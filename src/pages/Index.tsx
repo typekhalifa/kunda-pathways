@@ -10,19 +10,25 @@ import BlogPreview from "@/components/BlogPreview";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import Newsletter from "@/components/Newsletter";
+import Partners from "@/components/Partners";
+import ChatBot from "@/components/ChatBot";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
       <Header />
       <Hero />
       <Services />
       <About />
+      <Partners />
       <Testimonials />
       <BlogPreview />
+      <Newsletter />
       <Contact />
       <Footer />
       <WhatsAppButton />
+      <ChatBot />
     </div>
   );
 };
