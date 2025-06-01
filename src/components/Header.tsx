@@ -88,7 +88,6 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
             <LanguageSwitcher />
-            <ThemeToggle />
             <button 
               className="text-slate-800 dark:text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -107,6 +106,9 @@ const Header = () => {
               <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About</a>
               <a href="#blog" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Resources</a>
               <a href="#contact" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
+                <ThemeToggle />
+              </div>
               <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 w-full">
                 Book Consultation
               </Button>

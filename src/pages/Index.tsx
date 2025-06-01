@@ -1,6 +1,4 @@
 
-import { ArrowDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
@@ -13,23 +11,26 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import Newsletter from "@/components/Newsletter";
 import Partners from "@/components/Partners";
 import ChatBot from "@/components/ChatBot";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
-      <Header />
-      <Hero />
-      <Services />
-      <About />
-      <Partners />
-      <Testimonials />
-      <BlogPreview />
-      <Newsletter />
-      <Contact />
-      <Footer />
-      <WhatsAppButton />
-      <ChatBot />
-    </div>
+    <LanguageProvider>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
+        <Header />
+        <Hero />
+        <Services />
+        <About />
+        <Partners />
+        <Testimonials />
+        <BlogPreview />
+        <Newsletter />
+        <Contact />
+        <Footer />
+        <WhatsAppButton />
+        <ChatBot />
+      </div>
+    </LanguageProvider>
   );
 };
 

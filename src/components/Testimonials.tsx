@@ -1,5 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Star, User } from "lucide-react";
 
 const Testimonials = () => {
   const testimonials = [
@@ -8,18 +9,21 @@ const Testimonials = () => {
       role: "University Student in Seoul",
       content: "Thanks to GlobalConnect, I'm now studying at a top Korean university with a full scholarship. The guidance was incredible!",
       country: "Rwanda",
+      rating: 5,
     },
     {
       name: "James Mukamana",
       role: "F&B Entrepreneur",
       content: "The food industry consulting helped me launch my beverage company in the Korean market. Invaluable expertise!",
       country: "Uganda",
+      rating: 5,
     },
     {
       name: "Sarah Nkunda",
       role: "Graduate Student",
       content: "From visa application to finding accommodation, every step was handled professionally. Highly recommended!",
       country: "Rwanda",
+      rating: 5,
     },
   ];
 
@@ -37,16 +41,31 @@ const Testimonials = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow border-0 shadow-md dark:bg-slate-800">
-              <CardContent className="p-8">
-                <div className="text-4xl text-blue-600 mb-4">"</div>
-                <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+            <Card key={index} className="hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden">
+              <CardContent className="p-6">
+                {/* Stars */}
+                <div className="flex mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                
+                {/* Quote */}
+                <div className="text-3xl text-blue-600 mb-3">"</div>
+                <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed italic">
                   {testimonial.content}
                 </p>
-                <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
-                  <div className="font-semibold text-slate-800 dark:text-white">{testimonial.name}</div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400">{testimonial.role}</div>
-                  <div className="text-sm text-blue-600">{testimonial.country}</div>
+                
+                {/* User Info */}
+                <div className="flex items-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-4">
+                    <User className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-800 dark:text-white">{testimonial.name}</div>
+                    <div className="text-sm text-slate-500 dark:text-slate-400">{testimonial.role}</div>
+                    <div className="text-sm text-blue-600 font-medium">{testimonial.country}</div>
+                  </div>
                 </div>
               </CardContent>
             </Card>

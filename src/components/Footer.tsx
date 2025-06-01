@@ -1,4 +1,6 @@
 
+import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from "lucide-react";
+
 const Footer = () => {
   return (
     <footer className="bg-slate-800 dark:bg-slate-950 text-white py-16 px-4">
@@ -8,21 +10,21 @@ const Footer = () => {
             <div className="text-2xl font-bold mb-4">
               Global<span className="text-blue-400">Connect</span>
             </div>
-            <p className="text-slate-400 dark:text-slate-300 leading-relaxed">
+            <p className="text-slate-400 dark:text-slate-300 leading-relaxed mb-6">
               Your partner for education and business in Korea & Asia.
             </p>
-            <div className="flex space-x-4 mt-6">
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                📘
+            <div className="flex space-x-4">
+              <a href="#" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
+                <Facebook size={20} />
               </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                🐦
+              <a href="#" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
+                <Twitter size={20} />
               </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                💼
+              <a href="#" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
+                <Linkedin size={20} />
               </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                📷
+              <a href="#" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
+                <Instagram size={20} />
               </a>
             </div>
           </div>
@@ -44,17 +46,26 @@ const Footer = () => {
               <li><a href="#services" className="hover:text-white transition-colors">Scholarship Guidance</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">University Admissions</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">F&B Market Analysis</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Book Consultation</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Visits Help & Relocations</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-slate-400 dark:text-slate-300">
-              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Sitemap</a></li>
-            </ul>
+            <h4 className="font-semibold mb-4">Contact Info</h4>
+            <div className="space-y-3 text-slate-400 dark:text-slate-300">
+              <div className="flex items-center space-x-2">
+                <Mail size={16} />
+                <span>info@globalconnect.com</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Phone size={16} />
+                <span>+82-10-1234-5678</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MapPin size={16} />
+                <span>Seoul, South Korea</span>
+              </div>
+            </div>
           </div>
         </div>
         
