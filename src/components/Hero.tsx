@@ -1,8 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Hero = () => {
+  const { translations } = useLanguage();
+
   return (
     <section 
       id="home" 
@@ -17,39 +20,38 @@ const Hero = () => {
       <div className="container mx-auto text-center relative z-10">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Your Gateway to
-            <span className="text-blue-400"> Global Opportunities</span>
+            {translations.heroTitle.split(' ').slice(0, -2).join(' ')}
+            <span className="text-blue-400"> {translations.heroTitle.split(' ').slice(-2).join(' ')}</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed font-semibold">
-            Expert guidance for studying in Korea and building food & beverage businesses across Asia. 
-            From scholarship applications to international business consulting.
+            {translations.heroSubtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg shadow-lg font-semibold">
-              Explore Study Programs
+              {translations.exploreStudyPrograms}
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
               className="border-2 border-white text-white hover:bg-white hover:text-slate-800 px-8 py-4 text-lg shadow-lg bg-black/20 backdrop-blur-sm font-semibold"
             >
-              F&B Consulting
+              {translations.fbConsulting}
             </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
             <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
-              <div className="text-slate-700 dark:text-slate-300 font-medium">Students Assisted</div>
+              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.studentsAssisted}</div>
             </div>
             <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="text-3xl font-bold text-green-600 mb-2">15+</div>
-              <div className="text-slate-700 dark:text-slate-300 font-medium">Countries Reached</div>
+              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.countriesReached}</div>
             </div>
             <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="text-3xl font-bold text-purple-600 mb-2">MSc</div>
-              <div className="text-slate-700 dark:text-slate-300 font-medium">Food Science Expert</div>
+              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.foodScienceExpert}</div>
             </div>
           </div>
         </div>
