@@ -9,43 +9,59 @@ const Footer = () => {
               Global<span className="text-blue-400">Connect</span>
             </div>
             <p className="text-slate-400 dark:text-slate-300 leading-relaxed">
-              Your trusted partner for global education and food industry opportunities.
+              Your partner for education and business in Korea & Asia.
             </p>
+            <div className="flex space-x-4 mt-6">
+              <a href="#" className="text-slate-400 hover:text-white transition-colors">
+                📘
+              </a>
+              <a href="#" className="text-slate-400 hover:text-white transition-colors">
+                🐦
+              </a>
+              <a href="#" className="text-slate-400 hover:text-white transition-colors">
+                💼
+              </a>
+              <a href="#" className="text-slate-400 hover:text-white transition-colors">
+                📷
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-slate-400 dark:text-slate-300">
+              <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Study in Korea</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">F&B Consulting</a></li>
+              <li><a href="#blog" className="hover:text-white transition-colors">Resources/Blog</a></li>
+              <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+            </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-slate-400 dark:text-slate-300">
-              <li><a href="#" className="hover:text-white transition-colors">Study Abroad</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Visa Assistance</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">F&B Consulting</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Language Training</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Scholarship Guidance</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">University Admissions</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">F&B Market Analysis</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Book Consultation</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
+            <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-slate-400 dark:text-slate-300">
-              <li><a href="#" className="hover:text-white transition-colors">Scholarship Guide</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">University List</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Success Stories</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold mb-4">Connect</h4>
-            <ul className="space-y-2 text-slate-400 dark:text-slate-300">
-              <li>📧 info@globalconnect.com</li>
-              <li>📱 +82-10-1234-5678</li>
-              <li>📍 Seoul, South Korea</li>
-              <li>🕒 Mon-Fri: 9AM-6PM KST</li>
+              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Sitemap</a></li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t border-slate-700 dark:border-slate-600 pt-8 text-center text-slate-400 dark:text-slate-300">
-          <p>&copy; 2024 GlobalConnect. All rights reserved. | Privacy Policy | Terms of Service</p>
+        <div className="border-t border-slate-700 dark:border-slate-600 pt-8 text-center">
+          <p className="text-slate-400 dark:text-slate-300">
+            &copy; 2024 GlobalConnect. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

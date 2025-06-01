@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Utensils, Globe, Users, CheckCircle, Star } from "lucide-react";
@@ -9,6 +8,7 @@ const Services = () => {
     { name: "University Enrollment", price: "$200", description: "Private & public university assistance" },
     { name: "Visa Application", price: "$100", description: "Full visa processing support" },
     { name: "Korean Language Training", price: "$80/month", description: "Online Korean language courses" },
+    { name: "Visits Help & Relocations", price: "$120", description: "Complete relocation and settlement assistance" },
   ];
 
   const fbServices = [
