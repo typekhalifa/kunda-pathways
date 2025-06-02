@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
   const { translations } = useLanguage();
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-slate-800 dark:bg-slate-950 text-white py-16 px-4">
@@ -12,7 +13,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           <div>
             <div className="text-2xl font-bold mb-4">
-              Global<span className="text-blue-400">Connect</span>
+              Kunda<span className="text-blue-400">Pathways</span>
             </div>
             <p className="text-slate-400 dark:text-slate-300 leading-relaxed mb-6">
               {translations.footerDescription}
@@ -68,7 +69,7 @@ const Footer = () => {
             <div className="space-y-3 text-slate-400 dark:text-slate-300">
               <div className="flex items-center space-x-2">
                 <Mail size={16} />
-                <span>info@globalconnect.com</span>
+                <span>info@kundapathways.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone size={16} />
@@ -84,7 +85,7 @@ const Footer = () => {
         
         <div className="border-t border-slate-700 dark:border-slate-600 pt-8 text-center">
           <p className="text-slate-400 dark:text-slate-300">
-            {translations.copyright}
+            © {currentYear} Kunda Pathways. {translations.allRightsReserved}
           </p>
         </div>
       </div>

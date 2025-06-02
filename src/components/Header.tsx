@@ -5,22 +5,24 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const { translations } = useLanguage();
 
   const studyServices = [
-    "Scholarship Guidance",
-    "University Enrollment", 
+    translations.scholarshipGuidance,
+    translations.universityAdmissions, 
     "Visa Application",
     "Korean Language Training",
-    "Visits Help & Relocations"
+    translations.visitsHelp
   ];
 
   const fbServices = [
     "Business Consultation",
-    "Market Analysis", 
+    translations.fbMarketAnalysis, 
     "Product Development",
     "Regulatory Compliance"
   ];
@@ -30,17 +32,17 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-2xl font-bold text-slate-800 dark:text-white hover:scale-105 transition-transform duration-300">
-            Global<span className="text-blue-600">Connect</span>
+            Kunda<span className="text-blue-600">Pathways</span>
           </Link>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#home" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+            <a href="#home" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.home}</a>
             
             {/* Services Dropdown */}
             <div className="relative" onMouseEnter={() => setIsServicesOpen(true)} onMouseLeave={() => setIsServicesOpen(false)}>
               <button className="flex items-center text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                Services
+                {translations.services}
                 <ChevronDown size={16} className="ml-1" />
               </button>
               
@@ -48,7 +50,7 @@ const Header = () => {
                 <div className="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg py-4 z-50 animate-fade-in">
                   <div className="grid grid-cols-2 gap-4 px-4">
                     <div>
-                      <h4 className="font-semibold text-blue-600 dark:text-blue-400 mb-2">Study Abroad</h4>
+                      <h4 className="font-semibold text-blue-600 dark:text-blue-400 mb-2">{translations.studyInKorea}</h4>
                       <ul className="space-y-1">
                         {studyServices.map((service, index) => (
                           <li key={index}>
@@ -60,7 +62,7 @@ const Header = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-green-600 dark:text-green-400 mb-2">F&B Consulting</h4>
+                      <h4 className="font-semibold text-green-600 dark:text-green-400 mb-2">{translations.fbConsulting}</h4>
                       <ul className="space-y-1">
                         {fbServices.map((service, index) => (
                           <li key={index}>
@@ -76,14 +78,14 @@ const Header = () => {
               )}
             </div>
             
-            <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About</a>
-            <a href="#blog" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Resources</a>
-            <a href="#contact" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
+            <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.about}</a>
+            <a href="#blog" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.resources}</a>
+            <a href="#contact" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.contact}</a>
             <LanguageSwitcher />
             <ThemeToggle />
             <Link to="/book-consultation">
               <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 hover:scale-105 transition-all duration-300 rounded-xl shadow-lg">
-                Book Consultation
+                {translations.bookConsultation}
               </Button>
             </Link>
           </nav>
@@ -104,17 +106,17 @@ const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden mt-4 py-4 border-t border-slate-200 dark:border-slate-700 animate-fade-in">
             <div className="flex flex-col space-y-4">
-              <a href="#home" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
-              <a href="#services" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Services</a>
-              <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About</a>
-              <a href="#blog" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Resources</a>
-              <a href="#contact" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
+              <a href="#home" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.home}</a>
+              <a href="#services" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.services}</a>
+              <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.about}</a>
+              <a href="#blog" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.resources}</a>
+              <a href="#contact" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.contact}</a>
               <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
                 <ThemeToggle />
               </div>
               <Link to="/book-consultation">
                 <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 w-full rounded-xl shadow-lg">
-                  Book Consultation
+                  {translations.bookConsultation}
                 </Button>
               </Link>
             </div>
