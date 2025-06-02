@@ -35,7 +35,7 @@ const ThemeToggle = () => {
       variant="outline"
       size="sm"
       onClick={toggleTheme}
-      className="border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800"
+      className="border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-md hover:shadow-lg transition-all duration-300"
     >
       {isDark ? <Sun size={16} /> : <Moon size={16} />}
     </Button>

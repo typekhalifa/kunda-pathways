@@ -82,7 +82,7 @@ const Header = () => {
             <LanguageSwitcher />
             <ThemeToggle />
             <Link to="/book-consultation">
-              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 hover:scale-105 transition-all duration-300">
+              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 hover:scale-105 transition-all duration-300 rounded-xl shadow-lg">
                 Book Consultation
               </Button>
             </Link>
@@ -92,7 +92,7 @@ const Header = () => {
           <div className="md:hidden flex items-center space-x-2">
             <LanguageSwitcher />
             <button 
-              className="text-slate-800 dark:text-white"
+              className="text-slate-800 dark:text-white p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -113,7 +113,7 @@ const Header = () => {
                 <ThemeToggle />
               </div>
               <Link to="/book-consultation">
-                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 w-full">
+                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 w-full rounded-xl shadow-lg">
                   Book Consultation
                 </Button>
               </Link>
