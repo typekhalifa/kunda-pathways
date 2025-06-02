@@ -28,10 +28,48 @@ const translations = {
     studentsAssisted: 'Students Assisted',
     countriesReached: 'Countries Reached',
     foodScienceExpert: 'Food Science Expert',
+    startYourJourney: 'Start Your Journey',
     
     // Services
     servicesTitle: 'Our Services',
-    servicesSubtitle: 'Comprehensive solutions for your educational and business goals',
+    servicesSubtitle: 'Professional guidance for your global journey and business success',
+    studyAbroadTitle: 'Study Abroad & Relocation',
+    studyAbroadSubtitle: 'Your pathway to global education',
+    fbConsultingTitle: 'Food & Beverage Consulting',
+    fbConsultingSubtitle: 'Expert guidance from MSc Food Science',
+    
+    // Service Items
+    scholarshipGuidance: 'Scholarship Guidance',
+    scholarshipGuidanceDesc: 'Complete scholarship application support',
+    universityAdmissions: 'University Enrollment',
+    universityAdmissionsDesc: 'Private & public university assistance',
+    visaApplication: 'Visa Application',
+    visaApplicationDesc: 'Full visa processing support',
+    koreanLanguageTraining: 'Korean Language Training',
+    koreanLanguageTrainingDesc: 'Online Korean language courses',
+    visitsHelp: 'Visits Help & Relocations',
+    visitsHelpDesc: 'Complete relocation and settlement assistance',
+    
+    businessConsultation: 'Business Consultation',
+    businessConsultationDesc: 'Expert F&B business advice',
+    fbMarketAnalysis: 'Market Analysis',
+    fbMarketAnalysisDesc: 'Asian market research & insights',
+    productDevelopment: 'Product Development',
+    productDevelopmentDesc: 'Food science & technology guidance',
+    regulatoryCompliance: 'Regulatory Compliance',
+    regulatoryComplianceDesc: 'Food safety & regulations',
+    
+    // Service Features
+    personalizedGuidance: 'Personalized guidance from Korean education expert',
+    endToEndSupport: 'End-to-end support from application to arrival',
+    culturalOrientation: 'Cultural orientation and settlement assistance',
+    mscFoodScienceExpertise: 'MSc Food Science & Technology expertise',
+    asianMarketSpecialization: 'Asian market specialization',
+    internationalBusinessDev: 'International business development',
+    getExpertConsultation: 'Get Expert Consultation',
+    packageDealsAvailable: 'Package Deals Available!',
+    saveUpTo20Percent: 'Save up to 20% when combining services',
+    viewAllPackages: 'View All Packages & Pricing',
     
     // About Section
     aboutTitle: 'About Us',
@@ -48,6 +86,17 @@ const translations = {
     studentsHelped: '500+ Students',
     studentsHelpedDesc: 'Successfully guided students from Africa to top Korean universities',
     countriesReachedDesc: 'International reach across Africa, Asia, and beyond',
+    
+    // Partners Section
+    ourTrustedPartners: 'Our Trusted Partners',
+    partnerDescription: 'We work with leading institutions and organizations',
+    
+    // Newsletter Section
+    newsletterTitle: 'Stay Updated with Global Opportunities',
+    newsletterDescription: 'Get the latest scholarship announcements, study abroad tips, and F&B industry insights delivered to your inbox.',
+    enterEmailAddress: 'Enter your email address',
+    subscribe: 'Subscribe',
+    newsletterThankYou: 'Thank you for subscribing! Check your email for confirmation.',
     
     // About Advisor Page
     backToHome: 'Back to Home',
@@ -104,10 +153,6 @@ const translations = {
     aboutUs: 'About Us',
     studyInKorea: 'Study in Korea',
     resourcesBlog: 'Resources/Blog',
-    scholarshipGuidance: 'Scholarship Guidance',
-    universityAdmissions: 'University Admissions',
-    fbMarketAnalysis: 'F&B Market Analysis',
-    visitsHelp: 'Visits Help & Relocations',
     contactInfo: 'Contact Info',
     location: 'Seoul, South Korea',
     legal: 'Legal',
@@ -296,7 +341,7 @@ const translations = {
     educationSpecialistTitle: 'Consultant en Éducation',
     freelanceWork: 'Freelance',
     specialistPeriod: '2020 - Présent',
-    specialistDescription: 'Fournissant des conseils complets aux étudiants africains pour les admissions universitaires coréennes et les candidatures de bourses.',
+    specialistDescription: 'Gutanga ubuyobozi bwuzuye ku banyeshuri b\'Abanyafurika ku kwemererwa muri kaminuza za Koreya no gusaba ubufasha bw\'amasomo.',
     readyToStart: 'Prêt à Commencer Votre Voyage?',
     contactCallToAction: 'Discutons de la façon dont je peux vous aider à atteindre vos objectifs éducatifs ou commerciaux en Corée et en Asie.',
     advisorFullDescription: 'Un défenseur passionné de l\'éducation mondiale et du développement commercial interculturel, dédié à créer des voies de succès entre l\'Afrique et l\'Asie.',
@@ -385,7 +430,7 @@ const translations = {
     // About Advisor Page
     backToHome: '홈으로 돌아가기',
     biography: '경력',
-    biographyP1: '르완다에서 태어나고 자란 John Doe는 항상 교육과 국제 개발에 대한 열정을 가지고 있었습니다. 르완다 대학교에서 영양학 학사 과정을 마친 후, 명망 있는 한국 정부 장학금 프로그램(KGSP)에 선발되었습니다.',
+    biographyP1: '르완다에서 태어나고 자란 John Doe는 항상 교육과 국제 개발에 대한 열정을 가지고 있었습니다. �르완다 대학교에서 영양학 학사 과정을 마친 후, 명망 있는 한국 정부 장학금 프로그램(KGSP)에 선발되었습니다.',
     biographyP2: '한국에서의 시간 동안 John은 학문적으로 뛰어난 성과를 거두었을 뿐만 아니라 한국 문화와 교육 시스템에 대한 깊은 이해를 발전시켰습니다. 한국의 가장 권위 있는 기관 중 하나인 서울대학교에서 식품과학기술 석사 학위를 완료했습니다.',
     biographyP3: '졸업 후 John은 다른 아프리카 학생들이 한국에서 교육적 꿈을 실현할 수 있도록 도우면서 컨설팅 업무를 통해 아프리카와 한국 식품 산업 간의 다리를 구축하는 데 자신의 경력을 바치기로 결정했습니다.',
     educationQualifications: '교육 및 자격',
@@ -437,10 +482,6 @@ const translations = {
     aboutUs: '회사 소개',
     studyInKorea: '한국 유학',
     resourcesBlog: '자료/블로그',
-    scholarshipGuidance: '장학금 안내',
-    universityAdmissions: '대학 입학',
-    fbMarketAnalysis: 'F&B 시장 분석',
-    visitsHelp: '방문 도움 및 이주',
     contactInfo: '연락처 정보',
     location: '서울, 대한민국',
     legal: '법적 정보',

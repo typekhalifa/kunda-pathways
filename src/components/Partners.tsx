@@ -1,5 +1,9 @@
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 const Partners = () => {
+  const { translations } = useLanguage();
+  
   const partners = [
     { name: "Seoul National University", logo: "🏛️" },
     { name: "KAIST", logo: "🔬" },
@@ -16,10 +20,10 @@ const Partners = () => {
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">
-            Our Trusted <span className="text-blue-600">Partners</span>
+            {translations.ourTrustedPartners.split(' ').slice(0, -1).join(' ')} <span className="text-blue-600">{translations.ourTrustedPartners.split(' ').slice(-1)}</span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg">
-            We work with leading institutions and organizations
+            {translations.partnerDescription}
           </p>
         </div>
         

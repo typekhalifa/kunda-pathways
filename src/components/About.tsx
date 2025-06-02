@@ -35,7 +35,9 @@ const About = () => {
           </p>
           
           <Link to="/about-advisor">
-            <Button variant="outline" className="mt-4 rounded-xl border-2 hover:bg-blue-50 dark:hover:bg-blue-900/20">
+            <Button 
+              className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
+            >
               {translations.readMoreAboutMe}
             </Button>
           </Link>

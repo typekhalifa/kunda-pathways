@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Newsletter = () => {
+  const { translations } = useLanguage();
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -23,31 +25,31 @@ const Newsletter = () => {
         <div className="max-w-2xl mx-auto">
           <Mail className="mx-auto mb-6 text-white" size={48} />
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Stay Updated with Global Opportunities
+            {translations.newsletterTitle}
           </h2>
           <p className="text-blue-100 mb-8 text-lg">
-            Get the latest scholarship announcements, study abroad tips, and F&B industry insights delivered to your inbox.
+            {translations.newsletterDescription}
           </p>
           
           {isSubscribed ? (
-            <div className="bg-green-500 text-white px-6 py-4 rounded-lg">
-              Thank you for subscribing! Check your email for confirmation.
+            <div className="bg-green-500 text-white px-6 py-4 rounded-xl shadow-lg">
+              {translations.newsletterThankYou}
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <Input
                 type="email"
-                placeholder="Enter your email address"
+                placeholder={translations.enterEmailAddress}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="flex-1 bg-white/90 border-0 text-slate-800"
+                className="flex-1 bg-white/90 border-0 text-slate-800 rounded-xl"
               />
               <Button 
                 type="submit" 
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8"
+                className="bg-white text-blue-600 hover:bg-gray-100 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                Subscribe
+                {translations.subscribe}
               </Button>
             </form>
           )}

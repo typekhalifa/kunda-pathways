@@ -10,7 +10,7 @@ const Testimonials = () => {
     {
       name: "Marie Uwimana",
       role: "University Student in Seoul",
-      content: "Thanks to GlobalConnect, I'm now studying at a top Korean university with a full scholarship. The guidance was incredible!",
+      content: "Thanks to Kunda Pathways, I'm now studying at a top Korean university with a full scholarship. The guidance was incredible!",
       country: "Rwanda",
       rating: 5,
     },
@@ -35,10 +35,10 @@ const Testimonials = () => {
       <div className="container mx-auto">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            Success <span className="text-blue-600">Stories</span>
+            {translations.successStories.split(' ')[0]} <span className="text-blue-600">{translations.successStories.split(' ').slice(1).join(' ')}</span>
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-            Real stories from clients who achieved their global dreams
+            {translations.testimonialSubtitle}
           </p>
         </div>
 

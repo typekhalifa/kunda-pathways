@@ -1,21 +1,25 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Utensils, Globe, Users, CheckCircle, Star } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Services = () => {
+  const { translations } = useLanguage();
+  
   const studyServices = [
-    { name: "Scholarship Guidance", price: "$150", description: "Complete scholarship application support" },
-    { name: "University Enrollment", price: "$200", description: "Private & public university assistance" },
-    { name: "Visa Application", price: "$100", description: "Full visa processing support" },
-    { name: "Korean Language Training", price: "$80/month", description: "Online Korean language courses" },
-    { name: "Visits Help & Relocations", price: "$120", description: "Complete relocation and settlement assistance" },
+    { name: translations.scholarshipGuidance, price: "$150", description: translations.scholarshipGuidanceDesc },
+    { name: translations.universityAdmissions, price: "$200", description: translations.universityAdmissionsDesc },
+    { name: translations.visaApplication, price: "$100", description: translations.visaApplicationDesc },
+    { name: translations.koreanLanguageTraining, price: "$80/month", description: translations.koreanLanguageTrainingDesc },
+    { name: translations.visitsHelp, price: "$120", description: translations.visitsHelpDesc },
   ];
 
   const fbServices = [
-    { name: "Business Consultation", price: "$250/hour", description: "Expert F&B business advice" },
-    { name: "Market Analysis", price: "$500", description: "Asian market research & insights" },
-    { name: "Product Development", price: "$300/hour", description: "Food science & technology guidance" },
-    { name: "Regulatory Compliance", price: "$200/hour", description: "Food safety & regulations" },
+    { name: translations.businessConsultation, price: "$250/hour", description: translations.businessConsultationDesc },
+    { name: translations.fbMarketAnalysis, price: "$500", description: translations.fbMarketAnalysisDesc },
+    { name: translations.productDevelopment, price: "$300/hour", description: translations.productDevelopmentDesc },
+    { name: translations.regulatoryCompliance, price: "$200/hour", description: translations.regulatoryComplianceDesc },
   ];
 
   return (
@@ -23,10 +27,10 @@ const Services = () => {
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            Our <span className="text-blue-600">Services</span>
+            {translations.servicesTitle.split(' ')[0]} <span className="text-blue-600">{translations.servicesTitle.split(' ').slice(1).join(' ')}</span>
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-            Professional guidance for your global journey and business success
+            {translations.servicesSubtitle}
           </p>
         </div>
 
@@ -40,9 +44,9 @@ const Services = () => {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-slate-800 dark:text-white">
-                    Study Abroad & Relocation
+                    {translations.studyAbroadTitle}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400">Your pathway to global education</p>
+                  <p className="text-slate-600 dark:text-slate-400">{translations.studyAbroadSubtitle}</p>
                 </div>
               </div>
 
@@ -61,20 +65,20 @@ const Services = () => {
               <div className="space-y-3 mb-6">
                 <div className="flex items-center text-slate-600 dark:text-slate-400">
                   <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>Personalized guidance from Korean education expert</span>
+                  <span>{translations.personalizedGuidance}</span>
                 </div>
                 <div className="flex items-center text-slate-600 dark:text-slate-400">
                   <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>End-to-end support from application to arrival</span>
+                  <span>{translations.endToEndSupport}</span>
                 </div>
                 <div className="flex items-center text-slate-600 dark:text-slate-400">
                   <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span>Cultural orientation and settlement assistance</span>
+                  <span>{translations.culturalOrientation}</span>
                 </div>
               </div>
 
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                Start Your Journey
+              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+                {translations.startYourJourney}
               </Button>
             </CardContent>
           </Card>
@@ -88,9 +92,9 @@ const Services = () => {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-slate-800 dark:text-white">
-                    Food & Beverage Consulting
+                    {translations.fbConsultingTitle}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400">Expert guidance from MSc Food Science</p>
+                  <p className="text-slate-600 dark:text-slate-400">{translations.fbConsultingSubtitle}</p>
                 </div>
               </div>
 
@@ -109,20 +113,20 @@ const Services = () => {
               <div className="space-y-3 mb-6">
                 <div className="flex items-center text-slate-600 dark:text-slate-400">
                   <Star className="h-5 w-5 text-yellow-500 mr-3" />
-                  <span>MSc Food Science & Technology expertise</span>
+                  <span>{translations.mscFoodScienceExpertise}</span>
                 </div>
                 <div className="flex items-center text-slate-600 dark:text-slate-400">
                   <Star className="h-5 w-5 text-yellow-500 mr-3" />
-                  <span>Asian market specialization</span>
+                  <span>{translations.asianMarketSpecialization}</span>
                 </div>
                 <div className="flex items-center text-slate-600 dark:text-slate-400">
                   <Star className="h-5 w-5 text-yellow-500 mr-3" />
-                  <span>International business development</span>
+                  <span>{translations.internationalBusinessDev}</span>
                 </div>
               </div>
 
-              <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
-                Get Expert Consultation
+              <Button className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl">
+                {translations.getExpertConsultation}
               </Button>
             </CardContent>
           </Card>
@@ -130,10 +134,10 @@ const Services = () => {
 
         <div className="text-center mt-12">
           <p className="text-slate-600 dark:text-slate-400 mb-4">
-            🎯 <strong>Package Deals Available!</strong> Save up to 20% when combining services
+            🎯 <strong>{translations.packageDealsAvailable}</strong> {translations.saveUpTo20Percent}
           </p>
-          <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900">
-            View All Packages & Pricing
+          <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-xl">
+            {translations.viewAllPackages}
           </Button>
         </div>
       </div>
