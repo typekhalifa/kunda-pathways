@@ -15,15 +15,31 @@ const Partners = () => {
     { name: "KOTRA", logo: "🌐" },
   ];
 
+  // Safe function to split text and style the last word
+  const renderStyledTitle = (text: string) => {
+    if (!text) return '';
+    const words = text.split(' ');
+    if (words.length <= 1) return text;
+    
+    const mainText = words.slice(0, -1).join(' ');
+    const lastWord = words.slice(-1)[0];
+    
+    return (
+      <>
+        {mainText} <span className="text-blue-600">{lastWord}</span>
+      </>
+    );
+  };
+
   return (
     <section className="py-16 px-4 bg-white dark:bg-slate-900 overflow-hidden">
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">
-            {translations.ourTrustedPartners.split(' ').slice(0, -1).join(' ')} <span className="text-blue-600">{translations.ourTrustedPartners.split(' ').slice(-1)}</span>
+            {renderStyledTitle(translations.ourTrustedPartners || 'Our Trusted Partners')}
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg">
-            {translations.partnerDescription}
+            {translations.partnerDescription || 'We work with leading institutions and organizations'}
           </p>
         </div>
         

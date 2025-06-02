@@ -175,8 +175,6 @@ const translations = {
     contact: 'Twandikire',
     resources: 'Amakuru',
     bookConsultation: 'Tekereza Inama',
-    
-    // Hero Section
     heroTitle: 'Inzira yawe yo kwinjira mu mahirwe mpuzamahanga',
     heroSubtitle: 'Ubuyobozi bw\'impuguke mu kwiga muri Koreya no kubaka ubucuruzi bw\'ibiryo n\'ibinyobwa muri Aziya. Kuva mu gusaba ubufasha bw\'amasomo kugeza mu gutanga inama z\'ubucuruzi mpuzamahanga.',
     exploreStudyPrograms: 'Shakisha Gahunda z\'Amasomo',
@@ -184,12 +182,18 @@ const translations = {
     studentsAssisted: 'Abanyeshuri Bafashijwe',
     countriesReached: 'Ibihugu Bigerwemo',
     foodScienceExpert: 'Inzobere mu Bumenyi bw\'Ibiryo',
-    
-    // Services
+    startYourJourney: 'Tangira Urugendo Rwawe',
     servicesTitle: 'Serivisi Zacu',
     servicesSubtitle: 'Ibisubizo byuzuye ku ntego zawe z\'uburezi n\'ubucuruzi',
-    
-    // About Section
+    ourTrustedPartners: 'Abo Dukorana Nabo Twizeye',
+    partnerDescription: 'Dukorana n\'ibigo n\'imiryango ikomeye',
+    newsletterTitle: 'Komeza ugire Amakuru y\'Amahirwe y\'Isi',
+    newsletterDescription: 'Habona amakuru mashya y\'amahirwe y\'amasomo, ubushakashatsi bw\'inganda, n\'amabwiriza y\'intsinzi.',
+    enterEmailAddress: 'Andika aderesi yawe ya imeyili',
+    subscribe: 'Iyandikishe',
+    newsletterThankYou: 'Urakoze kwiyandikisha! Reba imeyili yawe kugirango wemeze.',
+    successStories: 'Inkuru z\'Intsinzi',
+    testimonialSubtitle: 'Inkuru z\'ukuri z\'abakiriya bagezeho ku nzozi zabo z\'isi',
     aboutTitle: 'Abo',
     aboutSubtitle: 'Umunyangakenerwa wawe wizewe mu burezi bw\'isi n\'ubucuruzi',
     meetYourGlobalAdvisor: 'Hura n\'Umujyanama wawe w\'Isi',
@@ -197,13 +201,13 @@ const translations = {
     advisorTitle: 'Ikoranabuhanga ry\'Ibiryo | Inzobere mu Burezi bwa Koreya',
     advisorDescription: 'Umunyangakenerwa wawe mu burezi n\'ubucuruzi muri Koreya na Aziya. Mfite ubunyangamugayo bw\'imyaka myinshi mu buyobozi bw\'amasomo n\'ubucuruzi bw\'ibiryo.',
     readMoreAboutMe: 'Soma Byinshi Kanjye',
-    educationExpert: 'Inzobere mu Burezi',
-    educationExpertDesc: 'Kabuhariwe mu kwemererwa muri kaminuza za Koreya n\'ubuyobozi bw\'ubufasha bw\'amasomo',
-    fbConsultant: 'Umujyanama w\'Ibiryo',
-    fbConsultantDesc: 'MSc mu Bumenyi bw\'Ibiryo hamwe n\'ubunyangamugayo bw\'isesengura ry\'isoko',
-    studentsHelped: 'Abanyeshuri 500+',
-    studentsHelpedDesc: 'Nayoboye neza abanyeshuri bo muri Afurika kugera mu nzego zo hejuru za kaminuza za Koreya',
-    countriesReachedDesc: 'Ukurikirana mpuzamahanga muri Afurika, Aziya, n\'ahandi',
+    educationExpert: 'Education Expert',
+    educationExpertDesc: 'Specializing in Korean university admissions and scholarship guidance',
+    fbConsultant: 'F&B Consultant',
+    fbConsultantDesc: 'MSc in Food Science with extensive market analysis experience',
+    studentsHelped: '500+ Students',
+    studentsHelpedDesc: 'Successfully guided students from Africa to top Korean universities',
+    countriesReachedDesc: 'International reach across Africa, Asia, and beyond',
     
     // About Advisor Page
     backToHome: 'Subira ku Rupapuro rw\'Itangiriro',
@@ -212,10 +216,10 @@ const translations = {
     biographyP2: 'Mu gihe yari muri Koreya, John ntabwo yagize inyungu gusa mu masomo ariko yabyimye kandi no gusobanukirwa cyane umuco n\'uburezi bwa Koreya. Yarangije impamyabumenyi ye y\'icyiciro cya kabiri mu Bumenyi bw\'Ibiryo n\'Ikoranabuhanga muri Kaminuza y\'Isi ya Seoul, imwe mu nzego zo hejuru za kaminuza za Koreya.',
     biographyP3: 'Nyuma yo kurangiza amasomo, John yahisemo kwiyegurira umwuga we wo gufasha abandi banyeshuri b\'Abanyafurika kugera ku nzozi zabo z\'uburezi muri Koreya mu gihe akaba n\'ubaka amahuriro hagati y\'inganda z\'ibiryo za Afurika na Koreya binyuze mu bikorwa bye byo gutanga inama.',
     educationQualifications: 'Uburezi n\'Impamyabumenyi',
-    mscFoodScience: 'MSc mu Bumenyi bw\'Ibiryo n\'Ikoranabuhanga',
+    mscFoodScience: 'MSc in Food Science & Technology',
     seoulNationalUniversity: 'Kaminuza y\'Isi ya Seoul, Koreya',
     graduationYear: '2019 - 2021',
-    bscNutrition: 'BSc mu Bumenyi bw\'Intungamubiri',
+    bscNutrition: 'BSc in Nutrition Science',
     universityOfRwanda: 'Kaminuza y\'u Rwanda',
     undergraduateYear: '2014 - 2018',
     kgspScholar: 'Uwabonye Ubufasha bwa KGSP',
@@ -286,8 +290,6 @@ const translations = {
     contact: 'Contact',
     resources: 'Ressources',
     bookConsultation: 'Réserver une Consultation',
-    
-    // Hero Section
     heroTitle: 'Votre Passerelle vers les Opportunités Mondiales',
     heroSubtitle: 'Conseils d\'experts pour étudier en Corée et développer des entreprises de nourriture et boissons en Asie. Des candidatures de bourses au conseil commercial international.',
     exploreStudyPrograms: 'Explorer les Programmes d\'Études',
@@ -295,12 +297,18 @@ const translations = {
     studentsAssisted: 'Étudiants Assistés',
     countriesReached: 'Pays Atteints',
     foodScienceExpert: 'Expert en Science Alimentaire',
-    
-    // Services
+    startYourJourney: 'Commencez Votre Voyage',
     servicesTitle: 'Nos Services',
     servicesSubtitle: 'Solutions complètes pour vos objectifs éducatifs et commerciaux',
-    
-    // About Section
+    ourTrustedPartners: 'Nos Partenaires de Confiance',
+    partnerDescription: 'Nous travaillons avec des institutions et organisations de premier plan',
+    newsletterTitle: 'Restez Informé des Opportunités Mondiales',
+    newsletterDescription: 'Recevez les dernières annonces de bourses, conseils d\'études à l\'étranger et aperçus de l\'industrie F&B.',
+    enterEmailAddress: 'Entrez votre adresse e-mail',
+    subscribe: 'S\'abonner',
+    newsletterThankYou: 'Merci de vous être abonné! Vérifiez votre e-mail pour confirmation.',
+    successStories: 'Histoires de Succès',
+    testimonialSubtitle: 'Vraies histoires de clients qui ont réalisé leurs rêves mondiaux',
     aboutTitle: 'À Propos de Nous',
     aboutSubtitle: 'Votre partenaire de confiance dans l\'éducation mondiale et l\'expansion commerciale',
     meetYourGlobalAdvisor: 'Rencontrez Votre Conseiller Mondial',
@@ -397,8 +405,6 @@ const translations = {
     contact: '연락처',
     resources: '자료',
     bookConsultation: '상담 예약',
-    
-    // Hero Section
     heroTitle: '글로벌 기회로의 관문',
     heroSubtitle: '한국 유학과 아시아 전역의 식음료 사업 구축을 위한 전문 가이드. 장학금 신청부터 국제 비즈니스 컨설팅까지.',
     exploreStudyPrograms: '학습 프로그램 탐색',
@@ -406,12 +412,18 @@ const translations = {
     studentsAssisted: '지원한 학생 수',
     countriesReached: '도달 국가 수',
     foodScienceExpert: '식품과학 전문가',
-    
-    // Services
+    startYourJourney: '여행을 시작하세요',
     servicesTitle: '우리의 서비스',
     servicesSubtitle: '교육 및 비즈니스 목표를 위한 종합 솔루션',
-    
-    // About Section
+    ourTrustedPartners: '신뢰할 수 있는 파트너',
+    partnerDescription: '선도적인 기관 및 조직과 협력합니다',
+    newsletterTitle: '글로벌 기회 업데이트 받기',
+    newsletterDescription: '최신 장학금 공지, 해외 유학 팁, F&B 업계 인사이트를 받아보세요.',
+    enterEmailAddress: '이메일 주소를 입력하세요',
+    subscribe: '구독하기',
+    newsletterThankYou: '구독해 주셔서 감사합니다! 확인을 위해 이메일을 확인해 주세요.',
+    successStories: '성공 사례',
+    testimonialSubtitle: '글로벌 꿈을 이룬 고객들의 실제 이야기',
     aboutTitle: '회사 소개',
     aboutSubtitle: '글로벌 교육 및 비즈니스 확장의 신뢰할 수 있는 파트너',
     meetYourGlobalAdvisor: '글로벌 어드바이저를 만나보세요',
