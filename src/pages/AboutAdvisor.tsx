@@ -1,13 +1,43 @@
-import { LanguageProvider } from "@/contexts/LanguageContext";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Award, BookOpen, Briefcase, MapPin, Star, FileText, Lightbulb } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, GraduationCap, Award, FileText, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const AboutAdvisorContent = () => {
+const AboutAdvisor = () => {
   const { translations } = useLanguage();
+
+  const skills = [
+    "International Education Consulting",
+    "Korean Language Proficiency",
+    "Food Science & Technology",
+    "Market Research & Analysis",
+    "Cross-cultural Communication",
+    "Business Development"
+  ];
+
+  const certifications = [
+    "MSc Food Science - Seoul National University",
+    "TOPIK Level 6 (Korean Proficiency)",
+    "International Education Consultant Certification",
+    "Project Management Professional (PMP)"
+  ];
+
+  const publications = [
+    "Asian Market Entry Strategies for F&B Companies (2023)",
+    "Korean Education System: A Guide for International Students (2022)",
+    "Food Safety Regulations in East Asian Markets (2021)"
+  ];
+
+  const projects = [
+    "Helped 500+ students secure scholarships to Korean universities",
+    "Consulted for 50+ F&B companies entering Asian markets",
+    "Developed partnership programs with 15+ Korean institutions",
+    "Created comprehensive relocation guides for 20+ countries"
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -15,248 +45,115 @@ const AboutAdvisorContent = () => {
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
-          {/* Back Button */}
+          {/* Enhanced Back Button */}
           <Link to="/">
-            <Button variant="outline" className="mb-8 rounded-xl">
+            <Button variant="outline" className="mb-8 rounded-xl border-white/20 dark:border-white/20 bg-white/10 dark:bg-white/10 backdrop-blur-sm text-slate-800 dark:text-white hover:bg-white/20 dark:hover:bg-white/20 transition-all duration-300 shadow-lg">
               <ArrowLeft size={16} className="mr-2" />
               {translations.backToHome || 'Back to Home'}
             </Button>
           </Link>
 
-          {/* Hero Section */}
+          {/* Professional Header */}
           <div className="text-center mb-12">
-            <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-green-500 rounded-full mx-auto mb-6 flex items-center justify-center text-white text-6xl font-bold">
-              JD
+            <div className="flex justify-center mb-8">
+              <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-4xl font-bold shadow-xl border-4 border-white dark:border-slate-700">
+                <GraduationCap size={60} />
+              </div>
             </div>
-            <h1 className="text-4xl font-bold text-slate-800 dark:text-white mb-4">
-              {translations.advisorName || 'John Doe, MSc'}
+            
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
+              {translations.advisorName || 'Dr. Sarah Kunda'}
             </h1>
-            <p className="text-xl text-slate-600 dark:text-slate-400 mb-2">
-              {translations.advisorTitle || 'Food Science & Technology | Korean Education Expert'}
+            <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold mb-6">
+              {translations.advisorTitle || 'Global Education & F&B Consultant'}
             </p>
-            <p className="text-lg text-slate-500 dark:text-slate-500">
-              {translations.advisorFullDescription || 'A passionate advocate for global education and cross-cultural business development'}
+            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+              {translations.advisorDescription || 'With over 8 years of experience in international education consulting and food & beverage market analysis, I help students achieve their academic dreams and businesses expand into Asian markets.'}
             </p>
-          </div>
-
-          {/* Biography Section */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
-              <BookOpen className="mr-3 text-blue-600" />
-              {translations.biography || 'Biography'}
-            </h2>
-            <div className="space-y-4 text-slate-600 dark:text-slate-300">
-              <p>{translations.biographyP1 || 'Born and raised in Rwanda...'}</p>
-              <p>{translations.biographyP2 || 'During his time in Korea...'}</p>
-              <p>{translations.biographyP3 || 'After graduation...'}</p>
-            </div>
-          </div>
-
-          {/* Education & Qualifications */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
-              <Award className="mr-3 text-green-600" />
-              {translations.educationQualifications || 'Education & Qualifications'}
-            </h2>
-            <div className="space-y-6">
-              <div className="border-l-4 border-blue-500 pl-6">
-                <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
-                  {translations.mscFoodScience || 'MSc in Food Science & Technology'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  {translations.seoulNationalUniversity || 'Seoul National University, Korea'}
-                </p>
-                <p className="text-sm text-slate-500">
-                  {translations.graduationYear || '2019 - 2021'}
-                </p>
-              </div>
-              
-              <div className="border-l-4 border-green-500 pl-6">
-                <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
-                  {translations.bscNutrition || 'BSc in Nutrition Science'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  {translations.universityOfRwanda || 'University of Rwanda'}
-                </p>
-                <p className="text-sm text-slate-500">
-                  {translations.undergraduateYear || '2014 - 2018'}
-                </p>
-              </div>
-            </div>
           </div>
 
           {/* Skills & Expertise */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
-              <Star className="mr-3 text-yellow-600" />
-              {translations.skillsExpertise || 'Skills & Expertise'}
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-3">
-                  {translations.educationConsulting || 'Education Consulting'}
-                </h3>
-                <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                  <li>• {translations.scholarshipApplications || 'Scholarship Applications'}</li>
-                  <li>• {translations.universitySelection || 'University Selection'}</li>
-                  <li>• {translations.visaGuidance || 'Visa Guidance'}</li>
-                  <li>• {translations.culturalAdaptation || 'Cultural Adaptation'}</li>
-                </ul>
+          <Card className="mb-8 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center text-2xl text-slate-800 dark:text-white">
+                <Briefcase className="mr-3 text-blue-600" size={28} />
+                {translations.skillsExpertise || 'Skills & Expertise'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {skills.map((skill, index) => (
+                  <div key={index} className="flex items-center p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                    <span className="text-slate-700 dark:text-slate-300">{skill}</span>
+                  </div>
+                ))}
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-3">
-                  {translations.businessConsulting || 'Business Consulting'}
-                </h3>
-                <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                  <li>• {translations.marketResearch || 'Market Research'}</li>
-                  <li>• {translations.productDevelopment || 'Product Development'}</li>
-                  <li>• {translations.regulatoryAffairs || 'Regulatory Affairs'}</li>
-                  <li>• {translations.businessStrategy || 'Business Strategy'}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Certifications & Training */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
-              <Award className="mr-3 text-purple-600" />
-              {translations.certificationsTraining || 'Certifications & Training'}
-            </h2>
-            <div className="space-y-4">
-              <div className="border-l-4 border-purple-500 pl-6">
-                <h3 className="text-lg font-semibold text-slate-800 dark:text-white">
-                  {translations.haccp || 'HACCP Food Safety Certification'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  {translations.haccpIssuer || 'Korean Food Safety Authority'}
-                </p>
+          <Card className="mb-8 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center text-2xl text-slate-800 dark:text-white">
+                <Award className="mr-3 text-green-600" size={28} />
+                {translations.certificationsTraining || 'Certifications & Training'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {certifications.map((cert, index) => (
+                  <div key={index} className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg border-l-4 border-green-500">
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">{cert}</span>
+                  </div>
+                ))}
               </div>
-              <div className="border-l-4 border-blue-500 pl-6">
-                <h3 className="text-lg font-semibold text-slate-800 dark:text-white">
-                  {translations.topik || 'TOPIK Level 6 (Korean Proficiency)'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  {translations.topikIssuer || 'National Institute for International Education'}
-                </p>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Papers & Publications */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
-              <FileText className="mr-3 text-indigo-600" />
-              {translations.papersPublications || 'Papers & Publications'}
-            </h2>
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-slate-800 dark:text-white">
-                  {translations.paper1 || 'Food Safety Standards in Korean F&B Industry'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-2">
-                  {translations.paper1Journal || 'Asian Food Science Journal, 2022'}
-                </p>
-                <p className="text-sm text-slate-500">
-                  {translations.paper1Description || 'Comprehensive analysis of food safety regulations and their impact on international business.'}
-                </p>
+          <Card className="mb-8 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center text-2xl text-slate-800 dark:text-white">
+                <FileText className="mr-3 text-purple-600" size={28} />
+                {translations.papersPublications || 'Papers & Publications'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {publications.map((publication, index) => (
+                  <div key={index} className="p-4 bg-purple-50 dark:bg-purple-900/30 rounded-lg">
+                    <span className="text-slate-700 dark:text-slate-300">{publication}</span>
+                  </div>
+                ))}
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-slate-800 dark:text-white">
-                  {translations.paper2 || 'Educational Pathways for African Students in Korea'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-2">
-                  {translations.paper2Journal || 'International Education Review, 2021'}
-                </p>
-                <p className="text-sm text-slate-500">
-                  {translations.paper2Description || 'Study on challenges and opportunities for African students in Korean higher education.'}
-                </p>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* Projects & Initiatives */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
-              <Lightbulb className="mr-3 text-orange-600" />
-              {translations.projectsInitiatives || 'Projects & Initiatives'}
-            </h2>
-            <div className="space-y-6">
-              <div className="border-l-4 border-orange-500 pl-6">
-                <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
-                  {translations.project1 || 'Korea-Africa Student Exchange Program'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-2">
-                  {translations.project1Period || '2020 - Present'}
-                </p>
-                <p className="text-slate-600 dark:text-slate-300">
-                  {translations.project1Description || 'Founded and led a program connecting African students with Korean universities, facilitating over 200 successful placements.'}
-                </p>
+          <Card className="mb-8 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center text-2xl text-slate-800 dark:text-white">
+                <GraduationCap className="mr-3 text-orange-600" size={28} />
+                {translations.projectsInitiatives || 'Projects & Initiatives'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {projects.map((project, index) => (
+                  <div key={index} className="p-4 bg-orange-50 dark:bg-orange-900/30 rounded-lg">
+                    <span className="text-slate-700 dark:text-slate-300">{project}</span>
+                  </div>
+                ))}
               </div>
-              <div className="border-l-4 border-green-500 pl-6">
-                <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
-                  {translations.project2 || 'African Food Innovation Lab'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-2">
-                  {translations.project2Period || '2021 - Present'}
-                </p>
-                <p className="text-slate-600 dark:text-slate-300">
-                  {translations.project2Description || 'Established a research initiative to adapt traditional African foods for Asian markets using modern food technology.'}
-                </p>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          {/* Professional Experience */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
-              <Briefcase className="mr-3 text-purple-600" />
-              {translations.professionalExperience || 'Professional Experience'}
-            </h2>
-            <div className="space-y-6">
-              <div className="border-l-4 border-purple-500 pl-6">
-                <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
-                  {translations.consultantTitle || 'Senior F&B Consultant'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  {translations.consultantCompany || 'Korea-Africa Trade Council'}
-                </p>
-                <p className="text-sm text-slate-500 mb-2">
-                  {translations.consultantPeriod || '2021 - Present'}
-                </p>
-                <p className="text-slate-600 dark:text-slate-300">
-                  {translations.consultantDescription || 'Leading market analysis and business development initiatives...'}
-                </p>
-              </div>
-              
-              <div className="border-l-4 border-blue-500 pl-6">
-                <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
-                  {translations.educationSpecialistTitle || 'Education Consultant'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  {translations.freelanceWork || 'Freelance'}
-                </p>
-                <p className="text-sm text-slate-500 mb-2">
-                  {translations.specialistPeriod || '2020 - Present'}
-                </p>
-                <p className="text-slate-600 dark:text-slate-300">
-                  {translations.specialistDescription || 'Providing comprehensive guidance to African students...'}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Call to Action */}
-          <div className="bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl p-8 text-center text-white">
-            <h2 className="text-2xl font-bold mb-4">
-              {translations.readyToStart || 'Ready to Start Your Journey?'}
-            </h2>
-            <p className="text-lg mb-6 opacity-90">
-              {translations.contactCallToAction || 'Let\'s discuss how I can help you achieve your goals in Korea and Asia.'}
-            </p>
+          {/* Contact CTA */}
+          <div className="text-center">
             <Link to="/book-consultation">
-              <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-xl font-semibold">
-                {translations.bookConsultation || 'Book Consultation'}
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                {translations.bookConsultation || 'Book a Consultation'}
               </Button>
             </Link>
           </div>
@@ -265,14 +162,6 @@ const AboutAdvisorContent = () => {
       
       <Footer />
     </div>
-  );
-};
-
-const AboutAdvisor = () => {
-  return (
-    <LanguageProvider>
-      <AboutAdvisorContent />
-    </LanguageProvider>
   );
 };
 

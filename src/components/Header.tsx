@@ -120,9 +120,12 @@ const Header = () => {
             >
               {translations.about}
             </button>
-            <Link to="/resources" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <button 
+              onClick={() => handleNavigation('blog-preview')}
+              className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+            >
               {translations.resources}
-            </Link>
+            </button>
             <button 
               onClick={() => handleNavigation('contact')}
               className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
@@ -172,9 +175,12 @@ const Header = () => {
               >
                 {translations.about}
               </button>
-              <Link to="/resources" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <button 
+                onClick={() => handleNavigation('blog-preview')}
+                className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
                 {translations.resources}
-              </Link>
+              </button>
               <button 
                 onClick={() => handleNavigation('contact')}
                 className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"

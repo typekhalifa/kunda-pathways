@@ -13,6 +13,10 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Sitemap from "./pages/Sitemap";
 import AboutAdvisor from "./pages/AboutAdvisor";
+import StudyPrograms from "./pages/StudyPrograms";
+import FBConsulting from "./pages/FBConsulting";
+import BookFBConsultation from "./pages/BookFBConsultation";
+import AllServices from "./pages/AllServices";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +30,11 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/book-consultation" element={<BookConsultation />} />
+            <Route path="/book-fb-consultation" element={<BookFBConsultation />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/study-programs" element={<StudyPrograms />} />
+            <Route path="/fb-consulting" element={<FBConsulting />} />
+            <Route path="/all-services" element={<AllServices />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/sitemap" element={<Sitemap />} />

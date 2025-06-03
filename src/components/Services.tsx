@@ -77,9 +77,11 @@ const Services = () => {
                 </div>
               </div>
 
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                {translations.startYourJourney}
-              </Button>
+              <Link to="/book-consultation">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+                  {translations.startYourJourney}
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
@@ -125,9 +127,11 @@ const Services = () => {
                 </div>
               </div>
 
-              <Button className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl">
-                {translations.getExpertConsultation}
-              </Button>
+              <Link to="/fb-consulting">
+                <Button className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl">
+                  {translations.getExpertConsultation}
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>
@@ -136,9 +140,11 @@ const Services = () => {
           <p className="text-slate-600 dark:text-slate-400 mb-4">
             🎯 <strong>{translations.packageDealsAvailable}</strong> {translations.saveUpTo20Percent}
           </p>
-          <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-xl">
-            {translations.viewAllPackages}
-          </Button>
+          <Link to="/all-services">
+            <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-xl">
+              {translations.viewAllPackages}
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
