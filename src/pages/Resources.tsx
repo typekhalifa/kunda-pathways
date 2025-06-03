@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Clock, User, Tag } from "lucide-react";
+import { ArrowLeft, Clock, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -75,7 +75,7 @@ const Resources = () => {
         <div className="max-w-6xl mx-auto">
           {/* Back Button */}
           <Link to="/">
-            <Button variant="outline" className="mb-8 rounded-xl">
+            <Button variant="outline" className="mb-8 rounded-xl border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700">
               <ArrowLeft size={16} className="mr-2" />
               {translations.backToHome || 'Back to Home'}
             </Button>
@@ -101,7 +101,7 @@ const Resources = () => {
                     <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm rounded-full">
                       {article.category}
                     </span>
-                    <div className="flex items-center text-slate-500 text-sm">
+                    <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm">
                       <Clock size={14} className="mr-1" />
                       {article.readTime}
                     </div>
@@ -115,11 +115,11 @@ const Resources = () => {
                     {article.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-slate-500 text-sm">
+                    <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm">
                       <User size={14} className="mr-1" />
                       John Doe
                     </div>
-                    <span className="text-slate-500 text-sm">{article.date}</span>
+                    <span className="text-slate-500 dark:text-slate-400 text-sm">{article.date}</span>
                   </div>
                   <Button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
                     {translations.readMore || 'Read More'}
@@ -141,7 +141,7 @@ const Resources = () => {
               <input
                 type="email"
                 placeholder={translations.enterEmailAddress || 'Enter your email address'}
-                className="flex-1 px-4 py-3 rounded-xl text-slate-800 border-0"
+                className="flex-1 px-4 py-3 rounded-xl text-slate-800 border-0 placeholder:text-slate-500"
               />
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-xl font-semibold">
                 {translations.subscribe || 'Subscribe'}

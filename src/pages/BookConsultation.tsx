@@ -1,17 +1,16 @@
 
 import { useState } from "react";
-import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, CheckCircle, CreditCard, Smartphone, Building } from "lucide-react";
+import { ArrowLeft, CreditCard, Smartphone, Building } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const BookConsultationContent = () => {
+const BookConsultation = () => {
   const { translations } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -49,7 +48,6 @@ const BookConsultationContent = () => {
   const handlePayment = (method: string) => {
     console.log(`Processing payment via ${method}`);
     alert(`Payment processed via ${method}. Your consultation request has been sent!`);
-    // Here you would integrate with actual payment processors
   };
 
   if (currentStep === 2) {
@@ -59,7 +57,7 @@ const BookConsultationContent = () => {
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-2xl mx-auto">
             <Link to="/">
-              <Button variant="outline" className="mb-8 rounded-xl">
+              <Button variant="outline" className="mb-8 rounded-xl border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700">
                 <ArrowLeft size={16} className="mr-2" />
                 {translations.backToHome || 'Back to Home'}
               </Button>
@@ -69,7 +67,7 @@ const BookConsultationContent = () => {
               {translations.reviewConsultation || 'Review Your Consultation Request'}
             </h1>
 
-            <Card className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg mb-8">
+            <Card className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg mb-8 border-0">
               <CardHeader>
                 <CardTitle className="text-2xl text-slate-800 dark:text-white">
                   {translations.consultationDetails || 'Consultation Details'}
@@ -102,7 +100,7 @@ const BookConsultationContent = () => {
                   </label>
                   <p className="text-slate-800 dark:text-white">{formData.message}</p>
                 </div>
-                <div className="border-t pt-4">
+                <div className="border-t border-slate-200 dark:border-slate-600 pt-4">
                   <div className="flex justify-between items-center text-xl font-bold">
                     <span className="text-slate-800 dark:text-white">{translations.totalPrice || 'Total Price'}:</span>
                     <span className="text-blue-600">${selectedService?.price}</span>
@@ -111,7 +109,7 @@ const BookConsultationContent = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg">
+            <Card className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border-0">
               <CardHeader>
                 <CardTitle className="text-2xl text-slate-800 dark:text-white">
                   {translations.paymentMethods || 'Payment Methods'}
@@ -142,7 +140,7 @@ const BookConsultationContent = () => {
                 <Button 
                   onClick={() => setCurrentStep(1)}
                   variant="outline"
-                  className="w-full py-4 rounded-xl"
+                  className="w-full py-4 rounded-xl border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
                 >
                   {translations.backToEdit || 'Back to Edit Details'}
                 </Button>
@@ -161,7 +159,7 @@ const BookConsultationContent = () => {
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-2xl mx-auto">
           <Link to="/">
-            <Button variant="outline" className="mb-8 rounded-xl">
+            <Button variant="outline" className="mb-8 rounded-xl border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700">
               <ArrowLeft size={16} className="mr-2" />
               {translations.backToHome || 'Back to Home'}
             </Button>
@@ -171,17 +169,18 @@ const BookConsultationContent = () => {
             {translations.bookConsultation || 'Book Consultation'}
           </h1>
           
-          <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg">
+          <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg border-0">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
                   {translations.fullName || 'Full Name'}
                 </label>
                 <Input 
-                  placeholder="Your full name" 
+                  placeholder={translations.fullName || "Your full name"}
                   value={formData.fullName}
                   onChange={(e) => handleInputChange('fullName', e.target.value)}
                   required
+                  className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
                 />
               </div>
               <div>
@@ -190,10 +189,11 @@ const BookConsultationContent = () => {
                 </label>
                 <Input 
                   type="email" 
-                  placeholder="your.email@example.com" 
+                  placeholder={translations.email || "your.email@example.com"}
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   required
+                  className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
                 />
               </div>
             </div>
@@ -204,9 +204,10 @@ const BookConsultationContent = () => {
               </label>
               <Input 
                 type="tel" 
-                placeholder="+1 (555) 123-4567" 
+                placeholder="+1 (555) 123-4567"
                 value={formData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
+                className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
               />
             </div>
 
@@ -215,7 +216,7 @@ const BookConsultationContent = () => {
                 {translations.selectService || 'Select Service'}
               </label>
               <select 
-                className="w-full p-3 border rounded-lg dark:bg-slate-700 dark:border-slate-600"
+                className="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={formData.service}
                 onChange={(e) => handleInputChange('service', e.target.value)}
                 required
@@ -238,6 +239,7 @@ const BookConsultationContent = () => {
                   type="date" 
                   value={formData.preferredDate}
                   onChange={(e) => handleInputChange('preferredDate', e.target.value)}
+                  className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white rounded-xl"
                 />
               </div>
               <div>
@@ -248,6 +250,7 @@ const BookConsultationContent = () => {
                   type="time" 
                   value={formData.preferredTime}
                   onChange={(e) => handleInputChange('preferredTime', e.target.value)}
+                  className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white rounded-xl"
                 />
               </div>
             </div>
@@ -257,17 +260,18 @@ const BookConsultationContent = () => {
                 {translations.message || 'Message'}
               </label>
               <Textarea 
-                placeholder="Tell us about your goals and how we can help..." 
+                placeholder={translations.tellUsAboutGoals || "Tell us about your goals and how we can help..."}
                 rows={5} 
                 value={formData.message}
                 onChange={(e) => handleInputChange('message', e.target.value)}
                 required
+                className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
               />
             </div>
 
             <Button 
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl"
             >
               {translations.reviewConsultationRequest || 'Review Consultation Request'}
             </Button>
@@ -276,12 +280,6 @@ const BookConsultationContent = () => {
       </div>
       <Footer />
     </div>
-  );
-};
-
-const BookConsultation = () => {
-  return (
-    <BookConsultationContent />
   );
 };
 

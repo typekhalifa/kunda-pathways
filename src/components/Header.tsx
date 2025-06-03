@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -11,6 +11,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const { translations } = useLanguage();
+  const navigate = useNavigate();
 
   const studyServices = [
     translations.scholarshipGuidance,
@@ -27,6 +28,27 @@ const Header = () => {
     "Regulatory Compliance"
   ];
 
+  const handleNavigation = (sectionId: string) => {
+    // If we're not on the home page, navigate to home first
+    if (window.location.pathname !== '/') {
+      navigate('/');
+      // Wait for navigation to complete, then scroll
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      // If we're already on home page, just scroll
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 transition-colors duration-300">
       <div className="container mx-auto px-4 py-4">
@@ -37,11 +59,19 @@ const Header = () => {
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#home" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.home}</a>
+            <button 
+              onClick={() => handleNavigation('home')}
+              className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+            >
+              {translations.home}
+            </button>
             
             {/* Services Dropdown */}
             <div className="relative" onMouseEnter={() => setIsServicesOpen(true)} onMouseLeave={() => setIsServicesOpen(false)}>
-              <button className="flex items-center text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <button 
+                onClick={() => handleNavigation('services')}
+                className="flex items-center text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
                 {translations.services}
                 <ChevronDown size={16} className="ml-1" />
               </button>
@@ -54,9 +84,12 @@ const Header = () => {
                       <ul className="space-y-1">
                         {studyServices.map((service, index) => (
                           <li key={index}>
-                            <a href="#services" className="text-sm text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                            <button 
+                              onClick={() => handleNavigation('services')}
+                              className="text-sm text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                            >
                               {service}
-                            </a>
+                            </button>
                           </li>
                         ))}
                       </ul>
@@ -66,9 +99,12 @@ const Header = () => {
                       <ul className="space-y-1">
                         {fbServices.map((service, index) => (
                           <li key={index}>
-                            <a href="#services" className="text-sm text-slate-600 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400 transition-colors">
+                            <button 
+                              onClick={() => handleNavigation('services')}
+                              className="text-sm text-slate-600 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                            >
                               {service}
-                            </a>
+                            </button>
                           </li>
                         ))}
                       </ul>
@@ -78,9 +114,21 @@ const Header = () => {
               )}
             </div>
             
-            <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.about}</a>
-            <a href="#blog" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.resources}</a>
-            <a href="#contact" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.contact}</a>
+            <button 
+              onClick={() => handleNavigation('about')}
+              className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+            >
+              {translations.about}
+            </button>
+            <Link to="/resources" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              {translations.resources}
+            </Link>
+            <button 
+              onClick={() => handleNavigation('contact')}
+              className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
+            >
+              {translations.contact}
+            </button>
             <LanguageSwitcher />
             <ThemeToggle />
             <Link to="/book-consultation">
@@ -106,11 +154,33 @@ const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden mt-4 py-4 border-t border-slate-200 dark:border-slate-700 animate-fade-in">
             <div className="flex flex-col space-y-4">
-              <a href="#home" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.home}</a>
-              <a href="#services" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.services}</a>
-              <a href="#about" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.about}</a>
-              <a href="#blog" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.resources}</a>
-              <a href="#contact" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{translations.contact}</a>
+              <button 
+                onClick={() => handleNavigation('home')}
+                className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                {translations.home}
+              </button>
+              <button 
+                onClick={() => handleNavigation('services')}
+                className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                {translations.services}
+              </button>
+              <button 
+                onClick={() => handleNavigation('about')}
+                className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                {translations.about}
+              </button>
+              <Link to="/resources" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                {translations.resources}
+              </Link>
+              <button 
+                onClick={() => handleNavigation('contact')}
+                className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                {translations.contact}
+              </button>
               <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
                 <ThemeToggle />
               </div>
