@@ -1,7 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 const BlogPreview = () => {
   const { translations } = useLanguage();
@@ -61,10 +61,12 @@ const BlogPreview = () => {
           ))}
         </div>
 
-        <div className="text-center">
-          <Button size="lg" variant="outline" className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/20">
-            {translations.viewAllResources}
-          </Button>
+        <div className="text-center mt-12">
+          <Link to="/resources">
+            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 hover:scale-105 transition-all duration-300 rounded-xl shadow-lg">
+              {translations.viewAllResources}
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
