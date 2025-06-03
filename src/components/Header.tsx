@@ -53,8 +53,14 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 transition-colors duration-300">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-slate-800 dark:text-white hover:scale-105 transition-transform duration-300">
-            Kunda<span className="text-blue-600">Pathways</span>
+          <Link to="/" className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300">
+            {/* Easily replaceable logo section */}
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+              K
+            </div>
+            <span className="text-2xl font-bold text-slate-800 dark:text-white">
+              Kunda<span className="text-blue-600">Pathways</span>
+            </span>
           </Link>
           
           {/* Desktop Navigation */}

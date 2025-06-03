@@ -159,11 +159,9 @@ const StudyPrograms = () => {
                       </div>
                     </div>
                     
-                    <Link to={`/program-details/${university.id}`}>
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                        See More Details
-                      </Button>
-                    </Link>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+                      See More Details
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -223,11 +221,9 @@ const StudyPrograms = () => {
                       </div>
                     </div>
                     
-                    <Link to={`/program-details/${university.id}`}>
-                      <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-xl">
-                        See More Details
-                      </Button>
-                    </Link>
+                    <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-xl">
+                      See More Details
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -244,7 +240,7 @@ const StudyPrograms = () => {
             </p>
             <Link to="/book-consultation">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
-                Book Free Consultation
+                Schedule Consultation - $150
               </Button>
             </Link>
           </div>
