@@ -1,9 +1,7 @@
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { ArrowLeft, GraduationCap, Award, Users, Globe, Mail, Phone, MapPin, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, GraduationCap, Award, Users, Clock, Mail, Phone, MapPin, Globe } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
@@ -12,229 +10,221 @@ const AboutAdvisor = () => {
   const { translations } = useLanguage();
 
   const skills = [
-    "University Admissions Guidance",
-    "Scholarship Applications",
-    "Visa Processing",
-    "Food & Beverage Consulting",
-    "Market Research & Analysis",
-    "Korean Language Training",
-    "Cultural Orientation",
-    "Business Development"
+    "Food Science & Technology",
+    "University Admissions",
+    "Scholarship Applications", 
+    "Business Consulting",
+    "Market Analysis",
+    "Regulatory Compliance"
   ];
 
   const certifications = [
-    "MSc Food Science & Technology",
+    "MSc Food Science - Seoul National University",
     "Certified Education Consultant",
-    "Korean Language Proficiency (TOPIK Level 6)",
-    "International Business Development",
-    "Cross-Cultural Communication"
+    "Business Analysis Professional",
+    "Korean Language Proficiency (TOPIK Level 6)"
   ];
 
   const achievements = [
     "500+ Students Successfully Placed",
     "15+ Countries Reached",
-    "95% Visa Approval Rate",
-    "50+ University Partnerships",
-    "10+ Years Experience"
+    "95% Success Rate in Applications",
+    "5+ Years Experience"
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      <Header />
-      
-      <div className="container mx-auto px-4 py-20">
-        <div className="max-w-6xl mx-auto">
-          {/* Enhanced Back Button */}
+      {/* Header */}
+      <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-4">
           <Link to="/">
-            <Button variant="outline" className="mb-8 rounded-xl border-blue-300 dark:border-blue-600 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
-              <ArrowLeft size={16} className="mr-2" />
-              {translations.backToHome || 'Back to Home'}
+            <Button 
+              variant="ghost" 
+              className="mb-4 hover:bg-blue-50 dark:hover:bg-slate-800 text-blue-600 dark:text-blue-400 font-semibold rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+            >
+              <ArrowLeft className="mr-2" size={20} />
+              Back to Home
             </Button>
           </Link>
+        </div>
+      </div>
 
-          {/* Profile Header */}
-          <div className="text-center mb-12">
-            <div className="relative inline-block mb-6">
-              <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-xl">
-                K
-              </div>
-              <div className="absolute -bottom-2 -right-2 bg-green-500 w-8 h-8 rounded-full border-4 border-white dark:border-slate-800"></div>
+      <div className="container mx-auto px-4 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <div className="flex justify-center mb-8">
+            <div className="w-48 h-48 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-6xl font-bold shadow-lg border-4 border-white dark:border-slate-700">
+              <GraduationCap size={80} />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              Meet Your <span className="text-blue-600">Global Advisor</span>
-            </h1>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-              With over 10 years of experience in international education and F&B consulting, 
-              I'm here to guide you through your journey to success in East Asia.
-            </p>
           </div>
+          
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
+            {translations.advisorName}
+          </h1>
+          <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold mb-6">
+            {translations.advisorTitle}
+          </p>
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-4xl mx-auto leading-relaxed">
+            {translations.advisorDescription}
+          </p>
+        </div>
 
-          {/* Contact Information */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <Mail className="mx-auto mb-3 text-blue-600" size={32} />
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-2">Email</h3>
-                <a 
-                  href="mailto:info@kundapathways.com" 
-                  className="text-blue-600 dark:text-blue-400 hover:underline transition-colors"
-                >
-                  info@kundapathways.com
-                </a>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <Phone className="mx-auto mb-3 text-green-600" size={32} />
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-2">Phone</h3>
-                <a 
-                  href="tel:+821012345678" 
-                  className="text-green-600 dark:text-green-400 hover:underline transition-colors"
-                >
-                  +82 10 1234 5678
-                </a>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <Clock className="mx-auto mb-3 text-purple-600" size={32} />
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-2">Office Hours</h3>
-                <div className="text-slate-600 dark:text-slate-400">
-                  <div>Mon - Fri: 9 AM - 5 PM</div>
-                  <div>Sat - Sun: Closed</div>
+        {/* Contact & Consultation Section */}
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-xl mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Contact Information</h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 text-slate-600 dark:text-slate-300">
+                  <Mail size={20} className="text-blue-600" />
+                  <a href="mailto:info@kundapathways.com" className="hover:text-blue-600 transition-colors">
+                    info@kundapathways.com
+                  </a>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+                <div className="flex items-center space-x-3 text-slate-600 dark:text-slate-300">
+                  <Phone size={20} className="text-blue-600" />
+                  <a href="tel:+821012345678" className="hover:text-blue-600 transition-colors">
+                    +82-10-1234-5678
+                  </a>
+                </div>
+                <div className="flex items-center space-x-3 text-slate-600 dark:text-slate-300">
+                  <MapPin size={20} className="text-blue-600" />
+                  <span>Seoul, South Korea</span>
+                </div>
+              </div>
 
-          {/* Free Consultation CTA */}
-          <div className="text-center mb-12">
-            <div className="bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl p-8 text-white">
-              <h2 className="text-2xl font-bold mb-4">
-                Get Your Free 15-Minute Consultation
-              </h2>
-              <p className="text-lg mb-6 opacity-90">
-                Let's discuss your goals and how I can help you achieve them
+              <div className="mt-8">
+                <h4 className="text-lg font-semibold text-slate-800 dark:text-white mb-4 flex items-center">
+                  <Clock size={20} className="mr-2 text-blue-600" />
+                  Office Hours
+                </h4>
+                <div className="space-y-2 text-slate-600 dark:text-slate-300">
+                  <div className="flex justify-between">
+                    <span>Monday - Friday:</span>
+                    <span className="font-medium">9:00 AM - 5:00 PM (KST)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Saturday - Sunday:</span>
+                    <span className="font-medium text-red-500">Closed</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Get Started Today</h3>
+              <p className="text-slate-600 dark:text-slate-400 mb-6">
+                Schedule a free 15-minute consultation to discuss your goals and how I can help you achieve them.
               </p>
-              <WhatsAppConsultationButton className="text-lg px-8 py-3" />
-            </div>
-          </div>
-
-          {/* Skills & Expertise */}
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl text-slate-800 dark:text-white flex items-center">
-                <GraduationCap className="mr-3 text-blue-600" size={28} />
-                Skills & Expertise
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {skills.map((skill, index) => (
-                  <div key={index} className="flex items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
-                    <span className="text-slate-700 dark:text-slate-300">{skill}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Certifications */}
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl text-slate-800 dark:text-white flex items-center">
-                <Award className="mr-3 text-purple-600" size={28} />
-                Certifications & Qualifications
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {certifications.map((cert, index) => (
-                  <div key={index} className="flex items-center p-4 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg">
-                    <Award className="text-purple-600 mr-3" size={20} />
-                    <span className="text-slate-700 dark:text-slate-300 font-medium">{cert}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Achievements */}
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl text-slate-800 dark:text-white flex items-center">
-                <Users className="mr-3 text-green-600" size={28} />
-                Key Achievements
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {achievements.map((achievement, index) => (
-                  <div key={index} className="text-center p-4 bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
-                      {achievement.split(' ')[0]}
-                    </div>
-                    <div className="text-slate-600 dark:text-slate-400 text-sm">
-                      {achievement.split(' ').slice(1).join(' ')}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Trusted Partners */}
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl text-slate-800 dark:text-white flex items-center">
-                <Globe className="mr-3 text-blue-600" size={28} />
-                Our Trusted Partners
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="text-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg hover:shadow-lg transition-shadow">
-                  <div className="text-3xl mb-2">🏛️</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Seoul National University</div>
-                </div>
-                <div className="text-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg hover:shadow-lg transition-shadow">
-                  <div className="text-3xl mb-2">🎓</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">University of Tokyo</div>
-                </div>
-                <div className="text-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg hover:shadow-lg transition-shadow">
-                  <div className="text-3xl mb-2">🏢</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Yonsei University</div>
-                </div>
-                <div className="text-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg hover:shadow-lg transition-shadow">
-                  <div className="text-3xl mb-2">🌏</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Peking University</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Call to Action */}
-          <div className="text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-            <h2 className="text-3xl font-bold mb-4">Ready to Start Your Journey?</h2>
-            <p className="text-xl mb-6 opacity-90">
-              Let's work together to achieve your academic and professional goals
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <WhatsAppConsultationButton className="w-full mb-4" />
               <Link to="/book-consultation">
-                <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
-                  Schedule Full Consultation
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+                  <Calendar className="mr-2" size={20} />
+                  Book Full Consultation ($150)
                 </Button>
               </Link>
-              <WhatsAppConsultationButton className="px-8 py-3 text-lg bg-green-600 hover:bg-green-700" />
             </div>
           </div>
         </div>
+
+        {/* Skills & Expertise */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <Card className="hover:shadow-lg transition-shadow border-0 shadow-md bg-white dark:bg-slate-800">
+            <CardContent className="p-8">
+              <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
+                <Award className="mr-3 text-blue-600" size={24} />
+                Core Skills
+              </h3>
+              <ul className="space-y-3">
+                {skills.map((skill, index) => (
+                  <li key={index} className="flex items-center text-slate-600 dark:text-slate-300">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow border-0 shadow-md bg-white dark:bg-slate-800">
+            <CardContent className="p-8">
+              <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
+                <GraduationCap className="mr-3 text-green-600" size={24} />
+                Certifications
+              </h3>
+              <ul className="space-y-3">
+                {certifications.map((cert, index) => (
+                  <li key={index} className="flex items-start text-slate-600 dark:text-slate-300">
+                    <div className="w-2 h-2 bg-green-600 rounded-full mr-3 mt-2"></div>
+                    <span className="text-sm">{cert}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-shadow border-0 shadow-md bg-white dark:bg-slate-800">
+            <CardContent className="p-8">
+              <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center">
+                <Users className="mr-3 text-purple-600" size={24} />
+                Achievements
+              </h3>
+              <ul className="space-y-3">
+                {achievements.map((achievement, index) => (
+                  <li key={index} className="flex items-center text-slate-600 dark:text-slate-300">
+                    <div className="w-2 h-2 bg-purple-600 rounded-full mr-3"></div>
+                    {achievement}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Professional Background */}
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-xl mb-12">
+          <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Professional Background</h3>
+          <div className="prose prose-slate dark:prose-invert max-w-none">
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+              With over 5 years of experience in education consulting and food & beverage industry analysis, 
+              I have dedicated my career to helping students achieve their academic dreams while also providing 
+              strategic business insights to companies looking to expand in the Asian market.
+            </p>
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+              My journey began with my own studies in South Korea, where I completed my Master's degree in 
+              Food Science at Seoul National University. This experience gave me firsthand knowledge of the 
+              challenges international students face and the incredible opportunities available in Korean 
+              higher education.
+            </p>
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+              Today, I combine my academic background with practical industry experience to provide 
+              comprehensive guidance that goes beyond traditional consulting. Whether you're a student 
+              seeking the perfect university match or a business looking to understand the Asian F&B market, 
+              I'm here to turn your aspirations into achievements.
+            </p>
+          </div>
+        </div>
+
+        {/* Statistics */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+            <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
+            <div className="text-slate-600 dark:text-slate-300">Students Helped</div>
+          </div>
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+            <div className="text-3xl font-bold text-green-600 mb-2">15+</div>
+            <div className="text-slate-600 dark:text-slate-300">Countries Reached</div>
+          </div>
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+            <div className="text-3xl font-bold text-purple-600 mb-2">95%</div>
+            <div className="text-slate-600 dark:text-slate-300">Success Rate</div>
+          </div>
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+            <div className="text-3xl font-bold text-orange-600 mb-2">5+</div>
+            <div className="text-slate-600 dark:text-slate-300">Years Experience</div>
+          </div>
+        </div>
       </div>
-      
-      <Footer />
     </div>
   );
 };

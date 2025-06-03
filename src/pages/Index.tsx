@@ -11,6 +11,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import Newsletter from "@/components/Newsletter";
 import Partners from "@/components/Partners";
 import ChatBot from "@/components/ChatBot";
+import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
 
 const Index = () => {
   return (

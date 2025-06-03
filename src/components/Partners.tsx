@@ -5,14 +5,14 @@ const Partners = () => {
   const { translations } = useLanguage();
   
   const partners = [
-    { name: "Seoul National University", logo: "🏛️" },
-    { name: "KAIST", logo: "🔬" },
-    { name: "Yonsei University", logo: "🎓" },
-    { name: "Korea University", logo: "📚" },
-    { name: "POSTECH", logo: "⚗️" },
-    { name: "Hanyang University", logo: "🏗️" },
-    { name: "Korean Government", logo: "🇰🇷" },
-    { name: "KOTRA", logo: "🌐" },
+    { name: "Seoul National University", logo: "🏛️", alt: "SNU Logo" },
+    { name: "KAIST", logo: "🔬", alt: "KAIST Logo" },
+    { name: "Yonsei University", logo: "🎓", alt: "Yonsei Logo" },
+    { name: "Korea University", logo: "📚", alt: "Korea University Logo" },
+    { name: "POSTECH", logo: "⚗️", alt: "POSTECH Logo" },
+    { name: "Hanyang University", logo: "🏗️", alt: "Hanyang Logo" },
+    { name: "Korean Government", logo: "🇰🇷", alt: "Korean Government Logo" },
+    { name: "KOTRA", logo: "🌐", alt: "KOTRA Logo" },
   ];
 
   // Safe function to split text and style the last word
@@ -50,7 +50,14 @@ const Partners = () => {
                 key={index}
                 className="flex-shrink-0 mx-8 bg-gray-50 dark:bg-slate-800 rounded-lg p-6 min-w-[200px] text-center shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="text-4xl mb-2">{partner.logo}</div>
+                {/* Easy to replace with actual logo images */}
+                <div className="w-16 h-16 mx-auto mb-3 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center border-2 border-gray-200 dark:border-slate-600">
+                  <span className="text-2xl" role="img" aria-label={partner.alt}>
+                    {partner.logo}
+                  </span>
+                  {/* To replace with actual logos, use: */}
+                  {/* <img src={`/logos/${partner.name.toLowerCase().replace(/\s+/g, '-')}.png`} alt={partner.alt} className="w-12 h-12 object-contain" /> */}
+                </div>
                 <div className="text-sm font-medium text-slate-700 dark:text-slate-300">
                   {partner.name}
                 </div>

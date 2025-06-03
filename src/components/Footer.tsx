@@ -69,11 +69,15 @@ const Footer = () => {
             <div className="space-y-3 text-slate-400 dark:text-slate-300">
               <div className="flex items-center space-x-2">
                 <Mail size={16} />
-                <span>info@kundapathways.com</span>
+                <a href="mailto:info@kundapathways.com" className="hover:text-white transition-colors">
+                  info@kundapathways.com
+                </a>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone size={16} />
-                <span>+82-10-1234-5678</span>
+                <a href="tel:+821012345678" className="hover:text-white transition-colors">
+                  +82-10-1234-5678
+                </a>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin size={16} />
