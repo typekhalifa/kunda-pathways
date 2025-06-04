@@ -20,10 +20,10 @@ const WhatsAppConsultationButton = ({ className = "" }: WhatsAppConsultationButt
   return (
     <Button
       onClick={handleWhatsAppClick}
-      className={`bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center text-xs sm:text-sm md:text-base ${className}`}
+      className={`bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center px-3 py-2 sm:px-4 sm:py-3 ${className}`}
     >
-      <MessageCircle className="mr-2 flex-shrink-0" size={16} />
-      <span className="text-center leading-tight">
+      <MessageCircle className="mr-1 sm:mr-2 flex-shrink-0" size={14} />
+      <span className="text-center leading-tight text-xs sm:text-sm lg:text-base whitespace-nowrap overflow-hidden text-ellipsis">
         {translations.scheduleFreeConsultation || "Schedule Free 15min Consultation"}
       </span>
     </Button>
