@@ -14,18 +14,18 @@ const Header = () => {
   const navigate = useNavigate();
 
   const studyServices = [
-    translations.scholarshipGuidance,
-    translations.universityAdmissions, 
-    "Visa Application",
-    "Korean Language Training",
-    translations.visitsHelp
+    { name: translations.scholarshipGuidance || "Scholarship Guidance", path: "/study-programs" },
+    { name: translations.universityAdmissions || "University Admissions", path: "/study-programs" }, 
+    { name: "Visa Application", path: "/study-programs" },
+    { name: "Korean Language Training", path: "/study-programs" },
+    { name: translations.visitsHelp || "Study Visits", path: "/study-programs" }
   ];
 
   const fbServices = [
-    "Business Consultation",
-    translations.fbMarketAnalysis, 
-    "Product Development",
-    "Regulatory Compliance"
+    { name: "Business Consultation", path: "/fb-consulting" },
+    { name: translations.fbMarketAnalysis || "Market Analysis", path: "/fb-consulting" }, 
+    { name: "Product Development", path: "/fb-consulting" },
+    { name: "Regulatory Compliance", path: "/fb-consulting" }
   ];
 
   const handleNavigation = (sectionId: string) => {
@@ -49,6 +49,10 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const handleResourcesClick = () => {
+    handleNavigation('blog-preview');
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 transition-colors duration-300">
       <div className="container mx-auto px-4 py-4">
@@ -58,7 +62,7 @@ const Header = () => {
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-2xl font-bold text-slate-800 dark:text-white">
+            <span className="text-2xl font-bold text-slate-800 dark:text-white hidden sm:block">
               Kunda<span className="text-blue-600">Pathways</span>
             </span>
           </Link>
@@ -69,7 +73,7 @@ const Header = () => {
               onClick={() => handleNavigation('home')}
               className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
             >
-              {translations.home}
+              {translations.home || "Home"}
             </button>
             
             {/* Services Dropdown */}
@@ -78,7 +82,7 @@ const Header = () => {
                 onClick={() => handleNavigation('services')}
                 className="flex items-center text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
-                {translations.services}
+                {translations.services || "Services"}
                 <ChevronDown size={16} className="ml-1" />
               </button>
               
@@ -86,31 +90,33 @@ const Header = () => {
                 <div className="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg py-4 z-50 animate-fade-in">
                   <div className="grid grid-cols-2 gap-4 px-4">
                     <div>
-                      <h4 className="font-semibold text-blue-600 dark:text-blue-400 mb-2">{translations.studyInKorea}</h4>
+                      <h4 className="font-semibold text-blue-600 dark:text-blue-400 mb-2">{translations.studyInKorea || "Study in Korea"}</h4>
                       <ul className="space-y-1">
                         {studyServices.map((service, index) => (
                           <li key={index}>
-                            <button 
-                              onClick={() => handleNavigation('services')}
-                              className="text-sm text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                            <Link 
+                              to={service.path}
+                              className="block text-sm text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1"
+                              onClick={() => setIsServicesOpen(false)}
                             >
-                              {service}
-                            </button>
+                              {service.name}
+                            </Link>
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-green-600 dark:text-green-400 mb-2">{translations.fbConsulting}</h4>
+                      <h4 className="font-semibold text-green-600 dark:text-green-400 mb-2">{translations.fbConsulting || "F&B Consulting"}</h4>
                       <ul className="space-y-1">
                         {fbServices.map((service, index) => (
                           <li key={index}>
-                            <button 
-                              onClick={() => handleNavigation('services')}
-                              className="text-sm text-slate-600 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                            <Link 
+                              to={service.path}
+                              className="block text-sm text-slate-600 dark:text-slate-300 hover:text-green-600 dark:hover:text-green-400 transition-colors py-1"
+                              onClick={() => setIsServicesOpen(false)}
                             >
-                              {service}
-                            </button>
+                              {service.name}
+                            </Link>
                           </li>
                         ))}
                       </ul>
@@ -124,25 +130,25 @@ const Header = () => {
               onClick={() => handleNavigation('about')}
               className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
             >
-              {translations.about}
+              {translations.about || "About"}
             </button>
             <button 
-              onClick={() => handleNavigation('blog-preview')}
+              onClick={handleResourcesClick}
               className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
             >
-              {translations.resources}
+              {translations.resources || "Resources"}
             </button>
             <button 
               onClick={() => handleNavigation('contact')}
               className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
             >
-              {translations.contact}
+              {translations.contact || "Contact"}
             </button>
             <LanguageSwitcher />
             <ThemeToggle />
             <Link to="/book-consultation">
               <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 hover:scale-105 transition-all duration-300 rounded-xl shadow-lg">
-                {translations.bookConsultation}
+                {translations.bookConsultation || "Book Consultation"}
               </Button>
             </Link>
           </nav>
@@ -167,38 +173,38 @@ const Header = () => {
                 onClick={() => handleNavigation('home')}
                 className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
-                {translations.home}
+                {translations.home || "Home"}
               </button>
               <button 
                 onClick={() => handleNavigation('services')}
                 className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
-                {translations.services}
+                {translations.services || "Services"}
               </button>
               <button 
                 onClick={() => handleNavigation('about')}
                 className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
-                {translations.about}
+                {translations.about || "About"}
               </button>
               <button 
-                onClick={() => handleNavigation('blog-preview')}
+                onClick={handleResourcesClick}
                 className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
-                {translations.resources}
+                {translations.resources || "Resources"}
               </button>
               <button 
                 onClick={() => handleNavigation('contact')}
                 className="text-left text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
-                {translations.contact}
+                {translations.contact || "Contact"}
               </button>
               <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
                 <ThemeToggle />
               </div>
               <Link to="/book-consultation">
                 <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 w-full rounded-xl shadow-lg">
-                  {translations.bookConsultation}
+                  {translations.bookConsultation || "Book Consultation"}
                 </Button>
               </Link>
             </div>

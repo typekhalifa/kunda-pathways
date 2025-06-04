@@ -11,12 +11,12 @@ const Services = () => {
 
   const studyServices = [
     {
-      title: translations.scholarshipGuidance,
+      title: translations.scholarshipGuidance || "Scholarship Guidance",
       description: "Complete guidance for finding and applying to scholarships",
       features: ["Scholarship search", "Application assistance", "Document preparation"]
     },
     {
-      title: translations.universityAdmissions,
+      title: translations.universityAdmissions || "University Admissions",
       description: "End-to-end university admission support",
       features: ["University selection", "Application review", "Interview preparation"]
     },
@@ -39,7 +39,7 @@ const Services = () => {
       features: ["Market research", "Business planning", "Strategy development"]
     },
     {
-      title: translations.fbMarketAnalysis,
+      title: translations.fbMarketAnalysis || "Market Analysis",
       description: "In-depth market analysis and competitive intelligence",
       features: ["Market sizing", "Competitor analysis", "Trend identification"]
     },
@@ -76,10 +76,10 @@ const Services = () => {
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            {renderStyledTitle(translations.ourServices)}
+            {renderStyledTitle(translations.ourServices || "Our Services")}
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-            {translations.servicesDescription}
+            {translations.servicesDescription || "Comprehensive support for your educational and business goals"}
           </p>
         </div>
 
@@ -88,7 +88,7 @@ const Services = () => {
           <div className="flex items-center justify-center mb-8">
             <GraduationCap className="w-8 h-8 text-blue-600 mr-3" />
             <h3 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white">
-              {translations.studyInKorea}
+              {translations.studyInKorea || "Study in Korea"}
             </h3>
           </div>
           
@@ -114,7 +114,7 @@ const Services = () => {
           <div className="text-center">
             <Link to="/study-programs">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                {translations.startYourJourney}
+                {translations.startYourJourney || "Start Your Journey"}
                 <ArrowRight className="ml-2" size={20} />
               </Button>
             </Link>
@@ -126,7 +126,7 @@ const Services = () => {
           <div className="flex items-center justify-center mb-8">
             <TrendingUp className="w-8 h-8 text-green-600 mr-3" />
             <h3 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white">
-              {translations.fbConsulting}
+              {translations.fbConsulting || "F&B Consulting"}
             </h3>
           </div>
           
@@ -152,7 +152,7 @@ const Services = () => {
           <div className="text-center">
             <Link to="/fb-consulting">
               <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                {translations.getExpertConsultation}
+                {translations.getExpertConsultation || "Get Expert Consultation"}
                 <ArrowRight className="ml-2" size={20} />
               </Button>
             </Link>
@@ -160,7 +160,7 @@ const Services = () => {
         </div>
 
         {/* Let's Start Your Journey Section */}
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-8 md:p-12 text-center">
+        <div className="bg-gradient-to-br from-blue-600/10 to-purple-600/10 dark:from-blue-500/20 dark:to-purple-500/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-8 md:p-12 text-center backdrop-blur-sm">
           <h3 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-6">
             {translations.letsStartYourJourney || "Let's Start Your Journey"}
           </h3>
@@ -169,14 +169,14 @@ const Services = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <WhatsAppConsultationButton className="w-full sm:w-auto" />
+            <WhatsAppConsultationButton className="w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4" />
             <Link to="/book-consultation">
               <Button 
                 size="lg" 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-8 py-3 sm:py-4 text-sm sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
               >
-                <Star className="mr-2" size={20} />
-                {translations.startYourJourney}
+                <Star className="mr-2" size={16} />
+                {translations.startYourJourney || "Start Your Journey"}
               </Button>
             </Link>
           </div>
@@ -190,7 +190,7 @@ const Services = () => {
               size="lg"
               className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              {translations.viewAllPackagesPricing}
+              {translations.viewAllPackagesPricing || "View All Packages & Pricing"}
             </Button>
           </Link>
         </div>
