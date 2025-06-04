@@ -55,12 +55,28 @@ const Services = () => {
     }
   ];
 
+  // Safe function to split text and style the last word
+  const renderStyledTitle = (text) => {
+    if (!text || typeof text !== 'string') return text || '';
+    const words = text.split(' ');
+    if (words.length <= 1) return text;
+    
+    const mainText = words.slice(0, -1).join(' ');
+    const lastWord = words.slice(-1)[0];
+    
+    return (
+      <>
+        {mainText} <span className="text-blue-600">{lastWord}</span>
+      </>
+    );
+  };
+
   return (
     <section id="services" className="py-20 px-4 bg-white dark:bg-slate-900">
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            {translations.ourServices.split(' ').slice(0, -1).join(' ')} <span className="text-blue-600">{translations.ourServices.split(' ').slice(-1)[0]}</span>
+            {renderStyledTitle(translations.ourServices)}
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
             {translations.servicesDescription}
@@ -96,7 +112,7 @@ const Services = () => {
           </div>
           
           <div className="text-center">
-            <Link to="/book-consultation">
+            <Link to="/study-programs">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                 {translations.startYourJourney}
                 <ArrowRight className="ml-2" size={20} />
@@ -146,10 +162,10 @@ const Services = () => {
         {/* Let's Start Your Journey Section */}
         <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-8 md:p-12 text-center">
           <h3 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-6">
-            {translations.letsStartYourJourney}
+            {translations.letsStartYourJourney || "Let's Start Your Journey"}
           </h3>
           <p className="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto">
-            {translations.journeyDescription}
+            {translations.journeyDescription || "Ready to take the next step? Get personalized guidance for your goals."}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
