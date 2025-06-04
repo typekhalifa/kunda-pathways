@@ -24,7 +24,7 @@ const WhatsAppConsultationButton = ({ className = "" }: WhatsAppConsultationButt
     >
       <MessageCircle className="mr-1 sm:mr-2 flex-shrink-0" size={14} />
       <span className="text-center leading-tight text-xs sm:text-sm lg:text-base">
-        {translations.scheduleFreeConsultation || "Schedule Free Consultation"}
+        Schedule a free 15-minute consultation
       </span>
     </Button>
   );
