@@ -44,25 +44,61 @@ const Partners = () => {
         </div>
         
         <div className="relative">
-          <div className="flex animate-scroll">
+          {/* Desktop: Single line */}
+          <div className="hidden md:flex animate-scroll">
             {[...partners, ...partners].map((partner, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 mx-8 bg-gray-50 dark:bg-slate-800 rounded-lg p-6 min-w-[200px] text-center shadow-sm hover:shadow-md transition-shadow"
               >
-                {/* Easy to replace with actual logo images */}
                 <div className="w-16 h-16 mx-auto mb-3 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center border-2 border-gray-200 dark:border-slate-600">
                   <span className="text-2xl" role="img" aria-label={partner.alt}>
                     {partner.logo}
                   </span>
-                  {/* To replace with actual logos, use: */}
-                  {/* <img src={`/logos/${partner.name.toLowerCase().replace(/\s+/g, '-')}.png`} alt={partner.alt} className="w-12 h-12 object-contain" /> */}
                 </div>
                 <div className="text-sm font-medium text-slate-700 dark:text-slate-300">
                   {partner.name}
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Mobile: Two lines */}
+          <div className="md:hidden">
+            <div className="flex animate-scroll-mobile-1 mb-4">
+              {[...partners.slice(0, 4), ...partners.slice(0, 4)].map((partner, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 mx-4 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 min-w-[150px] text-center shadow-sm"
+                >
+                  <div className="w-12 h-12 mx-auto mb-2 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center border-2 border-gray-200 dark:border-slate-600">
+                    <span className="text-lg" role="img" aria-label={partner.alt}>
+                      {partner.logo}
+                    </span>
+                  </div>
+                  <div className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                    {partner.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex animate-scroll-mobile-2">
+              {[...partners.slice(4), ...partners.slice(4)].map((partner, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 mx-4 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 min-w-[150px] text-center shadow-sm"
+                >
+                  <div className="w-12 h-12 mx-auto mb-2 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center border-2 border-gray-200 dark:border-slate-600">
+                    <span className="text-lg" role="img" aria-label={partner.alt}>
+                      {partner.logo}
+                    </span>
+                  </div>
+                  <div className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                    {partner.name}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -78,8 +114,34 @@ const Partners = () => {
             }
           }
           
+          @keyframes scroll-mobile-1 {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          
+          @keyframes scroll-mobile-2 {
+            0% {
+              transform: translateX(-50%);
+            }
+            100% {
+              transform: translateX(0);
+            }
+          }
+          
           .animate-scroll {
             animation: scroll 30s linear infinite;
+          }
+          
+          .animate-scroll-mobile-1 {
+            animation: scroll-mobile-1 25s linear infinite;
+          }
+          
+          .animate-scroll-mobile-2 {
+            animation: scroll-mobile-2 25s linear infinite;
           }
         `
       }} />

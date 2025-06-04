@@ -125,7 +125,7 @@ const ChatBot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-40 right-6 z-50 w-80 h-96 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden">
+        <div className="fixed bottom-40 right-6 z-50 w-80 sm:w-80 h-96 sm:h-96 max-h-[calc(100vh-200px)] bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden md:w-96 md:h-[500px]">
           {/* Header */}
           <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 rounded-t-2xl">
             <div className="flex items-center">
@@ -133,7 +133,7 @@ const ChatBot = () => {
                 <Bot size={16} />
               </div>
               <div>
-                <h3 className="font-semibold">Meg - Kunda Pathways Assistant</h3>
+                <h3 className="font-semibold text-sm">Meg - Kunda Pathways Assistant</h3>
                 <p className="text-xs text-purple-100">Online now • Usually replies instantly</p>
               </div>
             </div>
@@ -167,7 +167,7 @@ const ChatBot = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Type your message..."
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                className="flex-1 rounded-xl border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="flex-1 rounded-xl border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
               />
               <Button 
                 onClick={handleSendMessage}

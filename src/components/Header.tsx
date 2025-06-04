@@ -16,16 +16,16 @@ const Header = () => {
   const studyServices = [
     { name: translations.scholarshipGuidance || "Scholarship Guidance", path: "/study-programs" },
     { name: translations.universityAdmissions || "University Admissions", path: "/study-programs" }, 
-    { name: "Visa Application", path: "/study-programs" },
-    { name: "Korean Language Training", path: "/study-programs" },
+    { name: translations.visaApplication || "Visa Application", path: "/study-programs" },
+    { name: translations.koreanLanguageTraining || "Korean Language Training", path: "/study-programs" },
     { name: translations.visitsHelp || "Study Visits", path: "/study-programs" }
   ];
 
   const fbServices = [
-    { name: "Business Consultation", path: "/fb-consulting" },
+    { name: translations.businessConsultation || "Business Consultation", path: "/fb-consulting" },
     { name: translations.fbMarketAnalysis || "Market Analysis", path: "/fb-consulting" }, 
-    { name: "Product Development", path: "/fb-consulting" },
-    { name: "Regulatory Compliance", path: "/fb-consulting" }
+    { name: translations.productDevelopment || "Product Development", path: "/fb-consulting" },
+    { name: translations.regulatoryCompliance || "Regulatory Compliance", path: "/fb-consulting" }
   ];
 
   const handleNavigation = (sectionId: string) => {
@@ -53,11 +53,15 @@ const Header = () => {
     handleNavigation('blog-preview');
   };
 
+  const handleLogoClick = () => {
+    handleNavigation('home');
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 transition-colors duration-300">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300">
+          <button onClick={handleLogoClick} className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300">
             {/* Easily replaceable logo section */}
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
@@ -65,7 +69,7 @@ const Header = () => {
             <span className="text-2xl font-bold text-slate-800 dark:text-white hidden sm:block">
               Kunda<span className="text-blue-600">Pathways</span>
             </span>
-          </Link>
+          </button>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">

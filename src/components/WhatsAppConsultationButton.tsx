@@ -20,7 +20,7 @@ const WhatsAppConsultationButton = ({ className = "" }: WhatsAppConsultationButt
   return (
     <Button
       onClick={handleWhatsAppClick}
-      className={`bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center ${className}`}
+      className={`bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center text-xs sm:text-sm md:text-base ${className}`}
     >
       <MessageCircle className="mr-2 flex-shrink-0" size={16} />
       <span className="text-center leading-tight">

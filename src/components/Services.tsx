@@ -12,46 +12,78 @@ const Services = () => {
   const studyServices = [
     {
       title: translations.scholarshipGuidance || "Scholarship Guidance",
-      description: "Complete guidance for finding and applying to scholarships",
-      features: ["Scholarship search", "Application assistance", "Document preparation"]
+      description: translations.scholarshipDescription || "Complete guidance for finding and applying to scholarships",
+      features: [
+        translations.scholarshipSearch || "Scholarship search", 
+        translations.applicationAssistance || "Application assistance", 
+        translations.documentPreparation || "Document preparation"
+      ]
     },
     {
       title: translations.universityAdmissions || "University Admissions",
-      description: "End-to-end university admission support",
-      features: ["University selection", "Application review", "Interview preparation"]
+      description: translations.universityDescription || "End-to-end university admission support",
+      features: [
+        translations.universitySelection || "University selection", 
+        translations.applicationReview || "Application review", 
+        translations.interviewPreparation || "Interview preparation"
+      ]
     },
     {
-      title: "Visa Application",
-      description: "Comprehensive visa application assistance",
-      features: ["Document preparation", "Application filing", "Interview coaching"]
+      title: translations.visaApplication || "Visa Application",
+      description: translations.visaDescription || "Comprehensive visa application assistance",
+      features: [
+        translations.documentPreparation || "Document preparation", 
+        translations.applicationFiling || "Application filing", 
+        translations.interviewCoaching || "Interview coaching"
+      ]
     },
     {
-      title: "Korean Language Training",
-      description: "Professional Korean language preparation",
-      features: ["TOPIK preparation", "Conversation practice", "Cultural orientation"]
+      title: translations.koreanLanguageTraining || "Korean Language Training",
+      description: translations.languageDescription || "Professional Korean language preparation",
+      features: [
+        translations.topikPreparation || "TOPIK preparation", 
+        translations.conversationPractice || "Conversation practice", 
+        translations.culturalOrientation || "Cultural orientation"
+      ]
     }
   ];
 
   const fbServices = [
     {
-      title: "Business Consultation",
-      description: "Strategic business planning and market entry",
-      features: ["Market research", "Business planning", "Strategy development"]
+      title: translations.businessConsultation || "Business Consultation",
+      description: translations.businessDescription || "Strategic business planning and market entry",
+      features: [
+        translations.marketResearch || "Market research", 
+        translations.businessPlanning || "Business planning", 
+        translations.strategyDevelopment || "Strategy development"
+      ]
     },
     {
       title: translations.fbMarketAnalysis || "Market Analysis",
-      description: "In-depth market analysis and competitive intelligence",
-      features: ["Market sizing", "Competitor analysis", "Trend identification"]
+      description: translations.marketAnalysisDescription || "In-depth market analysis and competitive intelligence",
+      features: [
+        translations.marketSizing || "Market sizing", 
+        translations.competitorAnalysis || "Competitor analysis", 
+        translations.trendIdentification || "Trend identification"
+      ]
     },
     {
-      title: "Product Development",
-      description: "Food product development and innovation",
-      features: ["Recipe development", "Product testing", "Regulatory compliance"]
+      title: translations.productDevelopment || "Product Development",
+      description: translations.productDescription || "Food product development and innovation",
+      features: [
+        translations.recipeDevelopment || "Recipe development", 
+        translations.productTesting || "Product testing", 
+        translations.regulatoryCompliance || "Regulatory compliance"
+      ]
     },
     {
-      title: "Regulatory Compliance",
-      description: "Navigate food safety and regulatory requirements",
-      features: ["Safety standards", "Certification support", "Compliance audits"]
+      title: translations.regulatoryCompliance || "Regulatory Compliance",
+      description: translations.complianceDescription || "Navigate food safety and regulatory requirements",
+      features: [
+        translations.safetyStandards || "Safety standards", 
+        translations.certificationSupport || "Certification support", 
+        translations.complianceAudits || "Compliance audits"
+      ]
     }
   ];
 
@@ -169,14 +201,14 @@ const Services = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <WhatsAppConsultationButton className="w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4" />
+            <WhatsAppConsultationButton className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-4" />
             <Link to="/book-consultation">
               <Button 
                 size="lg" 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-8 py-3 sm:py-4 text-sm sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-8 py-3 sm:py-4 text-xs sm:text-sm md:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
               >
                 <Star className="mr-2" size={16} />
-                {translations.startYourJourney || "Start Your Journey"}
+                {translations.getFullConsultation || "Get Full Consultation"}
               </Button>
             </Link>
           </div>
@@ -188,9 +220,9 @@ const Services = () => {
             <Button 
               variant="outline" 
               size="lg"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-4 sm:px-8 py-4 text-xs sm:text-sm md:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              {translations.viewAllPackagesPricing || "View All Packages & Pricing"}
+              {translations.viewAllPackagesPricing || "View All Packages & Pricing and Get 25% Off"}
             </Button>
           </Link>
         </div>
