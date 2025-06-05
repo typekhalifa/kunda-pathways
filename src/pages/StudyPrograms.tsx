@@ -14,35 +14,50 @@ const StudyPrograms = () => {
     {
       id: 1,
       name: "Seoul National University",
-      country: "South Korea",
-      program: "Computer Science & Engineering",
-      duration: "4 years",
+      country: translations.southKorea || "South Korea",
+      program: translations.computerScienceEngineering || "Computer Science & Engineering",
+      duration: translations.fourYears || "4 years",
       tuition: "$8,000/year",
-      requirements: ["TOPIK Level 4+", "SAT 1400+", "English Proficiency", "Academic Transcripts"],
-      ranking: "#1 in Korea",
-      scholarships: "Full & Partial Available"
+      requirements: [
+        translations.topikLevel4Plus || "TOPIK Level 4+", 
+        "SAT 1400+", 
+        translations.englishProficiency || "English Proficiency", 
+        translations.academicTranscripts || "Academic Transcripts"
+      ],
+      ranking: translations.numberOneInKorea || "#1 in Korea",
+      scholarships: translations.fullPartialAvailable || "Full & Partial Available"
     },
     {
       id: 2,
       name: "University of Tokyo",
-      country: "Japan",
-      program: "International Business",
-      duration: "4 years",
+      country: translations.japan || "Japan",
+      program: translations.internationalBusiness || "International Business",
+      duration: translations.fourYears || "4 years",
       tuition: "$10,000/year",
-      requirements: ["JLPT N2+", "TOEFL 90+", "Academic Excellence", "Interview"],
-      ranking: "#1 in Japan",
-      scholarships: "MEXT Scholarship Available"
+      requirements: [
+        "JLPT N2+", 
+        "TOEFL 90+", 
+        translations.academicExcellence || "Academic Excellence", 
+        translations.interview || "Interview"
+      ],
+      ranking: translations.numberOneInJapan || "#1 in Japan",
+      scholarships: translations.mextScholarshipAvailable || "MEXT Scholarship Available"
     },
     {
       id: 3,
       name: "Peking University",
-      country: "China",
-      program: "International Relations",
-      duration: "4 years",
+      country: translations.china || "China",
+      program: translations.internationalRelations || "International Relations",
+      duration: translations.fourYears || "4 years",
       tuition: "$6,000/year",
-      requirements: ["HSK Level 6", "IELTS 7.0+", "Academic Records", "Personal Statement"],
-      ranking: "#1 in China",
-      scholarships: "Chinese Government Scholarship"
+      requirements: [
+        "HSK Level 6", 
+        "IELTS 7.0+", 
+        translations.academicRecords || "Academic Records", 
+        translations.personalStatement || "Personal Statement"
+      ],
+      ranking: translations.numberOneInChina || "#1 in China",
+      scholarships: translations.chineseGovernmentScholarship || "Chinese Government Scholarship"
     }
   ];
 
@@ -50,35 +65,50 @@ const StudyPrograms = () => {
     {
       id: 4,
       name: "Yonsei University",
-      country: "South Korea",
-      program: "Global MBA",
-      duration: "2 years",
+      country: translations.southKorea || "South Korea",
+      program: translations.globalMBA || "Global MBA",
+      duration: translations.twoYears || "2 years",
       tuition: "$25,000/year",
-      requirements: ["GMAT 650+", "Work Experience 3+ years", "TOEFL 100+", "Letters of Recommendation"],
-      ranking: "Top 3 Private in Korea",
-      scholarships: "Merit-based Available"
+      requirements: [
+        "GMAT 650+", 
+        translations.workExperience3Plus || "Work Experience 3+ years", 
+        "TOEFL 100+", 
+        translations.lettersOfRecommendation || "Letters of Recommendation"
+      ],
+      ranking: translations.top3PrivateInKorea || "Top 3 Private in Korea",
+      scholarships: translations.meritBasedAvailable || "Merit-based Available"
     },
     {
       id: 5,
       name: "Waseda University",
-      country: "Japan",
-      program: "International Liberal Studies",
-      duration: "4 years",
+      country: translations.japan || "Japan",
+      program: translations.internationalLiberalStudies || "International Liberal Studies",
+      duration: translations.fourYears || "4 years",
       tuition: "$35,000/year",
-      requirements: ["SAT 1300+", "TOEFL 90+", "Essay", "Interview"],
-      ranking: "Top Private in Japan",
-      scholarships: "International Student Scholarships"
+      requirements: [
+        "SAT 1300+", 
+        "TOEFL 90+", 
+        translations.essay || "Essay", 
+        translations.interview || "Interview"
+      ],
+      ranking: translations.topPrivateInJapan || "Top Private in Japan",
+      scholarships: translations.internationalStudentScholarships || "International Student Scholarships"
     },
     {
       id: 6,
       name: "Korea University",
-      country: "South Korea",
-      program: "Food Science & Technology",
-      duration: "4 years",
+      country: translations.southKorea || "South Korea",
+      program: translations.foodScienceTechnology || "Food Science & Technology",
+      duration: translations.fourYears || "4 years",
       tuition: "$20,000/year",
-      requirements: ["TOPIK Level 5+", "Science Background", "TOEFL 85+", "Portfolio"],
-      ranking: "Top 3 Private in Korea",
-      scholarships: "Industry Partnership Scholarships"
+      requirements: [
+        translations.topikLevel5Plus || "TOPIK Level 5+", 
+        translations.scienceBackground || "Science Background", 
+        "TOEFL 85+", 
+        translations.portfolio || "Portfolio"
+      ],
+      ranking: translations.top3PrivateInKorea || "Top 3 Private in Korea",
+      scholarships: translations.industryPartnershipScholarships || "Industry Partnership Scholarships"
     }
   ];
 
@@ -99,10 +129,10 @@ const StudyPrograms = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              Study Programs in <span className="text-blue-600">East Asia</span>
+              {translations.studyProgramsTitle || "Study Programs in"} <span className="text-blue-600">{translations.eastAsia || "East Asia"}</span>
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              Discover world-class education opportunities at top universities across Korea, Japan, and China
+              {translations.studyProgramsDescription || "Discover world-class education opportunities at top universities across Korea, Japan, and China"}
             </p>
           </div>
 
@@ -110,7 +140,7 @@ const StudyPrograms = () => {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
               <GraduationCap className="mr-3 text-blue-600" size={32} />
-              Public Universities
+              {translations.publicUniversities || "Public Universities"}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {publicUniversities.map((university) => (
@@ -148,7 +178,7 @@ const StudyPrograms = () => {
                     </div>
                     
                     <div className="mb-4">
-                      <h4 className="font-semibold text-slate-800 dark:text-white mb-2">Requirements:</h4>
+                      <h4 className="font-semibold text-slate-800 dark:text-white mb-2">{translations.requirements || "Requirements"}:</h4>
                       <div className="space-y-1">
                         {university.requirements.map((req, index) => (
                           <div key={index} className="flex items-center text-sm text-slate-600 dark:text-slate-300">
@@ -160,7 +190,7 @@ const StudyPrograms = () => {
                     </div>
                     
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                      See More Details
+                      {translations.seeMoreDetails || "See More Details"}
                     </Button>
                   </CardContent>
                 </Card>
@@ -172,7 +202,7 @@ const StudyPrograms = () => {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
               <GraduationCap className="mr-3 text-purple-600" size={32} />
-              Private Universities
+              {translations.privateUniversities || "Private Universities"}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {privateUniversities.map((university) => (
@@ -210,7 +240,7 @@ const StudyPrograms = () => {
                     </div>
                     
                     <div className="mb-4">
-                      <h4 className="font-semibold text-slate-800 dark:text-white mb-2">Requirements:</h4>
+                      <h4 className="font-semibold text-slate-800 dark:text-white mb-2">{translations.requirements || "Requirements"}:</h4>
                       <div className="space-y-1">
                         {university.requirements.map((req, index) => (
                           <div key={index} className="flex items-center text-sm text-slate-600 dark:text-slate-300">
@@ -222,7 +252,7 @@ const StudyPrograms = () => {
                     </div>
                     
                     <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-xl">
-                      See More Details
+                      {translations.seeMoreDetails || "See More Details"}
                     </Button>
                   </CardContent>
                 </Card>
@@ -233,14 +263,14 @@ const StudyPrograms = () => {
           {/* CTA Section */}
           <div className="text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
             <h2 className="text-2xl font-bold mb-4">
-              Ready to Start Your Academic Journey?
+              {translations.readyToStartAcademicJourney || "Ready to Start Your Academic Journey?"}
             </h2>
             <p className="text-lg mb-6 opacity-90">
-              Get personalized guidance and support for your university application process
+              {translations.getPersonalizedGuidanceSupport || "Get personalized guidance and support for your university application process"}
             </p>
             <Link to="/book-consultation">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
-                Schedule Consultation - $150
+                {translations.scheduleConsultation150 || "Schedule Consultation - $150"}
               </Button>
             </Link>
           </div>

@@ -1,3 +1,4 @@
+
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Map, Home, Briefcase, User, Mail, FileText, Shield, Scale } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,41 +11,41 @@ const Sitemap = () => {
 
   const siteLinks = [
     {
-      category: "Main Pages",
+      category: translations.mainPages || "Main Pages",
       icon: Home,
       links: [
-        { name: translations.home, path: "/", description: "Homepage with company overview" },
-        { name: translations.about, path: "/#about", description: "Learn about our company and mission" },
-        { name: translations.services, path: "/#services", description: "Our educational and business services" },
-        { name: translations.contact, path: "/#contact", description: "Get in touch with our team" },
+        { name: translations.home || "Home", path: "/", description: translations.homepageDescription || "Homepage with company overview" },
+        { name: translations.about || "About", path: "/#about", description: translations.aboutDescription || "Learn about our company and mission" },
+        { name: translations.services || "Services", path: "/#services", description: translations.servicesDescription || "Our educational and business services" },
+        { name: translations.contact || "Contact", path: "/#contact", description: translations.contactDescription || "Get in touch with our team" },
       ]
     },
     {
-      category: "Resources",
+      category: translations.resources || "Resources",
       icon: FileText,
       links: [
-        { name: "Blog/Resources", path: "/#blog", description: "Latest articles and educational resources" },
-        { name: "Success Stories", path: "/#testimonials", description: "Client testimonials and case studies" },
-        { name: "Newsletter", path: "/#newsletter", description: "Subscribe to our updates" },
+        { name: translations.blogResources || "Blog/Resources", path: "/#blog", description: translations.blogDescription || "Latest articles and educational resources" },
+        { name: translations.successStories || "Success Stories", path: "/#testimonials", description: translations.successStoriesDescription || "Client testimonials and case studies" },
+        { name: translations.newsletter || "Newsletter", path: "/#newsletter", description: translations.newsletterDescription || "Subscribe to our updates" },
       ]
     },
     {
-      category: "Legal",
+      category: translations.legal || "Legal",
       icon: Scale,
       links: [
-        { name: translations.privacyPolicy, path: "/privacy-policy", description: "How we handle your data" },
-        { name: translations.termsOfService, path: "/terms-of-service", description: "Terms and conditions of service" },
-        { name: translations.sitemap, path: "/sitemap", description: "Complete site navigation" },
+        { name: translations.privacyPolicy || "Privacy Policy", path: "/privacy-policy", description: translations.privacyPolicyDescription || "How we handle your data" },
+        { name: translations.termsOfService || "Terms of Service", path: "/terms-of-service", description: translations.termsOfServiceDescription || "Terms and conditions of service" },
+        { name: translations.sitemap || "Sitemap", path: "/sitemap", description: translations.sitemapDescription || "Complete site navigation" },
       ]
     },
     {
-      category: "Services",
+      category: translations.services || "Services",
       icon: Briefcase,
       links: [
-        { name: "Study in Korea", path: "/#services", description: "Educational consulting and scholarship guidance" },
-        { name: "F&B Consulting", path: "/#services", description: "Food & beverage business consulting" },
-        { name: "University Admissions", path: "/#services", description: "Assistance with university applications" },
-        { name: "Market Analysis", path: "/#services", description: "Business market research and analysis" },
+        { name: translations.studyInKorea || "Study in Korea", path: "/#services", description: translations.studyInKoreaDescription || "Educational consulting and scholarship guidance" },
+        { name: translations.fbConsulting || "F&B Consulting", path: "/#services", description: translations.fbConsultingDescription || "Food & beverage business consulting" },
+        { name: translations.universityAdmissions || "University Admissions", path: "/#services", description: translations.universityAdmissionsDescription || "Assistance with university applications" },
+        { name: translations.marketAnalysis || "Market Analysis", path: "/#services", description: translations.marketAnalysisDescription || "Business market research and analysis" },
       ]
     }
   ];
@@ -57,10 +58,10 @@ const Sitemap = () => {
           <div className="text-center mb-12">
             <Map className="mx-auto mb-6 text-blue-600" size={64} />
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              {translations.sitemapTitle}
+              {translations.sitemapTitle || "Site Map"}
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-400">
-              Complete navigation guide to all pages and sections of our website.
+              {translations.sitemapSubtitle || "Complete navigation guide to all pages and sections of our website."}
             </p>
           </div>
 
@@ -99,16 +100,16 @@ const Sitemap = () => {
               <CardContent className="p-8 text-center">
                 <Mail className="mx-auto mb-4 text-blue-600" size={48} />
                 <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-4">
-                  Need Help Finding Something?
+                  {translations.needHelpFinding || "Need Help Finding Something?"}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-400 mb-6">
-                  Can't find what you're looking for? Our team is here to help you navigate our services.
+                  {translations.cantFindWhatLooking || "Can't find what you're looking for? Our team is here to help you navigate our services."}
                 </p>
                 <Link 
                   to="/#contact"
                   className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
                 >
-                  Contact Support
+                  {translations.contactSupport || "Contact Support"}
                 </Link>
               </CardContent>
             </Card>
@@ -116,7 +117,7 @@ const Sitemap = () => {
 
           <div className="mt-12 text-center">
             <p className="text-slate-600 dark:text-slate-400">
-              Last updated: March 2024 | All pages are mobile-responsive and accessibility-friendly
+              {translations.lastUpdatedMarch2024 || "Last updated: March 2024"} | {translations.allPagesMobileResponsive || "All pages are mobile-responsive and accessibility-friendly"}
             </p>
           </div>
         </div>

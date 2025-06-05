@@ -71,11 +71,11 @@ const AboutAdvisor = () => {
                   {translations.educationExpertise || "Education Expertise"}
                 </h3>
                 <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                  <li>• Korean Government Scholarship Program (KGSP)</li>
-                  <li>• University admission strategies</li>
-                  <li>• Visa application guidance</li>
-                  <li>• Korean language preparation</li>
-                  <li>• Cultural adaptation support</li>
+                  <li>• {translations.koreanGovernmentScholarshipProgram || "Korean Government Scholarship Program (KGSP)"}</li>
+                  <li>• {translations.universityAdmissionStrategies || "University admission strategies"}</li>
+                  <li>• {translations.visaApplicationGuidance || "Visa application guidance"}</li>
+                  <li>• {translations.koreanLanguagePreparation || "Korean language preparation"}</li>
+                  <li>• {translations.culturalAdaptationSupport || "Cultural adaptation support"}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -87,11 +87,11 @@ const AboutAdvisor = () => {
                   {translations.fbExpertise || "F&B Expertise"}
                 </h3>
                 <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                  <li>• Market analysis & entry strategies</li>
-                  <li>• Product development & innovation</li>
-                  <li>• Regulatory compliance</li>
-                  <li>• Supply chain optimization</li>
-                  <li>• Business planning & funding</li>
+                  <li>• {translations.marketAnalysisEntryStrategies || "Market analysis & entry strategies"}</li>
+                  <li>• {translations.productDevelopmentInnovation || "Product development & innovation"}</li>
+                  <li>• {translations.regulatoryCompliance || "Regulatory compliance"}</li>
+                  <li>• {translations.supplyChainOptimization || "Supply chain optimization"}</li>
+                  <li>• {translations.businessPlanningFunding || "Business planning & funding"}</li>
                 </ul>
               </CardContent>
             </Card>

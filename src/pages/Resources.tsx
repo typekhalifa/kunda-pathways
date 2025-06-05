@@ -16,8 +16,8 @@ const Resources = () => {
       title: translations.blogPost1Title || 'Top 10 Korean Universities Offering Scholarships for African Students',
       excerpt: translations.blogPost1Excerpt || 'Discover the best opportunities for funded education in South Korea...',
       category: translations.education || 'Education',
-      readTime: '8 min read',
-      date: 'March 15, 2024',
+      readTime: translations.eightMinRead || '8 min read',
+      date: translations.march152024 || 'March 15, 2024',
       image: '/placeholder.svg'
     },
     {
@@ -25,8 +25,8 @@ const Resources = () => {
       title: translations.blogPost2Title || 'Breaking into the Korean F&B Market: A Complete Guide',
       excerpt: translations.blogPost2Excerpt || 'Everything you need to know about food business regulations in Korea...',
       category: translations.business || 'Business',
-      readTime: '12 min read',
-      date: 'March 10, 2024',
+      readTime: translations.twelveMinRead || '12 min read',
+      date: translations.march102024 || 'March 10, 2024',
       image: '/placeholder.svg'
     },
     {
@@ -34,35 +34,35 @@ const Resources = () => {
       title: translations.blogPost3Title || 'KGSP 2024: Application Tips and Deadlines',
       excerpt: translations.blogPost3Excerpt || 'Get insider tips for the Korean Government Scholarship Program...',
       category: translations.scholarships || 'Scholarships',
-      readTime: '6 min read',
-      date: 'March 5, 2024',
+      readTime: translations.sixMinRead || '6 min read',
+      date: translations.march52024 || 'March 5, 2024',
       image: '/placeholder.svg'
     },
     {
       id: 4,
-      title: 'Visa Application Process for Korean Universities',
-      excerpt: 'Step-by-step guide to successfully obtaining your student visa for Korea...',
+      title: translations.visaApplicationProcess || 'Visa Application Process for Korean Universities',
+      excerpt: translations.visaApplicationExcerpt || 'Step-by-step guide to successfully obtaining your student visa for Korea...',
       category: translations.education || 'Education',
-      readTime: '10 min read',
-      date: 'February 28, 2024',
+      readTime: translations.tenMinRead || '10 min read',
+      date: translations.february282024 || 'February 28, 2024',
       image: '/placeholder.svg'
     },
     {
       id: 5,
-      title: 'Food Safety Regulations in Asian Markets',
-      excerpt: 'Understanding compliance requirements for F&B businesses expanding into Asia...',
+      title: translations.foodSafetyRegulations || 'Food Safety Regulations in Asian Markets',
+      excerpt: translations.foodSafetyExcerpt || 'Understanding compliance requirements for F&B businesses expanding into Asia...',
       category: translations.business || 'Business',
-      readTime: '15 min read',
-      date: 'February 20, 2024',
+      readTime: translations.fifteenMinRead || '15 min read',
+      date: translations.february202024 || 'February 20, 2024',
       image: '/placeholder.svg'
     },
     {
       id: 6,
-      title: 'Cultural Adaptation Guide for International Students',
-      excerpt: 'Essential tips for adapting to Korean culture and academic environment...',
+      title: translations.culturalAdaptationGuide || 'Cultural Adaptation Guide for International Students',
+      excerpt: translations.culturalAdaptationExcerpt || 'Essential tips for adapting to Korean culture and academic environment...',
       category: translations.education || 'Education',
-      readTime: '7 min read',
-      date: 'February 15, 2024',
+      readTime: translations.sevenMinRead || '7 min read',
+      date: translations.february152024 || 'February 15, 2024',
       image: '/placeholder.svg'
     }
   ];
@@ -117,7 +117,7 @@ const Resources = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm">
                       <User size={14} className="mr-1" />
-                      John Doe
+                      {translations.johnDoe || "John Doe"}
                     </div>
                     <span className="text-slate-500 dark:text-slate-400 text-sm">{article.date}</span>
                   </div>

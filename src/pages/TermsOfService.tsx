@@ -1,3 +1,4 @@
+
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Scale, FileCheck, AlertTriangle, Users, Globe, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,10 +16,10 @@ const TermsOfService = () => {
           <div className="text-center mb-12">
             <Scale className="mx-auto mb-6 text-blue-600" size={64} />
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              {translations.termsOfServiceTitle}
+              {translations.termsOfServiceTitle || "Terms of Service"}
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-400">
-              Please read these terms carefully before using our services.
+              {translations.termsOfServiceSubtitle || "Please read these terms carefully before using our services."}
             </p>
           </div>
 
@@ -27,14 +28,12 @@ const TermsOfService = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-slate-800 dark:text-white">
                   <FileCheck className="text-blue-600" size={24} />
-                  Acceptance of Terms
+                  {translations.acceptanceOfTerms || "Acceptance of Terms"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-slate-600 dark:text-slate-400 space-y-4">
                 <p>
-                  By accessing and using Kunda Pathways' services, you accept and agree to be bound by 
-                  the terms and provision of this agreement. If you do not agree to abide by the above, 
-                  please do not use this service.
+                  {translations.acceptanceDescription || "By accessing and using Kunda Pathways' services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service."}
                 </p>
               </CardContent>
             </Card>
@@ -43,17 +42,17 @@ const TermsOfService = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-slate-800 dark:text-white">
                   <Globe className="text-blue-600" size={24} />
-                  Service Description
+                  {translations.serviceDescription || "Service Description"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-slate-600 dark:text-slate-400 space-y-4">
-                <p>Kunda Pathways provides:</p>
+                <p>{translations.kundaPathwaysProvides || "Kunda Pathways provides:"}</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Educational consulting and scholarship guidance</li>
-                  <li>University admission assistance</li>
-                  <li>Food & beverage business consulting</li>
-                  <li>Market analysis and business development support</li>
-                  <li>Visa application and relocation assistance</li>
+                  <li>{translations.educationalConsultingScholarshipGuidance || "Educational consulting and scholarship guidance"}</li>
+                  <li>{translations.universityAdmissionAssistance || "University admission assistance"}</li>
+                  <li>{translations.fbBusinessConsulting || "Food & beverage business consulting"}</li>
+                  <li>{translations.marketAnalysisBusinessDevelopment || "Market analysis and business development support"}</li>
+                  <li>{translations.visaApplicationRelocation || "Visa application and relocation assistance"}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -62,17 +61,17 @@ const TermsOfService = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-slate-800 dark:text-white">
                   <Users className="text-blue-600" size={24} />
-                  User Responsibilities
+                  {translations.userResponsibilities || "User Responsibilities"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-slate-600 dark:text-slate-400 space-y-4">
-                <p>As a user of our services, you agree to:</p>
+                <p>{translations.userResponsibilitiesDescription || "As a user of our services, you agree to:"}</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Provide accurate and complete information</li>
-                  <li>Maintain the confidentiality of your account</li>
-                  <li>Use our services only for lawful purposes</li>
-                  <li>Respect intellectual property rights</li>
-                  <li>Follow all applicable laws and regulations</li>
+                  <li>{translations.provideAccurateInfo || "Provide accurate and complete information"}</li>
+                  <li>{translations.maintainAccountConfidentiality || "Maintain the confidentiality of your account"}</li>
+                  <li>{translations.useServicesLawfully || "Use our services only for lawful purposes"}</li>
+                  <li>{translations.respectIntellectualProperty || "Respect intellectual property rights"}</li>
+                  <li>{translations.followApplicableLaws || "Follow all applicable laws and regulations"}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -81,21 +80,21 @@ const TermsOfService = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-slate-800 dark:text-white">
                   <AlertTriangle className="text-blue-600" size={24} />
-                  Limitations and Disclaimers
+                  {translations.limitationsDisclaimers || "Limitations and Disclaimers"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-slate-600 dark:text-slate-400 space-y-4">
                 <p>
-                  While we strive to provide accurate information and quality services, we cannot guarantee:
+                  {translations.limitationsDescription || "While we strive to provide accurate information and quality services, we cannot guarantee:"}
                 </p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Successful admission to educational institutions</li>
-                  <li>Approval of scholarship or visa applications</li>
-                  <li>Specific business outcomes or profits</li>
-                  <li>Availability of programs or opportunities</li>
+                  <li>{translations.successfulAdmission || "Successful admission to educational institutions"}</li>
+                  <li>{translations.approvalScholarshipVisa || "Approval of scholarship or visa applications"}</li>
+                  <li>{translations.specificBusinessOutcomes || "Specific business outcomes or profits"}</li>
+                  <li>{translations.availabilityPrograms || "Availability of programs or opportunities"}</li>
                 </ul>
                 <p className="font-semibold text-slate-800 dark:text-white">
-                  Our services are advisory in nature and success depends on various external factors.
+                  {translations.servicesAdvisoryNature || "Our services are advisory in nature and success depends on various external factors."}
                 </p>
               </CardContent>
             </Card>
@@ -104,16 +103,16 @@ const TermsOfService = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-slate-800 dark:text-white">
                   <Clock className="text-blue-600" size={24} />
-                  Payment and Refund Policy
+                  {translations.paymentRefundPolicy || "Payment and Refund Policy"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-slate-600 dark:text-slate-400 space-y-4">
-                <p>Our payment terms include:</p>
+                <p>{translations.paymentTermsInclude || "Our payment terms include:"}</p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Payment is required before service delivery</li>
-                  <li>Refunds are considered on a case-by-case basis</li>
-                  <li>Service fees are non-refundable once work has commenced</li>
-                  <li>Cancellations must be made within 48 hours of booking</li>
+                  <li>{translations.paymentRequiredBeforeService || "Payment is required before service delivery"}</li>
+                  <li>{translations.refundsCaseByCase || "Refunds are considered on a case-by-case basis"}</li>
+                  <li>{translations.serviceFeesNonRefundable || "Service fees are non-refundable once work has commenced"}</li>
+                  <li>{translations.cancellationsWithin48Hours || "Cancellations must be made within 48 hours of booking"}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -122,14 +121,12 @@ const TermsOfService = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-slate-800 dark:text-white">
                   <Scale className="text-blue-600" size={24} />
-                  Governing Law
+                  {translations.governingLaw || "Governing Law"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-slate-600 dark:text-slate-400 space-y-4">
                 <p>
-                  These terms shall be governed by and construed in accordance with the laws of 
-                  South Korea. Any disputes arising under these terms shall be subject to the 
-                  exclusive jurisdiction of the courts of Seoul, South Korea.
+                  {translations.governingLawDescription || "These terms shall be governed by and construed in accordance with the laws of South Korea. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts of Seoul, South Korea."}
                 </p>
               </CardContent>
             </Card>
@@ -137,7 +134,7 @@ const TermsOfService = () => {
 
           <div className="mt-12 text-center">
             <p className="text-slate-600 dark:text-slate-400">
-              Last updated: March 2024 | Questions? Contact us at legal@kundapathways.com
+              {translations.lastUpdatedMarch2024 || "Last updated: March 2024"} | {translations.questionsContactLegal || "Questions? Contact us at legal@kundapathways.com"}
             </p>
           </div>
         </div>
