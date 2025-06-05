@@ -30,15 +30,29 @@ const Testimonials = () => {
     },
   ];
 
+  // Helper function to safely split text
+  const renderStyledTitle = (text: string) => {
+    if (!text) return '';
+    
+    const words = text.split(' ');
+    if (words.length <= 1) return text;
+    
+    return (
+      <>
+        {words[0]} <span className="text-blue-600">{words.slice(1).join(' ')}</span>
+      </>
+    );
+  };
+
   return (
     <section className="py-20 px-4 bg-white dark:bg-slate-900 transition-colors duration-300">
       <div className="container mx-auto">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            {translations.successStories.split(' ')[0]} <span className="text-blue-600">{translations.successStories.split(' ').slice(1).join(' ')}</span>
+            {renderStyledTitle(translations.successStories || 'Success Stories')}
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-            {translations.testimonialSubtitle}
+            {translations.testimonialSubtitle || 'Hear from our satisfied clients who achieved their dreams'}
           </p>
         </div>
 

@@ -57,6 +57,7 @@ interface Translations {
   getExpertConsultation: string;
   getFullConsultation: string;
   viewAllPackagesPricing: string;
+  marketAnalysisDescription: string;
   
   // Study Programs
   studyProgramsTitle: string;
@@ -157,6 +158,8 @@ interface Translations {
   
   // Testimonials
   testimonialsTitle: string;
+  successStories: string;
+  testimonialSubtitle: string;
   
   // Blog
   blogTitle: string;
@@ -200,6 +203,103 @@ interface Translations {
   privacyPolicy: string;
   termsOfService: string;
   sitemap: string;
+  privacyPolicyTitle: string;
+  privacyPolicySubtitle: string;
+  informationWeCollect: string;
+  privacyCollectDescription: string;
+  personalIdentificationInfo: string;
+  educationalBackground: string;
+  professionalExperience: string;
+  communicationPreferences: string;
+  howWeUseYourInfo: string;
+  privacyUseDescription: string;
+  providePersonalizedServices: string;
+  processScholarshipApplications: string;
+  sendRelevantUpdates: string;
+  improveServices: string;
+  complyLegalObligations: string;
+  dataSecurity: string;
+  dataSecurityDescription: string;
+  encryptedDataTransmission: string;
+  regularSecurityAudits: string;
+  accessControls: string;
+  employeeTraining: string;
+  informationSharing: string;
+  privacySharingDescription: string;
+  educationalInstitutions: string;
+  governmentAgencies: string;
+  trustedServiceProviders: string;
+  legalAuthorities: string;
+  neverSellPersonalInfo: string;
+  yourRights: string;
+  rightsDescription: string;
+  accessYourData: string;
+  correctInaccurateInfo: string;
+  deleteYourData: string;
+  optOutCommunications: string;
+  contactUs: string;
+  updatesToPolicy: string;
+  updatesDescription: string;
+  
+  // Terms of Service
+  termsOfServiceTitle: string;
+  termsOfServiceSubtitle: string;
+  acceptanceOfTerms: string;
+  acceptanceDescription: string;
+  servicesProvided: string;
+  servicesDescription: string;
+  userResponsibilities: string;
+  responsibilitiesDescription: string;
+  intellectualProperty: string;
+  intellectualPropertyDescription: string;
+  limitationOfLiability: string;
+  liabilityDescription: string;
+  terminationOfServices: string;
+  terminationDescription: string;
+  governingLaw: string;
+  governingLawDescription: string;
+  changesTerms: string;
+  changesDescription: string;
+  
+  // About Advisor
+  professionalSummary: string;
+  educationExpertise: string;
+  koreanGovernmentScholarshipProgram: string;
+  universityAdmissionStrategies: string;
+  visaApplicationGuidance: string;
+  koreanLanguagePreparation: string;
+  culturalAdaptationSupport: string;
+  fbExpertise: string;
+  marketAnalysisEntryStrategies: string;
+  productDevelopmentInnovation: string;
+  supplyChainOptimization: string;
+  businessPlanningFunding: string;
+  keyAchievements: string;
+  scholarshipSuccessRate: string;
+  getInTouch: string;
+  mondayToFriday: string;
+  saturdaySunday: string;
+  koreanTime: string;
+  myMission: string;
+  missionStatement: string;
+  
+  // Consultation Booking
+  hotelBooking: string;
+  phoneConsultation: string;
+  reviewConsultation: string;
+  consultationDetails: string;
+  fullName: string;
+  selectedService: string;
+  totalPrice: string;
+  paymentMethods: string;
+  payWithCard: string;
+  payWithMobile: string;
+  payWithBank: string;
+  backToEdit: string;
+  phone: string;
+  preferredDate: string;
+  preferredTime: string;
+  reviewConsultationRequest: string;
   
   // WhatsApp button
   scheduleFreeFifteenMinuteConsultation: string;
@@ -263,6 +363,7 @@ const translations = {
     getExpertConsultation: "Get Expert Consultation",
     getFullConsultation: "Get Full Consultation",
     viewAllPackagesPricing: "View All Packages & Pricing and Get 25% Off",
+    marketAnalysisDescription: "In-depth market analysis and competitive intelligence",
     
     // Study Programs
     studyProgramsTitle: "Study Programs & Services",
@@ -363,6 +464,8 @@ const translations = {
     
     // Testimonials
     testimonialsTitle: "Success Stories",
+    successStories: "Success Stories",
+    testimonialSubtitle: "Hear from our satisfied clients who achieved their dreams",
     
     // Blog
     blogTitle: "Latest Resources",
@@ -406,6 +509,103 @@ const translations = {
     privacyPolicy: "Privacy Policy",
     termsOfService: "Terms of Service",
     sitemap: "Sitemap",
+    privacyPolicyTitle: "Privacy Policy",
+    privacyPolicySubtitle: "How we collect, use, and protect your information",
+    informationWeCollect: "Information We Collect",
+    privacyCollectDescription: "We collect information to provide better services to our users:",
+    personalIdentificationInfo: "Personal identification information (name, email, phone)",
+    educationalBackground: "Educational background and academic goals",
+    professionalExperience: "Professional experience and career objectives",
+    communicationPreferences: "Communication preferences and language choices",
+    howWeUseYourInfo: "How We Use Your Information",
+    privacyUseDescription: "We use the information we collect for the following purposes:",
+    providePersonalizedServices: "Provide personalized educational and consulting services",
+    processScholarshipApplications: "Process scholarship and university applications",
+    sendRelevantUpdates: "Send relevant updates and opportunities",
+    improveServices: "Improve our services and user experience",
+    complyLegalObligations: "Comply with legal obligations and requirements",
+    dataSecurity: "Data Security",
+    dataSecurityDescription: "We implement robust security measures to protect your information:",
+    encryptedDataTransmission: "Encrypted data transmission and storage",
+    regularSecurityAudits: "Regular security audits and assessments",
+    accessControls: "Strict access controls and authentication",
+    employeeTraining: "Employee training on data protection practices",
+    informationSharing: "Information Sharing",
+    privacySharingDescription: "We may share your information with trusted partners only when necessary:",
+    educationalInstitutions: "Educational institutions for application processing",
+    governmentAgencies: "Government agencies for visa and permit applications",
+    trustedServiceProviders: "Trusted service providers who assist in our operations",
+    legalAuthorities: "Legal authorities when required by law",
+    neverSellPersonalInfo: "We never sell your personal information to third parties.",
+    yourRights: "Your Rights",
+    rightsDescription: "You have the right to:",
+    accessYourData: "Access your personal data",
+    correctInaccurateInfo: "Correct inaccurate information",
+    deleteYourData: "Delete your data",
+    optOutCommunications: "Opt out of communications",
+    contactUs: "Contact Us",
+    updatesToPolicy: "Updates to This Policy",
+    updatesDescription: "We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.",
+    
+    // Terms of Service
+    termsOfServiceTitle: "Terms of Service",
+    termsOfServiceSubtitle: "Terms and conditions for using our services",
+    acceptanceOfTerms: "Acceptance of Terms",
+    acceptanceDescription: "By using our services, you agree to these terms and conditions.",
+    servicesProvided: "Services Provided",
+    servicesDescription: "We provide educational consulting and F&B business consulting services.",
+    userResponsibilities: "User Responsibilities",
+    responsibilitiesDescription: "Users are responsible for providing accurate information and following our guidelines.",
+    intellectualProperty: "Intellectual Property",
+    intellectualPropertyDescription: "All content and materials are protected by intellectual property laws.",
+    limitationOfLiability: "Limitation of Liability",
+    liabilityDescription: "Our liability is limited to the extent permitted by law.",
+    terminationOfServices: "Termination of Services",
+    terminationDescription: "We reserve the right to terminate services for violation of terms.",
+    governingLaw: "Governing Law",
+    governingLawDescription: "These terms are governed by the laws of South Korea.",
+    changesTerms: "Changes to Terms",
+    changesDescription: "We may update these terms from time to time.",
+    
+    // About Advisor
+    professionalSummary: "Professional Summary",
+    educationExpertise: "Education Expertise",
+    koreanGovernmentScholarshipProgram: "Korean Government Scholarship Program guidance",
+    universityAdmissionStrategies: "University admission strategies",
+    visaApplicationGuidance: "Visa application guidance",
+    koreanLanguagePreparation: "Korean language preparation",
+    culturalAdaptationSupport: "Cultural adaptation support",
+    fbExpertise: "F&B Expertise",
+    marketAnalysisEntryStrategies: "Market analysis and entry strategies",
+    productDevelopmentInnovation: "Product development and innovation",
+    supplyChainOptimization: "Supply chain optimization",
+    businessPlanningFunding: "Business planning and funding",
+    keyAchievements: "Key Achievements",
+    scholarshipSuccessRate: "95% scholarship success rate",
+    getInTouch: "Get in Touch",
+    mondayToFriday: "Monday to Friday",
+    saturdaySunday: "Saturday & Sunday",
+    koreanTime: "Korean Time (KST)",
+    myMission: "My Mission",
+    missionStatement: "To bridge the gap between African talent and Korean opportunities, creating pathways for educational and business success.",
+    
+    // Consultation Booking
+    hotelBooking: "In-person consultation",
+    phoneConsultation: "Phone consultation",
+    reviewConsultation: "Review Consultation",
+    consultationDetails: "Consultation Details",
+    fullName: "Full Name",
+    selectedService: "Selected Service",
+    totalPrice: "Total Price",
+    paymentMethods: "Payment Methods",
+    payWithCard: "Pay with Card",
+    payWithMobile: "Pay with Mobile Money",
+    payWithBank: "Pay with Bank Transfer",
+    backToEdit: "Back to Edit",
+    phone: "Phone",
+    preferredDate: "Preferred Date",
+    preferredTime: "Preferred Time",
+    reviewConsultationRequest: "Review Consultation Request",
     
     // WhatsApp button
     scheduleFreeFifteenMinuteConsultation: "Schedule a free 15-minute consultation"
@@ -468,6 +668,7 @@ const translations = {
     getExpertConsultation: "전문가 상담 받기",
     getFullConsultation: "전체 상담 받기",
     viewAllPackagesPricing: "모든 패키지 및 가격 확인 및 25% 할인 받기",
+    marketAnalysisDescription: "심층 시장 분석 및 경쟁 정보",
     
     // Study Programs
     studyProgramsTitle: "유학 프로그램 및 서비스",
@@ -502,7 +703,7 @@ const translations = {
     businessStrategyDesc: "전략적 사업 계획 및 시장 진입",
     businessConsultation: "비즈니스 조언",
     businessDescription: "전략적 사업 계획 및 시장 진입",
-    marketAnalysis: "F&B 시장 분석",
+    marketAnalysis: "시장 분석",
     marketAnalysisDesc: "심층 시장 분석 및 경쟁 정보",
     fbMarketAnalysis: "F&B 시장 분석",
     productDevelopment: "제품 개발",
@@ -518,12 +719,12 @@ const translations = {
     strategyDevelopment: "전략 개발",
     marketSizing: "시장 규모 측정",
     competitorAnalysis: "경쟁사 분석",
-    trendIdentification: "Trend identification",
+    trendIdentification: "트렌드 식별",
     recipeDevelopment: "레시피 개발",
     productTesting: "제품 테스트",
     safetyStandards: "안전 기준",
     certificationSupport: "인증 지원",
-    complianceAudits: "Compliance audits",
+    complianceAudits: "규정 준수 감사",
     
     // Common
     startYourJourney: "여행을 시작하세요",
@@ -568,8 +769,10 @@ const translations = {
     
     // Testimonials
     testimonialsTitle: "성공 사례",
+    successStories: "성공 사례",
+    testimonialSubtitle: "꿈을 실현한 만족한 고객들의 이야기를 들어보세요",
     
-    // Blog
+    // Blog and other translations...
     blogTitle: "최신 자료",
     blogDescription: "최신 인사이트로 업데이트하세요",
     readMore: "더 읽기",
@@ -611,13 +814,110 @@ const translations = {
     privacyPolicy: "개인정보 보호정책",
     termsOfService: "서비스 약관",
     sitemap: "사이트맵",
+    privacyPolicyTitle: "개인정보 보호정책",
+    privacyPolicySubtitle: "우리가 귀하의 정보를 수집, 사용 및 보호하는 방법",
+    informationWeCollect: "수집하는 정보",
+    privacyCollectDescription: "더 나은 서비스를 제공하기 위해 정보를 수집합니다:",
+    personalIdentificationInfo: "개인 식별 정보 (이름, 이메일, 전화번호)",
+    educationalBackground: "교육 배경 및 학업 목표",
+    professionalExperience: "전문 경험 및 경력 목표",
+    communicationPreferences: "의사소통 선호도 및 언어 선택",
+    howWeUseYourInfo: "정보 사용 방법",
+    privacyUseDescription: "수집한 정보를 다음 목적으로 사용합니다:",
+    providePersonalizedServices: "개인화된 교육 및 컨설팅 서비스 제공",
+    processScholarshipApplications: "장학금 및 대학 지원서 처리",
+    sendRelevantUpdates: "관련 업데이트 및 기회 전송",
+    improveServices: "서비스 및 사용자 경험 개선",
+    complyLegalObligations: "법적 의무 및 요구사항 준수",
+    dataSecurity: "데이터 보안",
+    dataSecurityDescription: "귀하의 정보를 보호하기 위해 강력한 보안 조치를 구현합니다:",
+    encryptedDataTransmission: "암호화된 데이터 전송 및 저장",
+    regularSecurityAudits: "정기적인 보안 감사 및 평가",
+    accessControls: "엄격한 액세스 제어 및 인증",
+    employeeTraining: "데이터 보호 관행에 대한 직원 교육",
+    informationSharing: "정보 공유",
+    privacySharingDescription: "필요한 경우에만 신뢰할 수 있는 파트너와 정보를 공유할 수 있습니다:",
+    educationalInstitutions: "지원서 처리를 위한 교육 기관",
+    governmentAgencies: "비자 및 허가 신청을 위한 정부 기관",
+    trustedServiceProviders: "운영을 지원하는 신뢰할 수 있는 서비스 제공업체",
+    legalAuthorities: "법률에 의해 요구되는 경우 법적 당국",
+    neverSellPersonalInfo: "귀하의 개인 정보를 제3자에게 판매하지 않습니다.",
+    yourRights: "귀하의 권리",
+    rightsDescription: "다음과 같은 권리가 있습니다:",
+    accessYourData: "개인 데이터 액세스",
+    correctInaccurateInfo: "부정확한 정보 수정",
+    deleteYourData: "데이터 삭제",
+    optOutCommunications: "커뮤니케이션 거부",
+    contactUs: "문의하기",
+    updatesToPolicy: "정책 업데이트",
+    updatesDescription: "이 개인정보 보호정책을 수시로 업데이트할 수 있습니다. 이 페이지에 새 정책을 게시하여 변경 사항을 알려드립니다.",
+    
+    // Terms of Service
+    termsOfServiceTitle: "서비스 약관",
+    termsOfServiceSubtitle: "우리 서비스 사용에 대한 이용약관",
+    acceptanceOfTerms: "약관 동의",
+    acceptanceDescription: "우리 서비스를 사용함으로써 이 이용약관에 동의하게 됩니다.",
+    servicesProvided: "제공되는 서비스",
+    servicesDescription: "교육 컨설팅 및 F&B 비즈니스 컨설팅 서비스를 제공합니다.",
+    userResponsibilities: "사용자 책임",
+    responsibilitiesDescription: "사용자는 정확한 정보를 제공하고 우리의 가이드라인을 따를 책임이 있습니다.",
+    intellectualProperty: "지적 재산권",
+    intellectualPropertyDescription: "모든 콘텐츠와 자료는 지적 재산권법으로 보호됩니다.",
+    limitationOfLiability: "책임 제한",
+    liabilityDescription: "우리의 책임은 법이 허용하는 범위로 제한됩니다.",
+    terminationOfServices: "서비스 종료",
+    terminationDescription: "약관 위반 시 서비스를 종료할 권리를 보유합니다.",
+    governingLaw: "준거법",
+    governingLawDescription: "이 약관은 대한민국 법률에 따라 규율됩니다.",
+    changesTerms: "약관 변경",
+    changesDescription: "수시로 이 약관을 업데이트할 수 있습니다.",
+    
+    // About Advisor
+    professionalSummary: "전문가 요약",
+    educationExpertise: "교육 전문성",
+    koreanGovernmentScholarshipProgram: "한국 정부 장학금 프로그램 안내",
+    universityAdmissionStrategies: "대학 입학 전략",
+    visaApplicationGuidance: "비자 신청 안내",
+    koreanLanguagePreparation: "한국어 준비",
+    culturalAdaptationSupport: "문화적 적응 지원",
+    fbExpertise: "F&B 전문성",
+    marketAnalysisEntryStrategies: "시장 분석 및 진입 전략",
+    productDevelopmentInnovation: "제품 개발 및 혁신",
+    supplyChainOptimization: "공급망 최적화",
+    businessPlanningFunding: "사업 계획 및 자금 조달",
+    keyAchievements: "주요 성과",
+    scholarshipSuccessRate: "95% 장학금 성공률",
+    getInTouch: "연락하기",
+    mondayToFriday: "월요일~금요일",
+    saturdaySunday: "토요일 및 일요일",
+    koreanTime: "한국 시간 (KST)",
+    myMission: "나의 사명",
+    missionStatement: "아프리카의 재능과 한국의 기회 사이의 격차를 해소하여 교육 및 비즈니스 성공을 위한 경로를 만드는 것입니다.",
+    
+    // Consultation Booking
+    hotelBooking: "대면 상담",
+    phoneConsultation: "전화 상담",
+    reviewConsultation: "상담 검토",
+    consultationDetails: "상담 세부사항",
+    fullName: "성명",
+    selectedService: "선택된 서비스",
+    totalPrice: "총 가격",
+    paymentMethods: "결제 방법",
+    payWithCard: "카드로 결제",
+    payWithMobile: "모바일 머니로 결제",
+    payWithBank: "은행 송금으로 결제",
+    backToEdit: "편집으로 돌아가기",
+    phone: "전화번호",
+    preferredDate: "선호 날짜",
+    preferredTime: "선호 시간",
+    reviewConsultationRequest: "상담 요청 검토",
     
     // WhatsApp button
     scheduleFreeFifteenMinuteConsultation: "무료 15분 상담 예약하기"
   },
   
   FR: {
-    // Navigation
+    // ... keep existing code (French translations with all new keys added)
     home: "Accueil",
     about: "À propos",
     services: "Services", 
@@ -662,10 +962,10 @@ const translations = {
     universityDescription: "Support de bout en bout pour les admissions universitaires",
     visaAssistance: "Assistance Visa",
     visaAssistanceDesc: "Aide professionnelle pour les demandes de visa et la documentation",
-    visaApplication: "Visa Application",
+    visaApplication: "Demande de Visa",
     visaDescription: "Assistance complète pour les demandes de visa",
     koreanLanguageTraining: "Formation en coréen",
-    languageDescription: "Formation en coréen",
+    languageDescription: "Formation professionnelle en langue coréenne",
     scholarshipDescription: "Aide complète pour trouver et postuler aux bourses",
     ourServices: "Nos Services",
     letsStartYourJourney: "Commencez votre voyage",
@@ -673,6 +973,7 @@ const translations = {
     getExpertConsultation: "Obtenir une consultation experte",
     getFullConsultation: "Obtenir une consultation complète",
     viewAllPackagesPricing: "Voir tous les packages et tarifs et bénéficier d'une réduction de 25%",
+    marketAnalysisDescription: "Analyse approfondie du marché et intelligence concurrentielle",
     
     // Study Programs
     studyProgramsTitle: "Programmes d'études et services",
@@ -723,7 +1024,7 @@ const translations = {
     strategyDevelopment: "Développement de stratégie",
     marketSizing: "Dimensionnement du marché",
     competitorAnalysis: "Analyse des concurrents",
-    trendIdentification: "Trend identification",
+    trendIdentification: "Identification des tendances",
     recipeDevelopment: "Développement de recettes",
     productTesting: "Test de produits",
     safetyStandards: "Normes de sécurité",
@@ -773,6 +1074,8 @@ const translations = {
     
     // Testimonials
     testimonialsTitle: "Histoires de succès",
+    successStories: "Histoires de succès",
+    testimonialSubtitle: "Écoutez nos clients satisfaits qui ont réalisé leurs rêves",
     
     // Blog
     blogTitle: "Dernières ressources",
@@ -788,7 +1091,7 @@ const translations = {
     blogPost3Title: "Conseils pour réussir le test TOPIK",
     blogPost3Excerpt: "Stratégies expertes pour réussir votre test de langue coréenne.",
     education: "Éducation",
-    business: "Buisson",
+    business: "Business",
     scholarships: "Bourses",
     
     // Newsletter
@@ -804,7 +1107,7 @@ const translations = {
     footerDescription: "Votre partenaire de confiance pour l'éducation coréenne et le succès F&B",
     resourcesBlog: "Ressources & Blog",
     visitsHelp: "Visa & Aide",
-    legal: "Loi",
+    legal: "Légal",
     contactInfo: "Informations de contact",
     allRightsReserved: "Tous droits réservés.",
     
@@ -816,13 +1119,110 @@ const translations = {
     privacyPolicy: "Politique de confidentialité",
     termsOfService: "Conditions de service",
     sitemap: "Plan du site",
+    privacyPolicyTitle: "Politique de confidentialité",
+    privacyPolicySubtitle: "Comment nous collectons, utilisons et protégeons vos informations",
+    informationWeCollect: "Informations que nous collectons",
+    privacyCollectDescription: "Nous collectons des informations pour fournir de meilleurs services à nos utilisateurs:",
+    personalIdentificationInfo: "Informations d'identification personnelle (nom, email, téléphone)",
+    educationalBackground: "Contexte éducatif et objectifs académiques",
+    professionalExperience: "Expérience professionnelle et objectifs de carrière",
+    communicationPreferences: "Préférences de communication et choix de langue",
+    howWeUseYourInfo: "Comment nous utilisons vos informations",
+    privacyUseDescription: "Nous utilisons les informations que nous collectons aux fins suivantes:",
+    providePersonalizedServices: "Fournir des services éducatifs et de conseil personnalisés",
+    processScholarshipApplications: "Traiter les demandes de bourses et d'universités",
+    sendRelevantUpdates: "Envoyer des mises à jour et opportunités pertinentes",
+    improveServices: "Améliorer nos services et l'expérience utilisateur",
+    complyLegalObligations: "Respecter les obligations et exigences légales",
+    dataSecurity: "Sécurité des données",
+    dataSecurityDescription: "Nous mettons en place des mesures de sécurité robustes pour protéger vos informations:",
+    encryptedDataTransmission: "Transmission et stockage de données cryptées",
+    regularSecurityAudits: "Audits et évaluations de sécurité réguliers",
+    accessControls: "Contrôles d'accès stricts et authentification",
+    employeeTraining: "Formation des employés sur les pratiques de protection des données",
+    informationSharing: "Partage d'informations",
+    privacySharingDescription: "Nous pouvons partager vos informations avec des partenaires de confiance uniquement lorsque nécessaire:",
+    educationalInstitutions: "Institutions éducatives pour le traitement des candidatures",
+    governmentAgencies: "Agences gouvernementales pour les demandes de visa et de permis",
+    trustedServiceProviders: "Prestataires de services de confiance qui nous aident dans nos opérations",
+    legalAuthorities: "Autorités légales lorsque requis par la loi",
+    neverSellPersonalInfo: "Nous ne vendons jamais vos informations personnelles à des tiers.",
+    yourRights: "Vos droits",
+    rightsDescription: "Vous avez le droit de:",
+    accessYourData: "Accéder à vos données personnelles",
+    correctInaccurateInfo: "Corriger les informations inexactes",
+    deleteYourData: "Supprimer vos données",
+    optOutCommunications: "Vous désabonner des communications",
+    contactUs: "Nous contacter",
+    updatesToPolicy: "Mises à jour de cette politique",
+    updatesDescription: "Nous pouvons mettre à jour cette politique de confidentialité de temps en temps. Nous vous informerons de tout changement en publiant la nouvelle politique sur cette page.",
+    
+    // Terms of Service
+    termsOfServiceTitle: "Conditions de service",
+    termsOfServiceSubtitle: "Conditions générales d'utilisation de nos services",
+    acceptanceOfTerms: "Acceptation des conditions",
+    acceptanceDescription: "En utilisant nos services, vous acceptez ces conditions générales.",
+    servicesProvided: "Services fournis",
+    servicesDescription: "Nous fournissons des services de conseil éducatif et de conseil en entreprise F&B.",
+    userResponsibilities: "Responsabilités de l'utilisateur",
+    responsibilitiesDescription: "Les utilisateurs sont responsables de fournir des informations exactes et de suivre nos directives.",
+    intellectualProperty: "Propriété intellectuelle",
+    intellectualPropertyDescription: "Tout le contenu et les matériaux sont protégés par les lois sur la propriété intellectuelle.",
+    limitationOfLiability: "Limitation de responsabilité",
+    liabilityDescription: "Notre responsabilité est limitée dans la mesure permise par la loi.",
+    terminationOfServices: "Résiliation des services",
+    terminationDescription: "Nous nous réservons le droit de résilier les services pour violation des conditions.",
+    governingLaw: "Loi applicable",
+    governingLawDescription: "Ces conditions sont régies par les lois de la Corée du Sud.",
+    changesTerms: "Modifications des conditions",
+    changesDescription: "Nous pouvons mettre à jour ces conditions de temps en temps.",
+    
+    // About Advisor
+    professionalSummary: "Résumé professionnel",
+    educationExpertise: "Expertise en éducation",
+    koreanGovernmentScholarshipProgram: "Guidance du programme de bourses du gouvernement coréen",
+    universityAdmissionStrategies: "Stratégies d'admission universitaire",
+    visaApplicationGuidance: "Guidance pour les demandes de visa",
+    koreanLanguagePreparation: "Préparation en langue coréenne",
+    culturalAdaptationSupport: "Support d'adaptation culturelle",
+    fbExpertise: "Expertise F&B",
+    marketAnalysisEntryStrategies: "Analyse de marché et stratégies d'entrée",
+    productDevelopmentInnovation: "Développement de produits et innovation",
+    supplyChainOptimization: "Optimisation de la chaîne d'approvisionnement",
+    businessPlanningFunding: "Planification d'entreprise et financement",
+    keyAchievements: "Réalisations clés",
+    scholarshipSuccessRate: "95% de taux de réussite des bourses",
+    getInTouch: "Entrer en contact",
+    mondayToFriday: "Lundi à vendredi",
+    saturdaySunday: "Samedi et dimanche",
+    koreanTime: "Heure coréenne (KST)",
+    myMission: "Ma mission",
+    missionStatement: "Combler le fossé entre le talent africain et les opportunités coréennes, créant des voies vers le succès éducatif et commercial.",
+    
+    // Consultation Booking
+    hotelBooking: "Consultation en personne",
+    phoneConsultation: "Consultation téléphonique",
+    reviewConsultation: "Révision de la consultation",
+    consultationDetails: "Détails de la consultation",
+    fullName: "Nom complet",
+    selectedService: "Service sélectionné",
+    totalPrice: "Prix total",
+    paymentMethods: "Méthodes de paiement",
+    payWithCard: "Payer par carte",
+    payWithMobile: "Payer par mobile money",
+    payWithBank: "Payer par virement bancaire",
+    backToEdit: "Retour à l'édition",
+    phone: "Téléphone",
+    preferredDate: "Date préférée",
+    preferredTime: "Heure préférée",
+    reviewConsultationRequest: "Révision de la demande de consultation",
     
     // WhatsApp button
     scheduleFreeFifteenMinuteConsultation: "Programmer une consultation gratuite de 15 minutes"
   },
   
   RW: {
-    // Navigation
+    // ... keep existing code (Kinyarwanda translations with all new keys added)
     home: "Ahabanza",
     about: "Ibibazo",
     services: "Serivisi",
@@ -838,46 +1238,47 @@ const translations = {
     exploreStudyPrograms: "Kugera kubikira gahunda z'amashuri na serivisi",
     
     // About section
-    meetYourGlobalAdvisor: "Meet Your Global Advisor",
+    meetYourGlobalAdvisor: "Huza n'umujyanama wawe w'isi yose",
     advisorName: "Dr. Sarah Johnson",
-    advisorTitle: "International Education & F&B Consultant",
-    advisorDescription: "With over 10 years of experience connecting African students to Korean universities and helping food businesses expand globally.",
-    readMoreAboutMe: "Read More About Me",
-    educationExpert: "Education Expert",
-    educationExpertDesc: "Specialized guidance for Korean university admissions",
-    fbConsultant: "F&B Consultant",
-    fbConsultantDesc: "Expert advice for food & beverage businesses",
-    studentsHelped: "500+ Students Helped",
-    studentsHelpedDesc: "Successfully guided students to Korean universities",
-    countriesReached: "15+ Countries Reached",
-    countriesReachedDesc: "Students from across Africa benefited",
-    studentsAssisted: "500+ Students Assisted",
-    foodScienceExpert: "Food Science Expert",
+    advisorTitle: "Umujyanama w'uburezi mpuzamahanga na F&B",
+    advisorDescription: "Hamwe n'uburambe bw'imyaka irenga 10 bwo guhuza abanyeshuri b'Abanyafurika n'amashuri makuru ya Koreya no gufasha ubucuruzi bw'ibiryo gukura ku isi.",
+    readMoreAboutMe: "Soma byinshi kuri njye",
+    educationExpert: "Impuguke mu burezi",
+    educationExpertDesc: "Ubuyobozi bwihariye bwo kwinjira mu mashuri makuru ya Koreya",
+    fbConsultant: "Umujyanama wa F&B",
+    fbConsultantDesc: "Inama z'impuguke ku bucuruzi bw'ibiryo n'ibinyobwa",
+    studentsHelped: "500+ Abanyeshuri bafashijwe",
+    studentsHelpedDesc: "Bayobowe neza mu mashuri makuru ya Koreya",
+    countriesReached: "15+ Ibihugu byagezweho",
+    countriesReachedDesc: "Abanyeshuri bo muri Afurika bongeye kubona inyungu",
+    studentsAssisted: "500+ Abanyeshuri bafashijwe",
+    foodScienceExpert: "Impuguke mu bya siyanse y'ibiryo",
     
     // Services
     servicesTitle: "Serivisi zacu",
     servicesSubtitle: "Ibisubizo byuzuye ku ntego zawe z'uburezi n'ubucuruzi",
-    servicesDescription: "Solutions complètes pour vos objectifs éducatifs et commerciaux",
+    servicesDescription: "Ubufasha buzuye ku ntego zawe z'uburezi n'ubucuruzi",
     studyInKorea: "Kwiga muri Koreya",
-    studyInKoreaDesc: "Guidance complète pour les bourses et admissions universitaires",
+    studyInKoreaDesc: "Ubuyobozi buzuye bw'impano no kwinjira mu mashuri makuru",
     fbConsulting: "Inama za F&B",
     fbConsultingDesc: "Inama z'impuguke ku bucuruzi bw'ibiryo n'ibinyobwa",
     universityAdmissions: "Kwinjira muri kaminuza",
     universityAdmissionsDesc: "Ubufasha bwuzuye ku busaba bwa kaminuza",
-    universityDescription: "Ubufasha bwuzuye ku busaba bwa kaminuza",
+    universityDescription: "Ubufasha bwuzuye bwo kwinjira muri kaminuza",
     visaAssistance: "Ubufasha bwa viza",
     visaAssistanceDesc: "Ubufasha bw'umwuga ku busaba bwa viza n'inyandiko",
-    visaApplication: "Visa Application",
-    visaDescription: "Assistance complète pour les demandes de visa",
-    koreanLanguageTraining: "Korean Language Training",
-    languageDescription: "Formation en coréen",
-    scholarshipDescription: "Aide complète pour trouver et postuler aux bourses",
-    ourServices: "Our Services",
-    letsStartYourJourney: "Let's Start Your Journey",
-    journeyDescription: "Prêt à prendre le prochain pas? Obtenez une assistance personnalisée pour vos objectifs.",
-    getExpertConsultation: "Obtenir une consultation experte",
-    getFullConsultation: "Obtenir une consultation complète",
-    viewAllPackagesPricing: "Voir tous les packages et tarifs et bénéficier d'une réduction de 25%",
+    visaApplication: "Gusaba viza",
+    visaDescription: "Ubufasha buzuye bwo gusaba viza",
+    koreanLanguageTraining: "Imyitozo y'ururimi rwa Koreya",
+    languageDescription: "Gutegura ururimi rwa Koreya mu buryo bw'umwuga",
+    scholarshipDescription: "Ubuyobozi buzuye bwo gushaka no gusaba impano",
+    ourServices: "Serivisi zacu",
+    letsStartYourJourney: "Reka dutangire urugendo rwawe",
+    journeyDescription: "Witeguye gufata intambwe ikurikira? Bonera ubuyobozi bwigenga ku ntego zawe.",
+    getExpertConsultation: "Bonera inama z'impuguke",
+    getFullConsultation: "Bonera inama zuzuye",
+    viewAllPackagesPricing: "Reba paki zose n'ibiciro hanyuma ubonere igabanura rya 25%",
+    marketAnalysisDescription: "Isesengura ry'imbere ry'isoko n'ubunyangamugayo bw'abanywanyi",
     
     // Study Programs
     studyProgramsTitle: "Gahunda z'amashuri na serivisi",
@@ -885,7 +1286,7 @@ const translations = {
     scholarshipGuidance: "Ubuyobozi bw'impano",
     scholarshipGuidanceDesc: "Ubufasha bw'impuguke mu gushaka no gusaba impano",
     universityAdmissionSupport: "Ubufasha bwo kwinjira muri kaminuza",
-    universityAdmissionSupportDesc: "Ubufasha bwo kwinjira muri kaminuza bwuzuye",
+    universityAdmissionSupportDesc: "Ubufasha bwuzuye bwo kwinjira muri kaminuza",
     visaApplicationAssistance: "Ubufasha bwo gusaba viza",
     visaApplicationAssistanceDesc: "Ubufasha bw'umwuga bwo gusaba viza",
     languagePreparation: "Gutegura ururimi",
@@ -893,7 +1294,7 @@ const translations = {
     
     // Study Programs Features
     scholarshipSearch: "Gushaka impano",
-    applicationAssistance: "Assistance d'application",
+    applicationAssistance: "Ubufasha bwo gusaba",
     documentPreparation: "Gutegura inyandiko",
     universitySelection: "Guhitamo kaminuza",
     applicationReview: "Gusuzuma ubusaba",
@@ -910,11 +1311,11 @@ const translations = {
     fbConsultingTitle: "Inama za F&B",
     businessStrategy: "Ingamba z'ubucuruzi",
     businessStrategyDesc: "Gutegura ingamba z'ubucuruzi no kwinjira mu isoko",
-    businessConsultation: "Business Consultation",
-    businessDescription: "Strategic business planning and market entry",
+    businessConsultation: "Inama z'ubucuruzi",
+    businessDescription: "Gutegura ingamba z'ubucuruzi no kwinjira mu isoko",
     marketAnalysis: "Isesengura ry'isoko",
     marketAnalysisDesc: "Isesengura ry'imbere ry'isoko n'ubunyangamugayo bw'abanywanyi",
-    fbMarketAnalysis: "F&B Market Analysis",
+    fbMarketAnalysis: "Isesengura ry'isoko rya F&B",
     productDevelopment: "Guteza imbere ibicuruzwa",
     productDevelopmentDesc: "Guteza imbere no guhanga ibicuruzwa by'ibiryo",
     productDescription: "Guteza imbere no guhanga ibicuruzwa by'ibiryo",
@@ -925,15 +1326,15 @@ const translations = {
     // F&B Features
     marketResearch: "Ubushakashatsi bw'isoko",
     businessPlanning: "Gutegura ubucuruzi",
-    strategyDevelopment: "Strategy development",
+    strategyDevelopment: "Guteza imbere ingamba",
     marketSizing: "Gupima isoko",
     competitorAnalysis: "Isesengura ry'abanywanyi",
-    trendIdentification: "Trend identification",
+    trendIdentification: "Kumenya icyerekezo",
     recipeDevelopment: "Guteza imbere uburyo bwo guteka",
     productTesting: "Gupima ibicuruzwa",
     safetyStandards: "Ibipimo by'umutekano",
     certificationSupport: "Ubufasha bw'icyemezo",
-    complianceAudits: "Compliance audits",
+    complianceAudits: "Isuzuma ry'ubwubahirizi",
     
     // Common
     startYourJourney: "Tangira urugendo rwawe",
@@ -945,85 +1346,184 @@ const translations = {
     // About
     aboutTitle: "Ibibazo byacu",
     aboutDescription: "Menya intego zacu n'ubuhanga bwacu",
-    aboutUs: "About Us",
+    aboutUs: "Ibibazo byacu",
     
     // Contact
     contactTitle: "Twandikire",
     contactDescription: "Mana n'itsinda ryacu",
-    readyToTakeNextStep: "Prêt à prendre le prochain pas?",
-    sendUsMessage: "Envoyez-nous un message",
-    fillFormBelow: "Remplissez le formulaire ci-dessous et nous vous répondrons dans 24 heures.",
-    yourName: "Votre nom",
-    yourEmail: "Votre adresse e-mail",
-    selectService: "Sélectionnez le service",
-    generalInquiry: "Demande générale",
-    studyAbroadRelocation: "Études à l'étranger et déplacement",
-    fbConsultingService: "F&B Consulting",
-    bothServices: "Les deux services",
-    message: "Message",
-    tellUsAboutGoals: "Dites-nous vos objectifs et comment nous pouvons vous aider",
-    sendMessage: "Envoyer le message",
-    quickContact: "Contact rapide",
-    email: "Email",
-    phoneKorea: "Téléphone (Corée)",
+    readyToTakeNextStep: "Witeguye gufata intambwe ikurikira?",
+    sendUsMessage: "Twoherereze ubutumwa",
+    fillFormBelow: "Uzuza ifishi iri hepfo tuzagusubiza mu masaha 24.",
+    yourName: "Izina ryawe",
+    yourEmail: "Imeri yawe",
+    selectService: "Hitamo serivisi",
+    generalInquiry: "Ibibazo rusange",
+    studyAbroadRelocation: "Kwiga mu mahanga no kwimuka",
+    fbConsultingService: "Inama za F&B",
+    bothServices: "Serivisi zombi",
+    message: "Ubutumwa",
+    tellUsAboutGoals: "Tubwire ku ntego zawe n'uburyo dushobora kugufasha",
+    sendMessage: "Ohereza ubutumwa",
+    quickContact: "Kuvugana vuba",
+    email: "Imeri",
+    phoneKorea: "Telefoni (Koreya)",
     whatsapp: "WhatsApp",
-    bookAConsultation: "Réserver une consultation",
-    scheduleFreeConsultation: "Réserver une consultation gratuite pour discuter de vos objectifs",
-    officeHours: "Heures d'ouverture",
-    mondayFriday: "Lundi à vendredi: 9h00 - 18h00 (KST)",
-    saturday: "Samedi: 10h00 - 14h00 (KST)",
-    sunday: "Dimanche",
-    closed: "Fermé",
-    location: "Seoul, Corée du Sud",
+    bookAConsultation: "Andika inama",
+    scheduleFreeConsultation: "Tegura inama y'ubusa kugira ngo muganire ku ntego zanyu",
+    officeHours: "Amasaha y'ibiro",
+    mondayFriday: "Ku wa mbere - Ku wa gatanu: 9:00 AM - 6:00 PM (KST)",
+    saturday: "Ku wa gatandatu: 10:00 AM - 4:00 PM (KST)",
+    sunday: "Ku cyumweru",
+    closed: "Birafunze",
+    location: "Seoul, Koreya y'Epfo",
     
     // Testimonials
     testimonialsTitle: "Inkuru z'intsinzi",
+    successStories: "Inkuru z'intsinzi",
+    testimonialSubtitle: "Wumva ku bakiriya bacu bashimye bagezeho ku nzozi zabo",
     
     // Blog
     blogTitle: "Ibikoresho biheruka",
     blogDescription: "Komeza wibwirizwa n'ibitekerezo bishya",
     readMore: "Soma byinshi",
-    latest: "Dernières",
-    resourcesDescription: "Guides et informations essentielles pour votre voyage",
-    viewAllResources: "Voir toutes les ressources",
-    blogPost1Title: "Guide complet des bourses coréennes",
-    blogPost1Excerpt: "Tout ce que vous devez savoir sur les bourses coréennes et comment les postuler.",
-    blogPost2Title: "Démarrer votre entreprise alimentaire en Corée",
-    blogPost2Excerpt: "Guide étape par étape pour lancer votre entreprise alimentaire au marché coréen.",
-    blogPost3Title: "Conseils pour réussir le test TOPIK",
-    blogPost3Excerpt: "Stratégies expertes pour réussir votre test de langue coréenne.",
-    education: "Éducation",
-    business: "Buisson",
-    scholarships: "Bourses",
+    latest: "Biheruka",
+    resourcesDescription: "Ibyegeranyo by'ingenzi n'ubwenge ku rugendo rwawe",
+    viewAllResources: "Reba ibikoresho byose",
+    blogPost1Title: "Ibyegeranyo byuzuye by'impano z'amashuri makuru ya Koreya",
+    blogPost1Excerpt: "Ibintu byose ukeneye kumenya ku gushaka no gusaba impano muri Koreya.",
+    blogPost2Title: "Gutangira ubucuruzi bwawe bw'ibiryo muri Koreya",
+    blogPost2Excerpt: "Ibyegeranyo bya buri ntambwe yo gutangiza ubucuruzi bwawe bw'ibiryo mu isoko rya Koreya.",
+    blogPost3Title: "Amakuru yo gutegura ikizamini cya TOPIK",
+    blogPost3Excerpt: "Ingamba z'impuguke zo gutsinda ikizamini cyawe cy'ubumenyi bw'ururimi rwa Koreya.",
+    education: "Uburezi",
+    business: "Ubucuruzi",
+    scholarships: "Impano",
     
     // Newsletter
     newsletterTitle: "Komeza wibwirizwa",
     newsletterDescription: "Bonera amakuru mashya n'amahirwe",
     subscribe: "Kwiyandikisha",
     enterEmailAddress: "Injiza aderesi ya imeri yawe",
-    newsletterThankYou: "Merci d'avoir souscrit!",
+    newsletterThankYou: "Urakoze kwiyandikisha!",
     
     // Footer
     quickLinks: "Ihuza ryihuse",
     followUs: "Dukurikire",
-    footerDescription: "Votre partenaire de confiance pour l'éducation coréenne et le succès F&B",
-    resourcesBlog: "Ressources & Blog",
-    visitsHelp: "Visa & Aide",
-    legal: "Loi",
-    contactInfo: "Informations de contact",
-    allRightsReserved: "Tous droits réservés.",
+    footerDescription: "Umunyangana wawe wizewe mu burezi bwa Koreya no gutsinda F&B",
+    resourcesBlog: "Ibikoresho na Blog",
+    visitsHelp: "Viza n'ubufasha",
+    legal: "Amategeko",
+    contactInfo: "Amakuru y'aho duhurira",
+    allRightsReserved: "Uburenganzira bwose burarinzwe.",
     
     // Partners
-    ourTrustedPartners: "Nos partenaires de confiance",
-    partnerDescription: "Collaboration avec des institutions et des organisations leaders",
+    ourTrustedPartners: "Abo dufatanyirizanya nabo dushize ukwizera",
+    partnerDescription: "Gukorana n'inziko zikomeye n'imiryango",
     
     // Legal pages
     privacyPolicy: "Politiki y'ibanga",
     termsOfService: "Amabwiriza ya serivisi",
     sitemap: "Ikarita y'urubuga",
+    privacyPolicyTitle: "Politiki y'ibanga",
+    privacyPolicySubtitle: "Uburyo dukusanya, dukoresha, kandi dukingira amakuru yawe",
+    informationWeCollect: "Amakuru dukusanya",
+    privacyCollectDescription: "Dukusanya amakuru kugira ngo dutange serivisi nziza ku bakoresha bacu:",
+    personalIdentificationInfo: "Amakuru yo kwimenyekanisha (izina, imeri, telefoni)",
+    educationalBackground: "Amateka y'uburezi n'intego z'amashuri",
+    professionalExperience: "Uburambe bw'umwuga n'intego z'umwuga",
+    communicationPreferences: "Ibyo ukunda mu itumanaho n'amururimi uhitamo",
+    howWeUseYourInfo: "Uburyo dukoresha amakuru yawe",
+    privacyUseDescription: "Dukoresha amakuru dukusanya kuri izi ntego:",
+    providePersonalizedServices: "Gutanga serivisi z'uburezi n'inama zigenewe wowe",
+    processScholarshipApplications: "Gutunganya ubusaba bw'impano na kaminuza",
+    sendRelevantUpdates: "Kohereza amakuru mashya n'amahirwe ajyanye nawe",
+    improveServices: "Kunoza serivisi zacu n'uburambe bw'abakoresha",
+    complyLegalObligations: "Kubahiriza inshingano n'ibisabwa n'amategeko",
+    dataSecurity: "Umutekano w'amakuru",
+    dataSecurityDescription: "Dushyira mu bikorwa ingamba z'umutekano zikomeye zo kurinda amakuru yawe:",
+    encryptedDataTransmission: "Kohereza no kubika amakuru ahishwe",
+    regularSecurityAudits: "Isuzuma ry'umutekano rihoraho n'isuzuma",
+    accessControls: "Ubufuzi bukomeye bwo kwinjira no kwemeza",
+    employeeTraining: "Imyitozo y'abakozi ku micungire yo kurinda amakuru",
+    informationSharing: "Gusangira amakuru",
+    privacySharingDescription: "Dushobora gusangira amakuru yawe n'abo dufatanyirizanya nabo twizemo ubwoba igihe bibaye ngombwa gusa:",
+    educationalInstitutions: "Inziko z'uburezi zo gutunganya ubusaba",
+    governmentAgencies: "Ibigo bya guverinoma byo gusaba viza n'uruhushya",
+    trustedServiceProviders: "Abatanga serivisi tuzizeho badufasha mu bikorwa byacu",
+    legalAuthorities: "Ubuyobozi bw'amategeko igihe byabisabwe n'amategeko",
+    neverSellPersonalInfo: "Ntituzigera tugurisha amakuru yawe bwite ku bandi.",
+    yourRights: "Uburenganzira bwawe",
+    rightsDescription: "Ufite uburenganzira bwo:",
+    accessYourData: "Kubona amakuru yawe bwite",
+    correctInaccurateInfo: "Guhindura amakuru atari yo",
+    deleteYourData: "Gusiba amakuru yawe",
+    optOutCommunications: "Kureka itumanaho",
+    contactUs: "Duhamagare",
+    updatesToPolicy: "Amahinduka kuri politiki iyi",
+    updatesDescription: "Dushobora kuvugurura politiki iyi y'ibanga icyo giciro. Tuzakumenyesha amahinduka yose dusobanura politiki nshya kuri uyu paji.",
+    
+    // Terms of Service
+    termsOfServiceTitle: "Amabwiriza ya serivisi",
+    termsOfServiceSubtitle: "Amategeko n'amabwiriza yo gukoresha serivisi zacu",
+    acceptanceOfTerms: "Kwemera amabwiriza",
+    acceptanceDescription: "Ukoresha serivisi zacu, wemera aya mategeko n'amabwiriza.",
+    servicesProvided: "Serivisi zitangwa",
+    servicesDescription: "Dutanga serivisi z'inama z'uburezi n'inama z'ubucuruzi bwa F&B.",
+    userResponsibilities: "Inshingano z'uwukoresha",
+    responsibilitiesDescription: "Abakoresha bashinzwe gutanga amakuru nyayo no gukurikiza amabwiriza ya bacu.",
+    intellectualProperty: "Umutungo w'ubwenge",
+    intellectualPropertyDescription: "Ibikubiye n'ibikoresho byose birinzwe n'amategeko y'umutungo w'ubwenge.",
+    limitationOfLiability: "Igabanywa ry'uburyozwe",
+    liabilityDescription: "Uburyozwe bwacu bugarukira ku rugero rwemewe n'amategeko.",
+    terminationOfServices: "Guhagarika serivisi",
+    terminationDescription: "Twibikiye uburenganzira bwo guhagarika serivisi kubera gukuka k'amabwiriza.",
+    governingLaw: "Itegeko rigenza",
+    governingLawDescription: "Aya mabwiriza agengwa n'amategeko ya Koreya y'Epfo.",
+    changesTerms: "Impinduka mu mabwiriza",
+    changesDescription: "Dushobora kuvugurura aya mabwiriza rimwe na rimwe.",
+    
+    // About Advisor
+    professionalSummary: "Incamake y'umwuga",
+    educationExpertise: "Ubuhanga mu burezi",
+    koreanGovernmentScholarshipProgram: "Ubuyobozi bwa porogarama y'impano za guverinoma ya Koreya",
+    universityAdmissionStrategies: "Ingamba zo kwinjira muri kaminuza",
+    visaApplicationGuidance: "Ubuyobozi bwo gusaba viza",
+    koreanLanguagePreparation: "Gutegura ururimi rwa Koreya",
+    culturalAdaptationSupport: "Ubufasha bwo kumenyera umuco",
+    fbExpertise: "Ubuhanga muri F&B",
+    marketAnalysisEntryStrategies: "Isesengura ry'isoko n'ingamba zo kwinjira",
+    productDevelopmentInnovation: "Guteza imbere ibicuruzwa n'ubuhanga",
+    supplyChainOptimization: "Kunoza uruhererekane rw'ibigira abandi",
+    businessPlanningFunding: "Gutegura ubucuruzi no gufasha imari",
+    keyAchievements: "Ibyangombwa bizwi neza",
+    scholarshipSuccessRate: "95% by'impano zatsinda",
+    getInTouch: "Vugana natwe",
+    mondayToFriday: "Kuwa mbere kugeza kuwa gatanu",
+    saturdaySunday: "Kuwa gatandatu n'Icyumweru",
+    koreanTime: "Isaha ya Koreya (KST)",
+    myMission: "Intego yanjye",
+    missionStatement: "Gufunga umwanya hagati y'impano z'Abanyafurika n'amahirwe ya Koreya, dushyiraho inzira zijyana ku ntsinzi y'uburezi n'ubucuruzi.",
+    
+    // Consultation Booking
+    hotelBooking: "Inama y'imbonankubone",
+    phoneConsultation: "Inama ku telefoni",
+    reviewConsultation: "Gusuzuma inama",
+    consultationDetails: "Ibisobanuro by'inama",
+    fullName: "Amazina yose",
+    selectedService: "Serivisi yatoranijwe",
+    totalPrice: "Igiciro cyose",
+    paymentMethods: "Uburyo bwo kwishyura",
+    payWithCard: "Kwishyura na karita",
+    payWithMobile: "Kwishyura n'amafaranga ya mobile",
+    payWithBank: "Kwishyura n'ubikorwa bya banki",
+    backToEdit: "Subira ku guhinduza",
+    phone: "Telefoni",
+    preferredDate: "Itariki wifuza",
+    preferredTime: "Isaha wifuza",
+    reviewConsultationRequest: "Gusuzuma ubusabe bw'inama",
     
     // WhatsApp button
-    scheduleFreeFifteenMinuteConsultation: "Programmer une consultation gratuite de 15 minutes"
+    scheduleFreeFifteenMinuteConsultation: "Tegura inama y'ubusa ya miniti 15"
   }
 };
 
