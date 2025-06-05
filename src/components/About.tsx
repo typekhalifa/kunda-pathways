@@ -8,12 +8,28 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const About = () => {
   const { translations } = useLanguage();
 
+  // Safe function to split text and style the last word
+  const renderStyledTitle = (text: string) => {
+    if (!text || typeof text !== 'string') return text || '';
+    const words = text.split(' ');
+    if (words.length <= 1) return text;
+    
+    const mainText = words.slice(0, -1).join(' ');
+    const lastWord = words.slice(-1)[0];
+    
+    return (
+      <>
+        {mainText} <span className="text-blue-600">{lastWord}</span>
+      </>
+    );
+  };
+
   return (
     <section id="about" className="py-20 px-4 bg-slate-50 dark:bg-slate-900">
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            {translations.meetYourGlobalAdvisor.split(' ').slice(0, -2).join(' ')} <span className="text-blue-600">{translations.meetYourGlobalAdvisor.split(' ').slice(-2).join(' ')}</span>
+            {renderStyledTitle(translations.meetYourGlobalAdvisor || "Meet Your Global Advisor")}
           </h2>
           
           {/* Professional Photo Placeholder */}
@@ -25,20 +41,20 @@ const About = () => {
           </div>
           
           <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
-            {translations.advisorName}
+            {translations.advisorName || "Dr. Sarah Johnson"}
           </h3>
           <p className="text-lg text-blue-600 dark:text-blue-400 font-semibold mb-4">
-            {translations.advisorTitle}
+            {translations.advisorTitle || "International Education & F&B Consultant"}
           </p>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed mb-6">
-            {translations.advisorDescription}
+            {translations.advisorDescription || "With over 10 years of experience connecting African students to Korean universities and helping food businesses expand globally."}
           </p>
           
           <Link to="/about-advisor">
             <Button 
               className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border-0"
             >
-              {translations.readMoreAboutMe}
+              {translations.readMoreAboutMe || "Read More About Me"}
             </Button>
           </Link>
         </div>
@@ -47,9 +63,9 @@ const About = () => {
           <Card className="text-center hover:shadow-lg transition-shadow border-0 shadow-md bg-white dark:bg-slate-800">
             <CardContent className="p-8">
               <GraduationCap className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-3 text-slate-800 dark:text-white">{translations.educationExpert}</h3>
+              <h3 className="text-xl font-semibold mb-3 text-slate-800 dark:text-white">{translations.educationExpert || "Education Expert"}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                {translations.educationExpertDesc}
+                {translations.educationExpertDesc || "Specialized guidance for Korean university admissions"}
               </p>
             </CardContent>
           </Card>
@@ -57,9 +73,9 @@ const About = () => {
           <Card className="text-center hover:shadow-lg transition-shadow border-0 shadow-md bg-white dark:bg-slate-800">
             <CardContent className="p-8">
               <TrendingUp className="w-12 h-12 text-green-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-3 text-slate-800 dark:text-white">{translations.fbConsultant}</h3>
+              <h3 className="text-xl font-semibold mb-3 text-slate-800 dark:text-white">{translations.fbConsultant || "F&B Consultant"}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                {translations.fbConsultantDesc}
+                {translations.fbConsultantDesc || "Expert advice for food & beverage businesses"}
               </p>
             </CardContent>
           </Card>
@@ -67,9 +83,9 @@ const About = () => {
           <Card className="text-center hover:shadow-lg transition-shadow border-0 shadow-md bg-white dark:bg-slate-800">
             <CardContent className="p-8">
               <Users className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-3 text-slate-800 dark:text-white">{translations.studentsHelped}</h3>
+              <h3 className="text-xl font-semibold mb-3 text-slate-800 dark:text-white">{translations.studentsHelped || "500+ Students Helped"}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                {translations.studentsHelpedDesc}
+                {translations.studentsHelpedDesc || "Successfully guided students to Korean universities"}
               </p>
             </CardContent>
           </Card>
@@ -77,9 +93,9 @@ const About = () => {
           <Card className="text-center hover:shadow-lg transition-shadow border-0 shadow-md bg-white dark:bg-slate-800">
             <CardContent className="p-8">
               <Globe className="w-12 h-12 text-orange-600 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-3 text-slate-800 dark:text-white">{translations.countriesReached}</h3>
+              <h3 className="text-xl font-semibold mb-3 text-slate-800 dark:text-white">{translations.countriesReached || "15+ Countries Reached"}</h3>
               <p className="text-slate-600 dark:text-slate-300">
-                {translations.countriesReachedDesc}
+                {translations.countriesReachedDesc || "Students from across Africa benefited"}
               </p>
             </CardContent>
           </Card>
