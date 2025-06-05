@@ -1,965 +1,623 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type Language = 'EN' | 'RW' | 'FR' | 'KO';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-interface LanguageContextType {
-  currentLanguage: Language;
-  setLanguage: (lang: Language) => void;
-  translations: Record<string, string>;
+interface Translations {
+  // Navigation
+  home: string;
+  about: string;
+  services: string;
+  contact: string;
+  resources: string;
+  
+  // Hero section
+  heroTitle: string;
+  heroSubtitle: string;
+  heroDescription: string;
+  getStarted: string;
+  learnMore: string;
+  
+  // Services
+  servicesTitle: string;
+  servicesSubtitle: string;
+  studyInKorea: string;
+  studyInKoreaDesc: string;
+  fbConsulting: string;
+  fbConsultingDesc: string;
+  universityAdmissions: string;
+  universityAdmissionsDesc: string;
+  visaAssistance: string;
+  visaAssistanceDesc: string;
+  
+  // Study Programs
+  studyProgramsTitle: string;
+  studyProgramsSubtitle: string;
+  scholarshipGuidance: string;
+  scholarshipGuidanceDesc: string;
+  universityAdmissionSupport: string;
+  universityAdmissionSupportDesc: string;
+  visaApplicationAssistance: string;
+  visaApplicationAssistanceDesc: string;
+  languagePreparation: string;
+  languagePreparationDesc: string;
+  
+  // Study Programs Features
+  scholarshipSearch: string;
+  applicationAssistance: string;
+  documentPreparation: string;
+  universitySelection: string;
+  applicationReview: string;
+  interviewPreparation: string;
+  visaDocumentPrep: string;
+  applicationFiling: string;
+  interviewCoaching: string;
+  topikPreparation: string;
+  conversationPractice: string;
+  culturalOrientationAndAccommodation: string;
+  
+  // F&B Consulting
+  fbConsultingTitle: string;
+  businessStrategy: string;
+  businessStrategyDesc: string;
+  marketAnalysis: string;
+  marketAnalysisDesc: string;
+  productDevelopment: string;
+  productDevelopmentDesc: string;
+  regulatoryCompliance: string;
+  regulatoryComplianceDesc: string;
+  
+  // F&B Features
+  marketResearch: string;
+  businessPlanning: string;
+  marketSizing: string;
+  competitorAnalysis: string;
+  recipeDevelopment: string;
+  productTesting: string;
+  safetyStandards: string;
+  certificationSupport: string;
+  
+  // Common
+  startYourJourney: string;
+  backToHome: string;
+  bookConsultation: string;
+  getQuote: string;
+  scheduleConsultation: string;
+  
+  // About
+  aboutTitle: string;
+  aboutDescription: string;
+  
+  // Contact
+  contactTitle: string;
+  contactDescription: string;
+  
+  // Testimonials
+  testimonialsTitle: string;
+  
+  // Blog
+  blogTitle: string;
+  blogDescription: string;
+  readMore: string;
+  
+  // Newsletter
+  newsletterTitle: string;
+  newsletterDescription: string;
+  subscribe: string;
+  enterEmailAddress: string;
+  
+  // Footer
+  quickLinks: string;
+  followUs: string;
+  
+  // Legal pages
+  privacyPolicy: string;
+  termsOfService: string;
+  sitemap: string;
+  
+  // WhatsApp button
+  scheduleFreeFifteenMinuteConsultation: string;
 }
-
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 const translations = {
   EN: {
     // Navigation
-    home: 'Home',
-    services: 'Services',
-    about: 'About',
-    contact: 'Contact',
-    resources: 'Resources',
-    bookConsultation: 'Book Consultation',
+    home: "Home",
+    about: "About",
+    services: "Services",
+    contact: "Contact",
+    resources: "Resources",
     
-    // Hero Section
-    heroTitle: 'Your Gateway to Global Opportunities',
-    heroSubtitle: 'Expert guidance for studying in Korea and building food & beverage businesses across Asia. From scholarship applications to international business consulting.',
-    exploreStudyPrograms: 'Explore Study Programs',
-    fbConsulting: 'F&B Consulting',
-    studentsAssisted: 'Students Assisted',
-    countriesReached: 'Countries Reached',
-    foodScienceExpert: 'Food Science Expert',
-    startYourJourney: 'Start Your Journey',
+    // Hero section
+    heroTitle: "Your Gateway to Korean Education & F&B Success",
+    heroSubtitle: "Scholarships • University Admissions • F&B Consulting",
+    heroDescription: "From scholarship guidance to food business consulting, we bridge Africa and Korea with personalized pathways to your success.",
+    getStarted: "Get Started",
+    learnMore: "Learn More",
     
     // Services
-    servicesTitle: 'Our Services',
-    servicesSubtitle: 'Professional guidance for your global journey and business success',
-    studyAbroadTitle: 'Study Abroad & Relocation',
-    studyAbroadSubtitle: 'Your pathway to global education',
-    fbConsultingTitle: 'Food & Beverage Consulting',
-    fbConsultingSubtitle: 'Expert guidance from MSc Food Science',
+    servicesTitle: "Our Services",
+    servicesSubtitle: "Comprehensive solutions for your educational and business goals",
+    studyInKorea: "Study in Korea",
+    studyInKoreaDesc: "Complete guidance for scholarships and university admissions",
+    fbConsulting: "F&B Consulting",
+    fbConsultingDesc: "Expert consulting for food & beverage businesses",
+    universityAdmissions: "University Admissions",
+    universityAdmissionsDesc: "End-to-end support for university applications",
+    visaAssistance: "Visa Assistance", 
+    visaAssistanceDesc: "Professional help with visa applications and documentation",
     
-    // Service Items
-    scholarshipGuidance: 'Scholarship Guidance',
-    scholarshipGuidanceDesc: 'Complete scholarship application support',
-    universityAdmissions: 'University Enrollment',
-    universityAdmissionsDesc: 'Private & public university assistance',
-    visaApplication: 'Visa Application',
-    visaApplicationDesc: 'Full visa processing support',
-    koreanLanguageTraining: 'Korean Language Training',
-    koreanLanguageTrainingDesc: 'Online Korean language courses',
-    visitsHelp: 'Visits Help & Relocations',
-    visitsHelpDesc: 'Complete relocation and settlement assistance',
+    // Study Programs
+    studyProgramsTitle: "Study Programs & Services",
+    studyProgramsSubtitle: "Comprehensive support for your Korean education journey",
+    scholarshipGuidance: "Scholarship Guidance",
+    scholarshipGuidanceDesc: "Expert help in finding and applying to scholarships",
+    universityAdmissionSupport: "University Admission Support", 
+    universityAdmissionSupportDesc: "End-to-end university admission support",
+    visaApplicationAssistance: "Visa Application Assistance",
+    visaApplicationAssistanceDesc: "Professional visa application assistance",
+    languagePreparation: "Language Preparation",
+    languagePreparationDesc: "Korean language test preparation",
     
-    businessConsultation: 'Business Consultation',
-    businessConsultationDesc: 'Expert F&B business advice',
-    fbMarketAnalysis: 'Market Analysis',
-    fbMarketAnalysisDesc: 'Asian market research & insights',
-    productDevelopment: 'Product Development',
-    productDevelopmentDesc: 'Food science & technology guidance',
-    regulatoryCompliance: 'Regulatory Compliance',
-    regulatoryComplianceDesc: 'Food safety & regulations',
+    // Study Programs Features
+    scholarshipSearch: "Scholarship search",
+    applicationAssistance: "Application assistance", 
+    documentPreparation: "Document preparation",
+    universitySelection: "University selection",
+    applicationReview: "Application review",
+    interviewPreparation: "Interview preparation",
+    visaDocumentPrep: "Document preparation",
+    applicationFiling: "Application filing",
+    interviewCoaching: "Interview coaching", 
+    topikPreparation: "TOPIK preparation",
+    conversationPractice: "Conversation practice",
+    culturalOrientationAndAccommodation: "Cultural orientation and accommodation",
     
-    // Service Features
-    personalizedGuidance: 'Personalized guidance from Korean education expert',
-    endToEndSupport: 'End-to-end support from application to arrival',
-    culturalOrientation: 'Cultural orientation and settlement assistance',
-    mscFoodScienceExpertise: 'MSc Food Science & Technology expertise',
-    asianMarketSpecialization: 'Asian market specialization',
-    internationalBusinessDev: 'International business development',
-    getExpertConsultation: 'Get Expert Consultation',
-    packageDealsAvailable: 'Package Deals Available!',
-    saveUpTo20Percent: 'Save up to 20% when combining services',
-    viewAllPackages: 'View All Packages & Pricing',
+    // F&B Consulting
+    fbConsultingTitle: "F&B Consulting",
+    businessStrategy: "Business Strategy",
+    businessStrategyDesc: "Strategic business planning and market entry",
+    marketAnalysis: "Market Analysis", 
+    marketAnalysisDesc: "In-depth market analysis and competitive intelligence",
+    productDevelopment: "Product Development",
+    productDevelopmentDesc: "Food product development and innovation",
+    regulatoryCompliance: "Regulatory Compliance",
+    regulatoryComplianceDesc: "Navigate food safety and regulatory requirements",
     
-    // About Section
-    aboutTitle: 'About Us',
-    aboutSubtitle: 'Your trusted partner in global education and business expansion',
-    meetYourGlobalAdvisor: 'Meet Your Global Advisor',
-    advisorName: 'John Doe, MSc',
-    advisorTitle: 'Food Science & Technology | Korean Education Expert',
-    advisorDescription: 'Your partner for education and business in Korea & Asia. With years of experience in both academic guidance and F&B consulting, I help students and entrepreneurs achieve their global dreams.',
-    readMoreAboutMe: 'Read More About Me',
-    educationExpert: 'Education Expert',
-    educationExpertDesc: 'Specializing in Korean university admissions and scholarship guidance',
-    fbConsultant: 'F&B Consultant',
-    fbConsultantDesc: 'MSc in Food Science with extensive market analysis experience',
-    studentsHelped: '500+ Students',
-    studentsHelpedDesc: 'Successfully guided students from Africa to top Korean universities',
-    countriesReachedDesc: 'International reach across Africa, Asia, and beyond',
+    // F&B Features
+    marketResearch: "Market research",
+    businessPlanning: "Business planning",
+    marketSizing: "Market sizing",
+    competitorAnalysis: "Competitor analysis", 
+    recipeDevelopment: "Recipe development",
+    productTesting: "Product testing",
+    safetyStandards: "Safety standards",
+    certificationSupport: "Certification support",
     
-    // Partners Section
-    ourTrustedPartners: 'Our Trusted Partners',
-    partnerDescription: 'We work with leading institutions and organizations',
+    // Common
+    startYourJourney: "Start Your Journey",
+    backToHome: "Back to Home",
+    bookConsultation: "Book Consultation",
+    getQuote: "Get Quote", 
+    scheduleConsultation: "Schedule Consultation",
     
-    // Newsletter Section
-    newsletterTitle: 'Stay Updated with Global Opportunities',
-    newsletterDescription: 'Get the latest scholarship announcements, study abroad tips, and F&B industry insights delivered to your inbox.',
-    enterEmailAddress: 'Enter your email address',
-    subscribe: 'Subscribe',
-    newsletterThankYou: 'Thank you for subscribing! Check your email for confirmation.',
+    // About
+    aboutTitle: "About Us",
+    aboutDescription: "Learn about our mission and expertise",
     
-    // Testimonials
-    successStories: 'Success Stories',
-    testimonialSubtitle: 'Real stories from clients who achieved their global dreams',
-    
-    // Blog/Resources
-    latest: 'Latest',
-    resourcesDescription: 'Stay updated with scholarship opportunities, industry insights, and success tips',
-    blogPost1Title: 'Top 10 Korean Universities Offering Scholarships for African Students',
-    blogPost1Excerpt: 'Discover the best opportunities for funded education in South Korea...',
-    blogPost2Title: 'Breaking into the Korean F&B Market: A Complete Guide',
-    blogPost2Excerpt: 'Everything you need to know about food business regulations in Korea...',
-    blogPost3Title: 'KGSP 2024: Application Tips and Deadlines',
-    blogPost3Excerpt: 'Get insider tips for the Korean Government Scholarship Program...',
-    education: 'Education',
-    business: 'Business',
-    scholarships: 'Scholarships',
-    readMore: 'Read More',
-    viewAllResources: 'View All Resources',
-    
-    // Contact Section
-    letsStartYourJourney: "Let's Start Your Journey",
-    readyToTakeNextStep: 'Ready to take the next step? Get in touch for a free consultation',
-    sendUsMessage: 'Send us a Message',
-    fillFormBelow: 'Fill out the form below and we\'ll respond within 24 hours',
-    yourName: 'Your Name',
-    yourEmail: 'Your Email',
-    selectService: 'Select Service',
-    generalInquiry: 'General Inquiry',
-    studyAbroadRelocation: 'Study Abroad & Relocation',
-    fbConsultingService: 'F&B Consulting',
-    bothServices: 'Both Services',
-    message: 'Message',
-    tellUsAboutGoals: 'Tell us about your goals and how we can help...',
-    sendMessage: 'Send Message',
-    quickContact: 'Quick Contact',
-    email: 'Email',
-    phone: 'Phone',
-    phoneKorea: 'Phone (Korea)',
-    whatsapp: 'WhatsApp',
-    bookAConsultation: 'Book a Consultation',
-    scheduleFreeConsultation: 'Schedule a free 15-minute consultation to discuss your goals and get personalized advice.',
-    scheduleConsultation: 'Schedule Free Consultation',
-    officeHours: 'Office Hours',
-    mondayFriday: 'Monday - Friday:',
-    saturday: 'Saturday:',
-    sunday: 'Sunday:',
-    closed: 'Closed',
-    
-    // Footer
-    footerDescription: 'Your partner for education and business in Korea & Asia.',
-    quickLinks: 'Quick Links',
-    aboutUs: 'About Us',
-    studyInKorea: 'Study in Korea',
-    resourcesBlog: 'Resources/Blog',
-    contactInfo: 'Contact Info',
-    location: 'Seoul, South Korea',
-    legal: 'Legal',
-    privacyPolicy: 'Privacy Policy',
-    termsOfService: 'Terms of Service',
-    sitemap: 'Sitemap',
-    allRightsReserved: 'All rights reserved.',
-    
-    // Legal Pages
-    privacyPolicyTitle: 'Privacy Policy',
-    termsOfServiceTitle: 'Terms of Service',
-    sitemapTitle: 'Sitemap',
-    
-    // About Advisor Page
-    backToHome: 'Back to Home',
-    biography: 'Biography',
-    biographyP1: 'Born and raised in Rwanda, John Doe always had a passion for education and international development. After completing his undergraduate studies in Nutrition at the University of Rwanda, he was selected for the prestigious Korean Government Scholarship Program (KGSP).',
-    biographyP2: 'During his time in Korea, John not only excelled academically but also developed a deep understanding of Korean culture and educational systems. He completed his Master of Science in Food Science and Technology at Seoul National University, one of Korea\'s most prestigious institutions.',
-    biographyP3: 'After graduation, John decided to dedicate his career to helping other African students achieve their educational dreams in Korea while also building bridges between African and Korean food industries through his consulting work.',
-    educationQualifications: 'Education & Qualifications',
-    mscFoodScience: 'MSc in Food Science & Technology',
-    seoulNationalUniversity: 'Seoul National University, Korea',
-    graduationYear: '2019 - 2021',
-    bscNutrition: 'BSc in Nutrition Science',
-    universityOfRwanda: 'University of Rwanda',
-    undergraduateYear: '2014 - 2018',
-    professionalExperience: 'Professional Experience',
-    consultantTitle: 'Senior F&B Consultant',
-    consultantCompany: 'Korea-Africa Trade Council',
-    consultantPeriod: '2021 - Present',
-    consultantDescription: 'Leading market analysis and business development initiatives for African food companies entering Korean and Asian markets.',
-    educationSpecialistTitle: 'Education Consultant',
-    freelanceWork: 'Freelance',
-    specialistPeriod: '2020 - Present',
-    specialistDescription: 'Providing comprehensive guidance to African students for Korean university admissions and scholarship applications.',
-    readyToStart: 'Ready to Start Your Journey?',
-    contactCallToAction: 'Let\'s discuss how I can help you achieve your goals in Korea and Asia.',
-    advisorFullDescription: 'A passionate advocate for global education and cross-cultural business development',
-
-    // New About Advisor translations
-    skillsExpertise: 'Skills & Expertise',
-    educationConsulting: 'Education Consulting',
-    scholarshipApplications: 'Scholarship Applications',
-    universitySelection: 'University Selection',
-    visaGuidance: 'Visa Guidance',
-    culturalAdaptation: 'Cultural Adaptation',
-    businessConsulting: 'Business Consulting',
-    marketResearch: 'Market Research',
-    regulatoryAffairs: 'Regulatory Affairs',
-    businessStrategy: 'Business Strategy',
-    certificationsTraining: 'Certifications & Training',
-    haccp: 'HACCP Food Safety Certification',
-    haccpIssuer: 'Korean Food Safety Authority',
-    topik: 'TOPIK Level 6 (Korean Proficiency)',
-    topikIssuer: 'National Institute for International Education',
-    papersPublications: 'Papers & Publications',
-    paper1: 'Food Safety Standards in Korean F&B Industry',
-    paper1Journal: 'Asian Food Science Journal, 2022',
-    paper1Description: 'Comprehensive analysis of food safety regulations and their impact on international business.',
-    paper2: 'Educational Pathways for African Students in Korea',
-    paper2Journal: 'International Education Review, 2021',
-    paper2Description: 'Study on challenges and opportunities for African students in Korean higher education.',
-    projectsInitiatives: 'Projects & Initiatives',
-    project1: 'Korea-Africa Student Exchange Program',
-    project1Period: '2020 - Present',
-    project1Description: 'Founded and led a program connecting African students with Korean universities, facilitating over 200 successful placements.',
-    project2: 'African Food Innovation Lab',
-    project2Period: '2021 - Present',
-    project2Description: 'Established a research initiative to adapt traditional African foods for Asian markets using modern food technology.',
-
-    // New Booking translations
-    reviewConsultation: 'Review Your Consultation Request',
-    consultationDetails: 'Consultation Details',
-    selectedService: 'Selected Service',
-    totalPrice: 'Total Price',
-    paymentMethods: 'Payment Methods',
-    payWithCard: 'Pay with Credit/Debit Card',
-    payWithMobile: 'Pay with Mobile Money',
-    payWithBank: 'Pay with Bank Transfer',
-    backToEdit: 'Back to Edit Details',
-    reviewConsultationRequest: 'Review Consultation Request',
-    hotelBooking: 'Hotel Booking Assistance',
-    phoneConsultation: 'Phone Consultation',
-    preferredDate: 'Preferred Date',
-    preferredTime: 'Preferred Time',
-    fullName: 'Full Name',
-  },
-  
-  RW: {
-    // Navigation
-    home: 'Inzu',
-    services: 'Serivisi',
-    about: 'Abo',
-    contact: 'Twandikire',
-    resources: 'Amakuru',
-    bookConsultation: 'Tekereza Inama',
-    
-    // Hero Section
-    heroTitle: 'Inzira yawe yo kwinjira mu mahirwe mpuzamahanga',
-    heroSubtitle: 'Ubuyobozi bw\'impuguke mu kwiga muri Koreya no kubaka ubucuruzi bw\'ibiryo n\'ibinyobwa muri Aziya. Kuva mu gusaba ubufasha bw\'amasomo kugeza mu gutanga inama z\'ubucuruzi mpuzamahanga.',
-    exploreStudyPrograms: 'Shakisha Gahunda z\'Amasomo',
-    fbConsulting: 'Inama z\'Ibiryo n\'Ibinyobwa',
-    studentsAssisted: 'Abanyeshuri Bafashijwe',
-    countriesReached: 'Ibihugu Bigerwemo',
-    foodScienceExpert: 'Inzobere mu Bumenyi bw\'Ibiryo',
-    startYourJourney: 'Tangira Urugendo Rwawe',
-    
-    // Services
-    servicesTitle: 'Serivisi Zacu',
-    servicesSubtitle: 'Ibisubizo byuzuye ku ntego zawe z\'uburezi n\'ubucuruzi',
-    studyAbroadTitle: 'Kwiga mu Mahanga n\'Ukwimuka',
-    studyAbroadSubtitle: 'Inzira yawe y\'uburezi bw\'isi',
-    fbConsultingTitle: 'Inama z\'Ibiryo n\'Ibinyobwa',
-    fbConsultingSubtitle: 'Ubuyobozi bw\'impuguke kuva mu bumenyi bw\'ibiryo',
-    
-    // Service Items
-    scholarshipGuidance: 'Ubuyobozi bw\'Ubufasha bw\'Amasomo',
-    scholarshipGuidanceDesc: 'Ubufasha bwuzuye bwo gusaba ubufasha bw\'amasomo',
-    universityAdmissions: 'Kwemererwa muri Kaminuza',
-    universityAdmissionsDesc: 'Ubufasha mu kaminuza zigenga n\'iza leta',
-    visaApplication: 'Gusaba Viza',
-    visaApplicationDesc: 'Ubufasha bwuzuye bwo gutunganya viza',
-    koreanLanguageTraining: 'Amahugurwa y\'Ikinyakoreya',
-    koreanLanguageTrainingDesc: 'Amasomo y\'ikinyakoreya ku rubuga',
-    visitsHelp: 'Ubufasha bw\'Urugendo n\'Ukwimukira',
-    visitsHelpDesc: 'Ubufasha bwuzuye bwo kwimukira no kwitegura',
-    
-    businessConsultation: 'Inama z\'Ubucuruzi',
-    businessConsultationDesc: 'Inama z\'impuguke z\'ubucuruzi bw\'ibiryo',
-    fbMarketAnalysis: 'Isesengura ry\'Isoko ry\'Ibiryo',
-    fbMarketAnalysisDesc: 'Ubushakashatsi n\'amakuru y\'isoko rya Aziya',
-    productDevelopment: 'Iterambere ry\'Ibicuruzwa',
-    productDevelopmentDesc: 'Ubuyobozi bw\'ubumenyi bw\'ibiryo n\'ikoranabuhanga',
-    regulatoryCompliance: 'Kubahiriza Amategeko',
-    regulatoryComplianceDesc: 'Umutekano w\'ibiryo n\'amategeko',
-    
-    // Service Features
-    personalizedGuidance: 'Ubuyobozi bwihariye kuva ku inzobere mu burezi bwa Koreya',
-    endToEndSupport: 'Ubufasha bwuzuye kuva mu gusaba kugeza ku kugera',
-    culturalOrientation: 'Ubuyobozi bw\'umuco no kwitegura',
-    mscFoodScienceExpertise: 'Ubuhanga bwa MSc mu Bumenyi bw\'Ibiryo n\'Ikoranabuhanga',
-    asianMarketSpecialization: 'Ubuhanga bw\'isoko rya Aziya',
-    internationalBusinessDev: 'Iterambere ry\'ubucuruzi mpuzamahanga',
-    getExpertConsultation: 'Saba Inama z\'Impuguke',
-    packageDealsAvailable: 'Amasezerano y\'Ipaketi Arahari!',
-    saveUpTo20Percent: 'Kugabanya kugeza 20% mukoresheje serivisi nyinshi',
-    viewAllPackages: 'Reba Amapaki Yose n\'Ibiciro',
-    
-    // About Section
-    aboutTitle: 'Abo',
-    aboutSubtitle: 'Umunyangakenerwa wawe wizewe mu burezi bw\'isi n\'ubwiyongere bw\'ubucuruzi',
-    meetYourGlobalAdvisor: 'Hura n\'Umujyanama wawe w\'Isi',
-    advisorName: 'John Doe, MSc',
-    advisorTitle: 'Ikoranabuhanga ry\'Ibiryo | Inzobere mu Burezi bwa Koreya',
-    advisorDescription: 'Umunyangakenerwa wawe mu burezi n\'ubucuruzi muri Koreya na Aziya. Mfite ubunyangamugayo bw\'imyaka myinshi mu buyobozi bw\'amasomo n\'ubucuruzi bw\'ibiryo.',
-    readMoreAboutMe: 'Soma Byinshi Kanjye',
-    educationExpert: 'Inzobere mu Burezi',
-    educationExpertDesc: 'Byihariye mu kwemererwa muri kaminuza za Koreya n\'ubuyobozi bw\'ubufasha bw\'amasomo',
-    fbConsultant: 'Umujyanama w\'Ibiryo',
-    fbConsultantDesc: 'MSc mu Bumenyi bw\'Ibiryo n\'ubunyangamugayo bunini bw\'isesengura ry\'isoko',
-    studentsHelped: '500+ Abanyeshuri',
-    studentsHelpedDesc: 'Nayoboye neza abanyeshuri bo muri Afurika kugera muri kaminuza zo hejuru za Koreya',
-    countriesReachedDesc: 'Ukugera mpuzamahanga muri Afurika, Aziya no hanze',
-    
-    // Partners Section
-    ourTrustedPartners: 'Abo Dukorana Nabo Twizeye',
-    partnerDescription: 'Dukorana n\'ibigo n\'imiryango ikomeye',
-    
-    // Newsletter Section
-    newsletterTitle: 'Komeza ugire Amakuru y\'Amahirwe y\'Isi',
-    newsletterDescription: 'Habona amakuru mashya y\'amahirwe y\'amasomo, ubushakashatsi bw\'inganda, n\'amabwiriza y\'intsinzi.',
-    enterEmailAddress: 'Andika aderesi yawe ya imeyili',
-    subscribe: 'Iyandikishe',
-    newsletterThankYou: 'Urakoze kwiyandikisha! Reba imeyili yawe kugirango wemeze.',
+    // Contact
+    contactTitle: "Contact Us",
+    contactDescription: "Get in touch with our team",
     
     // Testimonials
-    successStories: 'Inkuru z\'Intsinzi',
-    testimonialSubtitle: 'Inkuru z\'ukuri z\'abakiriya bagezeho ku nzozi zabo z\'isi',
+    testimonialsTitle: "Success Stories",
     
-    // Blog/Resources
-    latest: 'Amakuru',
-    resourcesDescription: 'Komeza ugire amakuru y\'amahirwe y\'amasomo, ubumenyi bw\'inganda, n\'amabwiriza y\'intsinzi',
-    blogPost1Title: 'Kaminuza 10 zo hejuru zo muri Koreya zitanga ubufasha bw\'amasomo ku banyeshuri b\'Afurika',
-    blogPost1Excerpt: 'Menya amahirwe meza yo kwiga muri Koreya y\'Amajyepfo...',
-    blogPost2Title: 'Kwinjira mu isoko ry\'ibiryo muri Koreya: Ubuyobozi bwuzuye',
-    blogPost2Excerpt: 'Byose ukeneye kumenya ku mategeko y\'ubucuruzi bw\'ibiryo muri Koreya...',
-    blogPost3Title: 'KGSP 2024: Amabwiriza yo gusaba n\'igihe ntarengwa',
-    blogPost3Excerpt: 'Gira amabwiriza y\'imbere ku gahunda y\'ubufasha bw\'amasomo ya guverinoma ya Koreya...',
-    education: 'Uburezi',
-    business: 'Ubucuruzi',
-    scholarships: 'Ubufasha bw\'Amasomo',
-    readMore: 'Soma Byinshi',
-    viewAllResources: 'Reba Amakuru Yose',
+    // Blog
+    blogTitle: "Latest Resources",
+    blogDescription: "Stay updated with the latest insights",
+    readMore: "Read More",
     
-    // Contact Section
-    letsStartYourJourney: 'Reka Dutangire Urugendo Rwawe',
-    readyToTakeNextStep: 'Witeguye gufata icyiciro gikurikira? Hamagara kugirango ubone inama zubusa',
-    sendUsMessage: 'Twoherereze Ubutumwa',
-    fillFormBelow: 'Uzuza ifishi iri hepfo tuzasubiza mu masaha 24',
-    yourName: 'Izina Ryawe',
-    yourEmail: 'Imeyili Yawe',
-    selectService: 'Hitamo Serivisi',
-    generalInquiry: 'Ibibazo Rusange',
-    studyAbroadRelocation: 'Kwiga mu Mahanga n\'Ukwimuka',
-    fbConsultingService: 'Inama z\'Ibiryo n\'Ibinyobwa',
-    bothServices: 'Serivisi Zombi',
-    message: 'Ubutumwa',
-    tellUsAboutGoals: 'Tubwire ku ntego zawe n\'uburyo dushobora kugufasha...',
-    sendMessage: 'Kohereza Ubutumwa',
-    quickContact: 'Itumanaho Ryihuse',
-    email: 'Imeyili',
-    phone: 'Telefoni',
-    phoneKorea: 'Telefoni (Koreya)',
-    whatsapp: 'WhatsApp',
-    bookAConsultation: 'Tekereza Inama',
-    scheduleFreeConsultation: 'Tekereza inama y\'iminota 15 yubusa kugirango muganire ku ntego zanyu mukabona inama zigenga.',
-    scheduleConsultation: 'Tekereza Inama Yubusa',
-    officeHours: 'Amasaha y\'Akazi',
-    mondayFriday: 'Kuwa mbere - Kuwa gatanu:',
-    saturday: 'Kuwa gatandatu:',
-    sunday: 'Ku cyumweru:',
-    closed: 'Bafunze',
+    // Newsletter
+    newsletterTitle: "Stay Updated",
+    newsletterDescription: "Get the latest updates and opportunities",
+    subscribe: "Subscribe",
+    enterEmailAddress: "Enter your email address",
     
     // Footer
-    footerDescription: 'Umunyangakenerwa wawe mu burezi n\'ubucuruzi muri Koreya na Aziya.',
-    quickLinks: 'Ihuza Ryihuse',
-    aboutUs: 'Abo',
-    studyInKorea: 'Wige muri Koreya',
-    resourcesBlog: 'Amakuru/Blog',
-    contactInfo: 'Amakuru y\'Itumanaho',
-    location: 'Seoul, Koreya y\'Amajyepfo',
-    legal: 'Amategeko',
-    privacyPolicy: 'Politiki y\'Ubwoba',
-    termsOfService: 'Amategeko y\'Serivisi',
-    sitemap: 'Ikarita y\'Urubuga',
-    allRightsReserved: 'Uburenganzira bwose burarinzwe.',
+    quickLinks: "Quick Links",
+    followUs: "Follow Us",
     
-    // Legal Pages
-    privacyPolicyTitle: 'Politiki y\'Ubwoba',
-    termsOfServiceTitle: 'Amategeko y\'Serivisi',
-    sitemapTitle: 'Ikarita y\'Urubuga',
+    // Legal pages
+    privacyPolicy: "Privacy Policy",
+    termsOfService: "Terms of Service", 
+    sitemap: "Sitemap",
     
-    // About Advisor Page
-    backToHome: 'Subira ku Rupapuro rw\'Itangiriro',
-    biography: 'Amateka y\'Ubuzima',
-    biographyP1: 'Yavukiye akaba akurira mu Rwanda, John Doe yari afite urukundo rukomeye rw\'uburezi n\'iterambere ry\'amahanga.',
-    biographyP2: 'Mu gihe yari muri Koreya, John ntabwo yagize inyungu gusa mu masomo ariko yabyimye kandi no gusobanukirwa cyane umuco n\'uburezi bwa Koreya.',
-    biographyP3: 'Nyuma yo kurangiza amasomo, John yahisemo kwiyegurira umwuga we wo gufasha abandi banyeshuri b\'Abanyafurika.',
-    educationQualifications: 'Uburezi n\'Impamyabumenyi',
-    mscFoodScience: 'MSc mu Bumenyi bw\'Ibiryo n\'Ikoranabuhanga',
-    seoulNationalUniversity: 'Kaminuza y\'Isi ya Seoul, Koreya',
-    graduationYear: '2019 - 2021',
-    bscNutrition: 'BSc mu Bumenyi bw\'Intungamubiri',
-    universityOfRwanda: 'Kaminuza y\'u Rwanda',
-    undergraduateYear: '2014 - 2018',
-    professionalExperience: 'Ubunyangamugayo bw\'Umwuga',
-    consultantTitle: 'Umujyanama Mukuru w\'Ibiryo',
-    consultantCompany: 'Inama y\'Ubucuruzi ya Koreya-Afurika',
-    consultantPeriod: '2021 - Ubu',
-    consultantDescription: 'Uyobora isesengura ry\'isoko n\'ibikorwa by\'iterambere ry\'ubucuruzi.',
-    educationSpecialistTitle: 'Umujyanama w\'Uburezi',
-    freelanceWork: 'Akazi gakomeye',
-    specialistPeriod: '2020 - Ubu',
-    specialistDescription: 'Gutanga ubuyobozi bwuzuye ku banyeshuri b\'Abanyafurika.',
-    readyToStart: 'Witeguye Gutangira Urugendo Rwawe?',
-    contactCallToAction: 'Reka tuganire ku buryo nshobora kugufasha kugera ku ntego zawe muri Koreya na Aziya.',
-    advisorFullDescription: 'Umushakashatsi ukunda uburezi bw\'isi n\'iterambere ry\'ubucuruzi',
-
-    // New translations in Kinyarwanda
-    skillsExpertise: 'Ubuhanga n\'Ubumenyi',
-    educationConsulting: 'Inama z\'Uburezi',
-    scholarshipApplications: 'Gusaba Ubufasha bw\'Amasomo',
-    universitySelection: 'Guhitamo Kaminuza',
-    visaGuidance: 'Ubuyobozi bwa Viza',
-    culturalAdaptation: 'Kwimenyereza Umuco',
-    businessConsulting: 'Inama z\'Ubucuruzi',
-    marketResearch: 'Ubushakashatsi bw\'Isoko',
-    regulatoryAffairs: 'Ibibazo by\'Amategeko',
-    businessStrategy: 'Ingamba z\'Ubucuruzi',
-    certificationsTraining: 'Impamyabumenyi n\'Amahugurwa',
-    haccp: 'Impamyabumenyi ya HACCP y\'Umutekano w\'Ibiryo',
-    haccpIssuer: 'Ikigo cy\'Umutekano w\'Ibiryo cya Koreya',
-    topik: 'TOPIK Urwego rwa 6 (Ubushobozi bw\'Ikinyakoreya)',
-    topikIssuer: 'Ikigo cy\'Igihugu cy\'Uburezi bw\'Amahanga',
-    papersPublications: 'Ibyanditswe n\'Ibisohokeyeho',
-    paper1: 'Amahame y\'Umutekano w\'Ibiryo mu Nganda za Koreya',
-    paper1Journal: 'Ikinyamakuru cy\'Ubumenyi bw\'Ibiryo bya Aziya, 2022',
-    paper1Description: 'Isesengura ryimbitse ry\'amategeko y\'umutekano w\'ibiryo.',
-    paper2: 'Inzira z\'Uburezi z\'Abanyeshuri b\'Abanyafurika muri Koreya',
-    paper2Journal: 'Isuzuma ry\'Uburezi bw\'Amahanga, 2021',
-    paper2Description: 'Ubushakashatsi ku bibazo n\'amahirwe y\'abanyeshuri.',
-    projectsInitiatives: 'Imishinga n\'Inyubaka',
-    project1: 'Gahunda yo Guhana Abanyeshuri Koreya-Afurika',
-    project1Period: '2020 - Ubu',
-    project1Description: 'Yashinze kandi ayobowe gahunda ihuza abanyeshuri.',
-    project2: 'Laboratoire y\'Udushya mu Biryo bya Afurika',
-    project2Period: '2021 - Ubu',
-    project2Description: 'Yashinge ubushakashatsi bw\'guhindura ibiryo bya Afurika.',
-
-    // Booking translations
-    reviewConsultation: 'Suzuma Icyifuzo cyawe cy\'Inama',
-    consultationDetails: 'Amakuru y\'Inama',
-    selectedService: 'Serivisi Yahiswemo',
-    totalPrice: 'Igiciro Cyose',
-    paymentMethods: 'Uburyo bwo Kwishyura',
-    payWithCard: 'Ishyura na Karita',
-    payWithMobile: 'Ishyura na Telefoni',
-    payWithBank: 'Ishyura na Banki',
-    backToEdit: 'Subira Guhindura',
-    reviewConsultationRequest: 'Suzuma Icyifuzo cy\'Inama',
-    hotelBooking: 'Ubufasha bwo Gutekereza Hoteli',
-    phoneConsultation: 'Inama ya Telefoni',
-    preferredDate: 'Itariki Uhitamo',
-    preferredTime: 'Isaha Uhitamo',
-    fullName: 'Amazina Yose',
-  },
-  
-  FR: {
-    // Navigation
-    home: 'Accueil',
-    services: 'Services',
-    about: 'À propos',
-    contact: 'Contact',
-    resources: 'Ressources',
-    bookConsultation: 'Réserver une Consultation',
-    
-    // Hero Section
-    heroTitle: 'Votre Passerelle vers les Opportunités Mondiales',
-    heroSubtitle: 'Conseils d\'experts pour étudier en Corée et développer des entreprises de nourriture et boissons en Asie.',
-    exploreStudyPrograms: 'Explorer les Programmes d\'Études',
-    fbConsulting: 'Conseil F&B',
-    studentsAssisted: 'Étudiants Assistés',
-    countriesReached: 'Pays Atteints',
-    foodScienceExpert: 'Expert en Science Alimentaire',
-    startYourJourney: 'Commencez Votre Voyage',
-    
-    // Services
-    servicesTitle: 'Nos Services',
-    servicesSubtitle: 'Solutions complètes pour vos objectifs éducatifs et commerciaux',
-    studyAbroadTitle: 'Études à l\'Étranger et Relocation',
-    studyAbroadSubtitle: 'Votre chemin vers l\'éducation mondiale',
-    fbConsultingTitle: 'Conseil en Nourriture et Boissons',
-    fbConsultingSubtitle: 'Conseils d\'experts en science alimentaire MSc',
-    
-    // Service Items
-    scholarshipGuidance: 'Orientation des Bourses',
-    scholarshipGuidanceDesc: 'Support complet pour les demandes de bourses',
-    universityAdmissions: 'Admissions Universitaires',
-    universityAdmissionsDesc: 'Assistance pour universités privées et publiques',
-    visaApplication: 'Demande de Visa',
-    visaApplicationDesc: 'Support complet pour le traitement des visas',
-    koreanLanguageTraining: 'Formation en Langue Coréenne',
-    koreanLanguageTrainingDesc: 'Cours de coréen en ligne',
-    visitsHelp: 'Aide aux Visites et Relocalisations',
-    visitsHelpDesc: 'Assistance complète pour la relocalisation et l\'installation',
-    
-    businessConsultation: 'Consultation d\'Affaires',
-    businessConsultationDesc: 'Conseils d\'experts en affaires F&B',
-    fbMarketAnalysis: 'Analyse du Marché F&B',
-    fbMarketAnalysisDesc: 'Recherche de marché et insights asiatiques',
-    productDevelopment: 'Développement de Produits',
-    productDevelopmentDesc: 'Conseils en science alimentaire et technologie',
-    regulatoryCompliance: 'Conformité Réglementaire',
-    regulatoryComplianceDesc: 'Sécurité alimentaire et réglementations',
-    
-    // Service Features
-    personalizedGuidance: 'Conseils personnalisés d\'un expert en éducation coréenne',
-    endToEndSupport: 'Support de bout en bout de la candidature à l\'arrivée',
-    culturalOrientation: 'Orientation culturelle et assistance à l\'installation',
-    mscFoodScienceExpertise: 'Expertise MSc en Science et Technologie Alimentaire',
-    asianMarketSpecialization: 'Spécialisation du marché asiatique',
-    internationalBusinessDev: 'Développement des affaires internationales',
-    getExpertConsultation: 'Obtenir une Consultation d\'Expert',
-    packageDealsAvailable: 'Offres de Packages Disponibles!',
-    saveUpTo20Percent: 'Économisez jusqu\'à 20% en combinant les services',
-    viewAllPackages: 'Voir Tous les Packages et Tarifs',
-    
-    // About Section
-    aboutTitle: 'À Propos de Nous',
-    aboutSubtitle: 'Votre partenaire de confiance dans l\'éducation mondiale et l\'expansion commerciale',
-    meetYourGlobalAdvisor: 'Rencontrez Votre Conseiller Mondial',
-    advisorName: 'John Doe, MSc',
-    advisorTitle: 'Science Alimentaire & Technologie | Expert en Éducation Coréenne',
-    advisorDescription: 'Votre partenaire pour l\'éducation et les affaires en Corée et en Asie.',
-    readMoreAboutMe: 'En Savoir Plus Sur Moi',
-    educationExpert: 'Expert en Éducation',
-    educationExpertDesc: 'Spécialisé dans les admissions universitaires coréennes et l\'orientation des bourses',
-    fbConsultant: 'Consultant F&B',
-    fbConsultantDesc: 'MSc en Science Alimentaire avec une vaste expérience d\'analyse de marché',
-    studentsHelped: '500+ Étudiants',
-    studentsHelpedDesc: 'J\'ai guidé avec succès des étudiants d\'Afrique vers les meilleures universités coréennes',
-    countriesReachedDesc: 'Portée internationale à travers l\'Afrique, l\'Asie et au-delà',
-    
-    // Partners Section
-    ourTrustedPartners: 'Nos Partenaires de Confiance',
-    partnerDescription: 'Nous travaillons avec des institutions et organisations de premier plan',
-    
-    // Newsletter Section
-    newsletterTitle: 'Restez Informé des Opportunités Mondiales',
-    newsletterDescription: 'Recevez les dernières annonces de bourses, conseils d\'études à l\'étranger et aperçus de l\'industrie F&B.',
-    enterEmailAddress: 'Entrez votre adresse e-mail',
-    subscribe: 'S\'abonner',
-    newsletterThankYou: 'Merci de vous être abonné! Vérifiez votre e-mail pour confirmation.',
-    
-    // Testimonials
-    successStories: 'Histoires de Succès',
-    testimonialSubtitle: 'Vraies histoires de clients qui ont réalisé leurs rêves mondiaux',
-    
-    // Blog/Resources
-    latest: 'Dernières',
-    resourcesDescription: 'Restez informé des opportunités de bourses, des aperçus de l\'industrie et des conseils de succès',
-    blogPost1Title: 'Top 10 des Universités Coréennes Offrant des Bourses aux Étudiants Africains',
-    blogPost1Excerpt: 'Découvrez les meilleures opportunités d\'éducation financée en Corée du Sud...',
-    blogPost2Title: 'Percer dans le Marché F&B Coréen: Un Guide Complet',
-    blogPost2Excerpt: 'Tout ce que vous devez savoir sur les réglementations commerciales alimentaires en Corée...',
-    blogPost3Title: 'KGSP 2024: Conseils de Candidature et Dates Limites',
-    blogPost3Excerpt: 'Obtenez des conseils d\'initiés pour le Programme de Bourses du Gouvernement Coréen...',
-    education: 'Éducation',
-    business: 'Affaires',
-    scholarships: 'Bourses',
-    readMore: 'Lire Plus',
-    viewAllResources: 'Voir Toutes les Ressources',
-    
-    // Contact Section
-    letsStartYourJourney: 'Commençons Votre Voyage',
-    readyToTakeNextStep: 'Prêt à franchir l\'étape suivante? Contactez-nous pour une consultation gratuite',
-    sendUsMessage: 'Envoyez-nous un Message',
-    fillFormBelow: 'Remplissez le formulaire ci-dessous et nous répondrons dans les 24 heures',
-    yourName: 'Votre Nom',
-    yourEmail: 'Votre E-mail',
-    selectService: 'Sélectionner le Service',
-    generalInquiry: 'Demande Générale',
-    studyAbroadRelocation: 'Études à l\'Étranger et Relocation',
-    fbConsultingService: 'Conseil F&B',
-    bothServices: 'Les Deux Services',
-    message: 'Message',
-    tellUsAboutGoals: 'Parlez-nous de vos objectifs et comment nous pouvons vous aider...',
-    sendMessage: 'Envoyer le Message',
-    quickContact: 'Contact Rapide',
-    email: 'E-mail',
-    phone: 'Téléphone',
-    phoneKorea: 'Téléphone (Corée)',
-    whatsapp: 'WhatsApp',
-    bookAConsultation: 'Réserver une Consultation',
-    scheduleFreeConsultation: 'Planifiez une consultation gratuite de 15 minutes pour discuter de vos objectifs et obtenir des conseils personnalisés.',
-    scheduleConsultation: 'Planifier une Consultation Gratuite',
-    officeHours: 'Heures de Bureau',
-    mondayFriday: 'Lundi - Vendredi:',
-    saturday: 'Samedi:',
-    sunday: 'Dimanche:',
-    closed: 'Fermé',
-    
-    // Footer
-    footerDescription: 'Votre partenaire pour l\'éducation et les affaires en Corée et en Asie.',
-    quickLinks: 'Liens Rapides',
-    aboutUs: 'À Propos de Nous',
-    studyInKorea: 'Étudier en Corée',
-    resourcesBlog: 'Ressources/Blog',
-    contactInfo: 'Informations de Contact',
-    location: 'Séoul, Corée du Sud',
-    legal: 'Légal',
-    privacyPolicy: 'Politique de Confidentialité',
-    termsOfService: 'Conditions de Service',
-    sitemap: 'Plan du Site',
-    allRightsReserved: 'Tous droits réservés.',
-    
-    // Legal Pages
-    privacyPolicyTitle: 'Politique de Confidentialité',
-    termsOfServiceTitle: 'Conditions de Service',
-    sitemapTitle: 'Plan du Site',
-    
-    // About Advisor Page
-    backToHome: 'Retour à l\'Accueil',
-    biography: 'Biographie',
-    biographyP1: 'Né et élevé au Rwanda, John Doe a toujours eu une passion pour l\'éducation et le développement international.',
-    biographyP2: 'Pendant son séjour en Corée, John a non seulement excellé académiquement mais a aussi développé une compréhension profonde de la culture coréenne.',
-    biographyP3: 'Après l\'obtention de son diplôme, John a décidé de consacrer sa carrière à aider d\'autres étudiants africains.',
-    educationQualifications: 'Éducation et Qualifications',
-    mscFoodScience: 'MSc en Science et Technologie Alimentaire',
-    seoulNationalUniversity: 'Université Nationale de Séoul, Corée',
-    graduationYear: '2019 - 2021',
-    bscNutrition: 'BSc en Science de la Nutrition',
-    universityOfRwanda: 'Université du Rwanda',
-    undergraduateYear: '2014 - 2018',
-    professionalExperience: 'Expérience Professionnelle',
-    consultantTitle: 'Consultant Senior F&B',
-    consultantCompany: 'Conseil Commercial Corée-Afrique',
-    consultantPeriod: '2021 - Présent',
-    consultantDescription: 'Dirigeant l\'analyse de marché et les initiatives de développement commercial.',
-    educationSpecialistTitle: 'Consultant en Éducation',
-    freelanceWork: 'Freelance',
-    specialistPeriod: '2020 - Présent',
-    specialistDescription: 'Fournir des conseils complets aux étudiants africains.',
-    readyToStart: 'Prêt à Commencer Votre Voyage?',
-    contactCallToAction: 'Discutons de la façon dont je peux vous aider à atteindre vos objectifs en Corée et en Asie.',
-    advisorFullDescription: 'Un défenseur passionné de l\'éducation mondiale et du développement commercial',
-
-    // New translations in French
-    skillsExpertise: 'Compétences et Expertise',
-    educationConsulting: 'Conseil en Éducation',
-    scholarshipApplications: 'Demandes de Bourses',
-    universitySelection: 'Sélection d\'Université',
-    visaGuidance: 'Guidance Visa',
-    culturalAdaptation: 'Adaptation Culturelle',
-    businessConsulting: 'Conseil en Affaires',
-    marketResearch: 'Recherche de Marché',
-    regulatoryAffairs: 'Affaires Réglementaires',
-    businessStrategy: 'Stratégie d\'Affaires',
-    certificationsTraining: 'Certifications et Formation',
-    haccp: 'Certification HACCP de Sécurité Alimentaire',
-    haccpIssuer: 'Autorité de Sécurité Alimentaire Coréenne',
-    topik: 'TOPIK Niveau 6 (Maîtrise du Coréen)',
-    topikIssuer: 'Institut National pour l\'Éducation Internationale',
-    papersPublications: 'Articles et Publications',
-    paper1: 'Normes de Sécurité Alimentaire dans l\'Industrie F&B Coréenne',
-    paper1Journal: 'Journal Asiatique de Science Alimentaire, 2022',
-    paper1Description: 'Analyse complète des réglementations de sécurité alimentaire.',
-    paper2: 'Voies Éducatives pour les Étudiants Africains en Corée',
-    paper2Journal: 'Revue Internationale de l\'Éducation, 2021',
-    paper2Description: 'Étude sur les défis et opportunités pour les étudiants africains.',
-    projectsInitiatives: 'Projets et Initiatives',
-    project1: 'Programme d\'Échange Étudiants Corée-Afrique',
-    project1Period: '2020 - Présent',
-    project1Description: 'Fondé et dirigé un programme connectant les étudiants africains.',
-    project2: 'Laboratoire d\'Innovation Alimentaire Africaine',
-    project2Period: '2021 - Présent',
-    project2Description: 'Établi une initiative de recherche pour adapter les aliments africains.',
-
-    // Booking translations
-    reviewConsultation: 'Examiner Votre Demande de Consultation',
-    consultationDetails: 'Détails de la Consultation',
-    selectedService: 'Service Sélectionné',
-    totalPrice: 'Prix Total',
-    paymentMethods: 'Méthodes de Paiement',
-    payWithCard: 'Payer par Carte',
-    payWithMobile: 'Payer par Mobile',
-    payWithBank: 'Payer par Banque',
-    backToEdit: 'Retour pour Modifier',
-    reviewConsultationRequest: 'Examiner la Demande de Consultation',
-    hotelBooking: 'Assistance Réservation Hôtel',
-    phoneConsultation: 'Consultation Téléphonique',
-    preferredDate: 'Date Préférée',
-    preferredTime: 'Heure Préférée',
-    fullName: 'Nom Complet',
+    // WhatsApp button
+    scheduleFreeFifteenMinuteConsultation: "Schedule a free 15-minute consultation"
   },
   
   KO: {
     // Navigation
-    home: '홈',
-    services: '서비스',
-    about: '소개',
-    contact: '연락처',
-    resources: '자료',
-    bookConsultation: '상담 예약',
+    home: "홈",
+    about: "소개", 
+    services: "서비스",
+    contact: "연락처",
+    resources: "자료",
     
-    // Hero Section
-    heroTitle: '글로벌 기회로의 관문',
-    heroSubtitle: '한국 유학과 아시아 전역의 식음료 사업 구축을 위한 전문 가이드.',
-    exploreStudyPrograms: '학습 프로그램 탐색',
-    fbConsulting: 'F&B 컨설팅',
-    studentsAssisted: '지원한 학생 수',
-    countriesReached: '도달 국가 수',
-    foodScienceExpert: '식품과학 전문가',
-    startYourJourney: '여행을 시작하세요',
+    // Hero section
+    heroTitle: "한국 교육 및 F&B 성공의 관문",
+    heroSubtitle: "장학금 • 대학 입학 • F&B 컨설팅",
+    heroDescription: "장학금 안내부터 식품 사업 컨설팅까지, 아프리카와 한국을 연결하는 맞춤형 성공 경로를 제공합니다.",
+    getStarted: "시작하기",
+    learnMore: "자세히 보기",
     
     // Services
-    servicesTitle: '우리의 서비스',
-    servicesSubtitle: '교육 및 비즈니스 목표를 위한 종합 솔루션',
-    studyAbroadTitle: '해외 유학 및 이주',
-    studyAbroadSubtitle: '글로벌 교육으로의 길',
-    fbConsultingTitle: '식음료 컨설팅',
-    fbConsultingSubtitle: '식품과학 석사의 전문 가이드',
+    servicesTitle: "우리의 서비스",
+    servicesSubtitle: "교육 및 사업 목표를 위한 종합 솔루션",
+    studyInKorea: "한국 유학",
+    studyInKoreaDesc: "장학금 및 대학 입학을 위한 완전한 안내",
+    fbConsulting: "F&B 컨설팅", 
+    fbConsultingDesc: "식음료 사업을 위한 전문 컨설팅",
+    universityAdmissions: "대학교 입학",
+    universityAdmissionsDesc: "대학 지원을 위한 전 과정 지원",
+    visaAssistance: "비자 지원",
+    visaAssistanceDesc: "비자 신청 및 서류 작성 전문 도움",
     
-    // Service Items
-    scholarshipGuidance: '장학금 안내',
-    scholarshipGuidanceDesc: '완전한 장학금 신청 지원',
-    universityAdmissions: '대학교 입학',
-    universityAdmissionsDesc: '사립 및 공립 대학교 지원',
-    visaApplication: '비자 신청',
-    visaApplicationDesc: '완전한 비자 처리 지원',
-    koreanLanguageTraining: '한국어 교육',
-    koreanLanguageTrainingDesc: '온라인 한국어 과정',
-    visitsHelp: '방문 도움 및 이주',
-    visitsHelpDesc: '완전한 이주 및 정착 지원',
+    // Study Programs
+    studyProgramsTitle: "유학 프로그램 및 서비스",
+    studyProgramsSubtitle: "한국 교육 여정을 위한 종합 지원",
+    scholarshipGuidance: "장학금 안내",
+    scholarshipGuidanceDesc: "장학금 찾기 및 지원에 대한 전문적인 도움",
+    universityAdmissionSupport: "대학교 입학 지원",
+    universityAdmissionSupportDesc: "대학교 입학 전 과정 지원",
+    visaApplicationAssistance: "비자 신청 지원",
+    visaApplicationAssistanceDesc: "전문적인 비자 신청 지원",
+    languagePreparation: "언어 준비",
+    languagePreparationDesc: "한국어 시험 준비",
     
-    businessConsultation: '비즈니스 상담',
-    businessConsultationDesc: '전문 F&B 비즈니스 조언',
-    fbMarketAnalysis: 'F&B 시장 분석',
-    fbMarketAnalysisDesc: '아시아 시장 연구 및 인사이트',
-    productDevelopment: '제품 개발',
-    productDevelopmentDesc: '식품과학 및 기술 가이드',
-    regulatoryCompliance: '규제 준수',
-    regulatoryComplianceDesc: '식품 안전 및 규정',
+    // Study Programs Features
+    scholarshipSearch: "장학금 검색",
+    applicationAssistance: "지원 도움",
+    documentPreparation: "서류 준비", 
+    universitySelection: "대학교 선택",
+    applicationReview: "지원서 검토",
+    interviewPreparation: "면접 준비",
+    visaDocumentPrep: "서류 준비",
+    applicationFiling: "신청서 제출",
+    interviewCoaching: "면접 코칭",
+    topikPreparation: "TOPIK 준비",
+    conversationPractice: "회화 연습",
+    culturalOrientationAndAccommodation: "문화적 오리엔테이션 및 장학 지원",
     
-    // Service Features
-    personalizedGuidance: '한국 교육 전문가의 개인화된 가이드',
-    endToEndSupport: '신청부터 도착까지 완전한 지원',
-    culturalOrientation: '문화적 오리엔테이션 및 정착 지원',
-    mscFoodScienceExpertise: '식품과학기술 석사 전문성',
-    asianMarketSpecialization: '아시아 시장 전문화',
-    internationalBusinessDev: '국제 비즈니스 개발',
-    getExpertConsultation: '전문가 상담 받기',
-    packageDealsAvailable: '패키지 딜 이용 가능!',
-    saveUpTo20Percent: '서비스를 결합하여 최대 20% 절약',
-    viewAllPackages: '모든 패키지 및 가격 보기',
+    // F&B Consulting
+    fbConsultingTitle: "F&B 컨설팅",
+    businessStrategy: "비즈니스 전략",
+    businessStrategyDesc: "전략적 사업 계획 및 시장 진입",
+    marketAnalysis: "F&B 시장 분석",
+    marketAnalysisDesc: "심층 시장 분석 및 경쟁 정보",
+    productDevelopment: "제품 개발", 
+    productDevelopmentDesc: "식품 제품 개발 및 혁신",
+    regulatoryCompliance: "규제 준수",
+    regulatoryComplianceDesc: "식품 안전 및 규제 요구사항 탐색",
     
-    // About Section
-    aboutTitle: '회사 소개',
-    aboutSubtitle: '글로벌 교육 및 비즈니스 확장의 신뢰할 수 있는 파트너',
-    meetYourGlobalAdvisor: '글로벌 어드바이저를 만나보세요',
-    advisorName: 'John Doe, MSc',
-    advisorTitle: '식품과학기술 | 한국 교육 전문가',
-    advisorDescription: '한국과 아시아의 교육 및 비즈니스 파트너.',
-    readMoreAboutMe: '더 자세히 알아보기',
-    educationExpert: '교육 전문가',
-    educationExpertDesc: '한국 대학교 입학 및 장학금 안내 전문',
-    fbConsultant: 'F&B 컨설턴트',
-    fbConsultantDesc: '식품과학 석사 및 광범위한 시장 분석 경험',
-    studentsHelped: '500명 이상의 학생',
-    studentsHelpedDesc: '아프리카 학생들을 한국 최고 대학교로 성공적으로 안내',
-    countriesReachedDesc: '아프리카, 아시아 및 그 너머의 국제적 도달',
+    // F&B Features
+    marketResearch: "시장 조사",
+    businessPlanning: "사업 계획",
+    marketSizing: "시장 규모 측정",
+    competitorAnalysis: "경쟁사 분석",
+    recipeDevelopment: "레시피 개발", 
+    productTesting: "제품 테스트",
+    safetyStandards: "안전 기준",
+    certificationSupport: "인증 지원",
     
-    // Partners Section
-    ourTrustedPartners: '신뢰할 수 있는 파트너',
-    partnerDescription: '선도적인 기관 및 조직과 협력합니다',
+    // Common
+    startYourJourney: "여행을 시작하세요",
+    backToHome: "홈으로 돌아가기",
+    bookConsultation: "상담 예약",
+    getQuote: "견적 받기",
+    scheduleConsultation: "상담 일정 잡기",
     
-    // Newsletter Section
-    newsletterTitle: '글로벌 기회 업데이트 받기',
-    newsletterDescription: '최신 장학금 공지, 해외 유학 팁, F&B 업계 인사이트를 받아보세요.',
-    enterEmailAddress: '이메일 주소를 입력하세요',
-    subscribe: '구독하기',
-    newsletterThankYou: '구독해 주셔서 감사합니다! 확인을 위해 이메일을 확인해 주세요.',
+    // About
+    aboutTitle: "회사 소개",
+    aboutDescription: "우리의 사명과 전문성에 대해 알아보세요",
+    
+    // Contact
+    contactTitle: "연락처",
+    contactDescription: "우리 팀과 연락하세요",
     
     // Testimonials
-    successStories: '성공 사례',
-    testimonialSubtitle: '글로벌 꿈을 이룬 고객들의 실제 이야기',
+    testimonialsTitle: "성공 사례",
     
-    // Blog/Resources
-    latest: '최신',
-    resourcesDescription: '장학금 기회, 업계 인사이트, 성공 팁으로 최신 정보를 유지하세요',
-    blogPost1Title: '아프리카 학생들에게 장학금을 제공하는 한국 대학교 상위 10곳',
-    blogPost1Excerpt: '한국에서 지원받는 교육의 최고 기회를 발견하세요...',
-    blogPost2Title: '한국 F&B 시장 진출: 완전 가이드',
-    blogPost2Excerpt: '한국의 식품 사업 규정에 대해 알아야 할 모든 것...',
-    blogPost3Title: 'KGSP 2024: 지원 팁과 마감일',
-    blogPost3Excerpt: '한국 정부 장학금 프로그램의 내부자 팁을 얻으세요...',
-    education: '교육',
-    business: '비즈니스',
-    scholarships: '장학금',
-    readMore: '더 읽기',
-    viewAllResources: '모든 자료 보기',
+    // Blog
+    blogTitle: "최신 자료",
+    blogDescription: "최신 인사이트로 업데이트하세요",
+    readMore: "더 읽기",
     
-    // Contact Section
-    letsStartYourJourney: '여행을 시작해 봅시다',
-    readyToTakeNextStep: '다음 단계를 밟을 준비가 되셨나요? 무료 상담을 위해 연락하세요',
-    sendUsMessage: '메시지 보내기',
-    fillFormBelow: '아래 양식을 작성하시면 24시간 내에 응답드리겠습니다',
-    yourName: '이름',
-    yourEmail: '이메일',
-    selectService: '서비스 선택',
-    generalInquiry: '일반 문의',
-    studyAbroadRelocation: '해외 유학 및 이주',
-    fbConsultingService: 'F&B 컨설팅',
-    bothServices: '두 서비스 모두',
-    message: '메시지',
-    tellUsAboutGoals: '목표와 저희가 어떻게 도울 수 있는지 알려주세요...',
-    sendMessage: '메시지 보내기',
-    quickContact: '빠른 연락',
-    email: '이메일',
-    phone: '전화',
-    phoneKorea: '전화 (한국)',
-    whatsapp: 'WhatsApp',
-    bookAConsultation: '상담 예약',
-    scheduleFreeConsultation: '목표를 논의하고 개인화된 조언을 받기 위해 15분 무료 상담을 예약하세요.',
-    scheduleConsultation: '무료 상담 예약',
-    officeHours: '운영 시간',
-    mondayFriday: '월요일 - 금요일:',
-    saturday: '토요일:',
-    sunday: '일요일:',
-    closed: '휴무',
+    // Newsletter
+    newsletterTitle: "업데이트 받기",
+    newsletterDescription: "최신 업데이트와 기회를 받아보세요",
+    subscribe: "구독하기",
+    enterEmailAddress: "이메일 주소를 입력하세요",
     
     // Footer
-    footerDescription: '한국과 아시아의 교육 및 비즈니스 파트너.',
-    quickLinks: '빠른 링크',
-    aboutUs: '회사 소개',
-    studyInKorea: '한국 유학',
-    resourcesBlog: '자료/블로그',
-    contactInfo: '연락처 정보',
-    location: '서울, 대한민국',
-    legal: '법적 정보',
-    privacyPolicy: '개인정보처리방침',
-    termsOfService: '서비스 약관',
-    sitemap: '사이트맵',
-    allRightsReserved: '모든 권리 보유.',
+    quickLinks: "빠른 링크",
+    followUs: "팔로우하기",
     
-    // Legal Pages
-    privacyPolicyTitle: '개인정보처리방침',
-    termsOfServiceTitle: '서비스 약관',
-    sitemapTitle: '사이트맵',
+    // Legal pages
+    privacyPolicy: "개인정보 보호정책",
+    termsOfService: "서비스 약관",
+    sitemap: "사이트맵",
     
-    // About Advisor Page
-    backToHome: '홈으로 돌아가기',
-    biography: '경력',
-    biographyP1: '르완다에서 태어나고 자란 John Doe는 항상 교육과 국제 개발에 대한 열정을 가지고 있었습니다.',
-    biographyP2: '한국에서의 시간 동안 John은 학문적으로 뛰어난 성과를 거두었을 뿐만 아니라 한국 문화에 대한 깊은 이해를 발전시켰습니다.',
-    biographyP3: '졸업 후 John은 다른 아프리카 학생들을 도우는 데 자신의 경력을 바치기로 결정했습니다.',
-    educationQualifications: '교육 및 자격',
-    mscFoodScience: '식품과학기술 석사',
-    seoulNationalUniversity: '서울대학교, 한국',
-    graduationYear: '2019 - 2021',
-    bscNutrition: '영양과학 학사',
-    universityOfRwanda: '르완다 대학교',
-    undergraduateYear: '2014 - 2018',
-    professionalExperience: '전문 경험',
-    consultantTitle: '수석 F&B 컨설턴트',
-    consultantCompany: '한국-아프리카 무역위원회',
-    consultantPeriod: '2021 - 현재',
-    consultantDescription: '시장 분석 및 사업 개발 이니셔티브를 주도하고 있습니다.',
-    educationSpecialistTitle: '교육 컨설턴트',
-    freelanceWork: '프리랜서',
-    specialistPeriod: '2020 - 현재',
-    specialistDescription: '아프리카 학생들에게 종합적인 지도를 제공하고 있습니다.',
-    readyToStart: '여행을 시작할 준비가 되셨나요?',
-    contactCallToAction: '한국과 아시아에서 목표를 달성하는 데 제가 어떻게 도움을 드릴 수 있는지 논의해 보겠습니다.',
-    advisorFullDescription: '글로벌 교육과 비즈니스 개발에 대한 열정적인 옹호자',
-
-    // New translations in Korean
-    skillsExpertise: '기술 및 전문성',
-    educationConsulting: '교육 컨설팅',
-    scholarshipApplications: '장학금 신청',
-    universitySelection: '대학교 선택',
-    visaGuidance: '비자 안내',
-    culturalAdaptation: '문화 적응',
-    businessConsulting: '비즈니스 컨설팅',
-    marketResearch: '시장 조사',
-    regulatoryAffairs: '규제 업무',
-    businessStrategy: '비즈니스 전략',
-    certificationsTraining: '자격증 및 교육',
-    haccp: 'HACCP 식품안전 자격증',
-    haccpIssuer: '한국 식품안전청',
-    topik: 'TOPIK 6급 (한국어 능력)',
-    topikIssuer: '국립국제교육원',
-    papersPublications: '논문 및 출판물',
-    paper1: '한국 F&B 산업의 식품안전 기준',
-    paper1Journal: '아시아 식품과학 저널, 2022',
-    paper1Description: '식품안전 규정과 국제 비즈니스에 미치는 영향에 대한 종합 분석.',
-    paper2: '한국 내 아프리카 학생들의 교육 경로',
-    paper2Journal: '국제교육 리뷰, 2021',
-    paper2Description: '아프리카 학생들의 도전과 기회에 대한 연구.',
-    projectsInitiatives: '프로젝트 및 이니셔티브',
-    project1: '한국-아프리카 학생 교환 프로그램',
-    project1Period: '2020 - 현재',
-    project1Description: '아프리카 학생들과 한국 대학을 연결하는 프로그램을 설립하고 주도.',
-    project2: '아프리카 식품 혁신 연구소',
-    project2Period: '2021 - 현재',
-    project2Description: '현대 식품 기술을 이용하여 전통 아프리카 음식을 아시아 시장에 적응시키는 연구.',
-
-    // Booking translations
-    reviewConsultation: '상담 요청 검토',
-    consultationDetails: '상담 세부사항',
-    selectedService: '선택된 서비스',
-    totalPrice: '총 가격',
-    paymentMethods: '결제 방법',
-    payWithCard: '카드로 결제',
-    payWithMobile: '모바일로 결제',
-    payWithBank: '은행 송금으로 결제',
-    backToEdit: '수정하러 돌아가기',
-    reviewConsultationRequest: '상담 요청 검토',
-    hotelBooking: '호텔 예약 지원',
-    phoneConsultation: '전화 상담',
-    preferredDate: '선호 날짜',
-    preferredTime: '선호 시간',
-    fullName: '전체 이름',
+    // WhatsApp button
+    scheduleFreeFifteenMinuteConsultation: "무료 15분 상담 예약하기"
   },
+  
+  FR: {
+    // Navigation
+    home: "Accueil",
+    about: "À propos",
+    services: "Services", 
+    contact: "Contact",
+    resources: "Ressources",
+    
+    // Hero section
+    heroTitle: "Votre passerelle vers l'éducation coréenne et le succès F&B",
+    heroSubtitle: "Bourses • Admissions universitaires • Conseil F&B",
+    heroDescription: "De l'orientation sur les bourses au conseil en entreprise alimentaire, nous relions l'Afrique et la Corée avec des parcours personnalisés vers votre succès.",
+    getStarted: "Commencer",
+    learnMore: "En savoir plus",
+    
+    // Services
+    servicesTitle: "Nos Services",
+    servicesSubtitle: "Solutions complètes pour vos objectifs éducatifs et commerciaux",
+    studyInKorea: "Étudier en Corée",
+    studyInKoreaDesc: "Guidance complète pour les bourses et admissions universitaires",
+    fbConsulting: "Conseil F&B",
+    fbConsultingDesc: "Conseil expert pour les entreprises alimentaires et boissons",
+    universityAdmissions: "Admissions Universitaires",
+    universityAdmissionsDesc: "Support de bout en bout pour les candidatures universitaires",
+    visaAssistance: "Assistance Visa",
+    visaAssistanceDesc: "Aide professionnelle pour les demandes de visa et la documentation",
+    
+    // Study Programs
+    studyProgramsTitle: "Programmes d'études et services",
+    studyProgramsSubtitle: "Support complet pour votre parcours éducatif coréen",
+    scholarshipGuidance: "Guidance des bourses",
+    scholarshipGuidanceDesc: "Aide experte pour trouver et postuler aux bourses",
+    universityAdmissionSupport: "Support d'admission universitaire",
+    universityAdmissionSupportDesc: "Support d'admission universitaire de bout en bout",
+    visaApplicationAssistance: "Assistance de demande de visa",
+    visaApplicationAssistanceDesc: "Assistance professionnelle de demande de visa",
+    languagePreparation: "Préparation linguistique",
+    languagePreparationDesc: "Préparation aux tests de langue coréenne",
+    
+    // Study Programs Features
+    scholarshipSearch: "Recherche de bourses",
+    applicationAssistance: "Assistance d'application",
+    documentPreparation: "Préparation de documents",
+    universitySelection: "Sélection d'université",
+    applicationReview: "Révision d'application",
+    interviewPreparation: "Préparation d'entretien",
+    visaDocumentPrep: "Préparation de documents",
+    applicationFiling: "Dépôt d'application",
+    interviewCoaching: "Coaching d'entretien",
+    topikPreparation: "Préparation TOPIK",
+    conversationPractice: "Pratique de conversation",
+    culturalOrientationAndAccommodation: "Orientation culturelle et logement",
+    
+    // F&B Consulting
+    fbConsultingTitle: "Conseil F&B",
+    businessStrategy: "Stratégie d'entreprise",
+    businessStrategyDesc: "Planification stratégique d'entreprise et entrée sur le marché",
+    marketAnalysis: "Analyse de marché",
+    marketAnalysisDesc: "Analyse de marché approfondie et intelligence concurrentielle",
+    productDevelopment: "Développement de produits",
+    productDevelopmentDesc: "Développement et innovation de produits alimentaires",
+    regulatoryCompliance: "Conformité réglementaire",
+    regulatoryComplianceDesc: "Naviguer dans la sécurité alimentaire et les exigences réglementaires",
+    
+    // F&B Features
+    marketResearch: "Recherche de marché",
+    businessPlanning: "Planification d'entreprise",
+    marketSizing: "Dimensionnement du marché",
+    competitorAnalysis: "Analyse des concurrents",
+    recipeDevelopment: "Développement de recettes",
+    productTesting: "Test de produits",
+    safetyStandards: "Normes de sécurité",
+    certificationSupport: "Support de certification",
+    
+    // Common
+    startYourJourney: "Commencez votre voyage",
+    backToHome: "Retour à l'accueil",
+    bookConsultation: "Réserver une consultation",
+    getQuote: "Obtenir un devis",
+    scheduleConsultation: "Programmer une consultation",
+    
+    // About
+    aboutTitle: "À propos de nous",
+    aboutDescription: "Découvrez notre mission et notre expertise",
+    
+    // Contact
+    contactTitle: "Contactez-nous",
+    contactDescription: "Entrez en contact avec notre équipe",
+    
+    // Testimonials
+    testimonialsTitle: "Histoires de succès",
+    
+    // Blog
+    blogTitle: "Dernières ressources",
+    blogDescription: "Restez à jour avec les dernières perspectives",
+    readMore: "Lire la suite",
+    
+    // Newsletter
+    newsletterTitle: "Restez informé",
+    newsletterDescription: "Recevez les dernières mises à jour et opportunités",
+    subscribe: "S'abonner",
+    enterEmailAddress: "Entrez votre adresse e-mail",
+    
+    // Footer
+    quickLinks: "Liens rapides",
+    followUs: "Suivez-nous",
+    
+    // Legal pages
+    privacyPolicy: "Politique de confidentialité",
+    termsOfService: "Conditions de service",
+    sitemap: "Plan du site",
+    
+    // WhatsApp button
+    scheduleFreeFifteenMinuteConsultation: "Programmer une consultation gratuite de 15 minutes"
+  },
+  
+  RW: {
+    // Navigation
+    home: "Ahabanza",
+    about: "Ibibazo",
+    services: "Serivisi",
+    contact: "Twandikire",
+    resources: "Ibikoresho",
+    
+    // Hero section
+    heroTitle: "Inzira yawe yo kwiga muri Koreya no gutsinda muri F&B",
+    heroSubtitle: "Impano • Kwinjira muri kaminuza • Inama za F&B",
+    heroDescription: "Kuva mu buyobozi bw'impano kugeza mu nama z'ubucuruzi bw'ibiryo, tuhuza Afurika na Koreya n'inzira zigenga kugera ku ntsinzi yawe.",
+    getStarted: "Tangira",
+    learnMore: "Menya byinshi",
+    
+    // Services
+    servicesTitle: "Serivisi zacu",
+    servicesSubtitle: "Ibisubizo byuzuye ku ntego zawe z'uburezi n'ubucuruzi",
+    studyInKorea: "Kwiga muri Koreya",
+    studyInKoreaDesc: "Ubuyobozi buzuye ku mpano no kwinjira muri kaminuza",
+    fbConsulting: "Inama za F&B",
+    fbConsultingDesc: "Inama z'impuguke ku bucuruzi bw'ibiryo n'ibinyobwa",
+    universityAdmissions: "Kwinjira muri kaminuza",
+    universityAdmissionsDesc: "Ubufasha bwuzuye ku busaba bwa kaminuza",
+    visaAssistance: "Ubufasha bwa viza",
+    visaAssistanceDesc: "Ubufasha bw'umwuga ku busaba bwa viza n'inyandiko",
+    
+    // Study Programs
+    studyProgramsTitle: "Gahunda z'amashuri na serivisi",
+    studyProgramsSubtitle: "Ubufasha buzuye ku rugendo rwawe rw'uburezi bwa Koreya",
+    scholarshipGuidance: "Ubuyobozi bw'impano",
+    scholarshipGuidanceDesc: "Ubufasha bw'impuguke mu gushaka no gusaba impano",
+    universityAdmissionSupport: "Ubufasha bwo kwinjira muri kaminuza",
+    universityAdmissionSupportDesc: "Ubufasha bwo kwinjira muri kaminuza bwuzuye",
+    visaApplicationAssistance: "Ubufasha bwo gusaba viza",
+    visaApplicationAssistanceDesc: "Ubufasha bw'umwuga bwo gusaba viza",
+    languagePreparation: "Gutegura ururimi",
+    languagePreparationDesc: "Gutegura ibizamini by'ururimi rwa Koreya",
+    
+    // Study Programs Features
+    scholarshipSearch: "Gushaka impano",
+    applicationAssistance: "Ubufasha bwo gusaba",
+    documentPreparation: "Gutegura inyandiko",
+    universitySelection: "Guhitamo kaminuza",
+    applicationReview: "Gusuzuma ubusaba",
+    interviewPreparation: "Gutegura ikiganiro",
+    visaDocumentPrep: "Gutegura inyandiko",
+    applicationFiling: "Kohereza ubusaba",
+    interviewCoaching: "Imyitozo y'ikiganiro",
+    topikPreparation: "Gutegura TOPIK",
+    conversationPractice: "Kwimenyereza ikiganiro",
+    culturalOrientationAndAccommodation: "Kwerekana umuco no gutura",
+    
+    // F&B Consulting
+    fbConsultingTitle: "Inama za F&B",
+    businessStrategy: "Ingamba z'ubucuruzi",
+    businessStrategyDesc: "Gutegura ingamba z'ubucuruzi no kwinjira mu isoko",
+    marketAnalysis: "Isesengura ry'isoko",
+    marketAnalysisDesc: "Isesengura ry'imbere ry'isoko n'ubunyangamugayo bw'abanywanyi",
+    productDevelopment: "Guteza imbere ibicuruzwa",
+    productDevelopmentDesc: "Guteza imbere no guhanga ibicuruzwa by'ibiryo",
+    regulatoryCompliance: "Kubahiriza amategeko",
+    regulatoryComplianceDesc: "Kuyobora mu mutekano w'ibiryo n'ibisabwa n'amategeko",
+    
+    // F&B Features
+    marketResearch: "Ubushakashatsi bw'isoko",
+    businessPlanning: "Gutegura ubucuruzi",
+    marketSizing: "Gupima isoko",
+    competitorAnalysis: "Isesengura ry'abanywanyi",
+    recipeDevelopment: "Guteza imbere uburyo bwo guteka",
+    productTesting: "Gupima ibicuruzwa",
+    safetyStandards: "Ibipimo by'umutekano",
+    certificationSupport: "Ubufasha bw'icyemezo",
+    
+    // Common
+    startYourJourney: "Tangira urugendo rwawe",
+    backToHome: "Garuka ku ntangiriro",
+    bookConsultation: "Andika inama",
+    getQuote: "Saba igiciro",
+    scheduleConsultation: "Tegura inama",
+    
+    // About
+    aboutTitle: "Ibibazo byacu",
+    aboutDescription: "Menya intego zacu n'ubuhanga bwacu",
+    
+    // Contact
+    contactTitle: "Twandikire",
+    contactDescription: "Mana n'itsinda ryacu",
+    
+    // Testimonials
+    testimonialsTitle: "Inkuru z'intsinzi",
+    
+    // Blog
+    blogTitle: "Ibikoresho biheruka",
+    blogDescription: "Komeza wibwirizwa n'ibitekerezo bishya",
+    readMore: "Soma byinshi",
+    
+    // Newsletter
+    newsletterTitle: "Komeza wibwirizwa",
+    newsletterDescription: "Bonera amakuru mashya n'amahirwe",
+    subscribe: "Kwiyandikisha",
+    enterEmailAddress: "Injiza aderesi ya imeri yawe",
+    
+    // Footer
+    quickLinks: "Ihuza ryihuse",
+    followUs: "Dukurikire",
+    
+    // Legal pages
+    privacyPolicy: "Politiki y'ibanga",
+    termsOfService: "Amabwiriza ya serivisi",
+    sitemap: "Ikarita y'urubuga",
+    
+    // WhatsApp button
+    scheduleFreeFifteenMinuteConsultation: "Tegura inama y'ubuntu iminota 15"
+  }
 };
 
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>('EN');
+interface LanguageContextType {
+  language: string;
+  setLanguage: (lang: string) => void;
+  translations: Translations;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export const LanguageProvider = ({ children }: { children: ReactNode }) => {
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('language') || 'EN';
+  });
 
   useEffect(() => {
-    const savedLang = localStorage.getItem('language') as Language;
-    if (savedLang && ['EN', 'RW', 'FR', 'KO'].includes(savedLang)) {
-      setCurrentLanguage(savedLang);
-    }
+    localStorage.setItem('language', language);
+  }, [language]);
 
-    const handleLanguageChange = (event: CustomEvent) => {
-      setCurrentLanguage(event.detail);
+  useEffect(() => {
+    const handleLanguageChange = (event: any) => {
+      setLanguage(event.detail);
     };
 
-    window.addEventListener('languageChanged', handleLanguageChange as EventListener);
-    
+    window.addEventListener('languageChanged', handleLanguageChange);
     return () => {
-      window.removeEventListener('languageChanged', handleLanguageChange as EventListener);
+      window.removeEventListener('languageChanged', handleLanguageChange);
     };
   }, []);
 
-  const setLanguage = (lang: Language) => {
-    setCurrentLanguage(lang);
-    localStorage.setItem('language', lang);
-  };
+  const currentTranslations = translations[language as keyof typeof translations] || translations.EN;
 
-  const value = {
-    currentLanguage,
-    setLanguage,
-    translations: translations[currentLanguage],
-  };
-
-  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, translations: currentTranslations }}>
+      {children}
+    </LanguageContext.Provider>
+  );
 };
 
 export const useLanguage = () => {

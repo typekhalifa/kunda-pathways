@@ -1,6 +1,6 @@
 
-import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface WhatsAppConsultationButtonProps {
@@ -11,21 +11,19 @@ const WhatsAppConsultationButton = ({ className = "" }: WhatsAppConsultationButt
   const { translations } = useLanguage();
   
   const handleWhatsAppClick = () => {
-    const phoneNumber = "821012345678"; // Replace with actual WhatsApp business number
-    const message = `Hello, I'm interested in your services. When can you be available for this free 15 min consultation?`;
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const phoneNumber = "+821012345678";
+    const message = encodeURIComponent(`Hello! I would like to schedule a free 15-minute consultation about your services.`);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
 
   return (
-    <Button
+    <Button 
       onClick={handleWhatsAppClick}
-      className={`bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center px-3 py-2 sm:px-4 sm:py-3 ${className}`}
+      className={`bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold flex items-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl ${className}`}
     >
-      <MessageCircle className="mr-1 sm:mr-2 flex-shrink-0" size={14} />
-      <span className="text-center leading-tight text-xs sm:text-sm lg:text-base">
-        Schedule a free 15-minute consultation
-      </span>
+      <MessageCircle size={20} />
+      {translations.scheduleFreeFifteenMinuteConsultation}
     </Button>
   );
 };
