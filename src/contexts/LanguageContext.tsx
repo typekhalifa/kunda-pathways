@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from 'react';
 
 // Define the translation interface
@@ -6,15 +5,21 @@ interface Translations {
   // Navigation and basic content
   home: string;
   about: string;
+  aboutUs: string;
   services: string;
   contact: string;
   resources: string;
+  latest: string;
+  viewAllResources: string;
   
   // Hero section
   heroTitle: string;
   heroSubtitle: string;
   getStarted: string;
   learnMore: string;
+  exploreStudyPrograms: string;
+  studentsAssisted: string;
+  foodScienceExpert: string;
   
   // About section
   meetYourGlobalAdvisor: string;
@@ -25,7 +30,7 @@ interface Translations {
   educationExpert: string;
   educationExpertDesc: string;
   fbConsultant: string;
-  fbConsultantDesc: string;
+  fbConsultingDesc: string;
   studentsHelped: string;
   studentsHelpedDesc: string;
   countriesReached: string;
@@ -37,11 +42,36 @@ interface Translations {
   studyInKorea: string;
   studyInKoreaDesc: string;
   fbConsulting: string;
-  fbConsultingDesc: string;
   universityAdmissions: string;
   universityAdmissionsDesc: string;
   marketAnalysis: string;
   marketAnalysisDesc: string;
+  scholarshipGuidance: string;
+  scholarshipDescription: string;
+  scholarshipSearch: string;
+  applicationAssistance: string;
+  documentPreparation: string;
+  universityDescription: string;
+  universitySelection: string;
+  applicationReview: string;
+  interviewPreparation: string;
+  visaApplication: string;
+  visaDescription: string;
+  applicationFiling: string;
+  interviewCoaching: string;
+  koreanLanguageTraining: string;
+  languageDescription: string;
+  topikPreparation: string;
+  conversationPractice: string;
+  culturalOrientation: string;
+  businessConsultation: string;
+  businessDescription: string;
+  marketResearch: string;
+  businessPlanning: string;
+  productDevelopment: string;
+  regulatoryCompliance: string;
+  fbMarketAnalysis: string;
+  visitsHelp: string;
   
   // Testimonials
   successStories: string;
@@ -50,6 +80,33 @@ interface Translations {
   // Contact
   contactTitle: string;
   contactSubtitle: string;
+  letsStartYourJourney: string;
+  readyToTakeNextStep: string;
+  sendUsMessage: string;
+  fillFormBelow: string;
+  yourName: string;
+  yourEmail: string;
+  selectService: string;
+  generalInquiry: string;
+  studyAbroadRelocation: string;
+  fbConsultingService: string;
+  bothServices: string;
+  message: string;
+  tellUsAboutGoals: string;
+  sendMessage: string;
+  quickContact: string;
+  email: string;
+  phoneKorea: string;
+  whatsapp: string;
+  bookAConsultation: string;
+  scheduleFreeConsultation: string;
+  scheduleConsultation: string;
+  officeHours: string;
+  mondayFriday: string;
+  saturday: string;
+  sunday: string;
+  closed: string;
+  bookConsultation: string;
   
   // Footer
   footerDescription: string;
@@ -60,6 +117,8 @@ interface Translations {
   sitemap: string;
   followUs: string;
   allRightsReserved: string;
+  contactInfo: string;
+  location: string;
   
   // Blog/Resources
   resourcesBlog: string;
@@ -79,6 +138,11 @@ interface Translations {
   newsletterDescription: string;
   enterEmailAddress: string;
   subscribe: string;
+  newsletterThankYou: string;
+  
+  // Partners
+  ourTrustedPartners: string;
+  partnerDescription: string;
   
   // Privacy Policy
   privacyPolicyTitle: string;
@@ -206,15 +270,21 @@ const englishTranslations: Translations = {
   // Navigation and basic content
   home: "Home",
   about: "About",
+  aboutUs: "About Us",
   services: "Services", 
   contact: "Contact",
   resources: "Resources",
+  latest: "Latest",
+  viewAllResources: "View All Resources",
   
   // Hero section
   heroTitle: "Your Gateway to Korean Universities & Global F&B Success",
   heroSubtitle: "Expert guidance for African students seeking education in Korea and food entrepreneurs expanding globally",
   getStarted: "Get Started",
   learnMore: "Learn More",
+  exploreStudyPrograms: "Explore Study Programs",
+  studentsAssisted: "Students Assisted",
+  foodScienceExpert: "Food Science Expert",
   
   // About section
   meetYourGlobalAdvisor: "Meet Your Global Advisor",
@@ -237,11 +307,36 @@ const englishTranslations: Translations = {
   studyInKorea: "Study in Korea",
   studyInKoreaDesc: "Complete guidance for Korean university admissions and scholarships",
   fbConsulting: "F&B Consulting",
-  fbConsultingDesc: "Strategic consulting for food & beverage businesses",
   universityAdmissions: "University Admissions",
   universityAdmissionsDesc: "Expert assistance with university applications",
   marketAnalysis: "Market Analysis",
   marketAnalysisDesc: "In-depth market research and business analysis",
+  scholarshipGuidance: "Scholarship Guidance",
+  scholarshipDescription: "Comprehensive scholarship search and application assistance",
+  scholarshipSearch: "Scholarship Search",
+  applicationAssistance: "Application Assistance",
+  documentPreparation: "Document Preparation",
+  universityDescription: "Expert guidance for university admissions",
+  universitySelection: "University Selection",
+  applicationReview: "Application Review",
+  interviewPreparation: "Interview Preparation",
+  visaApplication: "Visa Application",
+  visaDescription: "Complete visa application support",
+  applicationFiling: "Application Filing",
+  interviewCoaching: "Interview Coaching",
+  koreanLanguageTraining: "Korean Language Training",
+  languageDescription: "Professional Korean language instruction",
+  topikPreparation: "TOPIK Preparation",
+  conversationPractice: "Conversation Practice",
+  culturalOrientation: "Cultural Orientation",
+  businessConsultation: "Business Consultation",
+  businessDescription: "Strategic F&B business consulting",
+  marketResearch: "Market Research",
+  businessPlanning: "Business Planning",
+  productDevelopment: "Product Development",
+  regulatoryCompliance: "Regulatory Compliance",
+  fbMarketAnalysis: "F&B Market Analysis",
+  visitsHelp: "Study Visits",
   
   // Testimonials
   successStories: "Success Stories",
@@ -250,6 +345,33 @@ const englishTranslations: Translations = {
   // Contact
   contactTitle: "Get in Touch",
   contactSubtitle: "Ready to start your journey? Contact us today",
+  letsStartYourJourney: "Let's Start Your Journey",
+  readyToTakeNextStep: "Ready to take the next step? Get in touch for a free consultation",
+  sendUsMessage: "Send us a Message",
+  fillFormBelow: "Fill out the form below and we'll respond within 24 hours",
+  yourName: "Your Name",
+  yourEmail: "Your Email",
+  selectService: "Select Service",
+  generalInquiry: "General Inquiry",
+  studyAbroadRelocation: "Study Abroad & Relocation",
+  fbConsultingService: "F&B Consulting",
+  bothServices: "Both Services",
+  message: "Message",
+  tellUsAboutGoals: "Tell us about your goals and how we can help...",
+  sendMessage: "Send Message",
+  quickContact: "Quick Contact",
+  email: "Email",
+  phoneKorea: "Phone (Korea)",
+  whatsapp: "WhatsApp",
+  bookAConsultation: "Book a Consultation",
+  scheduleFreeConsultation: "Schedule a free 15-minute consultation to discuss your goals and get personalized advice.",
+  scheduleConsultation: "Schedule Free Consultation",
+  officeHours: "Office Hours",
+  mondayFriday: "Monday - Friday:",
+  saturday: "Saturday:",
+  sunday: "Sunday:",
+  closed: "Closed",
+  bookConsultation: "Book Consultation",
   
   // Footer
   footerDescription: "Connecting African talent with Korean opportunities and global F&B success.",
@@ -260,6 +382,8 @@ const englishTranslations: Translations = {
   sitemap: "Sitemap",
   followUs: "Follow Us",
   allRightsReserved: "All rights reserved.",
+  contactInfo: "Contact Info",
+  location: "Seoul, South Korea",
   
   // Blog/Resources
   resourcesBlog: "Resources & Articles",
@@ -279,6 +403,11 @@ const englishTranslations: Translations = {
   newsletterDescription: "Get the latest scholarship announcements, study abroad tips, and F&B industry insights delivered to your inbox.",
   enterEmailAddress: "Enter your email address",
   subscribe: "Subscribe",
+  newsletterThankYou: "Thank you for subscribing!",
+  
+  // Partners
+  ourTrustedPartners: "Our Trusted Partners",
+  partnerDescription: "Working with leading institutions and organizations worldwide",
   
   // Privacy Policy
   privacyPolicyTitle: "Privacy Policy",
@@ -406,15 +535,21 @@ const koreanTranslations: Translations = {
   // Navigation and basic content
   home: "홈",
   about: "소개",
+  aboutUs: "회사 소개",
   services: "서비스",
   contact: "연락처",
   resources: "자료",
+  latest: "최신",
+  viewAllResources: "모든 자료 보기",
   
   // Hero section
   heroTitle: "한국 대학교와 글로벌 F&B 성공으로의 관문",
   heroSubtitle: "한국에서 교육을 추구하는 아프리카 학생들과 글로벌로 확장하는 식품 기업가들을 위한 전문 지침",
   getStarted: "시작하기",
   learnMore: "더 알아보기",
+  exploreStudyPrograms: "유학 프로그램 탐색",
+  studentsAssisted: "지원된 학생 수",
+  foodScienceExpert: "식품과학 전문가",
   
   // About section
   meetYourGlobalAdvisor: "글로벌 어드바이저 만나기",
@@ -431,17 +566,42 @@ const koreanTranslations: Translations = {
   countriesReached: "15개국 이상 도달",
   countriesReachedDesc: "아프리카 전역의 학생들이 혜택을 받았습니다",
   
-  // Services section
+  // Services section  
   servicesTitle: "우리의 서비스",
   servicesDescription: "교육 및 비즈니스 여정을 위한 포괄적인 지원",
   studyInKorea: "한국 유학",
   studyInKoreaDesc: "한국 대학교 입학 및 장학금을 위한 완전한 지침",
   fbConsulting: "F&B 컨설팅",
-  fbConsultingDesc: "식음료 비즈니스를 위한 전략적 컨설팅",
   universityAdmissions: "대학교 입학",
   universityAdmissionsDesc: "대학교 지원을 위한 전문적인 도움",
   marketAnalysis: "시장 분석",
   marketAnalysisDesc: "심층적인 시장 조사 및 비즈니스 분석",
+  scholarshipGuidance: "장학금 안내",
+  scholarshipDescription: "포괄적인 장학금 검색 및 지원 도움",
+  scholarshipSearch: "장학금 검색",
+  applicationAssistance: "지원 도움",
+  documentPreparation: "서류 준비",
+  universityDescription: "대학교 입학을 위한 전문 지침",
+  universitySelection: "대학교 선택",
+  applicationReview: "지원서 검토",
+  interviewPreparation: "면접 준비",
+  visaApplication: "비자 신청",
+  visaDescription: "완전한 비자 신청 지원",
+  applicationFiling: "신청서 제출",
+  interviewCoaching: "면접 코칭",
+  koreanLanguageTraining: "한국어 교육",
+  languageDescription: "전문 한국어 교육",
+  topikPreparation: "TOPIK 준비",
+  conversationPractice: "회화 연습",
+  culturalOrientation: "문화 오리엔테이션",
+  businessConsultation: "비즈니스 컨설팅",
+  businessDescription: "전략적 F&B 비즈니스 컨설팅",
+  marketResearch: "시장 조사",
+  businessPlanning: "사업 계획",
+  productDevelopment: "제품 개발",
+  regulatoryCompliance: "규제 준수",
+  fbMarketAnalysis: "F&B 시장 분석",
+  visitsHelp: "학습 방문",
   
   // Testimonials
   successStories: "성공 스토리",
@@ -450,6 +610,33 @@ const koreanTranslations: Translations = {
   // Contact
   contactTitle: "연락하기",
   contactSubtitle: "여정을 시작할 준비가 되셨나요? 오늘 연락하세요",
+  letsStartYourJourney: "여정을 시작해보세요",
+  readyToTakeNextStep: "다음 단계를 밟을 준비가 되셨나요? 무료 상담을 위해 연락하세요",
+  sendUsMessage: "메시지 보내기",
+  fillFormBelow: "아래 양식을 작성하시면 24시간 내에 답변드리겠습니다",
+  yourName: "성함",
+  yourEmail: "이메일",
+  selectService: "서비스 선택",
+  generalInquiry: "일반 문의",
+  studyAbroadRelocation: "유학 및 이주",
+  fbConsultingService: "F&B 컨설팅",
+  bothServices: "모든 서비스",
+  message: "메시지",
+  tellUsAboutGoals: "목표와 도움이 필요한 사항을 알려주세요...",
+  sendMessage: "메시지 보내기",
+  quickContact: "빠른 연락",
+  email: "이메일",
+  phoneKorea: "전화 (한국)",
+  whatsapp: "왓츠앱",
+  bookAConsultation: "상담 예약",
+  scheduleFreeConsultation: "목표를 논의하고 개인 맞춤 조언을 받기 위한 무료 15분 상담을 예약하세요.",
+  scheduleConsultation: "무료 상담 예약",
+  officeHours: "운영 시간",
+  mondayFriday: "월요일 - 금요일:",
+  saturday: "토요일:",
+  sunday: "일요일:",
+  closed: "휴무",
+  bookConsultation: "상담 예약",
   
   // Footer
   footerDescription: "아프리카 인재를 한국 기회와 글로벌 F&B 성공으로 연결합니다.",
@@ -460,6 +647,8 @@ const koreanTranslations: Translations = {
   sitemap: "사이트맵",
   followUs: "팔로우하기",
   allRightsReserved: "모든 권리 보유.",
+  contactInfo: "연락처 정보",
+  location: "서울, 대한민국",
   
   // Blog/Resources
   resourcesBlog: "자료 및 기사",
@@ -479,8 +668,13 @@ const koreanTranslations: Translations = {
   newsletterDescription: "최신 장학금 발표, 해외 유학 팁 및 F&B 업계 통찰력을 받은편지함으로 받아보세요.",
   enterEmailAddress: "이메일 주소를 입력하세요",
   subscribe: "구독하기",
+  newsletterThankYou: "구독해 주셔서 감사합니다!",
   
-  // Privacy Policy - Korean translations
+  // Partners
+  ourTrustedPartners: "신뢰할 수 있는 파트너",
+  partnerDescription: "전 세계 주요 기관 및 조직과 협력",
+  
+  // Privacy Policy
   privacyPolicyTitle: "개인정보 보호정책",
   privacyPolicySubtitle: "귀하의 개인정보는 우리의 우선순위입니다. 귀하의 정보를 어떻게 보호하고 처리하는지 알아보세요.",
   informationWeCollect: "수집하는 정보",
@@ -519,7 +713,7 @@ const koreanTranslations: Translations = {
   lastUpdatedMarch2024: "최종 업데이트: 2024년 3월",
   questionsContact: "문의사항이 있으시면 privacy@kundapathways.com으로 연락하세요",
   
-  // Terms of Service - Korean translations
+  // Terms of Service
   termsOfServiceTitle: "서비스 약관",
   termsOfServiceSubtitle: "서비스를 사용하기 전에 이 약관을 주의 깊게 읽어주세요.",
   acceptanceOfTerms: "약관 동의",
@@ -555,7 +749,7 @@ const koreanTranslations: Translations = {
   governingLawDescription: "이 약관은 대한민국 법률에 따라 규율되고 해석됩니다. 이 약관에 따른 모든 분쟁은 대한민국 서울 법원의 전속 관할권에 속합니다.",
   questionsContactLegal: "문의사항이 있으시면 legal@kundapathways.com으로 연락하세요",
   
-  // Sitemap - Korean translations
+  // Sitemap
   sitemapTitle: "사이트맵",
   sitemapSubtitle: "웹사이트의 모든 페이지와 섹션에 대한 완전한 탐색 가이드입니다.",
   mainPages: "주요 페이지",
@@ -579,7 +773,7 @@ const koreanTranslations: Translations = {
   contactSupport: "지원팀 연락하기",
   allPagesMobileResponsive: "모든 페이지는 모바일 반응형이며 접근성 친화적입니다",
   
-  // Resources specific - Korean translations
+  // Resources specific
   eightMinRead: "8분 읽기",
   march152024: "2024년 3월 15일",
   twelveMinRead: "12분 읽기",
