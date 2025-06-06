@@ -15,7 +15,7 @@ const Testimonials = () => {
       rating: 5,
     },
     {
-      name: "James Mukamana",
+      name: "Type Khalifa",
       role: "F&B Entrepreneur",
       content: "The food industry consulting helped me launch my beverage company in the Korean market. Invaluable expertise!",
       country: "Uganda",
