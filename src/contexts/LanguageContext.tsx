@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface Translations {
@@ -31,6 +30,7 @@ interface Translations {
   fbConsultantDesc: string;
   countriesReached: string;
   countriesReachedDesc: string;
+  studentsHelped: string;
   studentsHelpedDesc: string;
 
   // Services Section
@@ -56,6 +56,7 @@ interface Translations {
   conversationPractice: string;
   culturalOrientation: string;
   fbBusinessConsulting: string;
+  businessConsultation: string;
   businessDescription: string;
   marketResearch: string;
   businessPlanning: string;
@@ -276,7 +277,10 @@ interface Translations {
   // Sitemap
   mainPages: string;
   homepageDescription: string;
+  aboutDescription: string;
+  contactDescription: string;
   blogResources: string;
+  blogDescription: string;
   successStoriesDescription: string;
   newsletter: string;
   privacyPolicyDescription: string;
@@ -293,12 +297,16 @@ interface Translations {
   allPagesMobileResponsive: string;
 
   // Terms of Service
+  termsOfServiceTitle: string;
+  termsOfServiceSubtitle: string;
+  acceptanceOfTerms: string;
   serviceDescription: string;
   kundaPathwaysProvides: string;
   educationalConsultingScholarshipGuidance: string;
   universityAdmissionAssistance: string;
   marketAnalysisBusinessDevelopment: string;
   visaApplicationRelocation: string;
+  userResponsibilities: string;
   userResponsibilitiesDescription: string;
   provideAccurateInfo: string;
   maintainAccountConfidentiality: string;
@@ -318,6 +326,9 @@ interface Translations {
   refundsCaseByCase: string;
   serviceFeesNonRefundable: string;
   cancellationsWithin48Hours: string;
+  governingLaw: string;
+  governingLawDescription: string;
+  questionsContactLegal: string;
   intellectualProperty: string;
   terminationDescription: string;
   responsibilitiesDescription: string;
@@ -355,6 +366,7 @@ const englishTranslations: Translations = {
   fbConsultantDesc: "Expert advice for food & beverage businesses",
   countriesReached: "15+ Countries Reached",
   countriesReachedDesc: "Students from across Africa benefited",
+  studentsHelped: "500+ Students Helped",
   studentsHelpedDesc: "Successfully guided students to Korean universities",
 
   // Services Section
@@ -380,6 +392,7 @@ const englishTranslations: Translations = {
   conversationPractice: "Conversation Practice",
   culturalOrientation: "Cultural Orientation",
   fbBusinessConsulting: "F&B Business Consulting",
+  businessConsultation: "Business Consultation",
   businessDescription: "Strategic consulting for food & beverage businesses",
   marketResearch: "Market Research",
   businessPlanning: "Business Planning",
@@ -600,7 +613,10 @@ const englishTranslations: Translations = {
   // Sitemap
   mainPages: "Main Pages",
   homepageDescription: "Main landing page with overview of services",
+  aboutDescription: "Learn about our mission and team",
+  contactDescription: "Get in touch with our team",
   blogResources: "Blog & Resources",
+  blogDescription: "Educational articles and insights",
   successStoriesDescription: "Latest articles and success stories",
   newsletter: "Newsletter",
   privacyPolicyDescription: "How we protect your personal information",
@@ -617,36 +633,43 @@ const englishTranslations: Translations = {
   allPagesMobileResponsive: "All pages are mobile-responsive and optimized for search engines",
 
   // Terms of Service
+  termsOfServiceTitle: "Terms of Service",
+  termsOfServiceSubtitle: "Please read these terms carefully before using our services.",
+  acceptanceOfTerms: "Acceptance of Terms",
   serviceDescription: "Service Description",
   kundaPathwaysProvides: "Kunda Pathways provides:",
   educationalConsultingScholarshipGuidance: "Educational consulting and scholarship guidance",
   universityAdmissionAssistance: "University admission assistance",
-  marketAnalysisBusinessDevelopment: "Market analysis and business development",
-  visaApplicationRelocation: "Visa application and relocation support",
+  marketAnalysisBusinessDevelopment: "Market analysis and business development support",
+  visaApplicationRelocation: "Visa application and relocation assistance",
+  userResponsibilities: "User Responsibilities",
   userResponsibilitiesDescription: "As a user of our services, you agree to:",
   provideAccurateInfo: "Provide accurate and complete information",
-  maintainAccountConfidentiality: "Maintain account confidentiality",
-  useServicesLawfully: "Use our services lawfully and ethically",
+  maintainAccountConfidentiality: "Maintain the confidentiality of your account",
+  useServicesLawfully: "Use our services only for lawful purposes",
   respectIntellectualProperty: "Respect intellectual property rights",
   followApplicableLaws: "Follow all applicable laws and regulations",
-  limitationsDisclaimers: "Limitations & Disclaimers",
-  limitationsDescription: "While we strive for excellence, we cannot guarantee:",
-  successfulAdmission: "Successful admission to any institution",
+  limitationsDisclaimers: "Limitations and Disclaimers",
+  limitationsDescription: "While we strive to provide accurate information and quality services, we cannot guarantee:",
+  successfulAdmission: "Successful admission to educational institutions",
   approvalScholarshipVisa: "Approval of scholarship or visa applications",
-  specificBusinessOutcomes: "Specific business outcomes or results",
-  availabilityPrograms: "Availability of specific programs or opportunities",
-  servicesAdvisoryNature: "Our services are advisory in nature and success depends on various factors beyond our control.",
-  paymentRefundPolicy: "Payment & Refund Policy",
+  specificBusinessOutcomes: "Specific business outcomes or profits",
+  availabilityPrograms: "Availability of programs or opportunities",
+  servicesAdvisoryNature: "Our services are advisory in nature and success depends on various external factors.",
+  paymentRefundPolicy: "Payment and Refund Policy",
   paymentTermsInclude: "Our payment terms include:",
-  paymentRequiredBeforeService: "Payment required before service delivery",
-  refundsCaseByCase: "Refunds considered on a case-by-case basis",
-  serviceFeesNonRefundable: "Service fees are generally non-refundable",
-  cancellationsWithin48Hours: "Cancellations must be made within 48 hours",
+  paymentRequiredBeforeService: "Payment is required before service delivery",
+  refundsCaseByCase: "Refunds are considered on a case-by-case basis",
+  serviceFeesNonRefundable: "Service fees are non-refundable once work has commenced",
+  cancellationsWithin48Hours: "Cancellations must be made within 48 hours of booking",
+  governingLaw: "Governing Law",
+  governingLawDescription: "These terms shall be governed by and construed in accordance with the laws of South Korea. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts of Seoul, South Korea.",
+  questionsContactLegal: "Questions? Contact us at legal@kundapathways.com",
   intellectualProperty: "Intellectual Property",
   terminationDescription: "Termination",
   responsibilitiesDescription: "User Responsibilities",
   changesDescription: "Changes to Terms",
-  acceptanceDescription: "Acceptance of Terms"
+  acceptanceDescription: "By accessing and using Kunda Pathways' services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.",
 };
 
 const koreanTranslations: Translations = {
@@ -679,6 +702,7 @@ const koreanTranslations: Translations = {
   fbConsultantDesc: "식음료 사업을 위한 전문 조언",
   countriesReached: "15개국 이상 도달",
   countriesReachedDesc: "아프리카 전역의 학생들이 혜택을 받았습니다",
+  studentsHelped: "500명 이상의 학생 도움",
   studentsHelpedDesc: "한국 대학교로의 성공적인 학생 지도",
 
   // Services Section
@@ -704,6 +728,7 @@ const koreanTranslations: Translations = {
   conversationPractice: "회화 연습",
   culturalOrientation: "문화 적응",
   fbBusinessConsulting: "F&B 비즈니스 컨설팅",
+  businessConsultation: "비즈니스 컨설테이션",
   businessDescription: "식음료 사업을 위한 전략적 컨설팅",
   marketResearch: "시장 조사",
   businessPlanning: "사업 계획",
@@ -924,7 +949,10 @@ const koreanTranslations: Translations = {
   // Sitemap
   mainPages: "주요 페이지",
   homepageDescription: "서비스 개요가 포함된 메인 랜딩 페이지",
+  aboutDescription: "우리의 사명과 팀에 대해 알아보세요",
+  contactDescription: "우리 팀과 연락하세요",
   blogResources: "블로그 및 자료",
+  blogDescription: "교육 기사 및 인사이트",
   successStoriesDescription: "최신 기사 및 성공 사례",
   newsletter: "뉴스레터",
   privacyPolicyDescription: "개인정보 보호 방법",
@@ -941,12 +969,16 @@ const koreanTranslations: Translations = {
   allPagesMobileResponsive: "모든 페이지는 모바일 반응형이며 검색 엔진에 최적화되어 있습니다",
 
   // Terms of Service
+  termsOfServiceTitle: "서비스 약관",
+  termsOfServiceSubtitle: "서비스를 사용하기 전에 이 약관을 주의 깊게 읽어주세요.",
+  acceptanceOfTerms: "약관 동의",
   serviceDescription: "서비스 설명",
   kundaPathwaysProvides: "Kunda Pathways는 다음을 제공합니다:",
   educationalConsultingScholarshipGuidance: "교육 컨설팅 및 장학금 안내",
   universityAdmissionAssistance: "대학 입학 지원",
-  marketAnalysisBusinessDevelopment: "시장 분석 및 사업 개발",
+  marketAnalysisBusinessDevelopment: "시장 분석 및 사업 개발 지원",
   visaApplicationRelocation: "비자 신청 및 이주 지원",
+  userResponsibilities: "사용자 책임",
   userResponsibilitiesDescription: "서비스 사용자로서 다음에 동의합니다:",
   provideAccurateInfo: "정확하고 완전한 정보 제공",
   maintainAccountConfidentiality: "계정 기밀성 유지",
@@ -955,22 +987,25 @@ const koreanTranslations: Translations = {
   followApplicableLaws: "모든 해당 법률 및 규정 준수",
   limitationsDisclaimers: "제한 사항 및 면책 조항",
   limitationsDescription: "우수성을 위해 노력하지만 다음을 보장할 수 없습니다:",
-  successfulAdmission: "모든 기관에 대한 성공적인 입학",
+  successfulAdmission: "교육 기관에 대한 성공적인 입학",
   approvalScholarshipVisa: "장학금 또는 비자 신청 승인",
-  specificBusinessOutcomes: "특정 사업 결과",
-  availabilityPrograms: "특정 프로그램 또는 기회의 가용성",
-  servicesAdvisoryNature: "저희 서비스는 자문 성격이며 성공은 저희 통제 범위를 벗어난 다양한 요인에 따라 달라집니다.",
+  specificBusinessOutcomes: "특정 사업 결과 또는 이익",
+  availabilityPrograms: "프로그램 또는 기회의 가용성",
+  servicesAdvisoryNature: "저희 서비스는 자문 성격이며 성공은 다양한 외부 요인에 따라 달라집니다.",
   paymentRefundPolicy: "결제 및 환불 정책",
   paymentTermsInclude: "결제 조건에는 다음이 포함됩니다:",
   paymentRequiredBeforeService: "서비스 제공 전 결제 필요",
   refundsCaseByCase: "환불은 케이스별로 고려",
-  serviceFeesNonRefundable: "서비스 수수료는 일반적으로 환불되지 않음",
-  cancellationsWithin48Hours: "취소는 48시간 내에 이루어져야 함",
+  serviceFeesNonRefundable: "작업이 시작된 후 서비스 수수료는 환불되지 않음",
+  cancellationsWithin48Hours: "예약 후 48시간 내에 취소해야 함",
+  governingLaw: "준거법",
+  governingLawDescription: "이 약관은 대한민국 법률에 따라 관리되고 해석됩니다. 이 약관에 따른 모든 분쟁은 대한민국 서울 법원의 전속 관할에 따릅니다.",
+  questionsContactLegal: "문의사항? legal@kundapathways.com으로 연락주세요",
   intellectualProperty: "지적 재산권",
   terminationDescription: "종료",
   responsibilitiesDescription: "사용자 책임",
   changesDescription: "약관 변경",
-  acceptanceDescription: "약관 수락"
+  acceptanceDescription: "Kunda Pathways의 서비스에 접근하고 사용함으로써 이 계약의 조건에 구속되는 것에 동의합니다. 위 사항에 동의하지 않으면 이 서비스를 사용하지 마십시오.",
 };
 
 interface LanguageContextType {
