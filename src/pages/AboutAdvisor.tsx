@@ -42,7 +42,7 @@ const AboutAdvisor = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              {translations.advisorName || "John Doe"}
+              {translations.advisorName || "Mr. Jean HAGABA"}
             </h1>
             <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold mb-6">
               {translations.advisorTitle || "Global Education & F&B Consultant"}
@@ -57,7 +57,7 @@ const AboutAdvisor = () => {
                 {translations.professionalSummary || "Professional Summary"}
               </h2>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
-                {translations.advisorDescription || "With over 8 years of experience in international education consulting and F&B business development, I specialize in helping students achieve their academic dreams in Korea while also supporting entrepreneurs in navigating the Asian F&B market. My dual expertise in education and food science (MSc) allows me to provide comprehensive guidance for both academic and business ventures."}
+                {translations.advisorDescription || "With over 5 years of experience in international education consulting and F&B business development, I specialize in helping students achieve their academic dreams in Korea while also supporting entrepreneurs in navigating the Asian F&B market. My dual expertise in education and Food Science and Technology (MSc) allows me to provide comprehensive guidance for both academic and business ventures."}
               </p>
             </CardContent>
           </Card>
@@ -136,7 +136,7 @@ const AboutAdvisor = () => {
                       onClick={handleEmailClick}
                       className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors underline"
                     >
-                      info@kundapathways.com
+                      info@kundapath.com
                     </button>
                   </div>
                   <div className="flex items-center text-slate-600 dark:text-slate-300">
