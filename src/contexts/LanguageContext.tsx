@@ -10,6 +10,7 @@ interface Translations {
   studyInKorea: string;
   fbConsulting: string;
   businessConsultation: string;
+  koreanLanguageTraining: string;
   
   // Hero Section
   heroTitle: string;
@@ -35,10 +36,13 @@ interface Translations {
   ourServices: string;
   scholarshipGuidance: string;
   scholarshipGuidanceDesc: string;
+  scholarshipDescription: string;
   universityAdmissions: string;
   universityAdmissionsDesc: string;
   universityAdmissionSupport: string;
   universityAdmissionSupportDesc: string;
+  universityDescription: string;
+  visaDescription: string;
   marketAnalysis: string;
   marketAnalysisDescription: string;
   fbMarketAnalysis: string;
@@ -61,6 +65,10 @@ interface Translations {
   journeyDescription: string;
   getFullConsultation: string;
   viewAllPackagesPricing: string;
+  languageDescription: string;
+  culturalOrientation: string;
+  businessDescription: string;
+  marketResearch: string;
   
   // Study Programs
   studyProgramsTitle: string;
@@ -82,6 +90,29 @@ interface Translations {
   conversationPractice: string;
   culturalOrientationAndAccommodation: string;
   bookConsultation: string;
+  
+  // Contact Section
+  readyToTakeNextStep: string;
+  sendUsMessage: string;
+  fillFormBelow: string;
+  yourName: string;
+  yourEmail: string;
+  selectService: string;
+  generalInquiry: string;
+  studyAbroadRelocation: string;
+  fbConsultingService: string;
+  bothServices: string;
+  message: string;
+  tellUsAboutGoals: string;
+  sendMessage: string;
+  quickContact: string;
+  phoneKorea: string;
+  whatsapp: string;
+  bookAConsultation: string;
+  scheduleFreeConsultation: string;
+  scheduleConsultation: string;
+  saturday: string;
+  sunday: string;
   
   // About Advisor Page
   professionalSummary: string;
@@ -119,12 +150,14 @@ interface Translations {
   enterEmailAddress: string;
   subscribe: string;
   newsletterThankYou: string;
+  newsletter: string;
   
   // Footer
   footerDescription: string;
   quickLinks: string;
   aboutUs: string;
   resourcesBlog: string;
+  blogResources: string;
   legal: string;
   privacyPolicy: string;
   termsOfService: string;
@@ -264,9 +297,6 @@ interface Translations {
   studyInKoreaDescription: string;
   fbConsultingDescription: string;
   universityAdmissionsDescription: string;
-  marketAnalysisDescription: string;
-  privacyPolicyDescription: string;
-  termsOfServiceDescription: string;
   sitemapDescription: string;
   needHelpFinding: string;
   cantFindWhatLooking: string;
@@ -280,7 +310,6 @@ interface Translations {
   consultationDetails: string;
   fullName: string;
   selectedService: string;
-  selectService: string;
   totalPrice: string;
   paymentMethods: string;
   payWithCard: string;
@@ -300,7 +329,6 @@ interface Translations {
   
   // Visa
   visaApplication: string;
-  regulatoryCompliance: string;
 }
 
 const translations: Record<string, Translations> = {
@@ -313,6 +341,7 @@ const translations: Record<string, Translations> = {
     studyInKorea: "Study in Korea",
     fbConsulting: "F&B Consulting",
     businessConsultation: "Business Consultation",
+    koreanLanguageTraining: "Korean Language Training",
     
     // Hero Section
     heroTitle: "Your Gateway to Korean Education and Global Business Success",
@@ -338,10 +367,13 @@ const translations: Record<string, Translations> = {
     ourServices: "Our Services",
     scholarshipGuidance: "Scholarship Guidance",
     scholarshipGuidanceDesc: "Complete assistance with scholarship applications and funding opportunities",
+    scholarshipDescription: "Complete assistance with scholarship applications and funding opportunities",
     universityAdmissions: "University Admissions",
     universityAdmissionsDesc: "Expert guidance through the university application process",
     universityAdmissionSupport: "University Admission Support",
     universityAdmissionSupportDesc: "Comprehensive support for university applications and admissions",
+    universityDescription: "Expert guidance through the university application process",
+    visaDescription: "Complete support for visa application and documentation",
     marketAnalysis: "Market Analysis",
     marketAnalysisDescription: "In-depth market research and analysis for business expansion",
     fbMarketAnalysis: "F&B Market Analysis",
@@ -364,6 +396,10 @@ const translations: Record<string, Translations> = {
     journeyDescription: "Begin your path to success with our expert guidance",
     getFullConsultation: "Get Full Consultation",
     viewAllPackagesPricing: "View All Packages & Pricing",
+    languageDescription: "Korean language training and cultural preparation",
+    culturalOrientation: "Cultural Orientation",
+    businessDescription: "Expert advice for food & beverage businesses",
+    marketResearch: "Market Research",
     
     // Study Programs
     studyProgramsTitle: "Study Programs & Services",
@@ -385,6 +421,29 @@ const translations: Record<string, Translations> = {
     conversationPractice: "Conversation Practice",
     culturalOrientationAndAccommodation: "Cultural Orientation & Accommodation",
     bookConsultation: "Book Consultation",
+    
+    // Contact Section
+    readyToTakeNextStep: "Ready to take the next step? Get in touch for a free consultation",
+    sendUsMessage: "Send us a Message",
+    fillFormBelow: "Fill out the form below and we'll respond within 24 hours",
+    yourName: "Your Name",
+    yourEmail: "Your Email",
+    selectService: "Select Service",
+    generalInquiry: "General Inquiry",
+    studyAbroadRelocation: "Study Abroad & Relocation",
+    fbConsultingService: "F&B Consulting",
+    bothServices: "Both Services",
+    message: "Message",
+    tellUsAboutGoals: "Tell us about your goals and how we can help...",
+    sendMessage: "Send Message",
+    quickContact: "Quick Contact",
+    phoneKorea: "Phone (Korea)",
+    whatsapp: "WhatsApp",
+    bookAConsultation: "Book a Consultation",
+    scheduleFreeConsultation: "Schedule a free 15-minute consultation to discuss your goals and get personalized advice.",
+    scheduleConsultation: "Schedule Free Consultation",
+    saturday: "Saturday",
+    sunday: "Sunday",
     
     // About Advisor Page
     professionalSummary: "Professional Summary",
@@ -422,12 +481,14 @@ const translations: Record<string, Translations> = {
     enterEmailAddress: "Enter your email address",
     subscribe: "Subscribe",
     newsletterThankYou: "Thank you for subscribing! Check your email for updates.",
+    newsletter: "Newsletter",
     
     // Footer
     footerDescription: "Your trusted partner for Korean education and global F&B business success.",
     quickLinks: "Quick Links",
     aboutUs: "About Us",
     resourcesBlog: "Resources & Blog",
+    blogResources: "Blog & Resources",
     legal: "Legal",
     privacyPolicy: "Privacy Policy",
     termsOfService: "Terms of Service",
@@ -567,9 +628,6 @@ const translations: Record<string, Translations> = {
     studyInKoreaDescription: "Educational consulting and scholarship guidance",
     fbConsultingDescription: "Food & beverage business consulting",
     universityAdmissionsDescription: "Assistance with university applications",
-    marketAnalysisDescription: "Business market research and analysis",
-    privacyPolicyDescription: "How we handle your data",
-    termsOfServiceDescription: "Terms and conditions of service",
     sitemapDescription: "Complete site navigation",
     needHelpFinding: "Need Help Finding Something?",
     cantFindWhatLooking: "Can't find what you're looking for? Our team is here to help you navigate our services.",
@@ -583,7 +641,6 @@ const translations: Record<string, Translations> = {
     consultationDetails: "Consultation Details",
     fullName: "Full Name",
     selectedService: "Selected Service",
-    selectService: "Select Service",
     totalPrice: "Total Price",
     paymentMethods: "Payment Methods",
     payWithCard: "Pay with Card",
@@ -613,6 +670,7 @@ const translations: Record<string, Translations> = {
     studyInKorea: "한국 유학",
     fbConsulting: "식음료 컨설팅",
     businessConsultation: "사업 컨설팅",
+    koreanLanguageTraining: "한국어 교육",
     
     // Hero Section
     heroTitle: "한국 교육과 글로벌 비즈니스 성공의 관문",
@@ -638,10 +696,13 @@ const translations: Record<string, Translations> = {
     ourServices: "우리의 서비스",
     scholarshipGuidance: "장학금 안내",
     scholarshipGuidanceDesc: "장학금 신청과 재정 지원 기회에 대한 완전한 지원",
+    scholarshipDescription: "장학금 신청과 재정 지원 기회에 대한 완전한 지원",
     universityAdmissions: "대학 입학",
     universityAdmissionsDesc: "대학 지원 과정에 대한 전문 가이드",
     universityAdmissionSupport: "대학 입학 지원",
     universityAdmissionSupportDesc: "대학 지원 및 입학을 위한 종합적인 지원",
+    universityDescription: "대학 지원 과정에 대한 전문 가이드",
+    visaDescription: "비자 신청 및 서류 작성에 대한 완전한 지원",
     marketAnalysis: "시장 분석",
     marketAnalysisDescription: "사업 확장을 위한 심도 있는 시장 조사 및 분석",
     fbMarketAnalysis: "식음료 시장 분석",
@@ -664,6 +725,10 @@ const translations: Record<string, Translations> = {
     journeyDescription: "전문 가이드와 함께 성공으로의 길을 시작하세요",
     getFullConsultation: "전체 컨설팅 받기",
     viewAllPackagesPricing: "모든 패키지 및 가격 보기",
+    languageDescription: "한국어 교육 및 문화 준비",
+    culturalOrientation: "문화 오리엔테이션",
+    businessDescription: "식음료 사업을 위한 전문 조언",
+    marketResearch: "시장 조사",
     
     // Study Programs
     studyProgramsTitle: "유학 프로그램 및 서비스",
@@ -685,6 +750,29 @@ const translations: Record<string, Translations> = {
     conversationPractice: "회화 연습",
     culturalOrientationAndAccommodation: "문화 오리엔테이션 및 숙소",
     bookConsultation: "상담 예약",
+    
+    // Contact Section
+    readyToTakeNextStep: "다음 단계로 나아갈 준비가 되셨나요? 무료 상담을 위해 연락주세요",
+    sendUsMessage: "메시지 보내기",
+    fillFormBelow: "아래 양식을 작성해주시면 24시간 내에 답변드리겠습니다",
+    yourName: "성명",
+    yourEmail: "이메일",
+    selectService: "서비스 선택",
+    generalInquiry: "일반 문의",
+    studyAbroadRelocation: "유학 및 이주",
+    fbConsultingService: "식음료 컨설팅",
+    bothServices: "두 서비스 모두",
+    message: "메시지",
+    tellUsAboutGoals: "목표와 저희가 어떻게 도울 수 있는지 말씀해주세요...",
+    sendMessage: "메시지 보내기",
+    quickContact: "빠른 연락",
+    phoneKorea: "전화 (한국)",
+    whatsapp: "WhatsApp",
+    bookAConsultation: "상담 예약",
+    scheduleFreeConsultation: "목표를 논의하고 개인화된 조언을 받기 위한 무료 15분 상담을 예약하세요.",
+    scheduleConsultation: "무료 상담 예약",
+    saturday: "토요일",
+    sunday: "일요일",
     
     // About Advisor Page
     professionalSummary: "전문 요약",
@@ -722,12 +810,14 @@ const translations: Record<string, Translations> = {
     enterEmailAddress: "이메일 주소를 입력하세요",
     subscribe: "구독하기",
     newsletterThankYou: "구독해주셔서 감사합니다! 업데이트를 위해 이메일을 확인해주세요.",
+    newsletter: "뉴스레터",
     
     // Footer
     footerDescription: "한국 교육과 글로벌 식음료 사업 성공을 위한 신뢰할 수 있는 파트너입니다.",
     quickLinks: "빠른 링크",
     aboutUs: "회사 소개",
     resourcesBlog: "자료 및 블로그",
+    blogResources: "블로그 및 자료",
     legal: "법적 고지",
     privacyPolicy: "개인정보 보호정책",
     termsOfService: "서비스 약관",
@@ -867,9 +957,6 @@ const translations: Record<string, Translations> = {
     studyInKoreaDescription: "교육 컨설팅 및 장학금 안내",
     fbConsultingDescription: "식음료 사업 컨설팅",
     universityAdmissionsDescription: "대학 지원 지원",
-    marketAnalysisDescription: "사업 시장 조사 및 분석",
-    privacyPolicyDescription: "데이터 처리 방법",
-    termsOfServiceDescription: "서비스 약관 및 조건",
     sitemapDescription: "완전한 사이트 탐색",
     needHelpFinding: "찾는 것을 도움이 필요하신가요?",
     cantFindWhatLooking: "찾고 있는 것을 찾을 수 없나요? 우리 팀이 서비스 탐색을 도와드립니다.",
@@ -883,7 +970,6 @@ const translations: Record<string, Translations> = {
     consultationDetails: "상담 세부사항",
     fullName: "성명",
     selectedService: "선택된 서비스",
-    selectService: "서비스 선택",
     totalPrice: "총 가격",
     paymentMethods: "결제 방법",
     payWithCard: "카드로 결제",
