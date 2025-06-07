@@ -29,6 +29,10 @@ interface Translations {
   getStarted: string;
   learnMore: string;
   watchVideo: string;
+  exploreStudyPrograms: string;
+  studentsAssisted: string;
+  countriesReached: string;
+  foodScienceExpert: string;
 
   // About Section
   aboutDescription: string;
@@ -77,10 +81,101 @@ interface Translations {
   // Services specific
   serviceDescription: string;
   supplyChainOptimization: string;
+  scholarshipDescription: string;
+  scholarshipSearch: string;
+  applicationAssistance: string;
+  documentPreparation: string;
+  universityDescription: string;
+  universitySelection: string;
+  applicationReview: string;
+  interviewPreparation: string;
+  visaDescription: string;
+  applicationFiling: string;
+  interviewCoaching: string;
+  languageDescription: string;
+  topikPreparation: string;
+  conversationPractice: string;
+  culturalOrientation: string;
+  businessDescription: string;
+  marketResearch: string;
+  businessPlanning: string;
+  strategyDevelopment: string;
+  marketAnalysisDescription: string;
+  marketSizing: string;
+  competitorAnalysis: string;
+  trendIdentification: string;
+  productDescription: string;
+  recipeDevelopment: string;
+  productTesting: string;
+  complianceDescription: string;
+  safetyStandards: string;
+  certificationSupport: string;
+  complianceAudits: string;
+  ourServices: string;
+  servicesDescription: string;
+  startYourJourney: string;
+  getExpertConsultation: string;
+  letsStartYourJourney: string;
+  journeyDescription: string;
+  getFullConsultation: string;
+  viewAllPackagesPricing: string;
+
+  // Blog & Resources
+  blogPost1Title: string;
+  blogPost1Excerpt: string;
+  blogPost2Title: string;
+  blogPost2Excerpt: string;
+  blogPost3Title: string;
+  blogPost3Excerpt: string;
+  education: string;
+  business: string;
+  scholarships: string;
+  latest: string;
+  resourcesDescription: string;
+  readMore: string;
+  viewAllResources: string;
+
+  // Footer
+  footerDescription: string;
+  quickLinks: string;
+  aboutUs: string;
+  resourcesBlog: string;
+  legal: string;
+  contactInfo: string;
+  allRightsReserved: string;
+
+  // Newsletter
+  newsletterTitle: string;
+  newsletterDescription: string;
+  newsletterThankYou: string;
+  enterEmailAddress: string;
+  subscribe: string;
+
+  // Partners
+  ourTrustedPartners: string;
+  partnerDescription: string;
+
+  // Testimonials
+  successStories: string;
+  testimonialSubtitle: string;
+
+  // WhatsApp Consultation
+  scheduleFreeFifteenMinuteConsultation: string;
+
+  // About Advisor Page
+  backToHome: string;
+  advisorName: string;
+  advisorTitle: string;
+  professionalSummary: string;
+  educationExpertise: string;
+  koreanGovernmentScholarshipProgram: string;
 
   // Privacy & Terms
   privacyPolicyDescription: string;
   termsOfServiceDescription: string;
+  privacyPolicy: string;
+  termsOfService: string;
+  sitemap: string;
 }
 
 const englishTranslations: Translations = {
@@ -111,6 +206,10 @@ const englishTranslations: Translations = {
   getStarted: "Get Started",
   learnMore: "Learn More",
   watchVideo: "Watch Video",
+  exploreStudyPrograms: "Explore Study Programs",
+  studentsAssisted: "Students Assisted",
+  countriesReached: "Countries Reached",
+  foodScienceExpert: "Food Science Expert",
 
   // About Section
   aboutDescription: "Empowering dreams through education and business excellence. We bridge cultures and create opportunities for global success.",
@@ -159,10 +258,101 @@ const englishTranslations: Translations = {
   // Services specific
   serviceDescription: "Professional consulting services",
   supplyChainOptimization: "Supply Chain Optimization",
+  scholarshipDescription: "Comprehensive scholarship search and application support",
+  scholarshipSearch: "Scholarship Search",
+  applicationAssistance: "Application Assistance",
+  documentPreparation: "Document Preparation",
+  universityDescription: "Complete university admission guidance",
+  universitySelection: "University Selection",
+  applicationReview: "Application Review",
+  interviewPreparation: "Interview Preparation",
+  visaDescription: "Complete visa application support",
+  applicationFiling: "Application Filing",
+  interviewCoaching: "Interview Coaching",
+  languageDescription: "Korean language training and cultural preparation",
+  topikPreparation: "TOPIK Preparation",
+  conversationPractice: "Conversation Practice",
+  culturalOrientation: "Cultural Orientation",
+  businessDescription: "Strategic business consultation services",
+  marketResearch: "Market Research",
+  businessPlanning: "Business Planning",
+  strategyDevelopment: "Strategy Development",
+  marketAnalysisDescription: "Comprehensive market analysis and insights",
+  marketSizing: "Market Sizing",
+  competitorAnalysis: "Competitor Analysis",
+  trendIdentification: "Trend Identification",
+  productDescription: "Product development and innovation support",
+  recipeDevelopment: "Recipe Development",
+  productTesting: "Product Testing",
+  complianceDescription: "Regulatory compliance and certification support",
+  safetyStandards: "Safety Standards",
+  certificationSupport: "Certification Support",
+  complianceAudits: "Compliance Audits",
+  ourServices: "Our Services",
+  servicesDescription: "Comprehensive solutions for your global success",
+  startYourJourney: "Start Your Journey",
+  getExpertConsultation: "Get Expert Consultation",
+  letsStartYourJourney: "Let's Start Your Journey",
+  journeyDescription: "Ready to transform your dreams into reality?",
+  getFullConsultation: "Get Full Consultation",
+  viewAllPackagesPricing: "View All Packages & Pricing",
+
+  // Blog & Resources
+  blogPost1Title: "Complete Guide to Korean Universities",
+  blogPost1Excerpt: "Everything you need to know about studying in Korea's top universities",
+  blogPost2Title: "F&B Business Success in Asia",
+  blogPost2Excerpt: "Strategies for expanding your food business in Asian markets",
+  blogPost3Title: "Scholarship Opportunities 2024",
+  blogPost3Excerpt: "Latest scholarship programs and application tips",
+  education: "Education",
+  business: "Business",
+  scholarships: "Scholarships",
+  latest: "Latest",
+  resourcesDescription: "Stay updated with the latest insights and guides",
+  readMore: "Read More",
+  viewAllResources: "View All Resources",
+
+  // Footer
+  footerDescription: "Your trusted partner for global education and business success",
+  quickLinks: "Quick Links",
+  aboutUs: "About Us",
+  resourcesBlog: "Resources & Blog",
+  legal: "Legal",
+  contactInfo: "Contact Info",
+  allRightsReserved: "All rights reserved.",
+
+  // Newsletter
+  newsletterTitle: "Stay Updated",
+  newsletterDescription: "Get the latest updates on scholarships, programs, and business opportunities",
+  newsletterThankYou: "Thank you for subscribing!",
+  enterEmailAddress: "Enter your email address",
+  subscribe: "Subscribe",
+
+  // Partners
+  ourTrustedPartners: "Our Trusted Partners",
+  partnerDescription: "Working with leading institutions worldwide",
+
+  // Testimonials
+  successStories: "Success Stories",
+  testimonialSubtitle: "What our clients say about their journey with us",
+
+  // WhatsApp Consultation
+  scheduleFreeFifteenMinuteConsultation: "Schedule Free 15-min Consultation",
+
+  // About Advisor Page
+  backToHome: "Back to Home",
+  advisorName: "Kunda Pathways Team",
+  advisorTitle: "International Education & F&B Experts",
+  professionalSummary: "Professional Summary",
+  educationExpertise: "Education Expertise",
+  koreanGovernmentScholarshipProgram: "Korean Government Scholarship Program",
 
   // Privacy & Terms
   privacyPolicyDescription: "Our privacy policy and data protection practices",
   termsOfServiceDescription: "Terms and conditions for using our services",
+  privacyPolicy: "Privacy Policy",
+  termsOfService: "Terms of Service",
+  sitemap: "Sitemap",
 };
 
 const koreanTranslations: Translations = {
@@ -193,6 +383,10 @@ const koreanTranslations: Translations = {
   getStarted: "시작하기",
   learnMore: "더 알아보기",
   watchVideo: "비디오 보기",
+  exploreStudyPrograms: "학습 프로그램 탐색",
+  studentsAssisted: "지원한 학생",
+  countriesReached: "도달한 국가",
+  foodScienceExpert: "식품과학 전문가",
 
   // About Section
   aboutDescription: "교육과 비즈니스 우수성을 통해 꿈을 실현합니다. 문화를 연결하고 글로벌 성공의 기회를 창출합니다.",
@@ -241,10 +435,101 @@ const koreanTranslations: Translations = {
   // Services specific
   serviceDescription: "전문 컨설팅 서비스",
   supplyChainOptimization: "공급망 최적화",
+  scholarshipDescription: "포괄적인 장학금 검색 및 신청 지원",
+  scholarshipSearch: "장학금 검색",
+  applicationAssistance: "지원 도움",
+  documentPreparation: "서류 준비",
+  universityDescription: "완전한 대학 입학 지도",
+  universitySelection: "대학 선택",
+  applicationReview: "지원서 검토",
+  interviewPreparation: "면접 준비",
+  visaDescription: "완전한 비자 신청 지원",
+  applicationFiling: "신청서 제출",
+  interviewCoaching: "면접 코칭",
+  languageDescription: "한국어 교육 및 문화 준비",
+  topikPreparation: "TOPIK 준비",
+  conversationPractice: "회화 연습",
+  culturalOrientation: "문화 적응",
+  businessDescription: "전략적 비즈니스 컨설팅 서비스",
+  marketResearch: "시장 조사",
+  businessPlanning: "사업 계획",
+  strategyDevelopment: "전략 개발",
+  marketAnalysisDescription: "포괄적인 시장 분석 및 통찰",
+  marketSizing: "시장 규모 조사",
+  competitorAnalysis: "경쟁사 분석",
+  trendIdentification: "트렌드 식별",
+  productDescription: "제품 개발 및 혁신 지원",
+  recipeDevelopment: "레시피 개발",
+  productTesting: "제품 테스트",
+  complianceDescription: "규제 준수 및 인증 지원",
+  safetyStandards: "안전 기준",
+  certificationSupport: "인증 지원",
+  complianceAudits: "규정 준수 감사",
+  ourServices: "우리의 서비스",
+  servicesDescription: "글로벌 성공을 위한 종합 솔루션",
+  startYourJourney: "여정 시작하기",
+  getExpertConsultation: "전문가 상담 받기",
+  letsStartYourJourney: "여정을 시작해봅시다",
+  journeyDescription: "꿈을 현실로 만들 준비가 되셨나요?",
+  getFullConsultation: "전체 상담 받기",
+  viewAllPackagesPricing: "모든 패키지 및 가격 보기",
+
+  // Blog & Resources
+  blogPost1Title: "한국 대학교 완전 가이드",
+  blogPost1Excerpt: "한국 최고 대학교 유학에 대해 알아야 할 모든 것",
+  blogPost2Title: "아시아 식음료 사업 성공",
+  blogPost2Excerpt: "아시아 시장에서 식음료 사업 확장 전략",
+  blogPost3Title: "2024년 장학금 기회",
+  blogPost3Excerpt: "최신 장학금 프로그램 및 지원 팁",
+  education: "교육",
+  business: "비즈니스",
+  scholarships: "장학금",
+  latest: "최신",
+  resourcesDescription: "최신 통찰력과 가이드로 업데이트하세요",
+  readMore: "더 읽기",
+  viewAllResources: "모든 자료 보기",
+
+  // Footer
+  footerDescription: "글로벌 교육 및 비즈니스 성공을 위한 신뢰할 수 있는 파트너",
+  quickLinks: "빠른 링크",
+  aboutUs: "회사 소개",
+  resourcesBlog: "자료 및 블로그",
+  legal: "법적 정보",
+  contactInfo: "연락처 정보",
+  allRightsReserved: "모든 권리 보유.",
+
+  // Newsletter
+  newsletterTitle: "업데이트 받기",
+  newsletterDescription: "장학금, 프로그램, 비즈니스 기회에 대한 최신 업데이트 받기",
+  newsletterThankYou: "구독해 주셔서 감사합니다!",
+  enterEmailAddress: "이메일 주소 입력",
+  subscribe: "구독",
+
+  // Partners
+  ourTrustedPartners: "신뢰할 수 있는 파트너",
+  partnerDescription: "전 세계 주요 기관과 협력",
+
+  // Testimonials
+  successStories: "성공 사례",
+  testimonialSubtitle: "고객들이 우리와의 여정에 대해 말하는 것",
+
+  // WhatsApp Consultation
+  scheduleFreeFifteenMinuteConsultation: "무료 15분 상담 예약",
+
+  // About Advisor Page
+  backToHome: "홈으로 돌아가기",
+  advisorName: "쿤다 패스웨이즈 팀",
+  advisorTitle: "국제 교육 및 식음료 전문가",
+  professionalSummary: "전문가 요약",
+  educationExpertise: "교육 전문성",
+  koreanGovernmentScholarshipProgram: "한국 정부 장학금 프로그램",
 
   // Privacy & Terms
   privacyPolicyDescription: "개인정보 보호정책 및 데이터 보호 관행",
   termsOfServiceDescription: "서비스 이용 약관",
+  privacyPolicy: "개인정보 보호정책",
+  termsOfService: "서비스 이용약관",
+  sitemap: "사이트맵",
 };
 
 const frenchTranslations: Translations = {
@@ -275,6 +560,10 @@ const frenchTranslations: Translations = {
   getStarted: "Commencer",
   learnMore: "En savoir plus",
   watchVideo: "Regarder la vidéo",
+  exploreStudyPrograms: "Explorer les programmes d'études",
+  studentsAssisted: "Étudiants aidés",
+  countriesReached: "Pays atteints",
+  foodScienceExpert: "Expert en science alimentaire",
 
   // About Section
   aboutDescription: "Donner du pouvoir aux rêves grâce à l'excellence éducative et commerciale. Nous relions les cultures et créons des opportunités de succès mondial.",
@@ -323,10 +612,101 @@ const frenchTranslations: Translations = {
   // Services specific
   serviceDescription: "Services de conseil professionnel",
   supplyChainOptimization: "Optimisation de la chaîne d'approvisionnement",
+  scholarshipDescription: "Recherche complète de bourses et soutien aux candidatures",
+  scholarshipSearch: "Recherche de bourses",
+  applicationAssistance: "Assistance aux candidatures",
+  documentPreparation: "Préparation de documents",
+  universityDescription: "Guide complet d'admission universitaire",
+  universitySelection: "Sélection d'université",
+  applicationReview: "Révision de candidature",
+  interviewPreparation: "Préparation d'entretien",
+  visaDescription: "Support complet pour demande de visa",
+  applicationFiling: "Dépôt de candidature",
+  interviewCoaching: "Coaching d'entretien",
+  languageDescription: "Formation en coréen et préparation culturelle",
+  topikPreparation: "Préparation TOPIK",
+  conversationPractice: "Pratique de conversation",
+  culturalOrientation: "Orientation culturelle",
+  businessDescription: "Services de consultation d'affaires stratégiques",
+  marketResearch: "Recherche de marché",
+  businessPlanning: "Planification d'affaires",
+  strategyDevelopment: "Développement de stratégie",
+  marketAnalysisDescription: "Analyse de marché complète et insights",
+  marketSizing: "Dimensionnement du marché",
+  competitorAnalysis: "Analyse de concurrents",
+  trendIdentification: "Identification de tendances",
+  productDescription: "Support de développement et d'innovation de produits",
+  recipeDevelopment: "Développement de recettes",
+  productTesting: "Test de produits",
+  complianceDescription: "Support de conformité réglementaire et certification",
+  safetyStandards: "Normes de sécurité",
+  certificationSupport: "Support de certification",
+  complianceAudits: "Audits de conformité",
+  ourServices: "Nos services",
+  servicesDescription: "Solutions complètes pour votre succès mondial",
+  startYourJourney: "Commencez votre parcours",
+  getExpertConsultation: "Obtenez une consultation d'expert",
+  letsStartYourJourney: "Commençons votre parcours",
+  journeyDescription: "Prêt à transformer vos rêves en réalité ?",
+  getFullConsultation: "Obtenez une consultation complète",
+  viewAllPackagesPricing: "Voir tous les forfaits et tarifs",
+
+  // Blog & Resources
+  blogPost1Title: "Guide complet des universités coréennes",
+  blogPost1Excerpt: "Tout ce que vous devez savoir sur les études dans les meilleures universités de Corée",
+  blogPost2Title: "Succès des entreprises F&B en Asie",
+  blogPost2Excerpt: "Stratégies pour développer votre entreprise alimentaire sur les marchés asiatiques",
+  blogPost3Title: "Opportunités de bourses 2024",
+  blogPost3Excerpt: "Derniers programmes de bourses et conseils de candidature",
+  education: "Éducation",
+  business: "Affaires",
+  scholarships: "Bourses",
+  latest: "Dernières",
+  resourcesDescription: "Restez à jour avec les derniers insights et guides",
+  readMore: "Lire plus",
+  viewAllResources: "Voir toutes les ressources",
+
+  // Footer
+  footerDescription: "Votre partenaire de confiance pour le succès éducatif et commercial mondial",
+  quickLinks: "Liens rapides",
+  aboutUs: "À propos de nous",
+  resourcesBlog: "Ressources et blog",
+  legal: "Légal",
+  contactInfo: "Informations de contact",
+  allRightsReserved: "Tous droits réservés.",
+
+  // Newsletter
+  newsletterTitle: "Restez informé",
+  newsletterDescription: "Obtenez les dernières mises à jour sur les bourses, programmes et opportunités d'affaires",
+  newsletterThankYou: "Merci de vous être abonné !",
+  enterEmailAddress: "Entrez votre adresse email",
+  subscribe: "S'abonner",
+
+  // Partners
+  ourTrustedPartners: "Nos partenaires de confiance",
+  partnerDescription: "Travaillant avec les principales institutions du monde entier",
+
+  // Testimonials
+  successStories: "Histoires de succès",
+  testimonialSubtitle: "Ce que nos clients disent de leur parcours avec nous",
+
+  // WhatsApp Consultation
+  scheduleFreeFifteenMinuteConsultation: "Planifier consultation gratuite 15min",
+
+  // About Advisor Page
+  backToHome: "Retour à l'accueil",
+  advisorName: "Équipe Kunda Pathways",
+  advisorTitle: "Experts en éducation internationale et F&B",
+  professionalSummary: "Résumé professionnel",
+  educationExpertise: "Expertise en éducation",
+  koreanGovernmentScholarshipProgram: "Programme de bourses du gouvernement coréen",
 
   // Privacy & Terms
   privacyPolicyDescription: "Notre politique de confidentialité et nos pratiques de protection des données",
   termsOfServiceDescription: "Conditions générales d'utilisation de nos services",
+  privacyPolicy: "Politique de confidentialité",
+  termsOfService: "Conditions de service",
+  sitemap: "Plan du site",
 };
 
 const translations = {
