@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface Translations {
@@ -212,6 +211,7 @@ interface Translations {
   // Privacy Policy
   privacyPolicyTitle: string;
   privacyPolicySubtitle: string;
+  privacyPolicyDescription: string;
   informationWeCollect: string;
   privacyCollectDescription: string;
   personalIdentificationInfo: string;
@@ -251,6 +251,7 @@ interface Translations {
   // Terms of Service
   termsOfServiceTitle: string;
   termsOfServiceSubtitle: string;
+  termsOfServiceDescription: string;
   acceptanceOfTerms: string;
   acceptanceDescription: string;
   serviceDescription: string;
@@ -526,7 +527,7 @@ const translations: Record<string, Translations> = {
     foodSafetyRegulations: "Food Safety Regulations in Asian Markets",
     foodSafetyExcerpt: "Understanding compliance requirements for F&B businesses expanding into Asia...",
     fifteenMinRead: "15 min read",
-    february202024: "February 20, 2024",
+    february202024: "February 20, 2020",
     culturalAdaptationGuide: "Cultural Adaptation Guide for International Students",
     culturalAdaptationExcerpt: "Essential tips for adapting to Korean culture and academic environment...",
     sevenMinRead: "7 min read",
@@ -543,6 +544,7 @@ const translations: Record<string, Translations> = {
     // Privacy Policy
     privacyPolicyTitle: "Privacy Policy",
     privacyPolicySubtitle: "Your privacy is our priority. Learn how we protect and handle your information.",
+    privacyPolicyDescription: "How we handle your data",
     informationWeCollect: "Information We Collect",
     privacyCollectDescription: "We collect information that you provide directly to us, such as:",
     personalIdentificationInfo: "Personal identification information (name, email address, phone number)",
@@ -582,6 +584,7 @@ const translations: Record<string, Translations> = {
     // Terms of Service
     termsOfServiceTitle: "Terms of Service",
     termsOfServiceSubtitle: "Please read these terms carefully before using our services.",
+    termsOfServiceDescription: "Terms and conditions of service",
     acceptanceOfTerms: "Acceptance of Terms",
     acceptanceDescription: "By accessing and using Kunda Pathways' services, you accept and agree to be bound by the terms and provision of this agreement.",
     serviceDescription: "Service Description",
@@ -681,7 +684,7 @@ const translations: Record<string, Translations> = {
     meetYourGlobalAdvisor: "글로벌 어드바이저를 만나보세요",
     advisorName: "장 하가바 선생님",
     advisorTitle: "글로벌 교육 및 식음료 컨설턴트",
-    advisorDescription: "국제 교육 컨설팅과 식음료 사업 개발 분야에서 5년 이상의 경험을 가진 전문가로, 한국에서의 학업 꿈을 이루고자 하는 학생들과 아시아 식음료 시장 진출을 원하는 기업가들을 지원합니다.",
+    advisorDescription: "국际 교육 컨설팅과 식음료 사업 개발 분야에서 5년 이상의 경험을 가진 전문가로, 한국에서의 학업 꿈을 이루고자 하는 학생들과 아시아 식음료 시장 진출을 원하는 기업가들을 지원합니다.",
     readMoreAboutMe: "더 자세히 알아보기",
     educationExpert: "교육 전문가",
     educationExpertDesc: "한국 대학 입학을 위한 전문 가이드",
@@ -872,6 +875,7 @@ const translations: Record<string, Translations> = {
     // Privacy Policy
     privacyPolicyTitle: "개인정보 보호정책",
     privacyPolicySubtitle: "귀하의 개인정보 보호가 우리의 우선순위입니다. 우리가 어떻게 귀하의 정보를 보호하고 처리하는지 알아보세요.",
+    privacyPolicyDescription: "우리가 귀하의 데이터를 처리하는 방법",
     informationWeCollect: "수집하는 정보",
     privacyCollectDescription: "귀하가 직접 제공하는 정보를 수집합니다:",
     personalIdentificationInfo: "개인 식별 정보 (이름, 이메일 주소, 전화번호)",
@@ -911,6 +915,7 @@ const translations: Record<string, Translations> = {
     // Terms of Service
     termsOfServiceTitle: "서비스 약관",
     termsOfServiceSubtitle: "서비스를 이용하기 전에 이 약관을 주의 깊게 읽어주세요.",
+    termsOfServiceDescription: "서비스 이용 약관",
     acceptanceOfTerms: "약관 동의",
     acceptanceDescription: "Kunda Pathways의 서비스에 접근하고 사용함으로써 이 계약의 약관과 조항에 동의하고 구속받는 것에 동의합니다.",
     serviceDescription: "서비스 설명",
