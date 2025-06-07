@@ -3,203 +3,213 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MessageCircle, Clock } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact = () => {
   const { translations } = useLanguage();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    service: "",
-    message: "",
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
   });
-  const { toast } = useToast();
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your inquiry. We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", service: "", message: "" });
+    console.log('Form submitted:', formData);
+    alert(translations.messageSent || 'Message sent successfully!');
+    setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
-    <section id="contact" className="py-20 px-4 bg-slate-100 dark:bg-slate-950">
-      <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-            {translations.letsStartYourJourney || "Let's Start Your Journey"}
-          </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-            {translations.readyToTakeNextStep || 'Ready to take the next step? Get in touch for a free consultation'}
-          </p>
-        </div>
+    <section id="contact" className="py-20 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+      <div className="container mx-auto px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
+              {translations.contact || "Contact Us"}
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+              {translations.readyToTakeNextStep || "Ready to take the next step in your journey? We're here to help you every step of the way."}
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <Card className="border-0 shadow-lg bg-white dark:bg-slate-800">
-            <CardHeader>
-              <CardTitle className="text-2xl text-slate-800 dark:text-white">
-                {translations.sendUsMessage || 'Send us a Message'}
-              </CardTitle>
-              <CardDescription className="text-slate-600 dark:text-slate-300">
-                {translations.fillFormBelow || 'Fill out the form below and we\'ll respond within 24 hours'}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-slate-700 dark:text-slate-300 mb-2 font-medium">
-                    {translations.yourName || 'Your Name'}
-                  </label>
-                  <Input
-                    placeholder={translations.yourName || "Your Name"}
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                    className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 dark:text-slate-300 mb-2 font-medium">
-                    {translations.yourEmail || 'Your Email'}
-                  </label>
-                  <Input
-                    type="email"
-                    placeholder={translations.yourEmail || "Your Email"}
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                    className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 dark:text-slate-300 mb-2 font-medium">
-                    {translations.selectService || 'Select Service'}
-                  </label>
-                  <select
-                    className="w-full p-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    value={formData.service}
-                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    required
-                  >
-                    <option value="">{translations.generalInquiry || 'General Inquiry'}</option>
-                    <option value="study-abroad">{translations.studyAbroadRelocation || 'Study Abroad & Relocation'}</option>
-                    <option value="fb-consulting">{translations.fbConsultingService || 'F&B Consulting'}</option>
-                    <option value="both">{translations.bothServices || 'Both Services'}</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-slate-700 dark:text-slate-300 mb-2 font-medium">
-                    {translations.message || 'Message'}
-                  </label>
-                  <Textarea
-                    placeholder={translations.tellUsAboutGoals || "Tell us about your goals and how we can help..."}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    rows={5}
-                    required
-                    className="bg-slate-50 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white"
-                  />
-                </div>
-                <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" size="lg">
-                  {translations.sendMessage || 'Send Message'}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Contact Info */}
-          <div className="space-y-6">
-            {/* Quick Contact */}
-            <Card className="border-0 shadow-lg bg-white dark:bg-slate-800">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-6 text-slate-800 dark:text-white flex items-center">
-                  <MessageCircle className="w-6 h-6 mr-2 text-blue-600" />
-                  {translations.quickContact || 'Quick Contact'}
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3 p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
-                    <Mail className="w-5 h-5 text-blue-600" />
-                    <div>
-                      <div className="text-slate-800 dark:text-white font-medium">
-                        {translations.email || 'Email'}
-                      </div>
-                      <div className="text-slate-600 dark:text-slate-300">info@globalconnect.com</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
-                    <Phone className="w-5 h-5 text-green-600" />
-                    <div>
-                      <div className="text-slate-800 dark:text-white font-medium">
-                        {translations.phoneKorea || 'Phone (Korea)'}
-                      </div>
-                      <div className="text-slate-600 dark:text-slate-300">+82-10-1234-5678</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
-                    <MessageCircle className="w-5 h-5 text-green-600" />
-                    <div>
-                      <div className="text-slate-800 dark:text-white font-medium">
-                        {translations.whatsapp || 'WhatsApp'}
-                      </div>
-                      <div className="text-slate-600 dark:text-slate-300">+82-10-1234-5678</div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Book Consultation */}
-            <Card className="border-0 shadow-lg bg-white dark:bg-slate-800">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4 text-slate-800 dark:text-white">
-                  {translations.bookAConsultation || 'Book a Consultation'}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-6">
-                  {translations.scheduleFreeConsultation || 'Schedule a free 15-minute consultation to discuss your goals and get personalized advice.'}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl text-slate-800 dark:text-white flex items-center">
+                  <Send className="mr-3 text-blue-600" />
+                  {translations.sendUsMessage || "Send us a message"}
+                </CardTitle>
+                <p className="text-slate-600 dark:text-slate-300">
+                  {translations.fillFormBelow || "Fill out the form below and we'll get back to you within 24 hours."}
                 </p>
-                <Button className="w-full bg-green-600 hover:bg-green-700" size="lg">
-                  {translations.scheduleConsultation || 'Schedule Free Consultation'}
-                </Button>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                      {translations.yourName || "Your Name"}
+                    </label>
+                    <Input 
+                      placeholder={translations.yourName || "Your Name"}
+                      value={formData.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      required
+                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                      {translations.yourEmail || "Your Email"}
+                    </label>
+                    <Input 
+                      type="email" 
+                      placeholder={translations.yourEmail || "Your Email"}
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      required
+                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                      {translations.subject || "Subject"}
+                    </label>
+                    <select 
+                      value={formData.subject}
+                      onChange={(e) => handleInputChange('subject', e.target.value)}
+                      required
+                      className="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">{translations.selectSubject || "Select a subject"}</option>
+                      <option value="general">{translations.generalInquiry || "General Inquiry"}</option>
+                      <option value="study">{translations.studyAbroadRelocation || "Study Abroad & Relocation"}</option>
+                      <option value="fb">{translations.fbConsultingService || "F&B Consulting Services"}</option>
+                      <option value="both">{translations.bothServices || "Both Services"}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                      {translations.message || "Message"}
+                    </label>
+                    <Textarea 
+                      placeholder={translations.tellUsAboutGoals || "Tell us about your goals and how we can help you achieve them..."}
+                      rows={5} 
+                      value={formData.message}
+                      onChange={(e) => handleInputChange('message', e.target.value)}
+                      required
+                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+                    />
+                  </div>
+
+                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl">
+                    {translations.sendMessage || "Send Message"}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
 
-            {/* Office Hours */}
-            <Card className="border-0 shadow-lg bg-white dark:bg-slate-800">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4 text-slate-800 dark:text-white flex items-center">
-                  <Clock className="w-6 h-6 mr-2 text-orange-600" />
-                  {translations.officeHours || 'Office Hours'}
-                </h3>
-                <div className="space-y-2">
+            {/* Contact Information */}
+            <div className="space-y-8">
+              <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-slate-800 dark:text-white flex items-center">
+                    <MessageCircle className="mr-3 text-green-600" />
+                    {translations.quickContact || "Quick Contact"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                      <Mail className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-slate-800 dark:text-white">Email</h4>
+                      <p className="text-slate-600 dark:text-slate-300">info@kundapathways.com</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                      <Phone className="w-6 h-6 text-green-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-slate-800 dark:text-white">{translations.phoneKorea || "Phone (Korea)"}</h4>
+                      <p className="text-slate-600 dark:text-slate-300">+82-10-1234-5678</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                      <MessageCircle className="w-6 h-6 text-purple-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-slate-800 dark:text-white">{translations.whatsapp || "WhatsApp"}</h4>
+                      <p className="text-slate-600 dark:text-slate-300">+82-10-1234-5678</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+                      <MapPin className="w-6 h-6 text-orange-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-slate-800 dark:text-white">{translations.location || "Location"}</h4>
+                      <p className="text-slate-600 dark:text-slate-300">Seoul, South Korea</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-lg">
+                <CardContent className="p-8 text-center">
+                  <h3 className="text-2xl font-bold mb-2">{translations.bookAConsultation || "Book a Consultation"}</h3>
+                  <p className="mb-4 opacity-90">
+                    {translations.scheduleFreeConsultation || "Schedule a free 15-minute consultation to discuss your goals."}
+                  </p>
+                  <Link to="/book-consultation">
+                    <Button className="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-xl font-semibold shadow-lg">
+                      {translations.scheduleConsultation || "Schedule Consultation"}
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl text-slate-800 dark:text-white flex items-center">
+                    <Clock className="mr-3 text-blue-600" />
+                    {translations.businessHours || "Business Hours"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-300">
-                      {translations.mondayFriday || 'Monday - Friday:'}
-                    </span>
-                    <span className="text-slate-800 dark:text-white font-medium">9:00 AM - 6:00 PM (KST)</span>
+                    <span className="text-slate-600 dark:text-slate-300">{translations.mondayFriday || "Monday - Friday"}</span>
+                    <span className="text-slate-800 dark:text-white font-medium">9:00 AM - 6:00 PM KST</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-300">
-                      {translations.saturday || 'Saturday:'}
-                    </span>
-                    <span className="text-slate-800 dark:text-white font-medium">10:00 AM - 4:00 PM (KST)</span>
+                    <span className="text-slate-600 dark:text-slate-300">{translations.saturday || "Saturday"}</span>
+                    <span className="text-slate-800 dark:text-white font-medium">10:00 AM - 4:00 PM KST</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-300">
-                      {translations.sunday || 'Sunday:'}
-                    </span>
-                    <span className="text-slate-800 dark:text-white font-medium">
-                      {translations.closed || 'Closed'}
-                    </span>
+                    <span className="text-slate-600 dark:text-slate-300">{translations.sunday || "Sunday"}</span>
+                    <span className="text-slate-800 dark:text-white font-medium">{translations.closed || "Closed"}</span>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>

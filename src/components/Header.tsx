@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -151,7 +150,7 @@ const Header = () => {
             <LanguageSwitcher />
             <ThemeToggle />
             <Link to="/book-consultation">
-              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 hover:scale-105 transition-all duration-300 rounded-xl shadow-lg">
+              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 hover:scale-105 transition-all duration-300 rounded-xl shadow-lg text-white">
                 {translations.bookConsultation || "Book Consultation"}
               </Button>
             </Link>
@@ -207,7 +206,7 @@ const Header = () => {
                 <ThemeToggle />
               </div>
               <Link to="/book-consultation">
-                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 w-full rounded-xl shadow-lg">
+                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 w-full rounded-xl shadow-lg text-white">
                   {translations.bookConsultation || "Book Consultation"}
                 </Button>
               </Link>

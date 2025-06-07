@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface Translations {
@@ -331,6 +330,48 @@ interface Translations {
   
   // Visa
   visaApplication: string;
+  
+  // Additional keys for better translation support
+  selectSubject: string;
+  messageSent: string;
+  bookAConsultation: string;
+  businessHours: string;
+  mondayFriday: string;
+  closed: string;
+  aboutDescription: string;
+  ourMission: string;
+  missionDescription: string;
+  personalizedGuidance: string;
+  expertConsultation: string;
+  endToEndSupport: string;
+  meetYourGlobalAdvisor: string;
+  internationalEducationExpert: string;
+  successfulStudents: string;
+  businessesHelped: string;
+  scholarshipSuccessRate: string;
+  yearsExperience: string;
+  marketEntryStrategy: string;
+  productDevelopmentService: string;
+  supplyChainOptimization: string;
+  brandLocalization: string;
+  partnershipDistribution: string;
+  completeMarketEntry: string;
+  whyChooseUs: string;
+  mscFoodScienceExpert: string;
+  experienceDescription: string;
+  successfulProjectsDescription: string;
+  specialPackageDeals: string;
+  mostPopular: string;
+  studyAbroadComplete: string;
+  fbMarketEntryComplete: string;
+  studentFbCombo: string;
+  additionalServicesTitle: string;
+  hotelBookingAssistance: string;
+  phoneConsultationService: string;
+  airportPickupService: string;
+  culturalOrientationService: string;
+  needCustomSolution: string;
+  getCustomQuote: string;
 }
 
 const translations: Record<string, Translations> = {
@@ -664,6 +705,48 @@ const translations: Record<string, Translations> = {
     
     // Visa
     visaApplication: "Visa Application",
+    
+    // Additional translations
+    selectSubject: "Select a subject",
+    messageSent: "Message sent successfully!",
+    bookAConsultation: "Book a Consultation",
+    businessHours: "Business Hours",
+    mondayFriday: "Monday - Friday",
+    closed: "Closed",
+    aboutDescription: "Empowering dreams through education and business excellence. We bridge cultures and create opportunities for global success.",
+    ourMission: "Our Mission",
+    missionDescription: "To provide comprehensive, personalized guidance that transforms educational aspirations and business ventures into successful realities. We believe in the power of quality education and strategic business planning to change lives.",
+    personalizedGuidance: "Personalized guidance tailored to your unique goals",
+    expertConsultation: "Expert consultation with proven track record",
+    endToEndSupport: "End-to-end support throughout your journey",
+    meetYourGlobalAdvisor: "Meet Your Global Advisor",
+    internationalEducationExpert: "International Education & F&B Expert",
+    successfulStudents: "Successful Students",
+    businessesHelped: "Businesses Helped",
+    scholarshipSuccessRate: "Scholarship Success Rate",
+    yearsExperience: "Years Experience",
+    marketEntryStrategy: "Market Entry Strategy",
+    productDevelopmentService: "Product Development",
+    supplyChainOptimization: "Supply Chain Optimization", 
+    brandLocalization: "Brand Localization",
+    partnershipDistribution: "Partnership & Distribution",
+    completeMarketEntry: "Complete Market Entry Package",
+    whyChooseUs: "Why Choose Us",
+    mscFoodScienceExpert: "MSc Food Science Expert",
+    experienceDescription: "8+ Years Experience",
+    successfulProjectsDescription: "50+ Successful Projects",
+    specialPackageDeals: "Special Package Deals",
+    mostPopular: "MOST POPULAR",
+    studyAbroadComplete: "Study Abroad Complete Package",
+    fbMarketEntryComplete: "F&B Market Entry Complete",
+    studentFbCombo: "Student + F&B Combo",
+    additionalServicesTitle: "Additional Services",
+    hotelBookingAssistance: "Hotel Booking Assistance",
+    phoneConsultationService: "Phone Consultation",
+    airportPickupService: "Airport Pickup Service",
+    culturalOrientationService: "Cultural Orientation",
+    needCustomSolution: "Need a Custom Solution?",
+    getCustomQuote: "Get Custom Quote",
   },
   FR: {
     // Navigation & Header
@@ -995,6 +1078,48 @@ const translations: Record<string, Translations> = {
     
     // Visa
     visaApplication: "Demande de visa",
+    
+    // Additional French translations
+    selectSubject: "Sélectionnez un sujet",
+    messageSent: "Message envoyé avec succès !",
+    bookAConsultation: "Réserver une Consultation",
+    businessHours: "Heures d'Ouverture",
+    mondayFriday: "Lundi - Vendredi",
+    closed: "Fermé",
+    aboutDescription: "Donner du pouvoir aux rêves grâce à l'excellence éducative et commerciale. Nous créons des ponts entre les cultures et créons des opportunités pour le succès mondial.",
+    ourMission: "Notre Mission",
+    missionDescription: "Fournir des conseils complets et personnalisés qui transforment les aspirations éducatives et les entreprises en réalités réussies. Nous croyons au pouvoir de l'éducation de qualité et de la planification commerciale stratégique pour changer des vies.",
+    personalizedGuidance: "Conseils personnalisés adaptés à vos objectifs uniques",
+    expertConsultation: "Consultation d'expert avec un historique prouvé",
+    endToEndSupport: "Support de bout en bout tout au long de votre parcours",
+    meetYourGlobalAdvisor: "Rencontrez Votre Conseiller Global",
+    internationalEducationExpert: "Expert en Éducation Internationale et F&B",
+    successfulStudents: "Étudiants Réussis",
+    businessesHelped: "Entreprises Aidées",
+    scholarshipSuccessRate: "Taux de Réussite des Bourses",
+    yearsExperience: "Années d'Expérience",
+    marketEntryStrategy: "Stratégie d'Entrée sur le Marché",
+    productDevelopmentService: "Développement de Produits",
+    supplyChainOptimization: "Optimisation de la Chaîne d'Approvisionnement",
+    brandLocalization: "Localisation de Marque",
+    partnershipDistribution: "Partenariat et Distribution",
+    completeMarketEntry: "Package Complet d'Entrée sur le Marché",
+    whyChooseUs: "Pourquoi Nous Choisir",
+    mscFoodScienceExpert: "Expert MSc en Sciences Alimentaires",
+    experienceDescription: "8+ Années d'Expérience",
+    successfulProjectsDescription: "50+ Projets Réussis",
+    specialPackageDeals: "Offres Spéciales de Packages",
+    mostPopular: "LE PLUS POPULAIRE",
+    studyAbroadComplete: "Package Complet d'Études à l'Étranger",
+    fbMarketEntryComplete: "Package Complet d'Entrée F&B",
+    studentFbCombo: "Combo Étudiant + F&B",
+    additionalServicesTitle: "Services Supplémentaires",
+    hotelBookingAssistance: "Assistance Réservation d'Hôtel",
+    phoneConsultationService: "Consultation Téléphonique",
+    airportPickupService: "Service de Prise en Charge à l'Aéroport",
+    culturalOrientationService: "Orientation Culturelle",
+    needCustomSolution: "Besoin d'une Solution Personnalisée ?",
+    getCustomQuote: "Obtenir un Devis Personnalisé",
   },
   KO: {
     // Navigation & Header
@@ -1016,7 +1141,7 @@ const translations: Record<string, Translations> = {
     meetYourGlobalAdvisor: "글로벌 어드바이저를 만나보세요",
     advisorName: "장 하가바 선생님",
     advisorTitle: "글로벌 교육 및 식음료 컨설턴트",
-    advisorDescription: "국际 교육 컨설팅과 식음료 사업 개발 분야에서 5년 이상의 경험을 가진 전문가로, 한국에서의 학업 꿈을 이루고자 하는 학생들과 아시아 식음료 시장 진출을 원하는 기업가들을 지원합니다.",
+    advisorDescription: "국제 교육 컨설팅과 식음료 사업 개발 분야에서 5년 이상의 경험을 가진 전문가로, 한국에서의 학업 꿈을 이루고자 하는 학생들과 아시아 식음료 시장 진출을 원하는 기업가들을 지원합니다.",
     readMoreAboutMe: "더 자세히 알아보기",
     educationExpert: "교육 전문가",
     educationExpertDesc: "한국 대학 입학을 위한 전문 가이드",
@@ -1326,6 +1451,48 @@ const translations: Record<string, Translations> = {
     
     // Visa
     visaApplication: "비자 신청",
+    
+    // Additional Korean translations
+    selectSubject: "주제를 선택하세요",
+    messageSent: "메시지가 성공적으로 전송되었습니다!",
+    bookAConsultation: "상담 예약",
+    businessHours: "운영 시간",
+    mondayFriday: "월요일 - 금요일",
+    closed: "휴무",
+    aboutDescription: "교육과 비즈니스 우수성을 통해 꿈에 힘을 실어줍니다. 문화를 연결하고 글로벌 성공의 기회를 창출합니다.",
+    ourMission: "우리의 사명",
+    missionDescription: "교육적 열망과 비즈니스 벤처를 성공적인 현실로 변환하는 포괄적이고 개인화된 가이던스를 제공합니다. 우리는 양질의 교육과 전략적 비즈니스 계획이 인생을 바꿀 수 있는 힘을 믿습니다.",
+    personalizedGuidance: "귀하의 고유한 목표에 맞춤화된 개인 지도",
+    expertConsultation: "입증된 실적을 가진 전문가 상담",
+    endToEndSupport: "여정 전반에 걸친 종단간 지원",
+    meetYourGlobalAdvisor: "글로벌 어드바이저를 만나보세요",
+    internationalEducationExpert: "국제 교육 및 F&B 전문가",
+    successfulStudents: "성공한 학생들",
+    businessesHelped: "도움을 받은 비즈니스",
+    scholarshipSuccessRate: "장학금 성공률",
+    yearsExperience: "년간 경험",
+    marketEntryStrategy: "시장 진입 전략",
+    productDevelopmentService: "제품 개발",
+    supplyChainOptimization: "공급망 최적화",
+    brandLocalization: "브랜드 현지화",
+    partnershipDistribution: "파트너십 및 유통",
+    completeMarketEntry: "완전한 시장 진입 패키지",
+    whyChooseUs: "왜 우리를 선택해야 하나요",
+    mscFoodScienceExpert: "MSc 식품과학 전문가",
+    experienceDescription: "8년 이상의 경험",
+    successfulProjectsDescription: "50개 이상의 성공 프로젝트",
+    specialPackageDeals: "특별 패키지 딜",
+    mostPopular: "가장 인기있는",
+    studyAbroadComplete: "해외 유학 완전 패키지",
+    fbMarketEntryComplete: "F&B 시장 진입 완전 패키지",
+    studentFbCombo: "학생 + F&B 콤보",
+    additionalServicesTitle: "추가 서비스",
+    hotelBookingAssistance: "호텔 예약 지원",
+    phoneConsultationService: "전화 상담",
+    airportPickupService: "공항 픽업 서비스",
+    culturalOrientationService: "문화적 오리엔테이션",
+    needCustomSolution: "맞춤 솔루션이 필요하신가요?",
+    getCustomQuote: "맞춤 견적 받기",
   }
 };
 

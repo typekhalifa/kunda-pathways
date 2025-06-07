@@ -1,101 +1,104 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, X, Send, Bot } from "lucide-react";
+import { MessageCircle, X, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hello! I'm Meg, your Kunda Pathways Assistant. I'm here to help you with study abroad opportunities in Korea and F&B consulting services. How can I assist you today?", isBot: true }
+    { text: "Hello! I'm Aria, your Kunda Pathways Assistant. I'm here to help you with study abroad opportunities in Korea and F&B consulting services. How can I assist you today?", isBot: true }
   ]);
   const [inputMessage, setInputMessage] = useState("");
 
-  // Enhanced knowledge base for the bot
+  // Enhanced AI knowledge base for the bot
   const getResponse = (userMessage: string) => {
     const message = userMessage.toLowerCase();
     
     // Study in Korea related queries
     if (message.includes('study') || message.includes('korea') || message.includes('university') || message.includes('education')) {
       if (message.includes('scholarship')) {
-        return "We offer comprehensive scholarship guidance for studying in Korea! Our services include KGSP (Korean Government Scholarship Program), university-specific scholarships, and private foundation scholarships. Our success rate is over 85%. We help with application strategies, document preparation, and interview coaching. Would you like to know more about specific scholarships or eligibility requirements?";
+        return "We offer comprehensive scholarship guidance for studying in Korea! Our services include KGSP (Korean Government Scholarship Program), university-specific scholarships, and private foundation scholarships. Our success rate is over 85%. We help with application strategies, document preparation, and interview coaching. Would you like to schedule a consultation to discuss specific scholarships for your field? I can arrange a call with our expert advisor.";
       }
       if (message.includes('admission') || message.includes('apply')) {
-        return "Our university admission services include: application strategy development, document preparation and review, personal statement writing assistance, interview preparation, and application tracking. We work with top Korean universities like Seoul National University, Yonsei, Korea University, and KAIST. Which field of study interests you most?";
+        return "Our university admission services include: application strategy development, document preparation and review, personal statement writing assistance, interview preparation, and application tracking. We work with top Korean universities like Seoul National University, Yonsei, Korea University, and KAIST. Which field of study interests you most? I'd be happy to schedule a consultation call to discuss your options in detail.";
       }
       if (message.includes('visa')) {
-        return "We provide complete visa application support including D-2 (study visa), D-4 (language training visa), and F-2 (residence visa) applications. Our team ensures all documentation is properly prepared and submitted. Processing typically takes 2-4 weeks. We also provide guidance on maintaining visa status and extensions.";
+        return "We provide complete visa application support including D-2 (study visa), D-4 (language training visa), and F-2 (residence visa) applications. Our team ensures all documentation is properly prepared and submitted. Processing typically takes 2-4 weeks. We also provide guidance on maintaining visa status and extensions. Would you like to speak with our visa specialist? I can arrange a consultation call.";
       }
       if (message.includes('language') || message.includes('korean') || message.includes('topik')) {
-        return "We offer comprehensive Korean language training programs from beginner to advanced levels, including TOPIK exam preparation. Our certified instructors help you achieve the language proficiency needed for university admission (usually TOPIK Level 3-4). We also provide cultural orientation and conversation practice sessions.";
+        return "We offer comprehensive Korean language training programs from beginner to advanced levels, including TOPIK exam preparation. Our certified instructors help you achieve the language proficiency needed for university admission (usually TOPIK Level 3-4). We also provide cultural orientation and conversation practice sessions. Would you be interested in a consultation call to assess your current level and create a personalized study plan?";
       }
-      return "We provide comprehensive study abroad services for Korea including: scholarship guidance (KGSP & others), university admissions support, visa applications, Korean language training, and post-arrival support. Our services range from $500-$3,000 depending on your needs. Which aspect would you like to know more about?";
+      return "We provide comprehensive study abroad services for Korea including: scholarship guidance (KGSP & others), university admissions support, visa applications, Korean language training, and post-arrival support. Our services range from $500-$3,000 depending on your needs. Would you like to schedule a FREE consultation call to discuss your specific goals? I can arrange that for you right away.";
     }
     
     // F&B Consulting related queries
     if (message.includes('food') || message.includes('beverage') || message.includes('restaurant') || message.includes('business') || message.includes('consulting')) {
       if (message.includes('market') || message.includes('analysis')) {
-        return "Our F&B market analysis services include: comprehensive market research, competitor analysis, consumer behavior studies, trend identification, and feasibility studies. We specialize in Korean and East Asian markets with particular expertise in Korean food culture and regulations. What type of F&B business are you planning to start?";
+        return "Our F&B market analysis services include: comprehensive market research, competitor analysis, consumer behavior studies, trend identification, and feasibility studies. We specialize in Korean and East Asian markets with particular expertise in Korean food culture and regulations. What type of F&B business are you planning to start? I'd love to connect you with our MSc Food Science expert for a detailed consultation call.";
       }
       if (message.includes('menu') || message.includes('product') || message.includes('development')) {
-        return "We offer menu development and product consulting services including: recipe development and optimization, nutritional analysis, cost optimization strategies, supplier sourcing, and regulatory compliance. Our MSc Food Science expert ensures quality and safety standards are met. We can help with both traditional and innovative food concepts.";
+        return "We offer menu development and product consulting services including: recipe development and optimization, nutritional analysis, cost optimization strategies, supplier sourcing, and regulatory compliance. Our MSc Food Science expert ensures quality and safety standards are met. We can help with both traditional and innovative food concepts. Would you like to schedule a call to discuss your product development needs?";
       }
       if (message.includes('license') || message.includes('permit') || message.includes('regulation') || message.includes('compliance')) {
-        return "We help with F&B business licensing and regulatory compliance including: business registration in Korea, food safety permits, health department approvals, import/export documentation, and ongoing compliance monitoring. We ensure full compliance with Korean regulations and can guide you through the entire legal process.";
+        return "We help with F&B business licensing and regulatory compliance including: business registration in Korea, food safety permits, health department approvals, import/export documentation, and ongoing compliance monitoring. We ensure full compliance with Korean regulations and can guide you through the entire legal process. Shall I arrange a consultation call with our regulatory compliance specialist?";
       }
-      return "Our F&B consulting services include: business planning and strategy development, market analysis, menu development, regulatory compliance, supplier network access, and operational setup. We have expertise in Korean market entry and MSc Food Science background. Our F&B consulting packages start from $800. What's your specific F&B business goal?";
+      return "Our F&B consulting services include: business planning and strategy development, market analysis, menu development, regulatory compliance, supplier network access, and operational setup. We have expertise in Korean market entry and MSc Food Science background. Our F&B consulting packages start from $800. Would you be interested in a consultation call to discuss your specific F&B business goals?";
     }
     
-    // Cost and pricing queries
+    // Call/consultation related queries
+    if (message.includes('call') || message.includes('consultation') || message.includes('speak') || message.includes('talk') || message.includes('meeting')) {
+      return "I'd be happy to arrange a consultation call for you! We offer FREE 15-minute initial consultations to understand your needs and provide personalized guidance. You can book directly through our website, or I can help you schedule right now. What type of consultation are you interested in - Study Abroad or F&B Consulting? You can also reach us at +82-10-1234-5678 or email info@kundapathways.com.";
+    }
+    
+    // Pricing queries
     if (message.includes('cost') || message.includes('price') || message.includes('fee') || message.includes('how much') || message.includes('pricing')) {
-      return "Our service fees vary based on your specific needs: Study abroad services start from $500 for basic consultation, while comprehensive packages range $1,500-$3,000. F&B consulting starts from $800. We offer a FREE 15-minute initial consultation to discuss your requirements and provide accurate pricing. Individual services can also be customized based on your budget.";
-    }
-    
-    // Timeline queries
-    if (message.includes('time') || message.includes('long') || message.includes('when') || message.includes('duration') || message.includes('timeline')) {
-      return "Timelines vary by service: University applications take 3-6 months, scholarship applications 4-8 months, visa processing 2-4 weeks. F&B consulting projects typically take 2-12 weeks depending on scope. We provide detailed project timelines during your consultation and keep you updated throughout the process.";
+      return "Our service fees vary based on your specific needs: Study abroad services start from $500 for basic consultation, while comprehensive packages range $1,500-$3,000. F&B consulting starts from $800. We offer a FREE 15-minute initial consultation to discuss your requirements and provide accurate pricing. Would you like me to schedule this consultation call for you? Individual services can also be customized based on your budget.";
     }
     
     // Success rate queries
     if (message.includes('success') || message.includes('rate') || message.includes('guarantee') || message.includes('results')) {
-      return "Our success rates: 85%+ scholarship approval rate, 95%+ university admission rate, 98%+ visa approval rate. While we can't guarantee outcomes (they depend on individual qualifications), our expertise and proven track record significantly improve your chances. We provide realistic assessments during consultation and work closely with you to maximize success.";
+      return "Our success rates are impressive: 85%+ scholarship approval rate, 95%+ university admission rate, 98%+ visa approval rate. While we can't guarantee outcomes (they depend on individual qualifications), our expertise and proven track record significantly improve your chances. We provide realistic assessments during consultation and work closely with you to maximize success. Would you like to schedule a call to discuss your specific situation?";
     }
     
-    // Contact and booking queries
-    if (message.includes('contact') || message.includes('book') || message.includes('appointment') || message.includes('consultation') || message.includes('meet')) {
-      return "Ready to get started? You can book a FREE 15-minute consultation through our website, email us at info@kundapathways.com, or call +82-10-1234-5678. We're available Monday-Friday 9AM-5PM KST, Saturday 10AM-4PM KST. You can also schedule directly via WhatsApp for immediate response!";
+    // Timeline queries
+    if (message.includes('time') || message.includes('long') || message.includes('when') || message.includes('duration') || message.includes('timeline')) {
+      return "Timelines vary by service: University applications take 3-6 months, scholarship applications 4-8 months, visa processing 2-4 weeks. F&B consulting projects typically take 2-12 weeks depending on scope. We provide detailed project timelines during your consultation and keep you updated throughout the process. Would you like to schedule a consultation call to get a personalized timeline for your goals?";
     }
     
-    // Location and availability queries
-    if (message.includes('location') || message.includes('where') || message.includes('office') || message.includes('seoul')) {
-      return "We're based in Seoul, South Korea, but serve clients worldwide through online consultations. We also have partnerships with institutions across Korea and can provide in-person support for students already in Korea. Our office hours are Monday-Friday 9AM-5PM KST, weekends closed.";
+    // Contact information queries
+    if (message.includes('contact') || message.includes('phone') || message.includes('email') || message.includes('reach')) {
+      return "You can reach us in several ways: 📧 Email: info@kundapathways.com | 📞 Phone: +82-10-1234-5678 | 💬 WhatsApp: +82-10-1234-5678 | 🕐 Hours: Monday-Friday 9AM-5PM KST, Saturday 10AM-4PM KST. Would you prefer a scheduled consultation call or immediate contact? I can help arrange either option for you!";
     }
     
-    // Who is the advisor
-    if (message.includes('who') || message.includes('advisor') || message.includes('consultant') || message.includes('team')) {
-      return "I work with an experienced team led by our principal consultant who has over 8 years of experience in international education consulting and F&B business development. Our advisor holds an MSc in Food Science and has helped over 500 students achieve their academic dreams in Korea. Would you like to learn more about our team's background?";
+    // Who is the advisor/team
+    if (message.includes('who') || message.includes('advisor') || message.includes('consultant') || message.includes('team') || message.includes('expert')) {
+      return "Our team is led by experienced consultants with over 8 years in international education and F&B business development. Our principal advisor holds an MSc in Food Science and has helped over 500 students achieve their academic dreams in Korea, plus assisted 50+ businesses with market entry. We're passionate about creating pathways to success! Would you like to schedule a call to meet our team personally?";
     }
     
-    // Languages and communication
-    if (message.includes('language') && !message.includes('korean') && !message.includes('study')) {
-      return "We provide services in multiple languages and can accommodate various communication preferences. Our team is experienced in working with international clients and can provide culturally sensitive guidance throughout your journey.";
+    // Interested/yes responses
+    if (message.includes('yes') || message.includes('interested') || message.includes('sure') || message.includes('okay') || message.includes('ok')) {
+      return "Perfect! I'm excited to help you move forward. To schedule your FREE 15-minute consultation, you can: 1) Visit our booking page directly on the website, 2) Call us at +82-10-1234-5678, 3) Email us at info@kundapathways.com, or 4) Send a WhatsApp message to +82-10-1234-5678. Which method would be most convenient for you? I'm here to guide you through the process!";
     }
     
-    // General greetings and thanks
+    // Greetings
     if (message.includes('hello') || message.includes('hi') || message.includes('hey') || message.includes('good morning') || message.includes('good afternoon')) {
-      return "Hello! Welcome to Kunda Pathways. I'm Meg, your virtual assistant. Whether you're interested in studying in Korea or starting an F&B business, I'm here to help guide you. What would you like to know about our services today?";
+      return "Hello! Welcome to Kunda Pathways! I'm Aria, your personal assistant. Whether you're dreaming of studying in Korea or expanding your F&B business into Asian markets, I'm here to guide you every step of the way. What brings you here today? Are you interested in education opportunities or business consulting? I'd love to learn about your goals and see how we can help you achieve them!";
     }
     
+    // Thanks
     if (message.includes('thank') || message.includes('thanks') || message.includes('appreciate')) {
-      return "You're very welcome! I'm here whenever you need assistance with your study abroad or F&B consulting journey. Feel free to ask any other questions, or schedule a FREE consultation to speak with our expert advisor directly!";
+      return "You're absolutely welcome! I'm thrilled I could help. Remember, we're here for you throughout your entire journey - whether it's studying in Korea or growing your F&B business. If you'd like personalized guidance, I highly recommend booking our FREE 15-minute consultation. Our experts would love to discuss your specific goals and create a tailored plan for success. Feel free to ask me anything else!";
     }
     
+    // Goodbye
     if (message.includes('bye') || message.includes('goodbye') || message.includes('see you')) {
-      return "Thank you for chatting with me! Remember, we offer a FREE 15-minute consultation if you'd like to discuss your goals with our expert advisor. Have a great day and don't hesitate to reach out anytime!";
+      return "Thank you for chatting with me today! Before you go, remember that we offer a FREE 15-minute consultation if you'd like to discuss your goals with our expert advisors. Whether it's studying in Korea or F&B consulting, we're here to support your dreams. Have a wonderful day, and don't hesitate to return anytime you need guidance on your journey to success!";
     }
     
-    // Default response
-    return "I'd be happy to help you with that! For detailed information about our study abroad and F&B consulting services, I recommend booking a FREE 15-minute consultation with our experts. You can also ask me about specific services like scholarships, university admissions, visa applications, or F&B business consulting. What specific area would you like to explore?";
+    // Default response with call-to-action
+    return "That's a great question! I'd love to provide you with detailed, personalized information. For the most comprehensive guidance tailored to your specific situation, I recommend scheduling a FREE 15-minute consultation with our expert advisors. They can address all your questions about study abroad opportunities, F&B consulting, pricing, timelines, and success strategies. Would you be interested in booking this consultation call? I can help you schedule it right now!";
   };
 
   const handleSendMessage = () => {
@@ -103,7 +106,7 @@ const ChatBot = () => {
 
     setMessages(prev => [...prev, { text: inputMessage, isBot: false }]);
     
-    // Generate intelligent response based on user input
+    // Generate intelligent response
     setTimeout(() => {
       const response = getResponse(inputMessage);
       setMessages(prev => [...prev, { text: response, isBot: true }]);
@@ -129,11 +132,12 @@ const ChatBot = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 rounded-t-2xl">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3">
-                <Bot size={16} />
-              </div>
+              <Avatar className="w-8 h-8 mr-3">
+                <AvatarImage src="https://images.unsplash.com/photo-1494790108755-2616b612b547?w=100&h=100&fit=crop&crop=face" alt="Aria Assistant" />
+                <AvatarFallback className="bg-white/20 text-white text-xs">AI</AvatarFallback>
+              </Avatar>
               <div>
-                <h3 className="font-semibold text-sm">Meg - Kunda Pathways Assistant</h3>
+                <h3 className="font-semibold text-sm">Aria - Kunda Pathways Assistant</h3>
                 <p className="text-xs text-purple-100">Online now • Usually replies instantly</p>
               </div>
             </div>
