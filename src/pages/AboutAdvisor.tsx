@@ -42,7 +42,7 @@ const AboutAdvisor = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              {translations.advisorName || "Mr. Jean HAGABA"}
+              {translations.advisorName || "Kunda John Kim"}
             </h1>
             <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold mb-6">
               {translations.advisorTitle || "Global Education & F&B Consultant"}
