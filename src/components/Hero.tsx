@@ -12,6 +12,14 @@ const Hero = () => {
   const studentsCount = useCountingAnimation(500, 2000, 500);
   const countriesCount = useCountingAnimation(15, 2000, 700);
 
+  // Safe handling of heroTitle to prevent undefined error
+  const heroTitle = translations.heroTitle || "Your Gateway to Global Education and Business Success";
+  const heroTitleParts = heroTitle.split(' ');
+  const mainTitle = heroTitleParts.slice(0, -2).join(' ');
+  const highlightedTitle = heroTitleParts.slice(-2).join(' ');
+
+  console.log('Hero component rendering with translations:', { heroTitle, translations });
+
   return (
     <section 
       id="home" 
@@ -26,17 +34,17 @@ const Hero = () => {
       <div className="container mx-auto text-center relative z-10">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            {translations.heroTitle.split(' ').slice(0, -2).join(' ')}
-            <span className="text-blue-400"> {translations.heroTitle.split(' ').slice(-2).join(' ')}</span>
+            {mainTitle}
+            <span className="text-blue-400"> {highlightedTitle}</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed font-semibold">
-            {translations.heroSubtitle}
+            {translations.heroSubtitle || "Expert guidance for Korean university admissions, scholarships, and F&B business consulting"}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link to="/study-programs">
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg shadow-lg font-semibold rounded-xl hover:scale-105 transition-all duration-300">
-                {translations.exploreStudyPrograms}
+                {translations.exploreStudyPrograms || "Explore Study Programs"}
               </Button>
             </Link>
             <Link to="/fb-consulting">
@@ -45,7 +53,7 @@ const Hero = () => {
                 variant="outline" 
                 className="border-2 border-white text-white hover:bg-white hover:text-slate-800 px-8 py-4 text-lg shadow-lg bg-black/20 backdrop-blur-sm font-semibold rounded-xl hover:scale-105 transition-all duration-300"
               >
-                {translations.fbConsulting}
+                {translations.fbConsulting || "F&B Consulting"}
               </Button>
             </Link>
           </div>
@@ -53,15 +61,15 @@ const Hero = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
             <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="text-3xl font-bold text-blue-600 mb-2">{studentsCount}+</div>
-              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.studentsAssisted}</div>
+              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.studentsAssisted || "Students Assisted"}</div>
             </div>
             <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="text-3xl font-bold text-green-600 mb-2">{countriesCount}+</div>
-              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.countriesReached}</div>
+              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.countriesReached || "Countries Reached"}</div>
             </div>
             <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="text-3xl font-bold text-purple-600 mb-2">MSc</div>
-              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.foodScienceExpert}</div>
+              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.foodScienceExpert || "Food Science Expert"}</div>
             </div>
           </div>
         </div>
