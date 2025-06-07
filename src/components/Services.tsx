@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, TrendingUp, Users, Globe, ArrowRight, CheckCircle, Star } from "lucide-react";
+import { GraduationCap, TrendingUp, Users, Globe, ArrowRight, CheckCircle, Star, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
@@ -29,7 +29,7 @@ const Services = () => {
       ]
     },
     {
-      title: translations.visaApplication || "Visa Application",
+      title: translations.visaApplicationAssistance || "Visa Application",
       description: translations.visaDescription || "Comprehensive visa application assistance",
       features: [
         translations.documentPreparation || "Document preparation", 
@@ -38,7 +38,7 @@ const Services = () => {
       ]
     },
     {
-      title: translations.koreanLanguageTraining || "Korean Language Training",
+      title: translations.koreanLanguagePreparation || "Korean Language Training",
       description: translations.languageDescription || "Professional Korean language preparation",
       features: [
         translations.topikPreparation || "TOPIK preparation", 
@@ -214,7 +214,7 @@ const Services = () => {
           </div>
         </div>
 
-        {/* View All Packages */}
+        {/* View All Packages with 25% off */}
         <div className="text-center mt-12">
           <Link to="/all-services">
             <Button 
@@ -222,7 +222,8 @@ const Services = () => {
               size="lg"
               className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-4 sm:px-8 py-4 text-xs sm:text-sm md:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              {translations.viewAllPackagesPricing || "View All Packages & Pricing and Get 25% Off"}
+              <Sparkles className="mr-2" size={20} />
+              {translations.viewAllPackagesPricing || "View All Packages & Pricing"} - Get 25% Off!
             </Button>
           </Link>
         </div>

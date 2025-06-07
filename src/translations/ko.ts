@@ -128,6 +128,7 @@ export const koTranslations: Translations = {
   legal: "법적 정보",
   contactInfo: "연락처 정보",
   allRightsReserved: "모든 권리 보유.",
+  location: "서울, 대한민국",
   newsletterThankYou: "구독해 주셔서 감사합니다!",
   ourTrustedPartners: "신뢰할 수 있는 파트너",
   partnerDescription: "선도적인 기관 및 조직과 협력합니다",
@@ -236,5 +237,17 @@ export const koTranslations: Translations = {
   optOutMarketing: "마케팅 커뮤니케이션 수신 거부",
   dataPortability: "데이터 이동성",
   lastUpdatedMarch2024: "최종 업데이트: 2024년 3월.",
-  questionsContact: "질문이 있으시면 privacy@kundapathways.com으로 연락주세요"
+  questionsContact: "질문이 있으시면 privacy@kundapathways.com으로 연락주세요",
+  // Missing translations for advisor section
+  businessConsultation: "비즈니스 컨설팅",
+  fbMarketAnalysis: "F&B 시장 분석",
+  productDevelopment: "제품 개발",
+  regulatoryCompliance: "규제 준수",
+  visitsHelp: "방문 지원",
+  heroTitle: "글로벌 교육 및 비즈니스 성공의 관문",
+  heroSubtitle: "한국 대학 입학, 장학금, F&B 비즈니스 컨설팅을 위한 전문 가이드",
+  exploreStudyPrograms: "학습 프로그램 탐색",
+  studentsAssisted: "지원한 학생 수",
+  countriesReached: "도달한 국가 수",
+  foodScienceExpert: "식품 과학 전문가"
 };

@@ -134,6 +134,7 @@ export const enTranslations: Translations = {
   legal: "Legal",
   contactInfo: "Contact Info",
   allRightsReserved: "All rights reserved.",
+  location: "Seoul, South Korea",
   newsletterThankYou: "Thank you for subscribing!",
   ourTrustedPartners: "Our Trusted Partners",
   partnerDescription: "We work with leading institutions and organizations",
@@ -242,5 +243,11 @@ export const enTranslations: Translations = {
   optOutMarketing: "Opt out of marketing communications",
   dataPortability: "Data portability",
   lastUpdatedMarch2024: "Last updated: March 2024.",
-  questionsContact: "Questions? Contact us at privacy@kundapathways.com"
+  questionsContact: "Questions? Contact us at privacy@kundapathways.com",
+  // Missing translations for advisor section
+  businessConsultation: "Business Consultation",
+  fbMarketAnalysis: "F&B Market Analysis",
+  productDevelopment: "Product Development",
+  regulatoryCompliance: "Regulatory Compliance",
+  visitsHelp: "Study Visits"
 };

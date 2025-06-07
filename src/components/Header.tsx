@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -15,8 +16,8 @@ const Header = () => {
   const studyServices = [
     { name: translations.scholarshipGuidance || "Scholarship Guidance", path: "/study-programs" },
     { name: translations.universityAdmissions || "University Admissions", path: "/study-programs" }, 
-    { name: translations.visaApplication || "Visa Application", path: "/study-programs" },
-    { name: translations.koreanLanguageTraining || "Korean Language Training", path: "/study-programs" },
+    { name: translations.visaApplicationAssistance || "Visa Application", path: "/study-programs" },
+    { name: translations.koreanLanguagePreparation || "Korean Language Training", path: "/study-programs" },
     { name: translations.visitsHelp || "Study Visits", path: "/study-programs" }
   ];
 
@@ -49,7 +50,8 @@ const Header = () => {
   };
 
   const handleResourcesClick = () => {
-    handleNavigation('blog-preview');
+    navigate('/resources');
+    setIsMenuOpen(false);
   };
 
   const handleLogoClick = () => {

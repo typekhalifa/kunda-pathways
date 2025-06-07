@@ -51,7 +51,9 @@ const Footer = () => {
               <li><a href="#services" className="hover:text-white transition-colors">{translations.scholarshipGuidance}</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">{translations.universityAdmissions}</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">{translations.fbMarketAnalysis}</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">{translations.visitsHelp}</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">{translations.visaApplicationAssistance}</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">{translations.koreanLanguagePreparation}</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">{translations.businessConsultation}</a></li>
             </ul>
           </div>
 
@@ -81,7 +83,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin size={16} />
-                <span>{translations.location}</span>
+                <span>Seoul, South Korea</span>
               </div>
             </div>
           </div>
