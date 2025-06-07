@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface Translations {
@@ -169,6 +168,102 @@ interface Translations {
   professionalSummary: string;
   educationExpertise: string;
   koreanGovernmentScholarshipProgram: string;
+  universityAdmissionStrategies: string;
+  visaApplicationGuidance: string;
+  koreanLanguagePreparation: string;
+  culturalAdaptationSupport: string;
+  fbExpertise: string;
+  marketAnalysisEntryStrategies: string;
+  productDevelopmentInnovation: string;
+  businessPlanningFunding: string;
+  keyAchievements: string;
+  getInTouch: string;
+  officeHours: string;
+  mondayToFriday: string;
+  saturdaySunday: string;
+  koreanTime: string;
+  myMission: string;
+  missionStatement: string;
+
+  // Book Consultation
+  hotelBooking: string;
+  phoneConsultation: string;
+  reviewConsultation: string;
+  consultationDetails: string;
+  fullName: string;
+  email: string;
+  selectedService: string;
+  totalPrice: string;
+  paymentMethods: string;
+  payWithCard: string;
+  payWithMobile: string;
+  payWithBank: string;
+  backToEdit: string;
+  phone: string;
+  selectService: string;
+  preferredDate: string;
+  preferredTime: string;
+  reviewConsultationRequest: string;
+
+  // Privacy Policy
+  privacyPolicyTitle: string;
+  privacyPolicySubtitle: string;
+  informationWeCollect: string;
+  privacyCollectDescription: string;
+  personalIdentificationInfo: string;
+  educationalBackground: string;
+  professionalExperience: string;
+  communicationPreferences: string;
+  howWeUseYourInfo: string;
+  privacyUseDescription: string;
+  providePersonalizedServices: string;
+  processScholarshipApplications: string;
+  sendRelevantUpdates: string;
+  improveServices: string;
+  complyLegalObligations: string;
+  dataSecurity: string;
+  dataSecurityDescription: string;
+  encryptedDataTransmission: string;
+  regularSecurityAudits: string;
+  accessControls: string;
+  employeeTraining: string;
+  informationSharing: string;
+  privacySharingDescription: string;
+  educationalInstitutions: string;
+  governmentAgencies: string;
+  trustedServiceProviders: string;
+  legalAuthorities: string;
+  neverSellPersonalInfo: string;
+  yourRights: string;
+  yourRightsDescription: string;
+  accessReviewPersonalInfo: string;
+  requestCorrections: string;
+  requestDeletion: string;
+  optOutMarketing: string;
+  dataPortability: string;
+  lastUpdatedMarch2024: string;
+  questionsContact: string;
+
+  // Resources
+  eightMinRead: string;
+  march152024: string;
+  twelveMinRead: string;
+  march102024: string;
+  sixMinRead: string;
+  march52024: string;
+  visaApplicationProcess: string;
+  visaApplicationExcerpt: string;
+  tenMinRead: string;
+  february282024: string;
+  foodSafetyRegulations: string;
+  foodSafetyExcerpt: string;
+  fifteenMinRead: string;
+  february202024: string;
+  culturalAdaptationGuide: string;
+  culturalAdaptationExcerpt: string;
+  sevenMinRead: string;
+  february152024: string;
+  johnDoe: string;
 
   // Privacy & Terms
   privacyPolicyDescription: string;
@@ -346,6 +441,102 @@ const englishTranslations: Translations = {
   professionalSummary: "Professional Summary",
   educationExpertise: "Education Expertise",
   koreanGovernmentScholarshipProgram: "Korean Government Scholarship Program",
+  universityAdmissionStrategies: "University admission strategies",
+  visaApplicationGuidance: "Visa application guidance",
+  koreanLanguagePreparation: "Korean language preparation",
+  culturalAdaptationSupport: "Cultural adaptation support",
+  fbExpertise: "F&B Expertise",
+  marketAnalysisEntryStrategies: "Market analysis & entry strategies",
+  productDevelopmentInnovation: "Product development & innovation",
+  businessPlanningFunding: "Business planning & funding",
+  keyAchievements: "Key Achievements",
+  getInTouch: "Get in Touch",
+  officeHours: "Office Hours",
+  mondayToFriday: "Monday to Friday",
+  saturdaySunday: "Saturday & Sunday",
+  koreanTime: "Korean Standard Time",
+  myMission: "My Mission",
+  missionStatement: "To bridge cultures and create opportunities by guiding students towards world-class education in Korea and helping entrepreneurs build successful food businesses that connect global markets.",
+
+  // Book Consultation
+  hotelBooking: "Hotel Booking Assistance",
+  phoneConsultation: "Phone Consultation",
+  reviewConsultation: "Review Your Consultation Request",
+  consultationDetails: "Consultation Details",
+  fullName: "Full Name",
+  email: "Email",
+  selectedService: "Selected Service",
+  totalPrice: "Total Price",
+  paymentMethods: "Payment Methods",
+  payWithCard: "Pay with Credit/Debit Card",
+  payWithMobile: "Pay with Mobile Money",
+  payWithBank: "Pay with Bank Transfer",
+  backToEdit: "Back to Edit Details",
+  phone: "Phone Number",
+  selectService: "Select Service",
+  preferredDate: "Preferred Date",
+  preferredTime: "Preferred Time",
+  reviewConsultationRequest: "Review Consultation Request",
+
+  // Privacy Policy
+  privacyPolicyTitle: "Privacy Policy",
+  privacyPolicySubtitle: "Your privacy is our priority. Learn how we protect and handle your information.",
+  informationWeCollect: "Information We Collect",
+  privacyCollectDescription: "We collect information that you provide directly to us, such as:",
+  personalIdentificationInfo: "Personal identification information (name, email address, phone number)",
+  educationalBackground: "Educational background and academic records",
+  professionalExperience: "Professional experience and business interests",
+  communicationPreferences: "Communication preferences and feedback",
+  howWeUseYourInfo: "How We Use Your Information",
+  privacyUseDescription: "We use the information we collect to:",
+  providePersonalizedServices: "Provide personalized educational and business consulting services",
+  processScholarshipApplications: "Process scholarship applications and university admissions",
+  sendRelevantUpdates: "Send you relevant updates about programs and opportunities",
+  improveServices: "Improve our services and user experience",
+  complyLegalObligations: "Comply with legal obligations and protect our rights",
+  dataSecurity: "Data Security",
+  dataSecurityDescription: "We implement industry-standard security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. This includes:",
+  encryptedDataTransmission: "Encrypted data transmission and storage",
+  regularSecurityAudits: "Regular security audits and assessments",
+  accessControls: "Access controls and authentication procedures",
+  employeeTraining: "Employee training on data protection practices",
+  informationSharing: "Information Sharing",
+  privacySharingDescription: "We may share your information with:",
+  educationalInstitutions: "Educational institutions for application processing",
+  governmentAgencies: "Government agencies for visa and scholarship applications",
+  trustedServiceProviders: "Trusted service providers who assist in our operations",
+  legalAuthorities: "Legal authorities when required by law",
+  neverSellPersonalInfo: "We never sell your personal information to third parties.",
+  yourRights: "Your Rights",
+  yourRightsDescription: "You have the right to:",
+  accessReviewPersonalInfo: "Access and review your personal information",
+  requestCorrections: "Request corrections to inaccurate data",
+  requestDeletion: "Request deletion of your information",
+  optOutMarketing: "Opt-out of marketing communications",
+  dataPortability: "Data portability and transfer",
+  lastUpdatedMarch2024: "Last updated: March 2024",
+  questionsContact: "Questions? Contact us at privacy@kundapathways.com",
+
+  // Resources
+  eightMinRead: "8 min read",
+  march152024: "March 15, 2024",
+  twelveMinRead: "12 min read",
+  march102024: "March 10, 2024",
+  sixMinRead: "6 min read",
+  march52024: "March 5, 2024",
+  visaApplicationProcess: "Visa Application Process for Korean Universities",
+  visaApplicationExcerpt: "Step-by-step guide to successfully obtaining your student visa for Korea...",
+  tenMinRead: "10 min read",
+  february282024: "February 28, 2024",
+  foodSafetyRegulations: "Food Safety Regulations in Asian Markets",
+  foodSafetyExcerpt: "Understanding compliance requirements for F&B businesses expanding into Asia...",
+  fifteenMinRead: "15 min read",
+  february202024: "February 20, 2024",
+  culturalAdaptationGuide: "Cultural Adaptation Guide for International Students",
+  culturalAdaptationExcerpt: "Essential tips for adapting to Korean culture and academic environment...",
+  sevenMinRead: "7 min read",
+  february152024: "February 15, 2024",
+  johnDoe: "John Doe",
 
   // Privacy & Terms
   privacyPolicyDescription: "Our privacy policy and data protection practices",
@@ -523,6 +714,102 @@ const koreanTranslations: Translations = {
   professionalSummary: "전문가 요약",
   educationExpertise: "교육 전문성",
   koreanGovernmentScholarshipProgram: "한국 정부 장학금 프로그램",
+  universityAdmissionStrategies: "대학 입학 전략",
+  visaApplicationGuidance: "비자 신청 지도",
+  koreanLanguagePreparation: "한국어 준비",
+  culturalAdaptationSupport: "문화 적응 지원",
+  fbExpertise: "식음료 전문성",
+  marketAnalysisEntryStrategies: "시장 분석 및 진출 전략",
+  productDevelopmentInnovation: "제품 개발 및 혁신",
+  businessPlanningFunding: "사업 계획 및 자금 조달",
+  keyAchievements: "주요 성과",
+  getInTouch: "연락하기",
+  officeHours: "운영 시간",
+  mondayToFriday: "월요일부터 금요일까지",
+  saturdaySunday: "토요일 및 일요일",
+  koreanTime: "한국 표준시",
+  myMission: "나의 사명",
+  missionStatement: "문화를 연결하고 학생들을 한국의 세계적 교육으로 안내하며 기업가들이 글로벌 시장을 연결하는 성공적인 식품 사업을 구축하도록 돕는 기회를 창출하는 것입니다.",
+
+  // Book Consultation
+  hotelBooking: "호텔 예약 지원",
+  phoneConsultation: "전화 상담",
+  reviewConsultation: "상담 요청 검토",
+  consultationDetails: "상담 세부 사항",
+  fullName: "성명",
+  email: "이메일",
+  selectedService: "선택된 서비스",
+  totalPrice: "총 가격",
+  paymentMethods: "결제 방법",
+  payWithCard: "카드로 결제",
+  payWithMobile: "모바일로 결제",
+  payWithBank: "은행 송금으로 결제",
+  backToEdit: "세부 사항 편집으로 돌아가기",
+  phone: "전화번호",
+  selectService: "서비스 선택",
+  preferredDate: "선호 날짜",
+  preferredTime: "선호 시간",
+  reviewConsultationRequest: "상담 요청 검토",
+
+  // Privacy Policy
+  privacyPolicyTitle: "개인정보 보호정책",
+  privacyPolicySubtitle: "귀하의 개인정보 보호가 우리의 우선순위입니다. 우리가 귀하의 정보를 어떻게 보호하고 처리하는지 알아보세요.",
+  informationWeCollect: "수집하는 정보",
+  privacyCollectDescription: "다음과 같이 귀하가 직접 제공하는 정보를 수집합니다:",
+  personalIdentificationInfo: "개인 식별 정보 (이름, 이메일 주소, 전화번호)",
+  educationalBackground: "교육 배경 및 학업 기록",
+  professionalExperience: "전문 경험 및 비즈니스 관심사",
+  communicationPreferences: "커뮤니케이션 선호도 및 피드백",
+  howWeUseYourInfo: "정보 사용 방법",
+  privacyUseDescription: "수집한 정보를 다음과 같이 사용합니다:",
+  providePersonalizedServices: "개인화된 교육 및 비즈니스 컨설팅 서비스 제공",
+  processScholarshipApplications: "장학금 신청 및 대학 입학 처리",
+  sendRelevantUpdates: "프로그램 및 기회에 대한 관련 업데이트 전송",
+  improveServices: "서비스 및 사용자 경험 개선",
+  complyLegalObligations: "법적 의무 준수 및 권리 보호",
+  dataSecurity: "데이터 보안",
+  dataSecurityDescription: "무단 액세스, 변경, 공개 또는 파괴로부터 개인정보를 보호하기 위해 업계 표준 보안 조치를 구현합니다. 여기에는 다음이 포함됩니다:",
+  encryptedDataTransmission: "암호화된 데이터 전송 및 저장",
+  regularSecurityAudits: "정기적인 보안 감사 및 평가",
+  accessControls: "액세스 제어 및 인증 절차",
+  employeeTraining: "데이터 보호 관행에 대한 직원 교육",
+  informationSharing: "정보 공유",
+  privacySharingDescription: "다음과 같은 경우 귀하의 정보를 공유할 수 있습니다:",
+  educationalInstitutions: "신청 처리를 위한 교육 기관",
+  governmentAgencies: "비자 및 장학금 신청을 위한 정부 기관",
+  trustedServiceProviders: "운영을 지원하는 신뢰할 수 있는 서비스 제공업체",
+  legalAuthorities: "법률에 의해 요구되는 경우 법적 당국",
+  neverSellPersonalInfo: "우리는 개인정보를 제3자에게 판매하지 않습니다.",
+  yourRights: "귀하의 권리",
+  yourRightsDescription: "다음과 같은 권리가 있습니다:",
+  accessReviewPersonalInfo: "개인정보에 액세스하고 검토",
+  requestCorrections: "부정확한 데이터의 수정 요청",
+  requestDeletion: "정보 삭제 요청",
+  optOutMarketing: "마케팅 커뮤니케이션 거부",
+  dataPortability: "데이터 이동성 및 전송",
+  lastUpdatedMarch2024: "최종 업데이트: 2024년 3월",
+  questionsContact: "문의사항이 있으시면 privacy@kundapathways.com으로 연락하세요",
+
+  // Resources
+  eightMinRead: "8분 읽기",
+  march152024: "2024년 3월 15일",
+  twelveMinRead: "12분 읽기",
+  march102024: "2024년 3월 10일",
+  sixMinRead: "6분 읽기",
+  march52024: "2024년 3월 5일",
+  visaApplicationProcess: "한국 대학 비자 신청 절차",
+  visaApplicationExcerpt: "한국 학생 비자를 성공적으로 취득하기 위한 단계별 가이드...",
+  tenMinRead: "10분 읽기",
+  february282024: "2024년 2월 28일",
+  foodSafetyRegulations: "아시아 시장의 식품 안전 규정",
+  foodSafetyExcerpt: "아시아로 확장하는 식음료 사업의 규정 준수 요구 사항 이해...",
+  fifteenMinRead: "15분 읽기",
+  february202024: "2024년 2월 20일",
+  culturalAdaptationGuide: "국제 학생을 위한 문화 적응 가이드",
+  culturalAdaptationExcerpt: "한국 문화와 학업 환경에 적응하기 위한 필수 팁...",
+  sevenMinRead: "7분 읽기",
+  february152024: "2024년 2월 15일",
+  johnDoe: "홍길동",
 
   // Privacy & Terms
   privacyPolicyDescription: "개인정보 보호정책 및 데이터 보호 관행",
@@ -700,6 +987,102 @@ const frenchTranslations: Translations = {
   professionalSummary: "Résumé professionnel",
   educationExpertise: "Expertise en éducation",
   koreanGovernmentScholarshipProgram: "Programme de bourses du gouvernement coréen",
+  universityAdmissionStrategies: "Stratégies d'admission universitaire",
+  visaApplicationGuidance: "Guide de demande de visa",
+  koreanLanguagePreparation: "Préparation à la langue coréenne",
+  culturalAdaptationSupport: "Support d'adaptation culturelle",
+  fbExpertise: "Expertise F&B",
+  marketAnalysisEntryStrategies: "Analyse de marché et stratégies d'entrée",
+  productDevelopmentInnovation: "Développement de produits et innovation",
+  businessPlanningFunding: "Planification d'affaires et financement",
+  keyAchievements: "Réalisations clés",
+  getInTouch: "Entrer en contact",
+  officeHours: "Heures de bureau",
+  mondayToFriday: "Lundi au vendredi",
+  saturdaySunday: "Samedi et dimanche",
+  koreanTime: "Heure standard coréenne",
+  myMission: "Ma mission",
+  missionStatement: "Créer des ponts entre les cultures et créer des opportunités en guidant les étudiants vers une éducation de classe mondiale en Corée et en aidant les entrepreneurs à construire des entreprises alimentaires prospères qui connectent les marchés mondiaux.",
+
+  // Book Consultation
+  hotelBooking: "Assistance réservation d'hôtel",
+  phoneConsultation: "Consultation téléphonique",
+  reviewConsultation: "Réviser votre demande de consultation",
+  consultationDetails: "Détails de la consultation",
+  fullName: "Nom complet",
+  email: "Email",
+  selectedService: "Service sélectionné",
+  totalPrice: "Prix total",
+  paymentMethods: "Méthodes de paiement",
+  payWithCard: "Payer par carte de crédit/débit",
+  payWithMobile: "Payer par mobile money",
+  payWithBank: "Payer par virement bancaire",
+  backToEdit: "Retour pour modifier les détails",
+  phone: "Numéro de téléphone",
+  selectService: "Sélectionner un service",
+  preferredDate: "Date préférée",
+  preferredTime: "Heure préférée",
+  reviewConsultationRequest: "Réviser la demande de consultation",
+
+  // Privacy Policy
+  privacyPolicyTitle: "Politique de confidentialité",
+  privacyPolicySubtitle: "Votre confidentialité est notre priorité. Découvrez comment nous protégeons et gérons vos informations.",
+  informationWeCollect: "Informations que nous collectons",
+  privacyCollectDescription: "Nous collectons les informations que vous nous fournissez directement, telles que :",
+  personalIdentificationInfo: "Informations d'identification personnelle (nom, adresse e-mail, numéro de téléphone)",
+  educationalBackground: "Contexte éducatif et dossiers académiques",
+  professionalExperience: "Expérience professionnelle et intérêts commerciaux",
+  communicationPreferences: "Préférences de communication et commentaires",
+  howWeUseYourInfo: "Comment nous utilisons vos informations",
+  privacyUseDescription: "Nous utilisons les informations que nous collectons pour :",
+  providePersonalizedServices: "Fournir des services de conseil éducatif et commercial personnalisés",
+  processScholarshipApplications: "Traiter les demandes de bourses et d'admissions universitaires",
+  sendRelevantUpdates: "Vous envoyer des mises à jour pertinentes sur les programmes et opportunités",
+  improveServices: "Améliorer nos services et l'expérience utilisateur",
+  complyLegalObligations: "Respecter les obligations légales et protéger nos droits",
+  dataSecurity: "Sécurité des données",
+  dataSecurityDescription: "Nous mettons en place des mesures de sécurité standard de l'industrie pour protéger vos informations personnelles contre l'accès non autorisé, l'altération, la divulgation ou la destruction. Cela inclut :",
+  encryptedDataTransmission: "Transmission et stockage de données cryptées",
+  regularSecurityAudits: "Audits et évaluations de sécurité réguliers",
+  accessControls: "Contrôles d'accès et procédures d'authentification",
+  employeeTraining: "Formation des employés sur les pratiques de protection des données",
+  informationSharing: "Partage d'informations",
+  privacySharingDescription: "Nous pouvons partager vos informations avec :",
+  educationalInstitutions: "Institutions éducatives pour le traitement des candidatures",
+  governmentAgencies: "Agences gouvernementales pour les demandes de visa et de bourses",
+  trustedServiceProviders: "Fournisseurs de services de confiance qui nous aident dans nos opérations",
+  legalAuthorities: "Autorités légales lorsque requis par la loi",
+  neverSellPersonalInfo: "Nous ne vendons jamais vos informations personnelles à des tiers.",
+  yourRights: "Vos droits",
+  yourRightsDescription: "Vous avez le droit de :",
+  accessReviewPersonalInfo: "Accéder et réviser vos informations personnelles",
+  requestCorrections: "Demander des corrections aux données inexactes",
+  requestDeletion: "Demander la suppression de vos informations",
+  optOutMarketing: "Vous désabonner des communications marketing",
+  dataPortability: "Portabilité et transfert de données",
+  lastUpdatedMarch2024: "Dernière mise à jour : Mars 2024",
+  questionsContact: "Questions ? Contactez-nous à privacy@kundapathways.com",
+
+  // Resources
+  eightMinRead: "8 min de lecture",
+  march152024: "15 mars 2024",
+  twelveMinRead: "12 min de lecture",
+  march102024: "10 mars 2024",
+  sixMinRead: "6 min de lecture",
+  march52024: "5 mars 2024",
+  visaApplicationProcess: "Processus de demande de visa pour les universités coréennes",
+  visaApplicationExcerpt: "Guide étape par étape pour obtenir avec succès votre visa étudiant pour la Corée...",
+  tenMinRead: "10 min de lecture",
+  february282024: "28 février 2024",
+  foodSafetyRegulations: "Réglementations de sécurité alimentaire sur les marchés asiatiques",
+  foodSafetyExcerpt: "Comprendre les exigences de conformité pour les entreprises F&B s'étendant en Asie...",
+  fifteenMinRead: "15 min de lecture",
+  february202024: "20 février 2024",
+  culturalAdaptationGuide: "Guide d'adaptation culturelle pour les étudiants internationaux",
+  culturalAdaptationExcerpt: "Conseils essentiels pour s'adapter à la culture coréenne et à l'environnement académique...",
+  sevenMinRead: "7 min de lecture",
+  february152024: "15 février 2024",
+  johnDoe: "Jean Dupont",
 
   // Privacy & Terms
   privacyPolicyDescription: "Notre politique de confidentialité et nos pratiques de protection des données",
