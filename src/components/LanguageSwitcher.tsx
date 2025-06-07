@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Globe } from "lucide-react";
@@ -9,7 +8,6 @@ const LanguageSwitcher = () => {
 
   const languages = [
     { code: "EN", name: "English", flag: "🇺🇸" },
-    { code: "RW", name: "Kinyarwanda", flag: "🇷🇼" },
     { code: "FR", name: "Français", flag: "🇫🇷" },
     { code: "KO", name: "한국어", flag: "🇰🇷" },
   ];
