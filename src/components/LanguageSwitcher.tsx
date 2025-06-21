@@ -1,10 +1,12 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Globe } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const LanguageSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("EN");
+  const { language, setLanguage } = useLanguage();
 
   const languages = [
     { code: "EN", name: "English", flag: "🇺🇸" },
@@ -12,19 +14,9 @@ const LanguageSwitcher = () => {
     { code: "KO", name: "한국어", flag: "🇰🇷" },
   ];
 
-  useEffect(() => {
-    const savedLang = localStorage.getItem("language") || "EN";
-    setCurrentLang(savedLang);
-  }, []);
-
   const handleLanguageChange = (langCode: string) => {
-    setCurrentLang(langCode);
+    setLanguage(langCode);
     setIsOpen(false);
-    localStorage.setItem("language", langCode);
-    
-    // Dispatch a custom event for other components to listen to
-    window.dispatchEvent(new CustomEvent('languageChanged', { detail: langCode }));
-    
     console.log(`Language switched to ${langCode}`);
   };
 
@@ -55,7 +47,7 @@ const LanguageSwitcher = () => {
         className="flex items-center space-x-1 border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-md hover:shadow-lg transition-all duration-300"
       >
         <Globe size={16} />
-        <span className="hidden sm:inline">{currentLang}</span>
+        <span className="hidden sm:inline">{language}</span>
         <ChevronDown size={14} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </Button>
 
@@ -66,7 +58,7 @@ const LanguageSwitcher = () => {
               key={lang.code}
               onClick={() => handleLanguageChange(lang.code)}
               className={`w-full px-3 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center space-x-2 text-sm transition-colors rounded-lg mx-1 ${
-                currentLang === lang.code ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-slate-700 dark:text-slate-300'
+                language === lang.code ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'text-slate-700 dark:text-slate-300'
               }`}
             >
               <span>{lang.flag}</span>

@@ -63,11 +63,12 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <button onClick={handleLogoClick} className="flex items-center space-x-2 hover:scale-105 transition-transform duration-300">
-            {/* Easily replaceable logo section */}
+            {/* Logo - responsive design */}
             <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-2xl font-bold text-slate-800 dark:text-white hidden sm:block">
+            {/* Show company name only on larger screens, hide on tablet (md) and show again on lg */}
+            <span className="text-2xl font-bold text-slate-800 dark:text-white hidden sm:block md:hidden lg:block">
               Kunda<span className="text-blue-600">Pathways</span>
             </span>
           </button>

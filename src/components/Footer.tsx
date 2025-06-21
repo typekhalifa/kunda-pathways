@@ -10,12 +10,15 @@ const Footer = () => {
   return (
     <footer className="bg-slate-800 dark:bg-slate-950 text-white py-16 px-4">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
-          <div>
-            <div className="text-2xl font-bold mb-4">
-              Kunda<span className="text-blue-400">Pathways</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+          {/* Company Info - Adjusted for better mobile layout */}
+          <div className="lg:col-span-1">
+            <div className="text-xl lg:text-2xl font-bold mb-4 break-words">
+              <span className="text-blue-400">Kunda</span>
+              <br className="sm:hidden" />
+              <span className="text-white">Pathways</span>
             </div>
-            <p className="text-slate-400 dark:text-slate-300 leading-relaxed mb-6">
+            <p className="text-slate-400 dark:text-slate-300 leading-relaxed mb-6 text-sm lg:text-base">
               {translations.footerDescription}
             </p>
             <div className="flex space-x-4">
@@ -36,7 +39,7 @@ const Footer = () => {
           
           <div>
             <h4 className="font-semibold mb-4">{translations.quickLinks}</h4>
-            <ul className="space-y-2 text-slate-400 dark:text-slate-300">
+            <ul className="space-y-2 text-slate-400 dark:text-slate-300 text-sm lg:text-base">
               <li><a href="#about" className="hover:text-white transition-colors">{translations.aboutUs}</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">{translations.studyInKorea}</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">{translations.fbConsulting}</a></li>
@@ -47,7 +50,7 @@ const Footer = () => {
           
           <div>
             <h4 className="font-semibold mb-4">{translations.services}</h4>
-            <ul className="space-y-2 text-slate-400 dark:text-slate-300">
+            <ul className="space-y-2 text-slate-400 dark:text-slate-300 text-sm lg:text-base">
               <li><a href="#services" className="hover:text-white transition-colors">{translations.scholarshipGuidance}</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">{translations.universityAdmissions}</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">{translations.fbMarketAnalysis}</a></li>
@@ -59,38 +62,39 @@ const Footer = () => {
 
           <div>
             <h4 className="font-semibold mb-4">{translations.legal}</h4>
-            <ul className="space-y-2 text-slate-400 dark:text-slate-300">
+            <ul className="space-y-2 text-slate-400 dark:text-slate-300 text-sm lg:text-base">
               <li><Link to="/privacy-policy" className="hover:text-white transition-colors">{translations.privacyPolicy}</Link></li>
               <li><Link to="/terms-of-service" className="hover:text-white transition-colors">{translations.termsOfService}</Link></li>
               <li><Link to="/sitemap" className="hover:text-white transition-colors">{translations.sitemap}</Link></li>
+              <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4">{translations.contactInfo}</h4>
-            <div className="space-y-3 text-slate-400 dark:text-slate-300">
+            <div className="space-y-3 text-slate-400 dark:text-slate-300 text-sm lg:text-base">
               <div className="flex items-center space-x-2">
-                <Mail size={16} />
-                <a href="mailto:info@kundapathways.com" className="hover:text-white transition-colors">
+                <Mail size={16} className="flex-shrink-0" />
+                <a href="mailto:info@kundapathways.com" className="hover:text-white transition-colors break-all">
                   info@kundapathways.com
                 </a>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone size={16} />
+                <Phone size={16} className="flex-shrink-0" />
                 <a href="tel:+821012345678" className="hover:text-white transition-colors">
                   +82-10-1234-5678
                 </a>
               </div>
               <div className="flex items-center space-x-2">
-                <MapPin size={16} />
-                <span>Seoul, South Korea</span>
+                <MapPin size={16} className="flex-shrink-0" />
+                <span>{translations.location}</span>
               </div>
             </div>
           </div>
         </div>
         
         <div className="border-t border-slate-700 dark:border-slate-600 pt-8 text-center">
-          <p className="text-slate-400 dark:text-slate-300">
+          <p className="text-slate-400 dark:text-slate-300 text-sm lg:text-base">
             © {currentYear} Kunda Pathways. {translations.allRightsReserved}
           </p>
         </div>

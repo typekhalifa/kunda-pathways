@@ -1,4 +1,3 @@
-
 import { Translations } from '../types/translations';
 
 export const enTranslations: Translations = {
@@ -244,7 +243,6 @@ export const enTranslations: Translations = {
   dataPortability: "Data portability",
   lastUpdatedMarch2024: "Last updated: March 2024.",
   questionsContact: "Questions? Contact us at privacy@kundapathways.com",
-  // Missing translations for advisor section
   businessConsultation: "Business Consultation",
   fbMarketAnalysis: "F&B Market Analysis",
   productDevelopment: "Product Development",
