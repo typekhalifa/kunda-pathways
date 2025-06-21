@@ -1,3 +1,4 @@
+
 import { Translations } from '../types/translations';
 
 export const enTranslations: Translations = {
@@ -249,7 +250,6 @@ export const enTranslations: Translations = {
   regulatoryCompliance: "Regulatory Compliance",
   visitsHelp: "Study Visits",
   faq: "FAQ",
-  // AllServices page translations
   allServicesTitle: "All Services & Pricing",
   allServicesSubtitle: "Comprehensive solutions for your educational and business needs",
   specialPackageDeals: "Special Package Deals",
@@ -265,7 +265,6 @@ export const enTranslations: Translations = {
   needCustomSolution: "Need a Custom Solution?",
   contactForCustom: "Contact us for personalized packages and enterprise solutions",
   getCustomQuote: "Get Custom Quote",
-  // Individual services
   scholarshipGuidanceService: "Scholarship Guidance",
   universityAdmissionsService: "University Admissions",
   visaApplicationHelpService: "Visa Application Help",
@@ -281,26 +280,8 @@ export const enTranslations: Translations = {
   phoneConsultationService: "Phone Consultation",
   airportPickupService: "Airport Pickup Service",
   culturalOrientationService: "Cultural Orientation",
-  // Service descriptions
-  scholarshipGuidanceDesc: "Complete guidance for finding and applying to scholarships",
-  universityAdmissionsDesc: "End-to-end university application support",
-  visaApplicationHelpDesc: "Expert assistance with student visa applications",
-  koreanLanguageTrainingDesc: "Personalized Korean language lessons",
-  visitsHelpRelocationsDesc: "Support for academic visits and relocations",
-  marketEntryStrategyDesc: "Comprehensive market analysis and entry strategy",
-  regulatoryComplianceDesc: "Navigate food safety regulations",
-  productDevelopmentDesc: "Develop products for Asian markets",
-  supplyChainOptimizationDesc: "Optimize supply chain efficiency",
-  brandLocalizationDesc: "Adapt brand for local markets",
-  partnershipDistributionDesc: "Connect with local partners",
-  hotelBookingAssistanceDesc: "Help with accommodation bookings",
-  phoneConsultationDesc: "Direct consultation via phone call",
-  airportPickupDesc: "Arrange airport pickup in Korea",
-  culturalOrientationDesc: "Prepare for cultural adaptation",
-  // Package services
   basicFbConsultation: "Basic F&B Consultation",
   businessNetworking: "Business Networking",
-  // Duration
   duration: "Duration",
   oneWeek: "1 week",
   oneToTwoWeeks: "1-2 weeks",
@@ -315,7 +296,6 @@ export const enTranslations: Translations = {
   ongoing: "Ongoing",
   perMonth: "/month",
   perHour: "/hour",
-  // Discount
   twentyPercentOff: "20% OFF",
   twentyFivePercentOff: "25% OFF"
 };

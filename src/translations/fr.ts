@@ -1,3 +1,4 @@
+
 import { Translations } from '../types/translations';
 
 export const frTranslations: Translations = {
@@ -279,21 +280,6 @@ export const frTranslations: Translations = {
   phoneConsultationService: "Consultation téléphonique",
   airportPickupService: "Service de récupération à l'aéroport",
   culturalOrientationService: "Orientation culturelle",
-  scholarshipGuidanceDesc: "Guidance complète pour trouver et postuler aux bourses",
-  universityAdmissionsDesc: "Support complet pour les candidatures universitaires",
-  visaApplicationHelpDesc: "Assistance experte pour les demandes de visa étudiant",
-  koreanLanguageTrainingDesc: "Cours de coréen personnalisés",
-  visitsHelpRelocationsDesc: "Support pour les visites académiques et relocalisations",
-  marketEntryStrategyDesc: "Analyse de marché complète et stratégie d'entrée",
-  regulatoryComplianceDesc: "Naviguer dans les réglementations de sécurité alimentaire",
-  productDevelopmentDesc: "Développer des produits pour les marchés asiatiques",
-  supplyChainOptimizationDesc: "Optimiser l'efficacité de la chaîne d'approvisionnement",
-  brandLocalizationDesc: "Adapter la marque aux marchés locaux",
-  partnershipDistributionDesc: "Se connecter avec des partenaires locaux",
-  hotelBookingAssistanceDesc: "Aide avec les réservations d'hébergement",
-  phoneConsultationDesc: "Consultation directe par téléphone",
-  airportPickupDesc: "Organiser la récupération à l'aéroport en Corée",
-  culturalOrientationDesc: "Se préparer à l'adaptation culturelle",
   basicFbConsultation: "Consultation F&B de base",
   businessNetworking: "Réseautage d'affaires",
   duration: "Durée",
