@@ -11,52 +11,145 @@ const AllServices = () => {
   const { translations } = useLanguage();
 
   const studyServices = [
-    { name: "Scholarship Guidance", price: "$150", duration: "1-2 weeks", description: "Complete guidance for finding and applying to scholarships" },
-    { name: "University Admissions", price: "$200", duration: "2-3 weeks", description: "End-to-end university application support" },
-    { name: "Visa Application Help", price: "$100", duration: "1 week", description: "Expert assistance with student visa applications" },
-    { name: "Korean Language Training", price: "$80/month", duration: "Ongoing", description: "Personalized Korean language lessons" },
-    { name: "Visits Help & Relocations", price: "$120", duration: "1-2 weeks", description: "Support for academic visits and relocations" },
+    { 
+      name: translations.scholarshipGuidanceService || "Scholarship Guidance", 
+      price: "$150", 
+      duration: translations.oneToTwoWeeks || "1-2 weeks", 
+      description: translations.scholarshipGuidanceDesc || "Complete guidance for finding and applying to scholarships" 
+    },
+    { 
+      name: translations.universityAdmissionsService || "University Admissions", 
+      price: "$200", 
+      duration: translations.twoToThreeWeeks || "2-3 weeks", 
+      description: translations.universityAdmissionsDesc || "End-to-end university application support" 
+    },
+    { 
+      name: translations.visaApplicationHelpService || "Visa Application Help", 
+      price: "$100", 
+      duration: translations.oneWeek || "1 week", 
+      description: translations.visaApplicationHelpDesc || "Expert assistance with student visa applications" 
+    },
+    { 
+      name: translations.koreanLanguageTrainingService || "Korean Language Training", 
+      price: `$80${translations.perMonth || "/month"}`, 
+      duration: translations.ongoing || "Ongoing", 
+      description: translations.koreanLanguageTrainingDesc || "Personalized Korean language lessons" 
+    },
+    { 
+      name: translations.visitsHelpRelocationsService || "Visits Help & Relocations", 
+      price: "$120", 
+      duration: translations.oneToTwoWeeks || "1-2 weeks", 
+      description: translations.visitsHelpRelocationsDesc || "Support for academic visits and relocations" 
+    },
   ];
 
   const fbServices = [
-    { name: "Market Entry Strategy", price: "$2,500", duration: "2-3 weeks", description: "Comprehensive market analysis and entry strategy" },
-    { name: "Regulatory Compliance", price: "$1,800", duration: "1-2 weeks", description: "Navigate food safety regulations" },
-    { name: "Product Development", price: "$3,200", duration: "4-6 weeks", description: "Develop products for Asian markets" },
-    { name: "Supply Chain Optimization", price: "$2,200", duration: "2-4 weeks", description: "Optimize supply chain efficiency" },
-    { name: "Brand Localization", price: "$1,500", duration: "1-3 weeks", description: "Adapt brand for local markets" },
-    { name: "Partnership & Distribution", price: "$2,800", duration: "3-5 weeks", description: "Connect with local partners" },
+    { 
+      name: translations.marketEntryStrategyService || "Market Entry Strategy", 
+      price: "$2,500", 
+      duration: translations.twoToThreeWeeks || "2-3 weeks", 
+      description: translations.marketEntryStrategyDesc || "Comprehensive market analysis and entry strategy" 
+    },
+    { 
+      name: translations.regulatoryComplianceService || "Regulatory Compliance", 
+      price: "$1,800", 
+      duration: translations.oneToTwoWeeks || "1-2 weeks", 
+      description: translations.regulatoryComplianceDesc || "Navigate food safety regulations" 
+    },
+    { 
+      name: translations.productDevelopmentService || "Product Development", 
+      price: "$3,200", 
+      duration: translations.fourToSixWeeks || "4-6 weeks", 
+      description: translations.productDevelopmentDesc || "Develop products for Asian markets" 
+    },
+    { 
+      name: translations.supplyChainOptimizationService || "Supply Chain Optimization", 
+      price: "$2,200", 
+      duration: translations.twoToFourWeeks || "2-4 weeks", 
+      description: translations.supplyChainOptimizationDesc || "Optimize supply chain efficiency" 
+    },
+    { 
+      name: translations.brandLocalizationService || "Brand Localization", 
+      price: "$1,500", 
+      duration: translations.oneToThreeWeeks || "1-3 weeks", 
+      description: translations.brandLocalizationDesc || "Adapt brand for local markets" 
+    },
+    { 
+      name: translations.partnershipDistributionService || "Partnership & Distribution", 
+      price: "$2,800", 
+      duration: translations.threeToFiveWeeks || "3-5 weeks", 
+      description: translations.partnershipDistributionDesc || "Connect with local partners" 
+    },
   ];
 
   const additionalServices = [
-    { name: "Hotel Booking Assistance", price: "$50", duration: "1-3 days", description: "Help with accommodation bookings" },
-    { name: "Phone Consultation", price: "$75/hour", duration: "1 hour", description: "Direct consultation via phone call" },
-    { name: "Airport Pickup Service", price: "$80", duration: "1 day", description: "Arrange airport pickup in Korea" },
-    { name: "Cultural Orientation", price: "$150", duration: "1 week", description: "Prepare for cultural adaptation" },
+    { 
+      name: translations.hotelBookingAssistanceService || "Hotel Booking Assistance", 
+      price: "$50", 
+      duration: translations.oneToThreeDays || "1-3 days", 
+      description: translations.hotelBookingAssistanceDesc || "Help with accommodation bookings" 
+    },
+    { 
+      name: translations.phoneConsultationService || "Phone Consultation", 
+      price: `$75${translations.perHour || "/hour"}`, 
+      duration: translations.oneHour || "1 hour", 
+      description: translations.phoneConsultationDesc || "Direct consultation via phone call" 
+    },
+    { 
+      name: translations.airportPickupService || "Airport Pickup Service", 
+      price: "$80", 
+      duration: translations.oneDay || "1 day", 
+      description: translations.airportPickupDesc || "Arrange airport pickup in Korea" 
+    },
+    { 
+      name: translations.culturalOrientationService || "Cultural Orientation", 
+      price: "$150", 
+      duration: translations.oneWeek || "1 week", 
+      description: translations.culturalOrientationDesc || "Prepare for cultural adaptation" 
+    },
   ];
 
   const packages = [
     {
-      name: "Study Abroad Complete Package",
+      name: translations.studyAbroadCompletePackage || "Study Abroad Complete Package",
       originalPrice: 650,
       discountedPrice: 520,
-      discount: "20% OFF",
-      services: ["Scholarship Guidance", "University Admissions", "Visa Application", "Korean Language (1 month)", "Cultural Orientation"],
+      discount: translations.twentyPercentOff || "20% OFF",
+      services: [
+        translations.scholarshipGuidance || "Scholarship Guidance", 
+        translations.universityAdmissions || "University Admissions", 
+        translations.visaApplicationAssistance || "Visa Application", 
+        `${translations.koreanLanguagePreparation || "Korean Language"} (1 ${translations.perMonth?.replace('/', '') || "month"})`, 
+        translations.culturalOrientation || "Cultural Orientation"
+      ],
       popular: true
     },
     {
-      name: "F&B Market Entry Complete",
+      name: translations.fbMarketEntryComplete || "F&B Market Entry Complete",
       originalPrice: 16000,
       discountedPrice: 12000,
-      discount: "25% OFF",
-      services: ["Market Entry Strategy", "Regulatory Compliance", "Product Development", "Supply Chain", "Brand Localization", "Partnership Support"],
+      discount: translations.twentyFivePercentOff || "25% OFF",
+      services: [
+        translations.marketEntryStrategyService || "Market Entry Strategy", 
+        translations.regulatoryComplianceService || "Regulatory Compliance", 
+        translations.productDevelopmentService || "Product Development", 
+        translations.supplyChainOptimizationService || "Supply Chain", 
+        translations.brandLocalizationService || "Brand Localization", 
+        translations.partnershipDistributionService || "Partnership Support"
+      ],
       popular: false
     },
     {
-      name: "Student + F&B Combo",
+      name: translations.studentFbCombo || "Student + F&B Combo",
       originalPrice: 800,
       discountedPrice: 600,
-      discount: "25% OFF",
-      services: ["Study Abroad Package", "Basic F&B Consultation", "Cultural Orientation", "Business Networking"],
+      discount: translations.twentyFivePercentOff || "25% OFF",
+      services: [
+        translations.studyAbroadCompletePackage || "Study Abroad Package", 
+        translations.basicFbConsultation || "Basic F&B Consultation", 
+        translations.culturalOrientation || "Cultural Orientation", 
+        translations.businessNetworking || "Business Networking"
+      ],
       popular: false
     }
   ];
@@ -78,17 +171,17 @@ const AllServices = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              All Services & <span className="text-blue-600">Pricing</span>
+              {translations.allServicesTitle || "All Services & "}<span className="text-blue-600">{translations.allServicesTitle?.includes('&') ? translations.allServicesTitle.split('&')[1].trim() : "Pricing"}</span>
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              Comprehensive solutions for your educational and business needs
+              {translations.allServicesSubtitle || "Comprehensive solutions for your educational and business needs"}
             </p>
           </div>
 
           {/* Package Deals */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-center text-slate-800 dark:text-white mb-8">
-              🎯 Special Package Deals
+              🎯 {translations.specialPackageDeals || "Special Package Deals"}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {packages.map((pkg, index) => (
@@ -96,7 +189,7 @@ const AllServices = () => {
                   {pkg.popular && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                       <span className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold">
-                        MOST POPULAR
+                        {translations.mostPopular || "MOST POPULAR"}
                       </span>
                     </div>
                   )}
@@ -121,7 +214,7 @@ const AllServices = () => {
                     </ul>
                     <Link to="/book-consultation">
                       <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                        Book Package
+                        {translations.bookPackage || "Book Package"}
                       </Button>
                     </Link>
                   </CardContent>
@@ -134,7 +227,7 @@ const AllServices = () => {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
               <GraduationCap className="mr-3 text-blue-600" size={32} />
-              Study Abroad Services
+              {translations.studyAbroadServices || "Study Abroad Services"}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {studyServices.map((service, index) => (
@@ -145,10 +238,10 @@ const AllServices = () => {
                       <span className="text-blue-600 font-bold text-lg">{service.price}</span>
                     </div>
                     <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">Duration: {service.duration}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
                     <Link to="/book-consultation">
                       <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                        Book Now
+                        {translations.bookNow || "Book Now"}
                       </Button>
                     </Link>
                   </CardContent>
@@ -161,7 +254,7 @@ const AllServices = () => {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
               <Utensils className="mr-3 text-green-600" size={32} />
-              F&B Consulting Services
+              {translations.fbConsultingServices || "F&B Consulting Services"}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {fbServices.map((service, index) => (
@@ -172,10 +265,10 @@ const AllServices = () => {
                       <span className="text-green-600 font-bold text-lg">{service.price}</span>
                     </div>
                     <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">Duration: {service.duration}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
                     <Link to="/book-fb-consultation">
                       <Button className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl">
-                        Book Now
+                        {translations.bookNow || "Book Now"}
                       </Button>
                     </Link>
                   </CardContent>
@@ -188,7 +281,7 @@ const AllServices = () => {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
               <Plane className="mr-3 text-purple-600" size={32} />
-              Additional Services
+              {translations.additionalServices || "Additional Services"}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {additionalServices.map((service, index) => (
@@ -199,10 +292,10 @@ const AllServices = () => {
                       <span className="text-purple-600 font-bold text-xl">{service.price}</span>
                     </div>
                     <p className="text-sm text-slate-600 dark:text-slate-300 text-center mb-2">{service.description}</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 text-center mb-4">Duration: {service.duration}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 text-center mb-4">{translations.duration || "Duration"}: {service.duration}</p>
                     <Link to="/book-consultation">
                       <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-xl">
-                        Book Now
+                        {translations.bookNow || "Book Now"}
                       </Button>
                     </Link>
                   </CardContent>
@@ -214,14 +307,14 @@ const AllServices = () => {
           {/* Contact CTA */}
           <div className="text-center bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl p-8 text-white">
             <h2 className="text-2xl font-bold mb-4">
-              Need a Custom Solution?
+              {translations.needCustomSolution || "Need a Custom Solution?"}
             </h2>
             <p className="text-lg mb-6 opacity-90">
-              Contact us for personalized packages and enterprise solutions
+              {translations.contactForCustom || "Contact us for personalized packages and enterprise solutions"}
             </p>
             <Link to="/book-consultation">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
-                Get Custom Quote
+                {translations.getCustomQuote || "Get Custom Quote"}
               </Button>
             </Link>
           </div>
