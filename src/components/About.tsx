@@ -51,7 +51,7 @@ const About = () => {
               </h4>
               <div className="flex items-center space-x-4 mb-6">
                 <img 
-                  src="/lovable-uploads/df7fa571-0382-44ec-8054-5c67b79d0004.png" 
+                  src="/lovable-uploads/khali.jpg" 
                   alt="Global Advisor" 
                   className="w-16 h-16 rounded-full object-cover border-4 border-blue-200 dark:border-blue-700"
                 />
