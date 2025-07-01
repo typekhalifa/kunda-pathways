@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -11,7 +11,7 @@ import ThemeToggle from "./ThemeToggle";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { translations } = useLanguage();
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const location = useLocation();
 
   useEffect(() => {
@@ -43,9 +43,9 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/f220c9e1-8cfe-42b0-af8c-5cbf33524148.png" 
+              src="/lovable-uploads/a650e8f0-8212-4af3-8a2f-024f79b1740f.png" 
               alt="Kunda Pathways Logo" 
-              className="h-10 w-auto"
+              className="h-12 w-auto filter dark:brightness-110 dark:contrast-110 dark:saturate-150"
             />
           </Link>
 
@@ -66,29 +66,6 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-4">
             <LanguageSwitcher />
             <ThemeToggle />
-            
-            {user ? (
-              <div className="flex items-center space-x-2">
-                {isAdmin && (
-                  <Link to="/admin/dashboard">
-                    <Button variant="outline" size="sm">
-                      <User className="w-4 h-4 mr-2" />
-                      Admin
-                    </Button>
-                  </Link>
-                )}
-                <Button variant="outline" size="sm" onClick={signOut}>
-                  Sign Out
-                </Button>
-              </div>
-            ) : (
-              <Link to="/admin">
-                <Button variant="outline" size="sm">
-                  <User className="w-4 h-4 mr-2" />
-                  Admin
-                </Button>
-              </Link>
-            )}
             
             <Link to="/book-consultation">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6">
@@ -127,28 +104,6 @@ const Header = () => {
                 <div className="flex items-center space-x-3">
                   <LanguageSwitcher />
                   <ThemeToggle />
-                </div>
-                <div className="flex items-center space-x-2">
-                  {user ? (
-                    <>
-                      {isAdmin && (
-                        <Link to="/admin/dashboard">
-                          <Button variant="outline" size="sm">
-                            Admin
-                          </Button>
-                        </Link>
-                      )}
-                      <Button variant="outline" size="sm" onClick={signOut}>
-                        Sign Out
-                      </Button>
-                    </>
-                  ) : (
-                    <Link to="/admin">
-                      <Button variant="outline" size="sm">
-                        Admin
-                      </Button>
-                    </Link>
-                  )}
                 </div>
               </div>
               <Link to="/book-consultation" className="pt-2">

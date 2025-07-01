@@ -12,6 +12,34 @@ VALUES (
   now()
 ) ON CONFLICT (id) DO NOTHING;
 
+-- Create the default admin auth user
+-- Password: admin123
+INSERT INTO auth.users (
+  id,
+  instance_id,
+  email,
+  encrypted_password,
+  email_confirmed_at,
+  created_at,
+  updated_at,
+  confirmation_token,
+  email_change,
+  email_change_token_new,
+  recovery_token
+) VALUES (
+  '00000000-0000-0000-0000-000000000001'::uuid,
+  '00000000-0000-0000-0000-000000000000'::uuid,
+  'typekhalifa@gmail.com',
+  crypt('admin123', gen_salt('bf')),
+  now(),
+  now(),
+  now(),
+  '',
+  '',
+  '',
+  ''
+) ON CONFLICT (id) DO NOTHING;
+
 -- Update services with additional categories and new services
 INSERT INTO public.services (name, description, price, currency, category, duration) VALUES
 ('Food Quality Control Consultation', 'Expert guidance on food safety standards, quality assurance protocols, and regulatory compliance', 180.00, 'USD', 'quality-control', '2 hours'),
