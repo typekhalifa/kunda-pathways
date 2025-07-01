@@ -43,7 +43,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/a650e8f0-8212-4af3-8a2f-024f79b1740f.png" 
+              src="/lovable-uploads/f220c9e1-8cfe-42b0-af8c-5cbf33524148.png" 
               alt="Kunda Pathways Logo" 
               className="h-12 w-auto filter dark:brightness-110 dark:contrast-110 dark:saturate-150"
             />
