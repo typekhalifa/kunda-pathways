@@ -69,18 +69,24 @@ const SettingsManager = () => {
 
       if (error) throw error;
 
-      // Process the fetched settings and update state
+      // Process the fetched settings and update state with proper type casting
       data?.forEach((setting) => {
         const value = setting.content_value;
         switch (setting.content_key) {
           case 'payment_settings':
-            setPaymentSettings(value);
+            if (typeof value === 'object' && value !== null) {
+              setPaymentSettings(value as typeof paymentSettings);
+            }
             break;
           case 'website_settings':
-            setWebsiteSettings(value);
+            if (typeof value === 'object' && value !== null) {
+              setWebsiteSettings(value as typeof websiteSettings);
+            }
             break;
           case 'booking_settings':
-            setBookingSettings(value);
+            if (typeof value === 'object' && value !== null) {
+              setBookingSettings(value as typeof bookingSettings);
+            }
             break;
         }
       });
@@ -149,7 +155,7 @@ const SettingsManager = () => {
         <p className="text-slate-600">Manage your application settings and preferences</p>
       </div>
 
-      {/* Password Settings */}
+      {/* Security Settings */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
