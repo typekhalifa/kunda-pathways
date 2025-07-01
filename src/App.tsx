@@ -19,7 +19,7 @@ import StudyPrograms from "./pages/StudyPrograms";
 import FBConsulting from "./pages/FBConsulting";
 import BookFBConsultation from "./pages/BookFBConsultation";
 import AllServices from "./pages/AllServices";
-import Auth from "./pages/Auth";
+import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
@@ -34,7 +34,7 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<Auth />} />
+              <Route path="/admin" element={<AdminLogin />} />
               <Route path="/book-consultation" element={<BookConsultation />} />
               <Route path="/book-fb-consultation" element={<BookFBConsultation />} />
               <Route path="/resources" element={<Resources />} />
@@ -46,7 +46,7 @@ const App = () => (
               <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/about-advisor" element={<AboutAdvisor />} />
               <Route 
-                path="/admin" 
+                path="/admin/dashboard" 
                 element={
                   <ProtectedRoute adminOnly>
                     <AdminDashboard />

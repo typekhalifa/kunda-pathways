@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -70,7 +71,7 @@ const Header = () => {
             {user ? (
               <div className="flex items-center space-x-2">
                 {isAdmin && (
-                  <Link to="/admin">
+                  <Link to="/admin/dashboard">
                     <Button variant="outline" size="sm">
                       <User className="w-4 h-4 mr-2" />
                       Admin
@@ -82,10 +83,10 @@ const Header = () => {
                 </Button>
               </div>
             ) : (
-              <Link to="/auth">
+              <Link to="/admin">
                 <Button variant="outline" size="sm">
                   <User className="w-4 h-4 mr-2" />
-                  Sign In
+                  Admin
                 </Button>
               </Link>
             )}
@@ -132,7 +133,7 @@ const Header = () => {
                   {user ? (
                     <>
                       {isAdmin && (
-                        <Link to="/admin">
+                        <Link to="/admin/dashboard">
                           <Button variant="outline" size="sm">
                             Admin
                           </Button>
@@ -143,9 +144,9 @@ const Header = () => {
                       </Button>
                     </>
                   ) : (
-                    <Link to="/auth">
+                    <Link to="/admin">
                       <Button variant="outline" size="sm">
-                        Sign In
+                        Admin
                       </Button>
                     </Link>
                   )}
