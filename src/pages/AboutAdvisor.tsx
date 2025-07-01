@@ -11,12 +11,27 @@ import Footer from "@/components/Footer";
 const AboutAdvisor = () => {
   const { translations } = useLanguage();
 
+  // Editable advisor information - change these values as needed
+  const advisorInfo = {
+    name: translations.advisorName || "Kunda John Kim",
+    title: translations.advisorTitle || "Global Education & F&B Consultant",
+    photoUrl: "/lovable-uploads/khali.jpg",
+    email: "info@kundapath.com",
+    phone: "+82-10-1234-5678",
+    location: translations.location || "Seoul, South Korea",
+    experience: "5+",
+    studentsHelped: "500+",
+    successRate: "85%",
+    countriesReached: "15+",
+    description: translations.advisorDescription || "With over 5 years of experience in international education consulting and F&B business development, I specialize in helping students achieve their academic dreams in Korea while also supporting entrepreneurs in navigating the Asian F&B market. My dual expertise in education and Food Science and Technology (MSc) allows me to provide comprehensive guidance for both academic and business ventures."
+  };
+
   const handleEmailClick = () => {
-    window.location.href = "mailto:info@kundapathways.com";
+    window.location.href = `mailto:${advisorInfo.email}`;
   };
 
   const handlePhoneClick = () => {
-    window.location.href = "tel:+821012345678";
+    window.location.href = `tel:${advisorInfo.phone}`;
   };
 
   return (
@@ -36,16 +51,18 @@ const AboutAdvisor = () => {
           {/* Professional Photo and Introduction */}
           <div className="text-center mb-12">
             <div className="flex justify-center mb-8">
-              <div className="w-48 h-48 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-6xl font-bold shadow-lg border-4 border-white dark:border-slate-700">
-                <GraduationCap size={80} />
-              </div>
+              <img 
+                src={advisorInfo.photoUrl} 
+                alt={advisorInfo.name}
+                className="w-48 h-48 rounded-full object-cover shadow-lg border-4 border-white dark:border-slate-700"
+              />
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              {translations.advisorName || "Kunda John Kim"}
+              {advisorInfo.name}
             </h1>
             <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold mb-6">
-              {translations.advisorTitle || "Global Education & F&B Consultant"}
+              {advisorInfo.title}
             </p>
           </div>
 
@@ -57,7 +74,7 @@ const AboutAdvisor = () => {
                 {translations.professionalSummary || "Professional Summary"}
               </h2>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
-                {translations.advisorDescription || "With over 5 years of experience in international education consulting and F&B business development, I specialize in helping students achieve their academic dreams in Korea while also supporting entrepreneurs in navigating the Asian F&B market. My dual expertise in education and Food Science and Technology (MSc) allows me to provide comprehensive guidance for both academic and business ventures."}
+                {advisorInfo.description}
               </p>
             </CardContent>
           </Card>
@@ -104,18 +121,22 @@ const AboutAdvisor = () => {
                 <Award className="mr-3 text-yellow-600" size={24} />
                 {translations.keyAchievements || "Key Achievements"}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
+                  <div className="text-3xl font-bold text-blue-600 mb-2">{advisorInfo.studentsHelped}</div>
                   <div className="text-slate-600 dark:text-slate-300">{translations.studentsAssisted || "Students Assisted"}</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">85%</div>
+                  <div className="text-3xl font-bold text-green-600 mb-2">{advisorInfo.successRate}</div>
                   <div className="text-slate-600 dark:text-slate-300">{translations.scholarshipSuccessRate || "Scholarship Success Rate"}</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600 mb-2">15+</div>
+                  <div className="text-3xl font-bold text-purple-600 mb-2">{advisorInfo.countriesReached}</div>
                   <div className="text-slate-600 dark:text-slate-300">{translations.countriesReached || "Countries Reached"}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-orange-600 mb-2">{advisorInfo.experience}</div>
+                  <div className="text-slate-600 dark:text-slate-300">{translations.yearsExperience || "Years Experience"}</div>
                 </div>
               </div>
             </CardContent>
@@ -136,7 +157,7 @@ const AboutAdvisor = () => {
                       onClick={handleEmailClick}
                       className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors underline"
                     >
-                      info@kundapath.com
+                      {advisorInfo.email}
                     </button>
                   </div>
                   <div className="flex items-center text-slate-600 dark:text-slate-300">
@@ -145,12 +166,12 @@ const AboutAdvisor = () => {
                       onClick={handlePhoneClick}
                       className="hover:text-green-600 dark:hover:text-green-400 transition-colors underline"
                     >
-                      +82-10-1234-5678
+                      {advisorInfo.phone}
                     </button>
                   </div>
                   <div className="flex items-center text-slate-600 dark:text-slate-300">
                     <MapPin size={20} className="mr-3 text-purple-600" />
-                    <span>{translations.location || "Seoul, South Korea"}</span>
+                    <span>{advisorInfo.location}</span>
                   </div>
                 </div>
 

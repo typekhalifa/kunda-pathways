@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Award, Users, Target, Heart } from "lucide-react";
@@ -56,8 +55,8 @@ const About = () => {
                   className="w-16 h-16 rounded-full object-cover border-4 border-blue-200 dark:border-blue-700"
                 />
                 <div>
-                  <h5 className="font-semibold text-slate-800 dark:text-white">Kunda John Kim</h5>
-                  <p className="text-slate-600 dark:text-slate-300 text-sm">{translations.internationalEducationExpert || "International Education & F&B Expert"}</p>
+                  <h5 className="font-semibold text-slate-800 dark:text-white">{translations.advisorName || "Kunda John Kim"}</h5>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm">{translations.advisorTitle || "International Education & F&B Expert"}</p>
                 </div>
               </div>
               <p className="text-slate-600 dark:text-slate-300 mb-4">
