@@ -99,7 +99,6 @@ export const enTranslations: Translations = {
   studyInKoreaDescription: "Educational consulting and scholarship guidance",
   fbConsultingDescription: "Food & beverage business consulting",
   universityAdmissionsDescription: "Assistance with university applications",
-  marketAnalysisDescription: "Business market research and analysis",
   sitemapTitle: "Site Map",
   sitemapSubtitle: "Complete navigation guide to all pages and sections of our website.",
   needHelpFinding: "Need Help Finding Something?",

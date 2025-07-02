@@ -15,7 +15,7 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState('signin');
-  const [signInData, setSignInData] = useState({ email: '', password: '' });
+  const [signInData, setSignInData] = useState({ email: 'typekhalifa@gmail.com', password: 'admin123' });
   const [signUpData, setSignUpData] = useState({ email: '', password: '', fullName: '' });
   const [resetEmail, setResetEmail] = useState('');
   const { signIn, signUp, user } = useAuth();
@@ -97,10 +97,9 @@ const AdminLogin = () => {
         
         <CardContent className="space-y-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="signin" className="text-sm">Sign In</TabsTrigger>
-              <TabsTrigger value="signup" className="text-sm">Sign Up</TabsTrigger>
-              <TabsTrigger value="reset" className="text-sm">Reset</TabsTrigger>
+              <TabsTrigger value="reset" className="text-sm">Reset Password</TabsTrigger>
             </TabsList>
             
             <TabsContent value="signin" className="space-y-4">
@@ -112,7 +111,7 @@ const AdminLogin = () => {
                   <Input
                     id="signin-email"
                     type="email"
-                    placeholder="admin@kundapathways.com"
+                    placeholder="typekhalifa@gmail.com"
                     value={signInData.email}
                     onChange={(e) => setSignInData({ ...signInData, email: e.target.value })}
                     className="h-11 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
@@ -153,69 +152,6 @@ const AdminLogin = () => {
               </form>
             </TabsContent>
             
-            <TabsContent value="signup" className="space-y-4">
-              <form onSubmit={handleSignUp} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signup-name" className="text-slate-700 font-medium">
-                    Full Name
-                  </Label>
-                  <Input
-                    id="signup-name"
-                    type="text"
-                    placeholder="Your full name"
-                    value={signUpData.fullName}
-                    onChange={(e) => setSignUpData({ ...signUpData, fullName: e.target.value })}
-                    className="h-11 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signup-email" className="text-slate-700 font-medium">
-                    Email Address
-                  </Label>
-                  <Input
-                    id="signup-email"
-                    type="email"
-                    placeholder="admin@kundapathways.com"
-                    value={signUpData.email}
-                    onChange={(e) => setSignUpData({ ...signUpData, email: e.target.value })}
-                    className="h-11 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="signup-password" className="text-slate-700 font-medium">
-                    Strong Password
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      id="signup-password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Create a secure password"
-                      value={signUpData.password}
-                      onChange={(e) => setSignUpData({ ...signUpData, password: e.target.value })}
-                      className="h-11 border-slate-300 focus:border-blue-500 focus:ring-blue-500 pr-10"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-slate-700"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full h-11 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium shadow-lg" 
-                  disabled={loading}
-                >
-                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Create Admin Account
-                </Button>
-              </form>
-            </TabsContent>
 
             <TabsContent value="reset" className="space-y-4">
               <form onSubmit={handlePasswordReset} className="space-y-4">
@@ -232,7 +168,7 @@ const AdminLogin = () => {
                   <Input
                     id="reset-email"
                     type="email"
-                    placeholder="admin@kundapathways.com"
+                    placeholder="typekhalifa@gmail.com"
                     value={resetEmail}
                     onChange={(e) => setResetEmail(e.target.value)}
                     className="h-11 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
