@@ -297,5 +297,37 @@ export const koTranslations: Translations = {
   perMonth: "/월",
   perHour: "/시간",
   twentyPercentOff: "20% 할인",
-  twentyFivePercentOff: "25% 할인"
+  twentyFivePercentOff: "25% 할인",
+  
+  // Additional missing translations
+  ourMission: "우리의 사명",
+  missionDescription: "교육적 열망과 비즈니스 벤처를 성공적인 현실로 변화시키는 포괄적이고 개인화된 지침을 제공하는 것입니다.",
+  personalizedGuidance: "고유한 목표에 맞춘 개인화된 지침",
+  expertConsultation: "입증된 실적을 가진 전문가 상담",
+  endToEndSupport: "여정 전반에 걸친 완전한 지원",
+  meetYourGlobalAdvisor: "글로벌 어드바이저를 만나보세요",
+  successfulStudents: "성공한 학생들",
+  businessesHelped: "도움을 받은 비즈니스",
+  scholarshipSuccessRate: "장학금 성공률",
+  yearsExperience: "년간 경험",
+  aboutDescription: "교육과 비즈니스 우수성을 통해 꿈에 힘을 실어줍니다. 우리는 문화를 연결하고 글로벌 성공을 위한 기회를 만듭니다.",
+  closed: "휴무",
+  learnMore: "더 알아보기",
+  
+  // Quality control and research related
+  qualityControlConsultation: "식품 품질 관리",
+  qualityControlDescription: "식품 안전 및 품질 보증에 대한 전문가 지침",
+  researchGuidance: "연구 주제 지침",
+  researchDescription: "학술 연구 주제 선택에 대한 전문적 지원",
+  thesisEditing: "논문 편집 및 검토",
+  thesisDescription: "학술 논문을 위한 종합적인 편집 서비스",
+  journalPublication: "학술지 논문 게재",
+  journalDescription: "학술 출판을 위한 완전한 지원",
+  labConsulting: "실험실 설치",
+  labDescription: "식품과학 실험실 설치를 위한 기술 지침",
+  nutritionAnalysis: "영양 분석",
+  nutritionDescription: "전문적인 영양 분석 및 라벨링 지원",
+  
+  supplyChainOptimization: "공급망 최적화",
+  advisorDescription: "국제 교육 컨설팅 분야에서 8년 이상의 경험과 식품과학 석사 학위를 바탕으로, 500명 이상의 학생들이 학업 목표를 달성하도록 도왔으며 전략적 F&B 컨설팅을 통해 수많은 기업의 글로벌 확장을 지원했습니다."
 };
