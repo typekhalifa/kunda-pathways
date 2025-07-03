@@ -22,6 +22,7 @@ import AllServices from "./pages/AllServices";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/admin/AdminBlog";
+import AdminSettings from "./pages/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,14 @@ const App = () => (
                 element={
                   <ProtectedRoute adminOnly>
                     <AdminBlog />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/settings" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminSettings />
                   </ProtectedRoute>
                 } 
               />

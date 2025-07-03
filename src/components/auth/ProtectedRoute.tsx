@@ -26,7 +26,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, adminOnly = f
   }
 
   if (!user) {
-    return <AuthForm />;
+    window.location.href = '/admin';
+    return null;
   }
 
   if (adminOnly && !isAdmin) {
