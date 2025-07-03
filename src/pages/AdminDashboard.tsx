@@ -50,10 +50,10 @@ const AdminDashboard = () => {
       color: 'text-green-600'
     },
     {
-      title: 'Resources',
-      description: 'Upload PDFs and manage resources',
+      title: 'Services',
+      description: 'Manage consultation services and pricing',
       icon: Plus,
-      href: '/admin/resources',
+      href: '/admin/services',
       color: 'text-purple-600'
     },
     {
@@ -116,7 +116,7 @@ const AdminDashboard = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-2xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <Calendar className="w-5 h-5 mr-2" />
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-2xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <MessageSquare className="w-5 h-5 mr-2" />
@@ -163,21 +163,25 @@ const AdminDashboard = () => {
       </div>
 
       <AlertDialog open={showSignOutDialog} onOpenChange={setShowSignOutDialog}>
-        <AlertDialogContent className="sm:max-w-md">
-          <AlertDialogHeader className="text-center sm:text-left">
-            <AlertDialogTitle className="flex items-center justify-center sm:justify-start text-xl">
-              <LogOut className="w-5 h-5 mr-2 text-destructive" />
-              Sign Out
+        <AlertDialogContent className="sm:max-w-lg rounded-2xl border-0 shadow-2xl bg-white dark:bg-slate-800">
+          <AlertDialogHeader className="text-center space-y-4 pt-6">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
+              <LogOut className="h-8 w-8 text-red-600 dark:text-red-400" />
+            </div>
+            <AlertDialogTitle className="text-2xl font-bold text-slate-800 dark:text-white">
+              Sign Out Confirmation
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-center sm:text-left mt-2">
-              Are you sure you want to sign out from the admin dashboard?
+            <AlertDialogDescription className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+              Are you sure you want to sign out from the admin dashboard? You'll need to log in again to access admin features.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="sm:flex-row sm:justify-end gap-2">
-            <AlertDialogCancel className="sm:mr-2">No, Stay</AlertDialogCancel>
+          <AlertDialogFooter className="flex-col sm:flex-row gap-3 pt-6 pb-6">
+            <AlertDialogCancel className="w-full sm:w-auto order-2 sm:order-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border-0 rounded-xl py-3 px-6 font-medium">
+              No, Stay Logged In
+            </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleSignOut}
-              className="bg-destructive hover:bg-destructive/90"
+              className="w-full sm:w-auto order-1 sm:order-2 bg-red-600 hover:bg-red-700 text-white border-0 rounded-xl py-3 px-6 font-medium shadow-lg hover:shadow-xl transition-all duration-200"
             >
               Yes, Sign Out
             </AlertDialogAction>

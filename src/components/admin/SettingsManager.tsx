@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { Loader2, KeyRound, User, Shield } from 'lucide-react';
@@ -132,15 +133,147 @@ const SettingsManager = () => {
         <CardHeader>
           <CardTitle>Website Settings</CardTitle>
           <CardDescription>
-            Manage your website configuration and content
+            Configure your website's global settings and appearance
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="text-center py-8">
-            <p className="text-slate-500 mb-4">Website settings panel coming soon...</p>
-            <p className="text-sm text-slate-400">
-              This will include site title, description, contact information, and other global settings.
-            </p>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <h4 className="font-semibold text-slate-800">Site Information</h4>
+              <div className="space-y-2">
+                <Label htmlFor="site-title">Site Title</Label>
+                <Input
+                  id="site-title"
+                  placeholder="Your Website Title"
+                  defaultValue="Africa-Korea Connect"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="site-description">Site Description</Label>
+                <Textarea
+                  id="site-description"
+                  placeholder="Brief description of your website"
+                  defaultValue="Educational consulting and cultural bridge between Africa and Korea"
+                  rows={3}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="contact-email">Contact Email</Label>
+                <Input
+                  id="contact-email"
+                  type="email"
+                  placeholder="contact@yoursite.com"
+                  defaultValue="info@africa-korea-connect.com"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-semibold text-slate-800">Branding</h4>
+              <div className="space-y-2">
+                <Label htmlFor="logo-upload">Logo Upload</Label>
+                <Input
+                  id="logo-upload"
+                  type="file"
+                  accept="image/*"
+                  className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="favicon-upload">Favicon Upload</Label>
+                <Input
+                  id="favicon-upload"
+                  type="file"
+                  accept="image/x-icon,image/png"
+                  className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="primary-color">Primary Color</Label>
+                <Input
+                  id="primary-color"
+                  type="color"
+                  defaultValue="#3b82f6"
+                  className="h-12 w-full"
+                />
+              </div>
+            </div>
+          </div>
+
+          <hr className="border-slate-200" />
+
+          <div className="space-y-4">
+            <h4 className="font-semibold text-slate-800">SEO Settings</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="meta-title">Meta Title</Label>
+                <Input
+                  id="meta-title"
+                  placeholder="SEO optimized title"
+                  defaultValue="Africa-Korea Connect - Educational Consulting"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="meta-keywords">Meta Keywords</Label>
+                <Input
+                  id="meta-keywords"
+                  placeholder="keyword1, keyword2, keyword3"
+                  defaultValue="korea, education, consulting, study abroad"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="meta-description">Meta Description</Label>
+              <Textarea
+                id="meta-description"
+                placeholder="SEO meta description (150-160 characters)"
+                defaultValue="Professional educational consulting services connecting African students with Korean universities and opportunities."
+                rows={3}
+              />
+            </div>
+          </div>
+
+          <hr className="border-slate-200" />
+
+          <div className="space-y-4">
+            <h4 className="font-semibold text-slate-800">Technical Settings</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="google-analytics">Google Analytics ID</Label>
+                <Input
+                  id="google-analytics"
+                  placeholder="GA-XXXXXXXXX-X"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="google-tag-manager">Google Tag Manager ID</Label>
+                <Input
+                  id="google-tag-manager"
+                  placeholder="GTM-XXXXXXX"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="facebook-pixel">Facebook Pixel ID</Label>
+                <Input
+                  id="facebook-pixel"
+                  placeholder="000000000000000"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="custom-css">Custom CSS</Label>
+                <Textarea
+                  id="custom-css"
+                  placeholder="/* Custom CSS styles */"
+                  rows={3}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end pt-4">
+            <Button className="bg-blue-600 hover:bg-blue-700">
+              Save Website Settings
+            </Button>
           </div>
         </CardContent>
       </Card>

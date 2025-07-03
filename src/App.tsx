@@ -26,6 +26,7 @@ import AdminSettings from "./pages/AdminSettings";
 import ContentManager from '@/components/admin/ContentManager';
 import MessagesManager from '@/components/admin/MessagesManager';
 import ConsultationsManager from '@/components/admin/ConsultationsManager';
+import ServicesManager from '@/components/admin/ServicesManager';
 
 // Admin page wrappers
 const AdminContent = () => (
@@ -51,6 +52,15 @@ const AdminConsultations = () => (
     <div className="container mx-auto">
       <h1 className="text-3xl font-bold mb-6">Consultation Management</h1>
       <ConsultationsManager />
+    </div>
+  </div>
+);
+
+const AdminServices = () => (
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Services Management</h1>
+      <ServicesManager />
     </div>
   </div>
 );
@@ -123,6 +133,14 @@ const App = () => (
                 element={
                   <ProtectedRoute adminOnly>
                     <AdminConsultations />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/services" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminServices />
                   </ProtectedRoute>
                 } 
               />
