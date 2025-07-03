@@ -15,7 +15,7 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState('signin');
-  const [signInData, setSignInData] = useState({ email: 'typekhalifa@gmail.com', password: 'admin123' });
+  const [signInData, setSignInData] = useState({ email: '', password: '' });
   const [signUpData, setSignUpData] = useState({ email: '', password: '', fullName: '' });
   const [resetEmail, setResetEmail] = useState('');
   const { signIn, signUp, user } = useAuth();
