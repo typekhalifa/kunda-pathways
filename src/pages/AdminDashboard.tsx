@@ -163,7 +163,7 @@ const AdminDashboard = () => {
       </div>
 
       <AlertDialog open={showSignOutDialog} onOpenChange={setShowSignOutDialog}>
-        <AlertDialogContent className="sm:max-w-lg rounded-2xl border-0 shadow-2xl bg-white dark:bg-slate-800">
+        <AlertDialogContent className="sm:max-w-lg rounded-3xl border-0 shadow-2xl bg-white dark:bg-slate-800">
           <AlertDialogHeader className="text-center space-y-4 pt-6">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
               <LogOut className="h-8 w-8 text-red-600 dark:text-red-400" />
