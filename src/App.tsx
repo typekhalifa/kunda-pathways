@@ -23,6 +23,37 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminSettings from "./pages/AdminSettings";
+import ContentManager from '@/components/admin/ContentManager';
+import MessagesManager from '@/components/admin/MessagesManager';
+import ConsultationsManager from '@/components/admin/ConsultationsManager';
+
+// Admin page wrappers
+const AdminContent = () => (
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Website Content Management</h1>
+      <ContentManager />
+    </div>
+  </div>
+);
+
+const AdminMessages = () => (
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Contact Messages</h1>
+      <MessagesManager />
+    </div>
+  </div>
+);
+
+const AdminConsultations = () => (
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Consultation Management</h1>
+      <ConsultationsManager />
+    </div>
+  </div>
+);
 
 const queryClient = new QueryClient();
 
@@ -68,6 +99,30 @@ const App = () => (
                 element={
                   <ProtectedRoute adminOnly>
                     <AdminSettings />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/content" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminContent />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/messages" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminMessages />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/consultations" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminConsultations />
                   </ProtectedRoute>
                 } 
               />

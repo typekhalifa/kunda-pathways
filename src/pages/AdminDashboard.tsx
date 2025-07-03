@@ -115,17 +115,30 @@ const AdminDashboard = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
-            <CardHeader>
-              <CardTitle className="flex items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center text-lg">
                 <Calendar className="w-5 h-5 mr-2" />
                 Consultations
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold">0</div>
-              <p className="text-purple-100">Pending bookings</p>
+              <p className="text-purple-100 text-sm">Pending bookings</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center text-lg">
+                <MessageSquare className="w-5 h-5 mr-2" />
+                Messages
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">0</div>
+              <p className="text-orange-100 text-sm">New inquiries</p>
             </CardContent>
           </Card>
         </div>
@@ -133,13 +146,15 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {dashboardCards.map((card, index) => (
             <Link key={index} to={card.href}>
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <card.icon className={`w-5 h-5 mr-2 ${card.color}`} />
+              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20 rounded-xl bg-gradient-to-br from-background to-muted/30">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center text-lg group-hover:text-primary transition-colors">
+                    <card.icon className={`w-6 h-6 mr-3 ${card.color} group-hover:scale-110 transition-transform`} />
                     {card.title}
                   </CardTitle>
-                  <CardDescription>{card.description}</CardDescription>
+                  <CardDescription className="text-sm text-muted-foreground">
+                    {card.description}
+                  </CardDescription>
                 </CardHeader>
               </Card>
             </Link>
@@ -148,16 +163,24 @@ const AdminDashboard = () => {
       </div>
 
       <AlertDialog open={showSignOutDialog} onOpenChange={setShowSignOutDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Sign Out</AlertDialogTitle>
-            <AlertDialogDescription>
+        <AlertDialogContent className="sm:max-w-md">
+          <AlertDialogHeader className="text-center sm:text-left">
+            <AlertDialogTitle className="flex items-center justify-center sm:justify-start text-xl">
+              <LogOut className="w-5 h-5 mr-2 text-destructive" />
+              Sign Out
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-center sm:text-left mt-2">
               Are you sure you want to sign out from the admin dashboard?
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>No</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSignOut}>Yes</AlertDialogAction>
+          <AlertDialogFooter className="sm:flex-row sm:justify-end gap-2">
+            <AlertDialogCancel className="sm:mr-2">No, Stay</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleSignOut}
+              className="bg-destructive hover:bg-destructive/90"
+            >
+              Yes, Sign Out
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
