@@ -116,7 +116,7 @@ const AdminDashboard = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-2xl">
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <Calendar className="w-5 h-5 mr-2" />
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-2xl">
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <MessageSquare className="w-5 h-5 mr-2" />
@@ -146,7 +146,7 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {dashboardCards.map((card, index) => (
             <Link key={index} to={card.href}>
-              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20 rounded-xl bg-gradient-to-br from-background to-muted/30">
+              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/20 rounded-3xl bg-gradient-to-br from-background to-muted/30">
                 <CardHeader className="pb-4">
                   <CardTitle className="flex items-center text-lg group-hover:text-primary transition-colors">
                     <card.icon className={`w-6 h-6 mr-3 ${card.color} group-hover:scale-110 transition-transform`} />
