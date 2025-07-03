@@ -21,6 +21,7 @@ import BookFBConsultation from "./pages/BookFBConsultation";
 import AllServices from "./pages/AllServices";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminBlog from "./pages/admin/AdminBlog";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,14 @@ const App = () => (
                 element={
                   <ProtectedRoute adminOnly>
                     <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/blog" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminBlog />
                   </ProtectedRoute>
                 } 
               />

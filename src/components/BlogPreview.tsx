@@ -8,22 +8,25 @@ const BlogPreview = () => {
 
   const posts = [
     {
-      title: translations.blogPost1Title,
-      excerpt: translations.blogPost1Excerpt,
-      date: "March 15, 2024",
-      category: translations.education,
+      title: translations.blogPost1Title || "2024 Complete Guide to Korean University Scholarships",
+      excerpt: translations.blogPost1Excerpt || "Everything you need to know about scholarship applications in Korea, including KGSP and university-specific programs. Discover eligibility criteria, application deadlines, and expert tips for success.",
+      date: translations.march152024 || "March 15, 2024",
+      category: translations.education || "Education",
+      readTime: translations.eightMinRead || "8 min read"
     },
     {
-      title: translations.blogPost2Title,
-      excerpt: translations.blogPost2Excerpt,
-      date: "March 10, 2024",
-      category: translations.business,
+      title: translations.blogPost2Title || "Korean F&B Market Entry Strategies",
+      excerpt: translations.blogPost2Excerpt || "Learn the essential steps to successfully enter the Korean food and beverage market with expert insights. From regulatory compliance to consumer preferences and distribution channels.",
+      date: translations.march102024 || "March 10, 2024", 
+      category: translations.business || "Business",
+      readTime: translations.twelveMinRead || "12 min read"
     },
     {
-      title: translations.blogPost3Title,
-      excerpt: translations.blogPost3Excerpt,
-      date: "March 5, 2024",
-      category: translations.scholarships,
+      title: translations.blogPost3Title || "TOPIK Preparation: Your Path to Korean Universities",
+      excerpt: translations.blogPost3Excerpt || "Master the Test of Proficiency in Korean with our comprehensive preparation guide. Includes study schedules, practice resources, and test-taking strategies.",
+      date: translations.march52024 || "March 5, 2024",
+      category: translations.scholarships || "Scholarships", 
+      readTime: translations.sixMinRead || "6 min read"
     },
   ];
 
@@ -50,12 +53,13 @@ const BlogPreview = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mb-3">
                   <span className="text-sm text-slate-500 dark:text-slate-400">{post.date}</span>
-                  <Button variant="ghost" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-                    {translations.readMore} →
-                  </Button>
+                  <span className="text-xs text-slate-400 dark:text-slate-500">{post.readTime}</span>
                 </div>
+                <Button variant="ghost" className="w-full text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 justify-center">
+                  {translations.readMore} →
+                </Button>
               </CardContent>
             </Card>
           ))}

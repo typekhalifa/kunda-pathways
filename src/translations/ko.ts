@@ -329,5 +329,56 @@ export const koTranslations: Translations = {
   nutritionDescription: "전문적인 영양 분석 및 라벨링 지원",
   
   supplyChainOptimization: "공급망 최적화",
-  advisorDescription: "국제 교육 컨설팅 분야에서 8년 이상의 경험과 식품과학 석사 학위를 바탕으로, 500명 이상의 학생들이 학업 목표를 달성하도록 도왔으며 전략적 F&B 컨설팅을 통해 수많은 기업의 글로벌 확장을 지원했습니다."
+  advisorDescription: "국제 교육 컨설팅 분야에서 8년 이상의 경험과 식품과학 석사 학위를 바탕으로, 500명 이상의 학생들이 학업 목표를 달성하도록 도왔으며 전략적 F&B 컨설팅을 통해 수많은 기업의 글로벌 확장을 지원했습니다.",
+
+  // Contact form translations
+  readyToTakeNextStep: "여정의 다음 단계를 시작할 준비가 되셨나요? 모든 단계에서 도움을 드리겠습니다.",
+  sendUsMessage: "메시지 보내기",
+  fillFormBelow: "아래 양식을 작성해 주시면 24시간 이내에 답변드리겠습니다.",
+  yourName: "성명",
+  yourEmail: "이메일",
+  subject: "제목",
+  selectSubject: "제목 선택",
+  generalInquiry: "일반 문의",
+  studyAbroadRelocation: "유학 및 이주",
+  fbConsultingService: "F&B 컨설팅 서비스",
+  bothServices: "두 서비스 모두",
+  message: "메시지",
+  tellUsAboutGoals: "목표와 달성을 위해 어떻게 도움을 드릴 수 있는지 말씀해 주세요...",
+  sendMessage: "메시지 보내기",
+  messageSent: "메시지가 성공적으로 전송되었습니다!",
+  quickContact: "빠른 연락",
+  phoneKorea: "전화 (한국)",
+  whatsapp: "왓츠앱",
+  bookAConsultation: "상담 예약",
+  scheduleFreeConsultation: "목표 논의를 위한 무료 15분 상담을 예약하세요.",
+  scheduleConsultation: "상담 예약하기",
+  businessHours: "영업 시간",
+  mondayFriday: "월요일 - 금요일",
+  saturday: "토요일",
+  sunday: "일요일",
+
+  // All Services page missing translations
+  marketEntryStrategyDesc: "아시아 F&B 시장을 위한 종합적인 시장 분석 및 진입 전략",
+  regulatoryComplianceDesc: "식품 안전 규정 탐색",
+  productDevelopmentDesc: "아시아 시장을 위한 제품 개발",
+  supplyChainOptimizationDesc: "공급망 효율성 최적화",
+  brandLocalizationDesc: "현지 시장을 위한 브랜드 적응",
+  partnershipDistributionDesc: "현지 파트너와 연결",
+  hotelBookingAssistanceDesc: "숙박 예약 도움",
+  phoneConsultationDesc: "전화를 통한 직접 상담",
+  airportPickupDesc: "한국 내 공항 픽업 주선",
+  culturalOrientationDesc: "문화 적응 준비",
+  universityAdmissionsDesc: "대학 지원 완전한 지원",
+  visaApplicationHelpDesc: "학생 비자 신청 전문가 지원",
+  koreanLanguageTrainingDesc: "개인 맞춤형 한국어 수업",
+  visitsHelpRelocationsDesc: "학술 방문 및 이주 지원",
+
+  // Blog and Resources
+  visaApplicationProcess: "한국 대학교를 위한 비자 신청 과정",
+  visaApplicationExcerpt: "한국 학생 비자를 성공적으로 취득하기 위한 단계별 가이드...",
+  foodSafetyRegulations: "아시아 시장의 식품 안전 규정",
+  foodSafetyExcerpt: "아시아로 확장하는 F&B 기업을 위한 준수 요건 이해...",
+  culturalAdaptationGuide: "국제 학생을 위한 문화 적응 가이드",
+  culturalAdaptationExcerpt: "한국 문화와 학업 환경에 적응하기 위한 필수 팁..."
 };

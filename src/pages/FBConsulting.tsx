@@ -13,15 +13,15 @@ const FBConsulting = () => {
   const consultingServices = [
     {
       id: 1,
-      title: "Market Entry Strategy",
+      title: translations.marketEntryStrategyService || "Market Entry Strategy",
       price: "$2,500",
-      duration: "2-3 weeks",
+      duration: translations.twoToThreeWeeks || "2-3 weeks",
       icon: <Globe className="w-8 h-8 text-blue-600" />,
-      description: "Comprehensive market analysis and entry strategy for Asian F&B markets",
+      description: translations.marketEntryStrategyDesc || "Comprehensive market analysis and entry strategy for Asian F&B markets",
       features: [
-        "Market size analysis",
-        "Competitor landscape mapping",
-        "Entry strategy development",
+        translations.marketSizing || "Market size analysis",
+        translations.competitorAnalysis || "Competitor landscape mapping", 
+        translations.strategyDevelopment || "Entry strategy development",
         "Risk assessment",
         "Timeline and milestones"
       ]
@@ -120,10 +120,10 @@ const FBConsulting = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-4">
-              F&B Consulting <span className="text-green-600">Services</span>
+              {translations.fbConsulting || "F&B Consulting"} <span className="text-green-600">{translations.services || "Services"}</span>
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              Expert guidance for Food & Beverage businesses expanding into Asian markets
+              {translations.fbConsultingDescription || "Expert guidance for Food & Beverage businesses expanding into Asian markets"}
             </p>
           </div>
 
