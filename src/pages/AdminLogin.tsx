@@ -23,6 +23,7 @@ const AdminLogin = () => {
 
   React.useEffect(() => {
     if (user) {
+      console.log('🔄 User detected in AdminLogin, redirecting to dashboard');
       navigate('/admin/dashboard');
     }
   }, [user, navigate]);
