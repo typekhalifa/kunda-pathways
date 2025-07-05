@@ -27,7 +27,7 @@ const StudyPrograms = () => {
     {
       id: 2,
       title: translations.universityAdmissions,
-      price: "$50", 
+      price: "$70", 
       duration: "2-3 weeks",
       icon: <GraduationCap className="w-8 h-8 text-green-600" />,
       description: translations.universityAdmissionSupportDesc,
@@ -140,7 +140,7 @@ const StudyPrograms = () => {
             </p>
             <div className="flex items-center justify-center mb-6">
               <span className="text-4xl font-bold mr-4">$250</span>
-              <span className="text-2xl line-through opacity-70">$330</span>
+              <span className="text-2xl line-through opacity-70">$350</span>
             </div>
             <Link to="/book-consultation?package=complete">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
@@ -188,7 +188,7 @@ const StudyPrograms = () => {
                   13+ Countries
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300">
-                  Students from over 15 African countries have benefited from our services
+                  Students from over 13 African countries have benefited from our services
                 </p>
               </CardContent>
             </Card>
