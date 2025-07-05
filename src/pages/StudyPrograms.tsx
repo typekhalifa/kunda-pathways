@@ -60,7 +60,7 @@ const StudyPrograms = () => {
       features: [
         translations.topikPreparation,
         translations.conversationPractice,
-        translations.culturalOrientationAndAccommodation
+        translations.culturalOrientation
       ]
     }
   ];
