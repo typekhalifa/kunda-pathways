@@ -69,7 +69,7 @@ const Hero = () => {
             </div>
             <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
               <div className="text-3xl font-bold text-purple-600 mb-2">MSc</div>
-              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.foodScienceExpert || "Food Science Expert"}</div>
+              <div className="text-slate-700 dark:text-slate-300 font-medium">{translations.foodScienceExpert || "Food Science & Tech Expert"}</div>
             </div>
           </div>
         </div>
