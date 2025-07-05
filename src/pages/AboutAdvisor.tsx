@@ -13,16 +13,16 @@ const AboutAdvisor = () => {
 
   // Editable advisor information - change these values as needed
   const advisorInfo = {
-    name: translations.advisorName || "Kunda John Kim",
+    name: translations.advisorName || "Kunda John",
     title: translations.advisorTitle || "Global Education & F&B Consultant",
     photoUrl: "/lovable-uploads/khali.jpg",
     email: "info@kundapath.com",
     phone: "+82-10-1234-5678",
     location: translations.location || "Seoul, South Korea",
     experience: "5+",
-    studentsHelped: "500+",
-    successRate: "85%",
-    countriesReached: "15+",
+    studentsHelped: "53+",
+    successRate: "87%",
+    countriesReached: "13+",
     description: translations.advisorDescription || "With over 5 years of experience in international education consulting and F&B business development, I specialize in helping students achieve their academic dreams in Korea while also supporting entrepreneurs in navigating the Asian F&B market. My dual expertise in education and Food Science and Technology (MSc) allows me to provide comprehensive guidance for both academic and business ventures."
   };
 
