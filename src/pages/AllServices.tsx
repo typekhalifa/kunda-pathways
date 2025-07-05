@@ -13,13 +13,13 @@ const AllServices = () => {
   const studyServices = [
     { 
       name: translations.scholarshipGuidanceService || "Scholarship Guidance", 
-      price: "$150", 
+      price: "$100", 
       duration: translations.oneToTwoWeeks || "1-2 weeks", 
       description: translations.scholarshipGuidanceDesc || "Complete guidance for finding and applying to scholarships" 
     },
     { 
       name: translations.universityAdmissionsService || "University Admissions", 
-      price: "$200", 
+      price: "$70", 
       duration: translations.twoToThreeWeeks || "2-3 weeks", 
       description: translations.universityAdmissionsDesc || "End-to-end university application support" 
     },
@@ -37,7 +37,7 @@ const AllServices = () => {
     },
     { 
       name: translations.visitsHelpRelocationsService || "Visits Help & Relocations", 
-      price: "$120", 
+      price: "$100", 
       duration: translations.oneToTwoWeeks || "1-2 weeks", 
       description: translations.visitsHelpRelocationsDesc || "Support for academic visits and relocations" 
     },
@@ -85,25 +85,25 @@ const AllServices = () => {
   const additionalServices = [
     { 
       name: translations.hotelBookingAssistanceService || "Hotel Booking Assistance", 
-      price: "$50", 
+      price: "$60", 
       duration: translations.oneToThreeDays || "1-3 days", 
       description: translations.hotelBookingAssistanceDesc || "Help with accommodation bookings" 
     },
     { 
       name: translations.phoneConsultationService || "Phone Consultation", 
-      price: `$75${translations.perHour || "/hour"}`, 
+      price: `$20${translations.perHour || "/hour"}`, 
       duration: translations.oneHour || "1 hour", 
       description: translations.phoneConsultationDesc || "Direct consultation via phone call" 
     },
     { 
       name: translations.airportPickupService || "Airport Pickup Service", 
-      price: "$80", 
+      price: "$50", 
       duration: translations.oneDay || "1 day", 
       description: translations.airportPickupDesc || "Arrange airport pickup in Korea" 
     },
     { 
       name: translations.culturalOrientationService || "Cultural Orientation", 
-      price: "$150", 
+      price: "$120", 
       duration: translations.oneWeek || "1 week", 
       description: translations.culturalOrientationDesc || "Prepare for cultural adaptation" 
     },
@@ -112,9 +112,9 @@ const AllServices = () => {
   const packages = [
     {
       name: translations.studyAbroadCompletePackage || "Study Abroad Complete Package",
-      originalPrice: 650,
-      discountedPrice: 520,
-      discount: translations.twentyPercentOff || "20% OFF",
+      originalPrice: 500,
+      discountedPrice: 320,
+      discount: translations.twentyPercentOff || "38% OFF",
       services: [
         translations.scholarshipGuidance || "Scholarship Guidance", 
         translations.universityAdmissions || "University Admissions", 
