@@ -45,7 +45,7 @@ const StudyPrograms = () => {
       icon: <Globe className="w-8 h-8 text-purple-600" />,
       description: translations.visaApplicationAssistanceDesc,
       features: [
-        translations.visaDocumentPrep,
+        translations.documentPreparation,
         translations.applicationFiling,
         translations.interviewCoaching
       ]
