@@ -55,12 +55,12 @@ const About = () => {
                   className="w-16 h-16 rounded-full object-cover border-4 border-blue-200 dark:border-blue-700"
                 />
                 <div>
-                  <h5 className="font-semibold text-slate-800 dark:text-white">{translations.advisorName || "Kunda John Kim"}</h5>
+                  <h5 className="font-semibold text-slate-800 dark:text-white">{translations.advisorName || "Kunda John"}</h5>
                   <p className="text-slate-600 dark:text-slate-300 text-sm">{translations.advisorTitle || "International Education & F&B Expert"}</p>
                 </div>
               </div>
               <p className="text-slate-600 dark:text-slate-300 mb-4">
-                {translations.advisorDescription || "With over 8 years of experience in international education consulting and MSc in Food Science, our team has helped over 500 students achieve their academic dreams and numerous businesses expand globally."}
+                {translations.advisorDescription || "With over 5 years of experience in international education consulting and MSc in Food Science, our team has helped over 500 students achieve their academic dreams and numerous businesses expand globally."}
               </p>
               <Link to="/about-advisor">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
@@ -76,7 +76,7 @@ const About = () => {
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Award className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-blue-600 mb-2">500+</h3>
+                <h3 className="text-2xl font-bold text-blue-600 mb-2">53+</h3>
                 <p className="text-slate-600 dark:text-slate-300">{translations.successfulStudents || "Successful Students"}</p>
               </CardContent>
             </Card>
@@ -86,7 +86,7 @@ const About = () => {
                 <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-green-600 mb-2">50+</h3>
+                <h3 className="text-2xl font-bold text-green-600 mb-2">42+</h3>
                 <p className="text-slate-600 dark:text-slate-300">{translations.businessesHelped || "Businesses Helped"}</p>
               </CardContent>
             </Card>
@@ -96,7 +96,7 @@ const About = () => {
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Target className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-purple-600 mb-2">85%</h3>
+                <h3 className="text-2xl font-bold text-purple-600 mb-2">87%</h3>
                 <p className="text-slate-600 dark:text-slate-300">{translations.scholarshipSuccessRate || "Scholarship Success Rate"}</p>
               </CardContent>
             </Card>
@@ -106,7 +106,7 @@ const About = () => {
                 <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Heart className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-orange-600 mb-2">8+</h3>
+                <h3 className="text-2xl font-bold text-orange-600 mb-2">5+</h3>
                 <p className="text-slate-600 dark:text-slate-300">{translations.yearsExperience || "Years Experience"}</p>
               </CardContent>
             </Card>
