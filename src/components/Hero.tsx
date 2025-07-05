@@ -9,8 +9,8 @@ const Hero = () => {
   const { translations } = useLanguage();
   
   // Counting animations for statistics
-  const studentsCount = useCountingAnimation(500, 2000, 500);
-  const countriesCount = useCountingAnimation(15, 2000, 700);
+  const studentsCount = useCountingAnimation(53, 2000, 500);
+  const countriesCount = useCountingAnimation(13, 2000, 700);
 
   // Safe handling of heroTitle to prevent undefined error
   const heroTitle = translations.heroTitle || "Your Gateway to Global Education and Business Success";
