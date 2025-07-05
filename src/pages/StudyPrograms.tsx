@@ -14,7 +14,7 @@ const StudyPrograms = () => {
     {
       id: 1,
       title: translations.scholarshipGuidance,
-      price: "$150",
+      price: "$100",
       duration: "1-2 weeks",
       icon: <Award className="w-8 h-8 text-blue-600" />,
       description: translations.scholarshipGuidanceDesc,
@@ -27,7 +27,7 @@ const StudyPrograms = () => {
     {
       id: 2,
       title: translations.universityAdmissions,
-      price: "$200", 
+      price: "$50", 
       duration: "2-3 weeks",
       icon: <GraduationCap className="w-8 h-8 text-green-600" />,
       description: translations.universityAdmissionSupportDesc,
@@ -139,8 +139,8 @@ const StudyPrograms = () => {
               Get all services at a 20% discount - Perfect for your Korean education journey
             </p>
             <div className="flex items-center justify-center mb-6">
-              <span className="text-4xl font-bold mr-4">$520</span>
-              <span className="text-2xl line-through opacity-70">$650</span>
+              <span className="text-4xl font-bold mr-4">$250</span>
+              <span className="text-2xl line-through opacity-70">$330</span>
             </div>
             <Link to="/book-consultation?package=complete">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
@@ -157,7 +157,7 @@ const StudyPrograms = () => {
                   <TrendingUp className="w-8 h-8 text-blue-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-3">
-                  85% Success Rate
+                  87% Success Rate
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300">
                   High success rate in scholarship applications and university admissions
@@ -171,7 +171,7 @@ const StudyPrograms = () => {
                   <Users className="w-8 h-8 text-green-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-3">
-                  500+ Students Helped
+                  53+ Students Helped
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300">
                   Successfully guided students from across Africa to Korean universities
@@ -185,7 +185,7 @@ const StudyPrograms = () => {
                   <Globe className="w-8 h-8 text-purple-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-3">
-                  15+ Countries
+                  13+ Countries
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300">
                   Students from over 15 African countries have benefited from our services
