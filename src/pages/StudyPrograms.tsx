@@ -26,7 +26,7 @@ const StudyPrograms = () => {
     },
     {
       id: 2,
-      title: translations.universityAdmissionSupport,
+      title: translations.universityAdmissions,
       price: "$200", 
       duration: "2-3 weeks",
       icon: <GraduationCap className="w-8 h-8 text-green-600" />,
@@ -52,7 +52,7 @@ const StudyPrograms = () => {
     },
     {
       id: 4,
-      title: translations.languagePreparation,
+      title: translations.koreanLanguagePreparation,
       price: "$80/month",
       duration: "Ongoing",
       icon: <Users className="w-8 h-8 text-orange-600" />,
