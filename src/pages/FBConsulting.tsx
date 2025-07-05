@@ -43,7 +43,7 @@ const FBConsulting = () => {
     },
     {
       id: 3,
-      title: "Product Development",
+      title: "Food Product Development",
       price: "$3,200",
       duration: "4-6 weeks",
       icon: <TrendingUp className="w-8 h-8 text-purple-600" />,
@@ -52,6 +52,7 @@ const FBConsulting = () => {
         "Consumer preference research",
         "Recipe adaptation",
         "Nutritional optimization",
+        "Food quality control",
         "Packaging design guidance",
         "Test market strategy"
       ]
@@ -195,10 +196,10 @@ const FBConsulting = () => {
                   <TrendingUp className="w-8 h-8 text-blue-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-3">
-                  MSc Food Science Expert
+                  Food Science & Tech Expert
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300">
-                  Advanced degree in Food Science with specialization in Asian markets
+                  Master of Science in Food Science and Technology with specialisation in Asian markets
                 </p>
               </CardContent>
             </Card>
@@ -209,7 +210,7 @@ const FBConsulting = () => {
                   <Globe className="w-8 h-8 text-green-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-3">
-                  8+ Years Experience
+                  5+ Years Experience
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300">
                   Extensive experience helping businesses succeed in Asian F&B markets
@@ -223,7 +224,7 @@ const FBConsulting = () => {
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-3">
-                  50+ Successful Projects
+                  17+ Successful Projects
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300">
                   Proven track record of successful F&B market entries and expansions
