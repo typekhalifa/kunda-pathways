@@ -28,7 +28,7 @@ import MessagesManager from '@/components/admin/MessagesManager';
 import ConsultationsManager from '@/components/admin/ConsultationsManager';
 import ServicesManager from '@/components/admin/ServicesManager';
 import BookStudyAbroadConsultation from '@/pages/BookStudyAbroadConsultation';
-import CompletePackage from "@/pages/book/CompletePackage";
+import CompletePackage from '@/pages/book/CompletePackage';
 
 // Admin page wrappers
 const AdminContent = () => (
