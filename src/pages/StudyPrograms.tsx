@@ -122,7 +122,7 @@ const StudyPrograms = () => {
                     </ul>
                   </div>
                   
-                  <Link to={`/book-consultation?service=${program.id}`}>
+                  <Link to="/book/study-abroad">
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
                       {translations.bookConsultation}
                     </Button>
