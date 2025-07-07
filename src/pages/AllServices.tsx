@@ -239,7 +239,7 @@ const AllServices = () => {
                     </div>
                     <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
-                    <Link to="/book-consultation">
+                    <Link to="/book/study-abroad">
                       <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
                         {translations.bookNow || "Book Now"}
                       </Button>
