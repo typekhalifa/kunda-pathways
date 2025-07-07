@@ -142,7 +142,7 @@ const StudyPrograms = () => {
               <span className="text-4xl font-bold mr-4">$250</span>
               <span className="text-2xl line-through opacity-70">$350</span>
             </div>
-            <Link to="/book-consultation?package=complete">
+            <Link to="/book/complete-package">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
                 Get Complete Package
               </Button>
