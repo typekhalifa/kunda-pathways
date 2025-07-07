@@ -28,6 +28,7 @@ import MessagesManager from '@/components/admin/MessagesManager';
 import ConsultationsManager from '@/components/admin/ConsultationsManager';
 import ServicesManager from '@/components/admin/ServicesManager';
 import BookStudyAbroadConsultation from '@/pages/BookStudyAbroadConsultation';
+import CompletePackage from "@/pages/book/CompletePackage";
 
 // Admin page wrappers
 const AdminContent = () => (
@@ -90,6 +91,7 @@ const App = () => (
               <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/about-advisor" element={<AboutAdvisor />} />
               <Route path="/book/study-abroad" element={<BookStudyAbroadConsultation />} />
+              <Route path="/book/complete-package" element={<CompletePackage />} />
               <Route 
                 path="/admin/dashboard" 
                 element={
