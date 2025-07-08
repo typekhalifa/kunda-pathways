@@ -139,19 +139,6 @@ const AllServices = () => {
       ],
       popular: false
     },
-    {
-      name: translations.studentFbCombo || "Student + F&B Combo",
-      originalPrice: 800,
-      discountedPrice: 600,
-      discount: translations.twentyFivePercentOff || "25% OFF",
-      services: [
-        translations.studyAbroadCompletePackage || "Study Abroad Package", 
-        translations.basicFbConsultation || "Basic F&B Consultation", 
-        translations.culturalOrientation || "Cultural Orientation", 
-        translations.businessNetworking || "Business Networking"
-      ],
-      popular: false
-    }
   ];
 
   return (
@@ -212,11 +199,16 @@ const AllServices = () => {
                         </li>
                       ))}
                     </ul>
-                    <Link to="/book/complete-package">
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                        {translations.bookPackage || "Book Package"}
-                      </Button>
-                    </Link>
+                      <Link to={
+                        pkg.name.toLowerCase().includes("study") ? "/book/complete-package" :
+                        pkg.name.toLowerCase().includes("f&b") ? "/book/fb-package" :
+                        "/book-consultation"
+                      }>
+                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+                          {translations.bookPackage || "Book Package"}
+                        </Button>
+                      </Link>
+                    
                   </CardContent>
                 </Card>
               ))}
