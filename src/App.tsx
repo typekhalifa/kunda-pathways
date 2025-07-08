@@ -30,6 +30,7 @@ import ServicesManager from '@/components/admin/ServicesManager';
 import BookStudyAbroadConsultation from '@/pages/BookStudyAbroadConsultation';
 import CompletePackage from '@/pages/CompletePackage';
 import FBCompletePackage from '@/pages/FBCompletePackage';
+import BookExtraServices from "./pages/BookExtraServices";
 
 // Admin page wrappers
 const AdminContent = () => (
@@ -94,6 +95,7 @@ const App = () => (
               <Route path="/book/study-abroad" element={<BookStudyAbroadConsultation />} />
               <Route path="/book/complete-package" element={<CompletePackage />} />
               <Route path="/book/fb-package" element={<FBCompletePackage />} />
+              <Route path="/book/extra-services" element={<BookExtraServices />} />
               <Route 
                 path="/admin/dashboard" 
                 element={
