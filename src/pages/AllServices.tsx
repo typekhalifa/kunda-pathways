@@ -212,7 +212,7 @@ const AllServices = () => {
                         </li>
                       ))}
                     </ul>
-                    <Link to="/book-consultation">
+                    <Link to="/book/complete-package">
                       <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
                         {translations.bookPackage || "Book Package"}
                       </Button>
