@@ -181,7 +181,7 @@ const FBConsulting = () => {
               <span className="text-4xl font-bold mr-4">$12,000</span>
               <span className="text-2xl line-through opacity-70">$16,000</span>
             </div>
-            <Link to="/book-fb-consultation?package=complete">
+            <Link to="/book/fb-package">
               <Button className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
                 Get Complete Package
               </Button>
