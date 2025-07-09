@@ -31,6 +31,7 @@ import BookStudyAbroadConsultation from '@/pages/BookStudyAbroadConsultation';
 import CompletePackage from '@/pages/CompletePackage';
 import FBCompletePackage from '@/pages/FBCompletePackage';
 import BookExtraServices from "./pages/BookExtraServices";
+import CustomQuote from "@/pages/CustomQuote";
 
 // Admin page wrappers
 const AdminContent = () => (
@@ -96,6 +97,7 @@ const App = () => (
               <Route path="/book/complete-package" element={<CompletePackage />} />
               <Route path="/book/fb-package" element={<FBCompletePackage />} />
               <Route path="/book/extra-services" element={<BookExtraServices />} />
+              <Route path="/custom-quote" element={<CustomQuote />} />
               <Route 
                 path="/admin/dashboard" 
                 element={
