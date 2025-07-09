@@ -50,16 +50,14 @@ const BookExtraServices = () => {
   };
 
   const getSelectedServiceDetails = () => {
-    return formData.selectedServices.map(id => 
+    return formData.selectedServices.map(id =>
       extraServices.find(s => s.id === id)
     ).filter(Boolean);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (currentStep === 1) {
-      setCurrentStep(2);
-    }
+    if (currentStep === 1) setCurrentStep(2);
   };
 
   const handlePayment = (method: string) => {
@@ -161,27 +159,58 @@ const BookExtraServices = () => {
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-6 bg-white/80 dark:bg-slate-800/80 p-8 rounded-2xl shadow-lg border-0">
+            {/* Full Name, Email, Phone */}
             <div className="grid md:grid-cols-2 gap-6">
-              <Input label="Full Name" value={formData.fullName} onChange={(e) => handleInputChange('fullName', e.target.value)} required />
-              <Input type="email" label="Email" value={formData.email} onChange={(e) => handleInputChange('email', e.target.value)} required />
-              <Input type="tel" label="Phone" value={formData.phone} onChange={(e) => handleInputChange('phone', e.target.value)} />
+              <div>
+                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Full Name</label>
+                <Input
+                  placeholder="Your full name"
+                  value={formData.fullName}
+                  onChange={(e) => handleInputChange('fullName', e.target.value)}
+                  required
+                  className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Email</label>
+                <Input
+                  type="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  required
+                  className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+                />
+              </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Select Services</label>
+              <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Phone Number</label>
+              <Input
+                type="tel"
+                placeholder="+1 (555) 123-4567"
+                value={formData.phone}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
+                className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+              />
+            </div>
+
+            {/* Services Selection */}
+            <div>
+              <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Select Services</label>
               <div className="grid gap-3">
                 {extraServices.map(service => (
                   <div
                     key={service.id}
                     onClick={() => handleServiceToggle(service.id)}
-                    className={`p-4 border rounded-xl cursor-pointer transition-all ${
+                    className={`p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${
                       formData.selectedServices.includes(service.id)
                         ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30'
                         : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:border-purple-400'
                     }`}
                   >
                     <div className="flex justify-between items-center">
-                      <span>{service.name}</span>
+                      <span className="text-slate-800 dark:text-white">{service.name}</span>
                       <span className="text-purple-600 font-bold">${service.price}</span>
                     </div>
                   </div>
@@ -189,18 +218,39 @@ const BookExtraServices = () => {
               </div>
             </div>
 
+            {/* Date & Time */}
             <div className="grid md:grid-cols-2 gap-6">
-              <Input type="date" label="Preferred Date" value={formData.preferredDate} onChange={(e) => handleInputChange('preferredDate', e.target.value)} />
-              <Input type="time" label="Preferred Time" value={formData.preferredTime} onChange={(e) => handleInputChange('preferredTime', e.target.value)} />
+              <div>
+                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Preferred Date</label>
+                <Input
+                  type="date"
+                  value={formData.preferredDate}
+                  onChange={(e) => handleInputChange('preferredDate', e.target.value)}
+                  className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white rounded-xl"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Preferred Time</label>
+                <Input
+                  type="time"
+                  value={formData.preferredTime}
+                  onChange={(e) => handleInputChange('preferredTime', e.target.value)}
+                  className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white rounded-xl"
+                />
+              </div>
             </div>
 
-            <Textarea 
-              label="Message" 
-              value={formData.message} 
-              onChange={(e) => handleInputChange('message', e.target.value)} 
-              placeholder="Add notes or special requests..." 
-              rows={4} 
-            />
+            {/* Message */}
+            <div>
+              <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Add notes or special requests</label>
+              <Textarea
+                value={formData.message}
+                onChange={(e) => handleInputChange('message', e.target.value)}
+                placeholder="e.g. Arriving at night. Please ensure airport pickup."
+                rows={4}
+                className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+              />
+            </div>
 
             {formData.selectedServices.length > 0 && (
               <div className="p-4 bg-purple-50 dark:bg-purple-900/30 rounded-xl font-bold text-slate-800 dark:text-white">
@@ -208,10 +258,10 @@ const BookExtraServices = () => {
               </div>
             )}
 
-            <Button 
+            <Button
               type="submit"
               disabled={formData.selectedServices.length === 0}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Review Request
             </Button>
