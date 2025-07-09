@@ -23,14 +23,33 @@ const BookConsultation = () => {
     preferredTime: ''
   });
 
-  const services = [
-    { id: 'study-abroad', name: translations.studyAbroadRelocation || 'Study Abroad & Relocation', price: 150 },
-    { id: 'fb-consulting', name: translations.fbConsultingService || 'F&B Consulting', price: 200 },
-    { id: 'visa-application', name: translations.visaApplication || 'Visa Application Help', price: 100 },
-    { id: 'hotel-booking', name: translations.hotelBooking || 'Hotel Booking Assistance', price: 50 },
-    { id: 'phone-consultation', name: translations.phoneConsultation || 'Phone Consultation', price: 75 },
-    { id: 'both-services', name: translations.bothServices || 'Study Abroad + F&B Consulting', price: 300 }
-  ];
+const services = [
+  // 🎓 Study Abroad Services
+  { id: 'scholarship-guidance', name: 'Scholarship Guidance', price: 100 },
+  { id: 'university-admissions', name: 'University Admissions', price: 70 },
+  { id: 'visa-application', name: 'Visa Application Help', price: 100 },
+  { id: 'korean-language', name: 'Korean Language Training', price: 80 },
+  { id: 'academic-visits', name: 'Visits Help & Relocations', price: 100 },
+
+  // 🍜 F&B Consulting
+  { id: 'market-entry', name: 'Market Entry Strategy', price: 2500 },
+  { id: 'regulatory', name: 'Regulatory Compliance', price: 1800 },
+  { id: 'product-dev', name: 'Product Development', price: 3200 },
+  { id: 'supply-chain', name: 'Supply Chain Optimization', price: 2200 },
+  { id: 'brand-local', name: 'Brand Localization', price: 1500 },
+  { id: 'partnership', name: 'Partnership & Distribution', price: 2800 },
+
+  // 🧳 Additional Services
+  { id: 'hotel-booking', name: 'Hotel Booking Assistance', price: 60 },
+  { id: 'phone-consultation', name: 'Phone Consultation', price: 20 },
+  { id: 'airport-pickup', name: 'Airport Pickup Service', price: 50 },
+  { id: 'cultural-orientation', name: 'Cultural Orientation', price: 120 },
+
+  // 🎯 Special Package Deals
+  { id: 'study-package', name: 'Study Abroad Complete Package', price: 320 },
+  { id: 'fb-package', name: 'F&B Market Entry Package', price: 12000 }
+];
+
 
   const selectedService = services.find(s => s.id === formData.service);
 
