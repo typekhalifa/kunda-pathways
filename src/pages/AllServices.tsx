@@ -304,7 +304,7 @@ const AllServices = () => {
             <p className="text-lg mb-6 opacity-90">
               {translations.contactForCustom || "Contact us for personalized packages and enterprise solutions"}
             </p>
-            <Link to="/book-consultation">
+            <Link to="/custom-quote">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
                 {translations.getCustomQuote || "Get Custom Quote"}
               </Button>
