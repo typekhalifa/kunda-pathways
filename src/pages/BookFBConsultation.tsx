@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, CreditCard, Smartphone, Building, Utensils } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/lib/supabase";
 
 const BookFBConsultation = () => {
   const { translations } = useLanguage();
@@ -60,12 +61,42 @@ const BookFBConsultation = () => {
     ).filter(Boolean);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (currentStep === 1) {
-      setCurrentStep(2);
+
+    try {
+      const { data, error } = await supabase.from("fb_consultation_bookings").insert([
+        {
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          services: formData.selectedServices, // or JSON.stringify(...) if text column
+          preferred_date: formData.preferredDate || null,
+          preferred_time: formData.preferredTime || null,
+          message: formData.message,
+          status: "pending",
+          payment_status: "unpaid",
+          total_price: getTotalPrice(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }
+      ]);
+
+      if (error) {
+        console.error("❌ Supabase insert error:", error);
+        alert(`❌ Error: ${error.message}`);
+      } else {
+        alert("✅ Your request was submitted successfully!");
+        setCurrentStep(2);
+      }
+    } catch (err: any) {
+      console.error("❌ Unexpected error:", err);
+      alert(`Unexpected error: ${err.message}`);
     }
   };
+
+
 
   const handlePayment = (method: string) => {
     console.log(`Processing payment via ${method}`);
@@ -176,6 +207,48 @@ const BookFBConsultation = () => {
                   <Building className="mr-3" size={20} />
                   Pay with Bank Transfer
                 </Button>
+
+                <div className="space-y-4 mt-4">
+                  <p className="text-slate-600 dark:text-slate-300 text-sm">
+                    💡 <strong>Payment Instructions:</strong> Please make a payment of 
+                    <span className="font-bold text-green-600"> ${totalPrice.toLocaleString()} </span> using one of the methods below:
+                  </p>
+                  <ul className="list-disc pl-6 text-sm text-slate-800 dark:text-white space-y-1">
+                    <li>📱 <strong>MTN Mobile Money:</strong> +250 788 214 751</li>
+                    <li>🏦 <strong>Bank Transfer:</strong> We'll share details upon request</li>
+                    <li>🌏 <strong>International:</strong> SWIFT transfers available — contact us via WhatsApp</li>
+                  </ul>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    After paying, please message us on WhatsApp with your full name and service selected.
+                  </p>
+                </div>
+
+                <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border-0">
+                  <CardHeader>
+                    <CardTitle className="text-2xl text-slate-800 dark:text-white">Confirm Your Payment</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Button
+                      onClick={() => alert("✅ Payment marked as completed. We'll reach out to you shortly.")}
+                      className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl"
+                    >
+                      ✅ I’ve Paid Successfully
+                    </Button>
+
+                    <a
+                      href={`https://wa.me/250788214751?text=Hello! I’ve paid for the F&B services: ${getSelectedServicesDetails()
+                        .map((s) => s?.name)
+                        .join(", ")}. My name is ${encodeURIComponent(formData.fullName)}.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button className="w-full bg-blue-600 text-white mt-3">
+                        💬 Message Us on WhatsApp
+                      </Button>
+                    </a>
+                  </CardContent>
+                </Card>
+
                 <Button 
                   onClick={() => setCurrentStep(1)}
                   variant="outline"

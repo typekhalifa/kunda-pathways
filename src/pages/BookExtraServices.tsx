@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, CreditCard, Smartphone, Building, Plane } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/lib/supabase";
 
 const BookExtraServices = () => {
   const { translations } = useLanguage();
@@ -55,14 +56,64 @@ const BookExtraServices = () => {
     ).filter(Boolean);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (currentStep === 1) setCurrentStep(2);
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-  const handlePayment = (method: string) => {
-    alert(`Payment via ${method} processed! Your service request has been received.`);
-  };
+  try {
+    const { data, error } = await supabase.from("extra_service_bookings").insert([
+      {
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        services: formData.selectedServices,
+        preferred_date: formData.preferredDate,
+        preferred_time: formData.preferredTime,
+        message: formData.message
+      }
+    ]);
+
+    if (error) {
+      console.error("Supabase error:", error.message);
+      alert("There was an error submitting your request.");
+    } else {
+      alert("✅Booking submitted successfully!");
+      setCurrentStep(2);
+    }
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    alert("An unexpected error occurred.");
+  }
+};
+
+
+  const handlePayment = async (method: string) => {
+  try {
+    const { error } = await supabase.from("extra_service_bookings").insert({
+      full_name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      selected_services: formData.selectedServices,
+      message: formData.message,
+      preferred_date: formData.preferredDate,
+      preferred_time: formData.preferredTime,
+      payment_method: method,
+      created_at: new Date().toISOString(),
+    });
+
+    if (error) {
+      console.error("❌ Error saving to Supabase:", error);
+      alert("Something went wrong while saving your request.");
+    } else {
+      alert(`✅ Payment via ${method} successful! Booking saved.`);
+      // You can reset form here if you want:
+      // setFormData({ ...initialState });
+    }
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    alert("Unexpected error occurred!");
+  }
+};
+
 
   const selected = getSelectedServiceDetails();
   const total = getTotalPrice();
@@ -116,25 +167,54 @@ const BookExtraServices = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/80 dark:bg-slate-800/80 p-8 border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl text-slate-800 dark:text-white">Payment Method</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button onClick={() => handlePayment("Credit Card")} className="w-full bg-blue-600 text-white">
-                  <CreditCard className="mr-2" /> Pay with Card
-                </Button>
-                <Button onClick={() => handlePayment("Mobile Money")} className="w-full bg-green-600 text-white">
-                  <Smartphone className="mr-2" /> Pay with Mobile Money
-                </Button>
-                <Button onClick={() => handlePayment("Bank Transfer")} className="w-full bg-purple-600 text-white">
-                  <Building className="mr-2" /> Pay with Bank Transfer
-                </Button>
-                <Button onClick={() => setCurrentStep(1)} variant="outline" className="w-full">
-                  Back to Edit
-                </Button>
-              </CardContent>
-            </Card>
+            <Card className="bg-white dark:bg-slate-800 p-8 shadow-lg border-0 mb-8">
+  <CardHeader>
+    <CardTitle className="text-2xl text-slate-800 dark:text-white">Payment Instructions</CardTitle>
+  </CardHeader>
+  <CardContent className="space-y-4">
+    <p className="text-slate-600 dark:text-slate-300 text-sm">
+      Please pay <span className="text-purple-600 font-bold">${total.toLocaleString()}</span> via:
+    </p>
+    <ul className="list-disc pl-6 text-sm text-slate-800 dark:text-white">
+      <li>📱 <strong>MTN Mobile Money:</strong> +250 788 214 751</li>
+      <li>🏦 <strong>Bank Transfer:</strong> We'll share details upon request.</li>
+    </ul>
+    <p className="text-xs text-slate-500 dark:text-slate-400">
+      After paying, you can contact us on WhatsApp with your name and selected service(s).
+    </p>
+  </CardContent>
+</Card>
+
+<Card className="bg-white dark:bg-slate-800 p-8 shadow-lg border-0">
+  <CardHeader>
+    <CardTitle className="text-2xl text-slate-800 dark:text-white">Mark Payment Done</CardTitle>
+  </CardHeader>
+  <CardContent className="space-y-3">
+    <Button onClick={() => handlePayment("Mobile Money")} className="w-full bg-green-600 text-white">
+      I’ve Paid via Mobile Money
+    </Button>
+
+    <a
+      href={`https://wa.me/250788214751?text=${encodeURIComponent(
+        `Hello! I’ve just paid for extra services: ${selected
+          .map((s) => s?.name)
+          .join(", ")}. My name is ${formData.fullName}.`
+      )}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Button className="w-full bg-blue-600 text-white mt-3">
+        📩 Message Us on WhatsApp
+      </Button>
+    </a>
+
+    <Button onClick={() => setCurrentStep(1)} variant="outline" className="w-full mt-4">
+      Back to Edit
+    </Button>
+  </CardContent>
+</Card>
+
+
           </div>
         </div>
         <Footer />
