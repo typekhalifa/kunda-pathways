@@ -24,40 +24,51 @@ const ConsultationsManager = () => {
         const [studyRes, fbRes, extraRes] = await Promise.all([
           supabase.from('study_abroad_bookings').select('*'),
           supabase.from('fb_consultation_bookings').select('*'),
-          supabase.from('extra_service_bookings').select('*')
+          supabase.from('extra_service_bookings').select('*'),
         ]);
 
-        const study = (studyRes.data || []).map((b) => ({
+        if (studyRes.error) console.error('❌ Study Abroad Fetch Error:', studyRes.error);
+        if (fbRes.error) console.error('❌ FB Consulting Fetch Error:', fbRes.error);
+        if (extraRes.error) console.error('❌ Extra Services Fetch Error:', extraRes.error);
+
+        console.log('✅ Study Abroad Data:', studyRes.data);
+        console.log('✅ FB Data:', fbRes.data);
+        console.log('✅ Extra Data:', extraRes.data);
+
+        const studyBookings = (studyRes.data || []).map((b) => ({
           ...b,
           service_type: b.service,
           booking_type: 'Study Abroad',
         }));
 
-        const fb = (fbRes.data || []).map((b) => ({
+        const fbBookings = (fbRes.data || []).map((b) => ({
           ...b,
           service_type: b.services,
-          company_name: b.company,
+          company_name: b.company || '',
           booking_type: 'F&B Consulting',
         }));
 
-        const extra = (extraRes.data || []).map((b) => ({
+        const extraBookings = (extraRes.data || []).map((b) => ({
           ...b,
           service_type: b.services,
           booking_type: 'Extra Services',
         }));
 
-        const all = [...study, ...fb, ...extra].sort(
+        const all = [...studyBookings, ...fbBookings, ...extraBookings];
+
+        const sorted = all.sort(
           (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
 
-        setConsultations(all);
-      } catch (error) {
-        console.error('Error fetching bookings:', error);
+        setConsultations(sorted);
+      } catch (err) {
+        console.error('🚨 Unexpected Error:', err);
       }
     };
 
     fetchAllBookings();
   }, []);
+
 
   const getStatusColor = (status: string) => {
     switch (status) {
