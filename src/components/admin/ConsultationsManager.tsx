@@ -51,14 +51,18 @@ const ConsultationsManager = () => {
 
         const studyBookings = (studyRes.data || []).map((b) => ({
           ...b,
-          service_type: typeof b.service === 'string' ? b.service : JSON.stringify(b.service),
+          service_type: typeof b.service === 'string' ? b.service : 
+            (Array.isArray(b.service) ? b.service.join(', ') : 
+             (b.service && typeof b.service === 'object' ? Object.values(b.service).join(', ') : 'N/A')),
           booking_type: 'Study Abroad',
         }));
         console.log('📚 Processed Study Bookings:', studyBookings);
 
         const fbBookings = (fbRes.data || []).map((b) => ({
           ...b,
-          service_type: typeof b.services === 'string' ? b.services : JSON.stringify(b.services),
+          service_type: typeof b.services === 'string' ? b.services : 
+            (Array.isArray(b.services) ? b.services.join(', ') : 
+             (b.services && typeof b.services === 'object' ? Object.values(b.services).join(', ') : 'N/A')),
           company_name: b.company || '',
           booking_type: 'F&B Consulting',
         }));
@@ -66,7 +70,9 @@ const ConsultationsManager = () => {
 
         const extraBookings = (extraRes.data || []).map((b) => ({
           ...b,
-          service_type: typeof b.services === 'string' ? b.services : JSON.stringify(b.services),
+          service_type: typeof b.services === 'string' ? b.services : 
+            (Array.isArray(b.services) ? b.services.join(', ') : 
+             (b.services && typeof b.services === 'object' ? Object.values(b.services).join(', ') : 'N/A')),
           booking_type: 'Extra Services',
         }));
         console.log('🔧 Processed Extra Bookings:', extraBookings);
