@@ -570,10 +570,25 @@ The Kunda Pathways Team`
                     <SelectTrigger className="h-12 rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
                       <SelectValue placeholder="Choose a template" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl border-2 border-slate-200 bg-white shadow-xl z-50">
-                      <SelectItem value="welcome" className="rounded-lg hover:bg-blue-50 focus:bg-blue-50 cursor-pointer m-1">Welcome Email</SelectItem>
-                      <SelectItem value="update" className="rounded-lg hover:bg-blue-50 focus:bg-blue-50 cursor-pointer m-1">Monthly Update</SelectItem>
-                      <SelectItem value="announcement" className="rounded-lg hover:bg-blue-50 focus:bg-blue-50 cursor-pointer m-1">Announcement</SelectItem>
+                    <SelectContent className="rounded-2xl border-2 border-slate-200 bg-white/95 backdrop-blur-md shadow-2xl z-50 p-2">
+                      <SelectItem value="welcome" className="rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 focus:bg-gradient-to-r focus:from-blue-50 focus:to-purple-50 cursor-pointer m-1 p-3 font-medium transition-all duration-200">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                          Welcome Email
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="update" className="rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 focus:bg-gradient-to-r focus:from-blue-50 focus:to-purple-50 cursor-pointer m-1 p-3 font-medium transition-all duration-200">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                          Monthly Update
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="announcement" className="rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 focus:bg-gradient-to-r focus:from-blue-50 focus:to-purple-50 cursor-pointer m-1 p-3 font-medium transition-all duration-200">
+                        <div className="flex items-center">
+                          <div className="w-2 h-2 bg-emerald-500 rounded-full mr-3"></div>
+                          Announcement
+                        </div>
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

@@ -17,6 +17,8 @@ const Newsletter = () => {
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('📧 Newsletter subscription attempt started');
+    
     if (!email) {
       toast.error('Please enter your email address');
       return;
@@ -24,7 +26,9 @@ const Newsletter = () => {
 
     setLoading(true);
     try {
-      const { error } = await supabase
+      console.log('📧 Attempting to subscribe:', { email: email.toLowerCase().trim(), name: name.trim() || null });
+      
+      const { data, error } = await supabase
         .from('newsletter_subscribers')
         .insert([
           {
@@ -35,9 +39,13 @@ const Newsletter = () => {
               topics: ['study-abroad', 'fb-consulting', 'general-updates']
             }
           }
-        ]);
+        ])
+        .select();
+
+      console.log('📧 Supabase response:', { data, error });
 
       if (error) {
+        console.error('📧 Subscription error:', error);
         if (error.code === '23505') { // Unique constraint violation
           toast.error('This email is already subscribed to our newsletter!');
         } else {
@@ -46,12 +54,13 @@ const Newsletter = () => {
         return;
       }
 
+      console.log('📧 Subscription successful!', data);
       setSubscribed(true);
       toast.success('🎉 Successfully subscribed to our newsletter!');
       setEmail('');
       setName('');
     } catch (error) {
-      console.error('Newsletter subscription error:', error);
+      console.error('📧 Newsletter subscription error:', error);
       toast.error('Failed to subscribe. Please try again.');
     } finally {
       setLoading(false);
