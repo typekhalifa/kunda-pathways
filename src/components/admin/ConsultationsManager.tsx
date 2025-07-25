@@ -16,9 +16,16 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const ConsultationsManager = () => {
   const [consultations, setConsultations] = useState<any[]>([]);
+  const [filteredConsultations, setFilteredConsultations] = useState<any[]>([]);
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterType, setFilterType] = useState<string>('all');
+  const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
+  const [selectedConsultation, setSelectedConsultation] = useState<any>(null);
   const { updateConsultationStatus, deleteConsultation, loading: actionLoading } = useConsultationActions();
 
   useEffect(() => {
@@ -86,6 +93,7 @@ const ConsultationsManager = () => {
         console.log('📊 Final Sorted Consultations:', sorted);
 
         setConsultations(sorted);
+        setFilteredConsultations(sorted);
       } catch (err) {
         console.error('🚨 Unexpected Error:', err);
       }
@@ -93,6 +101,21 @@ const ConsultationsManager = () => {
 
     fetchAllBookings();
   }, []);
+
+  // Filter consultations when filters change
+  useEffect(() => {
+    let filtered = consultations;
+    
+    if (filterStatus !== 'all') {
+      filtered = filtered.filter(c => c.status === filterStatus);
+    }
+    
+    if (filterType !== 'all') {
+      filtered = filtered.filter(c => c.booking_type === filterType);
+    }
+    
+    setFilteredConsultations(filtered);
+  }, [consultations, filterStatus, filterType]);
 
   const handleStatusUpdate = async (consultation: any, status: 'confirmed' | 'cancelled') => {
     const success = await updateConsultationStatus(
@@ -143,8 +166,13 @@ const ConsultationsManager = () => {
 
   const pendingCount = consultations.filter(c => c.status === 'pending').length;
   const totalRevenue = consultations
-    .filter(c => c.payment_status === 'completed')
-    .reduce((sum, c) => sum + (c.total_price || 0), 0);
+    .filter(c => c.payment_status === 'completed' || c.payment_status === 'paid')
+    .reduce((sum, c) => sum + (parseFloat(c.total_price) || 0), 0);
+
+  const handleViewDetails = (consultation: any) => {
+    setSelectedConsultation(consultation);
+    setViewDetailsOpen(true);
+  };
 
   return (
     <div className="space-y-6">
@@ -207,10 +235,30 @@ const ConsultationsManager = () => {
               <Calendar className="w-5 h-5 mr-2" />
               Consultation Bookings
             </div>
-            <Button variant="outline" size="sm">
-              <Filter className="w-4 h-4 mr-2" />
-              Filter
-            </Button>
+            <div className="flex gap-2">
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="confirmed">Confirmed</SelectItem>
+                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={filterType} onValueChange={setFilterType}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value="Study Abroad">Study Abroad</SelectItem>
+                  <SelectItem value="F&B Consulting">F&B Consulting</SelectItem>
+                  <SelectItem value="Extra Services">Extra Services</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </CardTitle>
           <CardDescription>
             Manage consultation booking requests and appointments
@@ -218,7 +266,7 @@ const ConsultationsManager = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {consultations.map((consultation) => (
+            {filteredConsultations.map((consultation) => (
               <Card key={consultation.id}>
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
@@ -281,7 +329,11 @@ const ConsultationsManager = () => {
                     </div>
 
                     <div className="flex flex-col gap-2 ml-4">
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => handleViewDetails(consultation)}
+                      >
                         <Eye className="w-4 h-4 mr-2" />
                         View Details
                       </Button>
@@ -323,6 +375,14 @@ const ConsultationsManager = () => {
             ))}
           </div>
 
+          {filteredConsultations.length === 0 && consultations.length > 0 && (
+            <div className="text-center py-8">
+              <Filter className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
+              <p className="text-muted-foreground">No consultations match your filters</p>
+              <p className="text-sm text-muted-foreground">Try adjusting your filter criteria</p>
+            </div>
+          )}
+
           {consultations.length === 0 && (
             <div className="text-center py-8">
               <Calendar className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
@@ -332,6 +392,102 @@ const ConsultationsManager = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* View Details Dialog */}
+      <Dialog open={viewDetailsOpen} onOpenChange={setViewDetailsOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Consultation Details</DialogTitle>
+            <DialogDescription>
+              Complete information for this consultation booking
+            </DialogDescription>
+          </DialogHeader>
+          {selectedConsultation && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h4 className="font-semibold mb-2">Client Information</h4>
+                  <div className="space-y-2 text-sm">
+                    <p><strong>Name:</strong> {selectedConsultation.full_name}</p>
+                    <p><strong>Email:</strong> {selectedConsultation.email}</p>
+                    {selectedConsultation.phone && <p><strong>Phone:</strong> {selectedConsultation.phone}</p>}
+                    {selectedConsultation.company_name && <p><strong>Company:</strong> {selectedConsultation.company_name}</p>}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">Booking Details</h4>
+                  <div className="space-y-2 text-sm">
+                    <p><strong>Type:</strong> {selectedConsultation.booking_type}</p>
+                    <p><strong>Date:</strong> {selectedConsultation.preferred_date}</p>
+                    <p><strong>Time:</strong> {selectedConsultation.preferred_time}</p>
+                    <p><strong>Price:</strong> ${selectedConsultation.total_price}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold mb-2">Service Details</h4>
+                <p className="text-sm bg-muted p-3 rounded">
+                  {selectedConsultation.service_type}
+                </p>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <h4 className="font-semibold mb-2">Status</h4>
+                  <Badge className={getStatusColor(selectedConsultation.status)}>
+                    {selectedConsultation.status}
+                  </Badge>
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-semibold mb-2">Payment Status</h4>
+                  <Badge className={getPaymentStatusColor(selectedConsultation.payment_status)}>
+                    {selectedConsultation.payment_status}
+                  </Badge>
+                </div>
+              </div>
+
+              {selectedConsultation.message && (
+                <div>
+                  <h4 className="font-semibold mb-2">Message</h4>
+                  <p className="text-sm bg-muted p-3 rounded">
+                    {selectedConsultation.message}
+                  </p>
+                </div>
+              )}
+
+              <div className="flex gap-2 pt-4 border-t">
+                {selectedConsultation.status === 'pending' && (
+                  <>
+                    <Button 
+                      variant="default"
+                      onClick={() => {
+                        handleStatusUpdate(selectedConsultation, 'confirmed');
+                        setViewDetailsOpen(false);
+                      }}
+                      disabled={actionLoading}
+                    >
+                      <Check className="w-4 h-4 mr-2" />
+                      Confirm Booking
+                    </Button>
+                    <Button 
+                      variant="destructive"
+                      onClick={() => {
+                        handleStatusUpdate(selectedConsultation, 'cancelled');
+                        setViewDetailsOpen(false);
+                      }}
+                      disabled={actionLoading}
+                    >
+                      <X className="w-4 h-4 mr-2" />
+                      Cancel Booking
+                    </Button>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
