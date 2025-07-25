@@ -45,6 +45,19 @@ const AdminNewsletter = () => {
   useEffect(() => {
     fetchSubscribers();
     fetchCampaigns();
+
+    // Set up real-time subscription
+    const subscriberChannel = supabase
+      .channel('newsletter-subscriber-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'newsletter_subscribers' }, () => {
+        console.log('Newsletter subscriber changed, refetching...');
+        fetchSubscribers();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscriberChannel);
+    };
   }, []);
 
   useEffect(() => {
@@ -533,84 +546,92 @@ The Kunda Pathways Team`
 
         {/* Compose Email Dialog */}
         <Dialog open={composeOpen} onOpenChange={setComposeOpen}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Compose Newsletter Campaign</DialogTitle>
-              <DialogDescription>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 rounded-3xl border-2 border-slate-200 dark:border-slate-700 shadow-2xl">
+            <DialogHeader className="pb-6 border-b border-slate-200 dark:border-slate-600">
+              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-white" />
+                </div>
+                Compose Newsletter Campaign
+              </DialogTitle>
+              <DialogDescription className="text-base text-slate-600 dark:text-slate-300">
                 Create a new email campaign for your {activeSubscribers} active subscribers
               </DialogDescription>
             </DialogHeader>
             
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Email Template</label>
+            <div className="space-y-6 py-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email Template</label>
                   <Select value={selectedTemplate} onValueChange={(value) => {
                     setSelectedTemplate(value);
                     loadTemplate(value);
                   }}>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12 rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
                       <SelectValue placeholder="Choose a template" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="rounded-xl border-2">
                       <SelectItem value="welcome">Welcome Email</SelectItem>
                       <SelectItem value="update">Monthly Update</SelectItem>
                       <SelectItem value="announcement">Announcement</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Recipients</label>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Recipients</label>
                   <Input 
                     value={`${activeSubscribers} active subscribers`} 
                     disabled 
+                    className="h-12 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">Campaign Title</label>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Campaign Title</label>
                 <Input
                   placeholder="Internal campaign name"
                   value={campaignTitle}
                   onChange={(e) => setCampaignTitle(e.target.value)}
+                  className="h-12 rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-blue-500"
                 />
               </div>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">Email Subject</label>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email Subject</label>
                 <Input
                   placeholder="Subject line for your email"
                   value={campaignSubject}
                   onChange={(e) => setCampaignSubject(e.target.value)}
+                  className="h-12 rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-purple-500"
                 />
               </div>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">Email Content</label>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email Content</label>
                 <Textarea
                   placeholder="Write your email content here..."
                   value={campaignContent}
                   onChange={(e) => setCampaignContent(e.target.value)}
                   rows={12}
-                  className="resize-none"
+                  className="resize-none rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900"
                 />
               </div>
 
-              <div className="flex gap-3 pt-4 border-t">
+              <div className="flex gap-4 pt-6 border-t border-slate-200 dark:border-slate-600">
                 <Button 
                   onClick={handleSaveDraft}
                   disabled={loading}
                   variant="outline"
-                  className="flex-1"
+                  className="flex-1 h-12 rounded-xl border-2 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
                 >
                   {loading ? 'Saving...' : 'Save as Draft'}
                 </Button>
                 <Button 
                   disabled={loading}
-                  className="flex-1"
+                  className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 font-medium shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  <Send className="w-4 h-4 mr-2" />
+                  <Send className="w-5 h-5 mr-2" />
                   Send Now
                 </Button>
               </div>
