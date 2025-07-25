@@ -33,13 +33,16 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchConsultationCount = async () => {
-      const { count, error } = await supabase
-        .from("consultation_bookings")
-        .select("*", { count: "exact", head: true });
+      try {
+        const [studyRes, fbRes, extraRes] = await Promise.all([
+          supabase.from('study_abroad_bookings').select('*', { count: 'exact', head: true }),
+          supabase.from('fb_consultation_bookings').select('*', { count: 'exact', head: true }),
+          supabase.from('extra_service_bookings').select('*', { count: 'exact', head: true }),
+        ]);
 
-      if (!error && count !== null) {
-        setConsultationCount(count);
-      } else {
+        const totalCount = (studyRes.count || 0) + (fbRes.count || 0) + (extraRes.count || 0);
+        setConsultationCount(totalCount);
+      } catch (error) {
         console.error("❌ Error fetching consultations count:", error);
       }
     };
@@ -143,8 +146,8 @@ const AdminDashboard = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">0</div>
-              <p className="text-purple-100 text-sm">Pending bookings</p>
+              <div className="text-3xl font-bold">{consultationCount}</div>
+              <p className="text-purple-100 text-sm">Total bookings</p>
             </CardContent>
           </Card>
 

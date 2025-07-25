@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
+import { useConsultationActions } from '@/hooks/useConsultationActions';
 import {
   Calendar,
   Clock,
@@ -9,7 +10,8 @@ import {
   Eye,
   Check,
   X,
-  Filter
+  Filter,
+  Trash2
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,6 +19,7 @@ import { Badge } from '@/components/ui/badge';
 
 const ConsultationsManager = () => {
   const [consultations, setConsultations] = useState<any[]>([]);
+  const { updateConsultationStatus, deleteConsultation, loading: actionLoading } = useConsultationActions();
 
   useEffect(() => {
     const fetchAllBookings = async () => {
@@ -68,6 +71,32 @@ const ConsultationsManager = () => {
 
     fetchAllBookings();
   }, []);
+
+  const handleStatusUpdate = async (consultation: any, status: 'confirmed' | 'cancelled') => {
+    const success = await updateConsultationStatus(
+      consultation.id,
+      consultation.booking_type,
+      status
+    );
+    
+    if (success) {
+      setConsultations(prev => 
+        prev.map(c => 
+          c.id === consultation.id ? { ...c, status } : c
+        )
+      );
+    }
+  };
+
+  const handleDelete = async (consultation: any) => {
+    if (window.confirm('Are you sure you want to delete this booking?')) {
+      const success = await deleteConsultation(consultation.id, consultation.booking_type);
+      
+      if (success) {
+        setConsultations(prev => prev.filter(c => c.id !== consultation.id));
+      }
+    }
+  };
 
 
   const getStatusColor = (status: string) => {
@@ -236,16 +265,35 @@ const ConsultationsManager = () => {
                       </Button>
                       {consultation.status === 'pending' && (
                         <>
-                          <Button size="sm" variant="default">
+                          <Button 
+                            size="sm" 
+                            variant="default"
+                            onClick={() => handleStatusUpdate(consultation, 'confirmed')}
+                            disabled={actionLoading}
+                          >
                             <Check className="w-4 h-4 mr-2" />
                             Confirm
                           </Button>
-                          <Button size="sm" variant="destructive">
+                          <Button 
+                            size="sm" 
+                            variant="destructive"
+                            onClick={() => handleStatusUpdate(consultation, 'cancelled')}
+                            disabled={actionLoading}
+                          >
                             <X className="w-4 h-4 mr-2" />
                             Cancel
                           </Button>
                         </>
                       )}
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => handleDelete(consultation)}
+                        disabled={actionLoading}
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Delete
+                      </Button>
                     </div>
                   </div>
                 </CardContent>

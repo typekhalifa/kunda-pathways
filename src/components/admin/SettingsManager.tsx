@@ -5,16 +5,48 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useAuth } from '@/contexts/AuthContext';
+import { useWebsiteSettings } from '@/hooks/useWebsiteSettings';
 import { toast } from 'sonner';
-import { Loader2, KeyRound, User, Shield } from 'lucide-react';
+import { Loader2, KeyRound, User, Shield, Save, Upload } from 'lucide-react';
 
 const SettingsManager = () => {
   const { profile, updatePassword } = useAuth();
+  const { settings, loading: settingsLoading, updateSetting, uploadFile } = useWebsiteSettings();
   const [passwordData, setPasswordData] = useState({
     newPassword: '',
     confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
+  const [saveLoading, setSaveLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    site_info: {
+      title: '',
+      description: '',
+      contact_email: ''
+    },
+    branding: {
+      logo_url: '',
+      favicon_url: '',
+      primary_color: '#3b82f6'
+    },
+    seo: {
+      meta_title: '',
+      meta_description: '',
+      meta_keywords: ''
+    },
+    analytics: {
+      google_analytics_id: '',
+      google_tag_manager_id: '',
+      facebook_pixel_id: '',
+      custom_css: ''
+    }
+  });
+
+  React.useEffect(() => {
+    if (settings) {
+      setFormData(settings);
+    }
+  }, [settings]);
 
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +73,47 @@ const SettingsManager = () => {
     }
     
     setLoading(false);
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'logo' | 'favicon') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const url = await uploadFile(file, type);
+    if (url) {
+      setFormData(prev => ({
+        ...prev,
+        branding: {
+          ...prev.branding,
+          [`${type}_url`]: url
+        }
+      }));
+      
+      if (type === 'favicon') {
+        // Update the favicon in the HTML head
+        const link = document.querySelector("link[rel*='icon']") as HTMLLinkElement || document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        link.href = url;
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+    }
+  };
+
+  const handleSaveSettings = async () => {
+    setSaveLoading(true);
+    try {
+      await Promise.all([
+        updateSetting('site_info', formData.site_info),
+        updateSetting('branding', formData.branding),
+        updateSetting('seo', formData.seo),
+        updateSetting('analytics', formData.analytics)
+      ]);
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    } finally {
+      setSaveLoading(false);
+    }
   };
 
   return (
@@ -145,7 +218,11 @@ const SettingsManager = () => {
                 <Input
                   id="site-title"
                   placeholder="Your Website Title"
-                  defaultValue="Africa-Korea Connect"
+                  value={formData.site_info.title}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    site_info: { ...prev.site_info, title: e.target.value }
+                  }))}
                 />
               </div>
               <div className="space-y-2">
@@ -153,7 +230,11 @@ const SettingsManager = () => {
                 <Textarea
                   id="site-description"
                   placeholder="Brief description of your website"
-                  defaultValue="Educational consulting and cultural bridge between Africa and Korea"
+                  value={formData.site_info.description}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    site_info: { ...prev.site_info, description: e.target.value }
+                  }))}
                   rows={3}
                 />
               </div>
@@ -163,7 +244,11 @@ const SettingsManager = () => {
                   id="contact-email"
                   type="email"
                   placeholder="contact@yoursite.com"
-                  defaultValue="info@africa-korea-connect.com"
+                  value={formData.site_info.contact_email}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    site_info: { ...prev.site_info, contact_email: e.target.value }
+                  }))}
                 />
               </div>
             </div>
@@ -176,24 +261,36 @@ const SettingsManager = () => {
                   id="logo-upload"
                   type="file"
                   accept="image/*"
+                  onChange={(e) => handleFileUpload(e, 'logo')}
                   className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
+                {formData.branding.logo_url && (
+                  <p className="text-sm text-muted-foreground">Current: {formData.branding.logo_url}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="favicon-upload">Favicon Upload</Label>
                 <Input
                   id="favicon-upload"
                   type="file"
-                  accept="image/x-icon,image/png"
+                  accept="image/x-icon,image/png,image/jpg,image/jpeg"
+                  onChange={(e) => handleFileUpload(e, 'favicon')}
                   className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
+                {formData.branding.favicon_url && (
+                  <p className="text-sm text-muted-foreground">Current: {formData.branding.favicon_url}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="primary-color">Primary Color</Label>
                 <Input
                   id="primary-color"
                   type="color"
-                  defaultValue="#3b82f6"
+                  value={formData.branding.primary_color}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    branding: { ...prev.branding, primary_color: e.target.value }
+                  }))}
                   className="h-12 w-full"
                 />
               </div>
@@ -210,7 +307,11 @@ const SettingsManager = () => {
                 <Input
                   id="meta-title"
                   placeholder="SEO optimized title"
-                  defaultValue="Africa-Korea Connect - Educational Consulting"
+                  value={formData.seo.meta_title}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    seo: { ...prev.seo, meta_title: e.target.value }
+                  }))}
                 />
               </div>
               <div className="space-y-2">
@@ -218,7 +319,11 @@ const SettingsManager = () => {
                 <Input
                   id="meta-keywords"
                   placeholder="keyword1, keyword2, keyword3"
-                  defaultValue="korea, education, consulting, study abroad"
+                  value={formData.seo.meta_keywords}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    seo: { ...prev.seo, meta_keywords: e.target.value }
+                  }))}
                 />
               </div>
             </div>
@@ -227,7 +332,11 @@ const SettingsManager = () => {
               <Textarea
                 id="meta-description"
                 placeholder="SEO meta description (150-160 characters)"
-                defaultValue="Professional educational consulting services connecting African students with Korean universities and opportunities."
+                value={formData.seo.meta_description}
+                onChange={(e) => setFormData(prev => ({
+                  ...prev,
+                  seo: { ...prev.seo, meta_description: e.target.value }
+                }))}
                 rows={3}
               />
             </div>
@@ -243,6 +352,11 @@ const SettingsManager = () => {
                 <Input
                   id="google-analytics"
                   placeholder="GA-XXXXXXXXX-X"
+                  value={formData.analytics.google_analytics_id}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    analytics: { ...prev.analytics, google_analytics_id: e.target.value }
+                  }))}
                 />
               </div>
               <div className="space-y-2">
@@ -250,6 +364,11 @@ const SettingsManager = () => {
                 <Input
                   id="google-tag-manager"
                   placeholder="GTM-XXXXXXX"
+                  value={formData.analytics.google_tag_manager_id}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    analytics: { ...prev.analytics, google_tag_manager_id: e.target.value }
+                  }))}
                 />
               </div>
               <div className="space-y-2">
@@ -257,6 +376,11 @@ const SettingsManager = () => {
                 <Input
                   id="facebook-pixel"
                   placeholder="000000000000000"
+                  value={formData.analytics.facebook_pixel_id}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    analytics: { ...prev.analytics, facebook_pixel_id: e.target.value }
+                  }))}
                 />
               </div>
               <div className="space-y-2">
@@ -264,6 +388,11 @@ const SettingsManager = () => {
                 <Textarea
                   id="custom-css"
                   placeholder="/* Custom CSS styles */"
+                  value={formData.analytics.custom_css}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    analytics: { ...prev.analytics, custom_css: e.target.value }
+                  }))}
                   rows={3}
                 />
               </div>
@@ -271,7 +400,13 @@ const SettingsManager = () => {
           </div>
 
           <div className="flex justify-end pt-4">
-            <Button className="bg-blue-600 hover:bg-blue-700">
+            <Button 
+              onClick={handleSaveSettings} 
+              disabled={saveLoading || settingsLoading}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              {saveLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Save className="mr-2 h-4 w-4" />
               Save Website Settings
             </Button>
           </div>
