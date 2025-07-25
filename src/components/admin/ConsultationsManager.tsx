@@ -124,13 +124,17 @@ const ConsultationsManager = () => {
       status
     );
     
-    if (success) {
-      setConsultations(prev => 
-        prev.map(c => 
-          c.id === consultation.id ? { ...c, status } : c
-        )
-      );
-    }
+      if (success) {
+        setConsultations(prev => 
+          prev.map(c => 
+            c.id === consultation.id ? { 
+              ...c, 
+              status,
+              payment_status: status === 'confirmed' ? 'paid' : c.payment_status
+            } : c
+          )
+        );
+      }
   };
 
   const handleDelete = async (consultation: any) => {
@@ -177,7 +181,7 @@ const ConsultationsManager = () => {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-blue-500">
+        <Card className="border-l-4 border-l-blue-500 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardContent className="pt-6">
             <div className="flex items-center">
               <Calendar className="h-8 w-8 text-blue-500" />
@@ -189,7 +193,7 @@ const ConsultationsManager = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-yellow-500">
+        <Card className="border-l-4 border-l-yellow-500 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardContent className="pt-6">
             <div className="flex items-center">
               <Clock className="h-8 w-8 text-yellow-500" />
@@ -201,7 +205,7 @@ const ConsultationsManager = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-green-500">
+        <Card className="border-l-4 border-l-green-500 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardContent className="pt-6">
             <div className="flex items-center">
               <Check className="h-8 w-8 text-green-500" />
@@ -215,7 +219,7 @@ const ConsultationsManager = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-emerald-500">
+        <Card className="border-l-4 border-l-emerald-500 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardContent className="pt-6">
             <div className="flex items-center">
               <DollarSign className="h-8 w-8 text-emerald-500" />
@@ -228,7 +232,7 @@ const ConsultationsManager = () => {
         </Card>
       </div>
 
-      <Card>
+      <Card className="rounded-3xl border-2 hover:border-primary/20 transition-all duration-300">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center">
@@ -267,7 +271,7 @@ const ConsultationsManager = () => {
         <CardContent>
           <div className="space-y-4">
             {filteredConsultations.map((consultation) => (
-              <Card key={consultation.id}>
+              <Card key={consultation.id} className="rounded-2xl border hover:border-primary/20 transition-all duration-300">
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">

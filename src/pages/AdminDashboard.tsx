@@ -23,7 +23,8 @@ import {
   Edit,
   Plus,
   BarChart3,
-  Mail
+  Mail,
+  DollarSign
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -31,6 +32,10 @@ const AdminDashboard = () => {
   const { profile, signOut } = useAuth();
   const [consultationCount, setConsultationCount] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
+  const [newsletterCount, setNewsletterCount] = useState(0);
+  const [activeSubscribers, setActiveSubscribers] = useState(0);
+  const [campaignsSent, setCampaignsSent] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
   const [showSignOutDialog, setShowSignOutDialog] = useState(false);
 
   useEffect(() => {
@@ -62,15 +67,77 @@ const AdminDashboard = () => {
       }
     };
 
+    const fetchNewsletterData = async () => {
+      try {
+        // Total subscribers
+        const { count: totalCount } = await supabase
+          .from('newsletter_subscribers')
+          .select('*', { count: 'exact', head: true });
+        
+        // Active subscribers
+        const { count: activeCount } = await supabase
+          .from('newsletter_subscribers')
+          .select('*', { count: 'exact', head: true })
+          .eq('is_active', true);
+        
+        // Sent campaigns
+        const { count: sentCount } = await supabase
+          .from('newsletter_campaigns')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'sent');
+
+        setNewsletterCount(totalCount || 0);
+        setActiveSubscribers(activeCount || 0);
+        setCampaignsSent(sentCount || 0);
+      } catch (error) {
+        console.error('Error fetching newsletter data:', error);
+      }
+    };
+
+    const fetchTotalRevenue = async () => {
+      try {
+        const [studyRes, fbRes, extraRes] = await Promise.all([
+          supabase.from('study_abroad_bookings').select('total_price, payment_status'),
+          supabase.from('fb_consultation_bookings').select('total_price, payment_status'),
+          supabase.from('extra_service_bookings').select('total_price, payment_status'),
+        ]);
+
+        const allBookings = [
+          ...(studyRes.data || []),
+          ...(fbRes.data || []),
+          ...(extraRes.data || [])
+        ];
+
+        const revenue = allBookings
+          .filter(b => b.payment_status === 'completed' || b.payment_status === 'paid')
+          .reduce((sum, b) => sum + (parseFloat(String(b.total_price)) || 0), 0);
+
+        setTotalRevenue(revenue);
+      } catch (error) {
+        console.error('Error fetching revenue:', error);
+      }
+    };
+
     fetchConsultationCount();
     fetchMessageCount();
+    fetchNewsletterData();
+    fetchTotalRevenue();
 
     // Set up real-time subscriptions for automatic updates
     const consultationChannel = supabase
       .channel('consultation-changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'study_abroad_bookings' }, fetchConsultationCount)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'fb_consultation_bookings' }, fetchConsultationCount)
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'extra_service_bookings' }, fetchConsultationCount)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'study_abroad_bookings' }, () => {
+        fetchConsultationCount();
+        fetchTotalRevenue();
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'fb_consultation_bookings' }, () => {
+        fetchConsultationCount();
+        fetchTotalRevenue();
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'extra_service_bookings' }, () => {
+        fetchConsultationCount();
+        fetchTotalRevenue();
+      })
       .subscribe();
 
     const messageChannel = supabase
@@ -78,9 +145,16 @@ const AdminDashboard = () => {
       .on('postgres_changes', { event: '*', schema: 'public', table: 'contact_messages' }, fetchMessageCount)
       .subscribe();
 
+    const newsletterChannel = supabase
+      .channel('newsletter-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'newsletter_subscribers' }, fetchNewsletterData)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'newsletter_campaigns' }, fetchNewsletterData)
+      .subscribe();
+
     return () => {
       supabase.removeChannel(consultationChannel);
       supabase.removeChannel(messageChannel);
+      supabase.removeChannel(newsletterChannel);
     };
   }, []);
 
@@ -202,6 +276,32 @@ const AdminDashboard = () => {
             <CardContent>
               <div className="text-3xl font-bold">{messageCount}</div>
               <p className="text-orange-100 text-sm">New inquiries</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center text-lg">
+                <Mail className="w-5 h-5 mr-2" />
+                Newsletter
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">{activeSubscribers}</div>
+              <p className="text-emerald-100 text-sm">Active subscribers</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center text-lg">
+                <DollarSign className="w-5 h-5 mr-2" />
+                Revenue
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">${totalRevenue.toFixed(2)}</div>
+              <p className="text-blue-100 text-sm">Total earned</p>
             </CardContent>
           </Card>
         </div>

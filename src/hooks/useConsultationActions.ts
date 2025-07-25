@@ -14,7 +14,11 @@ export const useConsultationActions = () => {
     setLoading(true);
     try {
       const updateData: any = { status };
-      if (paymentStatus) {
+      
+      // Auto-mark as paid when confirming
+      if (status === 'confirmed') {
+        updateData.payment_status = 'paid';
+      } else if (paymentStatus) {
         updateData.payment_status = paymentStatus;
       }
 
@@ -48,7 +52,11 @@ export const useConsultationActions = () => {
 
       if (error) throw error;
 
-      toast.success(`Booking ${status} successfully`);
+      const statusMessage = status === 'confirmed' 
+        ? 'Booking confirmed and marked as paid' 
+        : `Booking ${status} successfully`;
+        
+      toast.success(statusMessage);
       return true;
     } catch (error) {
       console.error('Error updating consultation:', error);

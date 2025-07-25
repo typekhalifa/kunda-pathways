@@ -164,7 +164,7 @@ const AdminAnalytics = () => {
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <Calendar className="w-5 h-5 mr-2" />
@@ -177,7 +177,7 @@ const AdminAnalytics = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white">
+          <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <DollarSign className="w-5 h-5 mr-2" />
@@ -190,7 +190,7 @@ const AdminAnalytics = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white">
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <Mail className="w-5 h-5 mr-2" />
@@ -203,7 +203,7 @@ const AdminAnalytics = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <TrendingUp className="w-5 h-5 mr-2" />
@@ -220,7 +220,7 @@ const AdminAnalytics = () => {
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Monthly Revenue Trend */}
-          <Card>
+          <Card className="rounded-3xl border-2 hover:border-primary/20 transition-all duration-300">
             <CardHeader>
               <CardTitle className="flex items-center">
                 <BarChart3 className="w-5 h-5 mr-2" />
@@ -256,7 +256,7 @@ const AdminAnalytics = () => {
           </Card>
 
           {/* Service Type Distribution */}
-          <Card>
+          <Card className="rounded-3xl border-2 hover:border-primary/20 transition-all duration-300">
             <CardHeader>
               <CardTitle className="flex items-center">
                 <PieChart className="w-5 h-5 mr-2" />
@@ -291,7 +291,7 @@ const AdminAnalytics = () => {
         {/* Status Overview and Recent Bookings */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Booking Status Overview */}
-          <Card>
+          <Card className="rounded-3xl border-2 hover:border-primary/20 transition-all duration-300">
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Users className="w-5 h-5 mr-2" />
@@ -313,7 +313,7 @@ const AdminAnalytics = () => {
           </Card>
 
           {/* Recent Bookings */}
-          <Card>
+          <Card className="rounded-3xl border-2 hover:border-primary/20 transition-all duration-300">
             <CardHeader>
               <CardTitle>Recent Bookings</CardTitle>
               <CardDescription>Latest booking activities</CardDescription>
