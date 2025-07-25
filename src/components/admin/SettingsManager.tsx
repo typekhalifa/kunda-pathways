@@ -6,8 +6,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWebsiteSettings } from '@/hooks/useWebsiteSettings';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Loader2, KeyRound, User, Shield, Save, Upload } from 'lucide-react';
+import { Loader2, KeyRound, User, Shield, Save, Upload, Edit } from 'lucide-react';
 
 const SettingsManager = () => {
   const { profile, updatePassword } = useAuth();
@@ -16,8 +17,13 @@ const SettingsManager = () => {
     newPassword: '',
     confirmPassword: ''
   });
+  const [profileData, setProfileData] = useState({
+    full_name: '',
+    email: ''
+  });
   const [loading, setLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(false);
   const [formData, setFormData] = useState({
     site_info: {
       title: '',
@@ -47,6 +53,38 @@ const SettingsManager = () => {
       setFormData(settings);
     }
   }, [settings]);
+
+  React.useEffect(() => {
+    if (profile) {
+      setProfileData({
+        full_name: profile.full_name || '',
+        email: profile.email || ''
+      });
+    }
+  }, [profile]);
+
+  const handleProfileUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setProfileLoading(true);
+    
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          full_name: profileData.full_name,
+          email: profileData.email
+        })
+        .eq('id', profile?.id);
+
+      if (error) throw error;
+      
+      toast.success('Profile updated successfully!');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update profile');
+    } finally {
+      setProfileLoading(false);
+    }
+  };
 
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,25 +168,47 @@ const SettingsManager = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label className="text-sm font-medium text-slate-600">Full Name</Label>
-              <p className="text-lg">{profile?.full_name || 'Not set'}</p>
-            </div>
-            <div>
-              <Label className="text-sm font-medium text-slate-600">Email</Label>
-              <p className="text-lg">{profile?.email}</p>
-            </div>
-            <div>
-              <Label className="text-sm font-medium text-slate-600">Role</Label>
-              <div className="flex items-center">
-                <Shield className="w-4 h-4 mr-2 text-green-600" />
-                <span className="text-lg capitalize bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
-                  {profile?.role}
-                </span>
+          <form onSubmit={handleProfileUpdate} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="profile-name">Full Name</Label>
+                <Input
+                  id="profile-name"
+                  value={profileData.full_name}
+                  onChange={(e) => setProfileData({ ...profileData, full_name: e.target.value })}
+                  placeholder="Your full name"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="profile-email">Email</Label>
+                <Input
+                  id="profile-email"
+                  type="email"
+                  value={profileData.email}
+                  onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                  placeholder="your.email@example.com"
+                />
+              </div>
+              <div>
+                <Label className="text-sm font-medium text-slate-600">Role</Label>
+                <div className="flex items-center">
+                  <Shield className="w-4 h-4 mr-2 text-green-600" />
+                  <span className="text-lg capitalize bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
+                    {profile?.role}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+            <Button 
+              type="submit" 
+              disabled={profileLoading}
+              className="w-full md:w-auto"
+            >
+              {profileLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Edit className="mr-2 h-4 w-4" />
+              Update Profile
+            </Button>
+          </form>
         </CardContent>
       </Card>
 

@@ -23,6 +23,7 @@ const ConsultationsManager = () => {
 
   useEffect(() => {
     const fetchAllBookings = async () => {
+      console.log('🔄 Starting to fetch bookings...');
       try {
         const [studyRes, fbRes, extraRes] = await Promise.all([
           supabase.from('study_abroad_bookings').select('*'),
@@ -30,38 +31,53 @@ const ConsultationsManager = () => {
           supabase.from('extra_service_bookings').select('*'),
         ]);
 
-        if (studyRes.error) console.error('❌ Study Abroad Fetch Error:', studyRes.error);
-        if (fbRes.error) console.error('❌ FB Consulting Fetch Error:', fbRes.error);
-        if (extraRes.error) console.error('❌ Extra Services Fetch Error:', extraRes.error);
-
-        console.log('✅ Study Abroad Data:', studyRes.data);
-        console.log('✅ FB Data:', fbRes.data);
-        console.log('✅ Extra Data:', extraRes.data);
+        if (studyRes.error) {
+          console.error('❌ Study Abroad Fetch Error:', studyRes.error);
+        } else {
+          console.log('✅ Study Abroad Raw Data:', studyRes.data);
+        }
+        
+        if (fbRes.error) {
+          console.error('❌ FB Consulting Fetch Error:', fbRes.error);
+        } else {
+          console.log('✅ FB Raw Data:', fbRes.data);
+        }
+        
+        if (extraRes.error) {
+          console.error('❌ Extra Services Fetch Error:', extraRes.error);
+        } else {
+          console.log('✅ Extra Raw Data:', extraRes.data);
+        }
 
         const studyBookings = (studyRes.data || []).map((b) => ({
           ...b,
-          service_type: b.service,
+          service_type: typeof b.service === 'string' ? b.service : JSON.stringify(b.service),
           booking_type: 'Study Abroad',
         }));
+        console.log('📚 Processed Study Bookings:', studyBookings);
 
         const fbBookings = (fbRes.data || []).map((b) => ({
           ...b,
-          service_type: b.services,
+          service_type: typeof b.services === 'string' ? b.services : JSON.stringify(b.services),
           company_name: b.company || '',
           booking_type: 'F&B Consulting',
         }));
+        console.log('🍽️ Processed FB Bookings:', fbBookings);
 
         const extraBookings = (extraRes.data || []).map((b) => ({
           ...b,
-          service_type: b.services,
+          service_type: typeof b.services === 'string' ? b.services : JSON.stringify(b.services),
           booking_type: 'Extra Services',
         }));
+        console.log('🔧 Processed Extra Bookings:', extraBookings);
 
         const all = [...studyBookings, ...fbBookings, ...extraBookings];
+        console.log('📋 All Combined Bookings:', all);
 
         const sorted = all.sort(
           (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
+        console.log('📊 Final Sorted Consultations:', sorted);
 
         setConsultations(sorted);
       } catch (err) {
