@@ -23,6 +23,8 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminSettings from "./pages/AdminSettings";
+import AdminAnalytics from "./pages/AdminAnalytics";
+import AdminNewsletter from "./pages/AdminNewsletter";
 import AdminConsultations from "./pages/AdminConsultations";
 import ContentManager from '@/components/admin/ContentManager';
 import MessagesManager from '@/components/admin/MessagesManager';
@@ -144,6 +146,22 @@ const App = () => (
                 element={
                   <ProtectedRoute adminOnly>
                     <AdminServices />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/analytics" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminAnalytics />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/newsletter" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminNewsletter />
                   </ProtectedRoute>
                 } 
               />

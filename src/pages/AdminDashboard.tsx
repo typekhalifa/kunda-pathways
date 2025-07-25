@@ -22,7 +22,8 @@ import {
   LogOut,
   Edit,
   Plus,
-  BarChart3
+  BarChart3,
+  Mail
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -138,6 +139,13 @@ const AdminDashboard = () => {
       icon: Settings,
       href: '/admin/settings',
       color: 'text-slate-600'
+    },
+    {
+      title: 'Newsletter',
+      description: 'Manage subscribers and email campaigns',
+      icon: Mail,
+      href: '/admin/newsletter',
+      color: 'text-cyan-600'
     }
   ];
 
