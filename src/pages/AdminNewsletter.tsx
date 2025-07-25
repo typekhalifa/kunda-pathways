@@ -317,7 +317,7 @@ The Kunda Pathways Team`
           <TabsContent value="subscribers" className="space-y-6">
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+              <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 border-0 rounded-3xl hover:scale-[1.02] transform">
                 <CardHeader className="pb-2">
                   <CardTitle className="flex items-center text-lg">
                     <Users className="w-5 h-5 mr-2" />
@@ -330,7 +330,7 @@ The Kunda Pathways Team`
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white">
+              <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 border-0 rounded-3xl hover:scale-[1.02] transform">
                 <CardHeader className="pb-2">
                   <CardTitle className="flex items-center text-lg">
                     <Mail className="w-5 h-5 mr-2" />
@@ -343,7 +343,7 @@ The Kunda Pathways Team`
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
+              <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 border-0 rounded-3xl hover:scale-[1.02] transform">
                 <CardHeader className="pb-2">
                   <CardTitle className="flex items-center text-lg">
                     <Send className="w-5 h-5 mr-2" />
