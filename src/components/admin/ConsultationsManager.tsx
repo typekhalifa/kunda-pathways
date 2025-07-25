@@ -1,70 +1,63 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Calendar, 
-  Clock, 
-  User, 
-  Mail, 
-  Phone, 
+import React, { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import {
+  Calendar,
+  Clock,
+  Mail,
+  Phone,
   DollarSign,
   Eye,
   Check,
   X,
   Filter
 } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 const ConsultationsManager = () => {
-  const [consultations] = useState([
-    {
-      id: '1',
-      full_name: 'Alice Johnson',
-      email: 'alice@example.com',
-      phone: '+1 234 567 8900',
-      service_type: 'University Application Consultation',
-      preferred_date: '2024-01-20',
-      preferred_time: '14:00',
-      total_price: 150,
-      status: 'pending',
-      payment_status: 'pending',
-      message: 'I need help with my application to Korean universities.',
-      created_at: '2024-01-15T10:30:00Z'
-    },
-    {
-      id: '2',
-      full_name: 'David Kim',
-      email: 'david@example.com',
-      phone: '+1 234 567 8901',
-      service_type: 'Study Abroad Planning',
-      preferred_date: '2024-01-18',
-      preferred_time: '10:00',
-      total_price: 200,
-      status: 'confirmed',
-      payment_status: 'completed',
-      message: 'Looking for guidance on study abroad programs.',
-      created_at: '2024-01-14T14:20:00Z'
-    },
-    {
-      id: '3',
-      full_name: 'Maria Rodriguez',
-      email: 'maria@example.com',
-      phone: '+1 234 567 8902',
-      service_type: 'Scholarship Consultation',
-      preferred_date: '2024-01-22',
-      preferred_time: '16:00',
-      total_price: 100,
-      status: 'cancelled',
-      payment_status: 'refunded',
-      message: 'Need information about available scholarships.',
-      created_at: '2024-01-13T09:15:00Z'
-    }
-  ]);
+  const [consultations, setConsultations] = useState<any[]>([]);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
-  };
+  useEffect(() => {
+    const fetchAllBookings = async () => {
+      try {
+        const [studyRes, fbRes, extraRes] = await Promise.all([
+          supabase.from('study_abroad_bookings').select('*'),
+          supabase.from('fb_consultation_bookings').select('*'),
+          supabase.from('extra_service_bookings').select('*')
+        ]);
+
+        const study = (studyRes.data || []).map((b) => ({
+          ...b,
+          service_type: b.service,
+          booking_type: 'Study Abroad',
+        }));
+
+        const fb = (fbRes.data || []).map((b) => ({
+          ...b,
+          service_type: b.services,
+          company_name: b.company,
+          booking_type: 'F&B Consulting',
+        }));
+
+        const extra = (extraRes.data || []).map((b) => ({
+          ...b,
+          service_type: b.services,
+          booking_type: 'Extra Services',
+        }));
+
+        const all = [...study, ...fb, ...extra].sort(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+
+        setConsultations(all);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
+    };
+
+    fetchAllBookings();
+  }, []);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -89,11 +82,10 @@ const ConsultationsManager = () => {
   const pendingCount = consultations.filter(c => c.status === 'pending').length;
   const totalRevenue = consultations
     .filter(c => c.payment_status === 'completed')
-    .reduce((sum, c) => sum + c.total_price, 0);
+    .reduce((sum, c) => sum + (c.total_price || 0), 0);
 
   return (
     <div className="space-y-6">
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="border-l-4 border-l-blue-500">
           <CardContent className="pt-6">
@@ -146,7 +138,6 @@ const ConsultationsManager = () => {
         </Card>
       </div>
 
-      {/* Consultations List */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
@@ -166,7 +157,7 @@ const ConsultationsManager = () => {
         <CardContent>
           <div className="space-y-4">
             {consultations.map((consultation) => (
-              <Card key={consultation.id} className="transition-all duration-200 hover:shadow-md">
+              <Card key={consultation.id}>
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -178,8 +169,8 @@ const ConsultationsManager = () => {
                         <Badge className={getPaymentStatusColor(consultation.payment_status)}>
                           {consultation.payment_status}
                         </Badge>
+                        <Badge variant="secondary">{consultation.booking_type}</Badge>
                       </div>
-                      
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground mb-3">
                         <div className="space-y-1">
                           <div className="flex items-center">
@@ -209,8 +200,16 @@ const ConsultationsManager = () => {
                         </div>
                       </div>
 
+                      {consultation.company_name && (
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Company:</strong> {consultation.company_name}
+                        </p>
+                      )}
+
                       <div className="mb-3">
-                        <p className="font-medium text-sm mb-1">Service: {consultation.service_type}</p>
+                        <p className="font-medium text-sm mb-1">
+                          Service: {consultation.service_type}
+                        </p>
                         {consultation.message && (
                           <p className="text-sm text-muted-foreground line-clamp-2">
                             Message: {consultation.message}

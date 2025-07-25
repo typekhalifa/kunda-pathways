@@ -112,7 +112,7 @@ const AdminLogin = () => {
                   <Input
                     id="signin-email"
                     type="email"
-                    placeholder="typekhalifa@gmail.com"
+                    placeholder="your@email.com"
                     value={signInData.email}
                     onChange={(e) => setSignInData({ ...signInData, email: e.target.value })}
                     className="h-11 border-slate-300 focus:border-blue-500 focus:ring-blue-500"

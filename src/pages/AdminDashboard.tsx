@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { supabase } from "@/lib/supabase";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -27,7 +28,25 @@ import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const { profile, signOut } = useAuth();
+  const [consultationCount, setConsultationCount] = useState(0);
   const [showSignOutDialog, setShowSignOutDialog] = useState(false);
+
+  useEffect(() => {
+    const fetchConsultationCount = async () => {
+      const { count, error } = await supabase
+        .from("consultation_bookings")
+        .select("*", { count: "exact", head: true });
+
+      if (!error && count !== null) {
+        setConsultationCount(count);
+      } else {
+        console.error("❌ Error fetching consultations count:", error);
+      }
+    };
+
+    fetchConsultationCount();
+  }, []);
+
 
   const handleSignOut = () => {
     signOut();
