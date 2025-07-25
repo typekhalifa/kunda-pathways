@@ -117,7 +117,7 @@ const Newsletter = () => {
             </p>
           </div>
 
-          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-800 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-800 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl">
             <CardHeader className="text-center pb-4">
               <div className="flex justify-center mb-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
@@ -127,7 +127,7 @@ const Newsletter = () => {
               <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Stay Connected With Us
               </CardTitle>
-              <CardDescription className="text-base">
+              <CardDescription className="text-base text-slate-600 dark:text-slate-300">
                 Be the first to know about new opportunities, expert insights, and exclusive content
               </CardDescription>
             </CardHeader>
@@ -139,7 +139,7 @@ const Newsletter = () => {
                     placeholder="Your name (optional)"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="border-blue-200 focus:border-blue-400 focus:ring-blue-400"
+                    className="border-blue-200 focus:border-blue-400 focus:ring-blue-400 rounded-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400"
                   />
                   <Input
                     type="email"
@@ -147,7 +147,7 @@ const Newsletter = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="border-blue-200 focus:border-blue-400 focus:ring-blue-400"
+                    className="border-blue-200 focus:border-blue-400 focus:ring-blue-400 rounded-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400"
                   />
                 </div>
                 
@@ -190,7 +190,7 @@ const Newsletter = () => {
                   )}
                 </Button>
                 
-                <p className="text-xs text-center text-muted-foreground">
+                <p className="text-xs text-center text-slate-500 dark:text-slate-400">
                   📧 Weekly updates • 🚫 No spam • ✨ Unsubscribe anytime
                 </p>
               </form>
