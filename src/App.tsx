@@ -23,6 +23,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminSettings from "./pages/AdminSettings";
+import AdminConsultationsPage from "./pages/AdminConsultations";
 import ContentManager from '@/components/admin/ContentManager';
 import MessagesManager from '@/components/admin/MessagesManager';
 import ConsultationsManager from '@/components/admin/ConsultationsManager';
@@ -52,14 +53,6 @@ const AdminMessages = () => (
   </div>
 );
 
-const AdminConsultations = () => (
-  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Consultation Management</h1>
-      <ConsultationsManager />
-    </div>
-  </div>
-);
 
 const AdminServices = () => (
   <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
@@ -83,7 +76,14 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/admin" element={<AdminLogin />} />
-              <Route path="/admin/consultations" element={<ConsultationsManager />} />
+              <Route 
+                path="/admin/consultations" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminConsultationsPage />
+                  </ProtectedRoute>
+                } 
+              />
               <Route path="/book-consultation" element={<BookConsultation />} />
               <Route path="/book-fb-consultation" element={<BookFBConsultation />} />
               <Route path="/resources" element={<Resources />} />
@@ -136,14 +136,6 @@ const App = () => (
                 element={
                   <ProtectedRoute adminOnly>
                     <AdminMessages />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/consultations" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminConsultations />
                   </ProtectedRoute>
                 } 
               />
