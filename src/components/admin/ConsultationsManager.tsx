@@ -399,17 +399,17 @@ const ConsultationsManager = () => {
 
       {/* View Details Dialog */}
       <Dialog open={viewDetailsOpen} onOpenChange={setViewDetailsOpen}>
-        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
-          <DialogHeader className="pb-6 border-b border-border/50">
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 rounded-3xl border-2 border-slate-200 dark:border-slate-700">
+          <DialogHeader className="pb-6 border-b border-slate-200 dark:border-slate-600">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <Calendar className="w-6 h-6 text-white" />
               </div>
               <div>
                 <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   Consultation Details
                 </DialogTitle>
-                <DialogDescription className="text-base mt-1">
+                <DialogDescription className="text-base mt-1 text-slate-600 dark:text-slate-300">
                   Complete information for this consultation booking
                 </DialogDescription>
               </div>
@@ -482,39 +482,39 @@ const ConsultationsManager = () => {
               {/* Main Content Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Client Information */}
-                <Card className="rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-shadow">
+                <Card className="rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-blue-50 to-white dark:from-blue-900/10 dark:to-slate-800">
                   <CardHeader className="pb-4">
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                        <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <CardTitle className="flex items-center gap-3 text-lg font-semibold text-slate-800 dark:text-slate-100">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                        <Mail className="w-5 h-5 text-white" />
                       </div>
                       Client Information
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-50 to-slate-50 dark:from-blue-900/20 dark:to-slate-800 rounded-xl border border-blue-200 dark:border-blue-800">
+                        <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-sm"></div>
                         <div>
-                          <p className="text-xs text-muted-foreground uppercase tracking-wide">Full Name</p>
-                          <p className="font-semibold">{selectedConsultation.full_name}</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wide font-medium">Full Name</p>
+                          <p className="font-semibold text-slate-800 dark:text-slate-100">{selectedConsultation.full_name}</p>
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
-                        <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                      <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-emerald-50 to-slate-50 dark:from-emerald-900/20 dark:to-slate-800 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                        <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full shadow-sm"></div>
                         <div>
-                          <p className="text-xs text-muted-foreground uppercase tracking-wide">Email Address</p>
-                          <p className="font-semibold break-all">{selectedConsultation.email}</p>
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400 uppercase tracking-wide font-medium">Email Address</p>
+                          <p className="font-semibold text-slate-800 dark:text-slate-100 break-all">{selectedConsultation.email}</p>
                         </div>
                       </div>
                       
                       {selectedConsultation.phone && (
-                        <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
-                          <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                        <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-purple-50 to-slate-50 dark:from-purple-900/20 dark:to-slate-800 rounded-xl border border-purple-200 dark:border-purple-800">
+                          <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full shadow-sm"></div>
                           <div>
-                            <p className="text-xs text-muted-foreground uppercase tracking-wide">Phone Number</p>
-                            <p className="font-semibold">{selectedConsultation.phone}</p>
+                            <p className="text-xs text-purple-600 dark:text-purple-400 uppercase tracking-wide font-medium">Phone Number</p>
+                            <p className="font-semibold text-slate-800 dark:text-slate-100">{selectedConsultation.phone}</p>
                           </div>
                         </div>
                       )}
@@ -533,30 +533,30 @@ const ConsultationsManager = () => {
                 </Card>
 
                 {/* Booking Details */}
-                <Card className="rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-shadow">
+                <Card className="rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-purple-50 to-white dark:from-purple-900/10 dark:to-slate-800">
                   <CardHeader className="pb-4">
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
-                        <Calendar className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                    <CardTitle className="flex items-center gap-3 text-lg font-semibold text-slate-800 dark:text-slate-100">
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                        <Calendar className="w-5 h-5 text-white" />
                       </div>
                       Booking Details
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
-                        <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                      <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-50 to-slate-50 dark:from-blue-900/20 dark:to-slate-800 rounded-xl border border-blue-200 dark:border-blue-800">
+                        <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-sm"></div>
                         <div>
-                          <p className="text-xs text-muted-foreground uppercase tracking-wide">Service Type</p>
-                          <p className="font-semibold">{selectedConsultation.booking_type}</p>
+                          <p className="text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wide font-medium">Service Type</p>
+                          <p className="font-semibold text-slate-800 dark:text-slate-100">{selectedConsultation.booking_type}</p>
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-emerald-50 to-slate-50 dark:from-emerald-900/20 dark:to-slate-800 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                        <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full shadow-sm"></div>
                         <div>
-                          <p className="text-xs text-muted-foreground uppercase tracking-wide">Created Date</p>
-                          <p className="font-semibold">
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400 uppercase tracking-wide font-medium">Created Date</p>
+                          <p className="font-semibold text-slate-800 dark:text-slate-100">
                             {new Date(selectedConsultation.created_at).toLocaleDateString()}
                           </p>
                         </div>

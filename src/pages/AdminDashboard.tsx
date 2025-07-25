@@ -283,7 +283,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
+          <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 border-0 rounded-3xl hover:scale-[1.02] transform">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <Mail className="w-5 h-5 mr-2" />
@@ -296,7 +296,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 border-0 rounded-3xl hover:scale-[1.02] transform">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
                 <DollarSign className="w-5 h-5 mr-2" />
