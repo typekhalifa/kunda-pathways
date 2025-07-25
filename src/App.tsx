@@ -3,7 +3,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
@@ -38,18 +40,60 @@ import CustomQuote from "@/pages/CustomQuote";
 
 // Admin page wrappers
 const AdminContent = () => (
-  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Website Content Management</h1>
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <Link to="/admin/dashboard">
+              <Button variant="outline" size="sm">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Dashboard
+              </Button>
+            </Link>
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+                Content Management
+              </h1>
+              <p className="text-slate-600 dark:text-slate-400">
+                Manage your website content and settings
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="container mx-auto px-4 py-8">
       <ContentManager />
     </div>
   </div>
 );
 
 const AdminMessages = () => (
-  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Contact Messages</h1>
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <Link to="/admin/dashboard">
+              <Button variant="outline" size="sm">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Dashboard
+              </Button>
+            </Link>
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+                Contact Messages
+              </h1>
+              <p className="text-slate-600 dark:text-slate-400">
+                View and manage all contact form submissions
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="container mx-auto px-4 py-8">
       <MessagesManager />
     </div>
   </div>
@@ -57,9 +101,30 @@ const AdminMessages = () => (
 
 
 const AdminServices = () => (
-  <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Services Management</h1>
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <Link to="/admin/dashboard">
+              <Button variant="outline" size="sm">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Dashboard
+              </Button>
+            </Link>
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+                Services Management
+              </h1>
+              <p className="text-slate-600 dark:text-slate-400">
+                Manage all your website services and pricing
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="container mx-auto px-4 py-8">
       <ServicesManager />
     </div>
   </div>
