@@ -74,9 +74,14 @@ const AuthForm = () => {
               {isLoading ? 'Signing in...' : 'Sign In'}
             </Button>
           </form>
-          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <p className="text-sm text-blue-700 dark:text-blue-300">
-              Default credentials are pre-filled. Change them after first login.
+          <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+            <p className="text-sm text-amber-700 dark:text-amber-300 mb-2">
+              <strong>Setup Required:</strong> Create this user in Supabase Dashboard first:
+            </p>
+            <p className="text-xs text-amber-600 dark:text-amber-400">
+              1. Go to Authentication → Users<br/>
+              2. Add User: typekhalifa@gmail.com / admin123<br/>
+              3. Enable "Auto Confirm"
             </p>
           </div>
         </CardContent>
