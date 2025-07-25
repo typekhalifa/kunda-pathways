@@ -41,8 +41,6 @@ const ServicesManager = () => {
     { value: 'study-abroad', label: 'Study Abroad', icon: '🎓', color: 'from-blue-500 to-blue-600' },
     { value: 'fb-consulting', label: 'F&B Consulting', icon: '🍽️', color: 'from-green-500 to-green-600' },
     { value: 'extra-services', label: 'Extra Services', icon: '⭐', color: 'from-purple-500 to-purple-600' },
-    { value: 'visa-assistance', label: 'Visa Assistance', icon: '📋', color: 'from-orange-500 to-orange-600' },
-    { value: 'language-support', label: 'Language Support', icon: '💬', color: 'from-pink-500 to-pink-600' },
   ];
 
   // Categorize services for better display
@@ -217,6 +215,7 @@ const ServicesManager = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g., Study Abroad Consultation"
+                    className="rounded-xl border-2 focus:border-primary"
                     required
                   />
                 </div>
@@ -226,13 +225,20 @@ const ServicesManager = () => {
                     value={formData.category}
                     onValueChange={(value) => setFormData({ ...formData, category: value })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="rounded-xl border-2 focus:border-primary bg-background">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="rounded-xl border-2 bg-background shadow-lg z-50">
                       {categories.map((category) => (
-                        <SelectItem key={category.value} value={category.value}>
-                          {category.label}
+                        <SelectItem 
+                          key={category.value} 
+                          value={category.value}
+                          className="rounded-lg hover:bg-accent focus:bg-accent cursor-pointer"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">{category.icon}</span>
+                            <span>{category.label}</span>
+                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -248,6 +254,7 @@ const ServicesManager = () => {
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Detailed description of the service..."
                   rows={3}
+                  className="rounded-xl border-2 focus:border-primary resize-none"
                   required
                 />
               </div>
@@ -262,6 +269,7 @@ const ServicesManager = () => {
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                     placeholder="99.99"
+                    className="rounded-xl border-2 focus:border-primary"
                     required
                   />
                 </div>
@@ -271,12 +279,16 @@ const ServicesManager = () => {
                     value={formData.currency}
                     onValueChange={(value) => setFormData({ ...formData, currency: value })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="rounded-xl border-2 focus:border-primary bg-background">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="rounded-xl border-2 bg-background shadow-lg z-50">
                       {currencies.map((currency) => (
-                        <SelectItem key={currency.value} value={currency.value}>
+                        <SelectItem 
+                          key={currency.value} 
+                          value={currency.value}
+                          className="rounded-lg hover:bg-accent focus:bg-accent cursor-pointer"
+                        >
                           {currency.label}
                         </SelectItem>
                       ))}
@@ -290,6 +302,7 @@ const ServicesManager = () => {
                     value={formData.duration}
                     onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
                     placeholder="e.g., 60 minutes"
+                    className="rounded-xl border-2 focus:border-primary"
                   />
                 </div>
               </div>
