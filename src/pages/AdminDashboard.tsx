@@ -63,6 +63,24 @@ const AdminDashboard = () => {
 
     fetchConsultationCount();
     fetchMessageCount();
+
+    // Set up real-time subscriptions for automatic updates
+    const consultationChannel = supabase
+      .channel('consultation-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'study_abroad_bookings' }, fetchConsultationCount)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'fb_consultation_bookings' }, fetchConsultationCount)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'extra_service_bookings' }, fetchConsultationCount)
+      .subscribe();
+
+    const messageChannel = supabase
+      .channel('message-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'contact_messages' }, fetchMessageCount)
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(consultationChannel);
+      supabase.removeChannel(messageChannel);
+    };
   }, []);
 
 
@@ -152,7 +170,7 @@ const AdminDashboard = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-3xl">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
