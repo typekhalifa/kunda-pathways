@@ -262,10 +262,10 @@ const ConsultationsManager = () => {
                         </p>
                       )}
 
-                      <div className="mb-3">
-                        <p className="font-medium text-sm mb-1">
-                          Service: {consultation.service_type}
-                        </p>
+                       <div className="mb-3">
+                         <p className="font-medium text-sm mb-1">
+                           Service: {Array.isArray(consultation.service_type) ? consultation.service_type.join(', ') : consultation.service_type}
+                         </p>
                         {consultation.message && (
                           <p className="text-sm text-muted-foreground line-clamp-2">
                             Message: {consultation.message}
