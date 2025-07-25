@@ -23,7 +23,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminSettings from "./pages/AdminSettings";
-import AdminConsultationsPage from "./pages/AdminConsultations";
+import AdminConsultations from "./pages/AdminConsultations";
 import ContentManager from '@/components/admin/ContentManager';
 import MessagesManager from '@/components/admin/MessagesManager';
 import ConsultationsManager from '@/components/admin/ConsultationsManager';
@@ -80,7 +80,7 @@ const App = () => (
                 path="/admin/consultations" 
                 element={
                   <ProtectedRoute adminOnly>
-                    <AdminConsultationsPage />
+                    <AdminConsultations />
                   </ProtectedRoute>
                 } 
               />
