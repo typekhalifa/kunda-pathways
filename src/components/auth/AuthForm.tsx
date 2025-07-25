@@ -8,7 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 const AuthForm = () => {
-  const [email, setEmail] = useState('admin@kundapathways.com');
+  const [email, setEmail] = useState('typekhalifa@gmail.com');
   const [password, setPassword] = useState('admin123');
   const [isLoading, setIsLoading] = useState(false);
   const { signIn } = useAuth();
