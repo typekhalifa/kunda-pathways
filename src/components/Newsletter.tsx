@@ -18,6 +18,7 @@ const Newsletter = () => {
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('📧 Newsletter subscription attempt started');
+    console.log('📧 Form data before processing:', { email, name, emailLength: email.length, nameLength: name.length });
     
     if (!email) {
       toast.error('Please enter your email address');
@@ -26,14 +27,22 @@ const Newsletter = () => {
 
     setLoading(true);
     try {
-      console.log('📧 Attempting to subscribe:', { email: email.toLowerCase().trim(), name: name.trim() || null });
+      const trimmedEmail = email.toLowerCase().trim();
+      const trimmedName = name.trim() || null;
+      
+      console.log('📧 Attempting to subscribe:', { 
+        email: trimmedEmail, 
+        name: trimmedName,
+        originalEmail: email,
+        originalName: name 
+      });
       
       const { data, error } = await supabase
         .from('newsletter_subscribers')
         .insert([
           {
-            email: email.toLowerCase().trim(),
-            name: name.trim() || null,
+            email: trimmedEmail,
+            name: trimmedName,
             preferences: {
               frequency: 'weekly',
               topics: ['study-abroad', 'fb-consulting', 'general-updates']

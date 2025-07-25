@@ -38,12 +38,31 @@ const ServicesManager = () => {
   });
 
   const categories = [
-    { value: 'study-abroad', label: 'Study Abroad' },
-    { value: 'fb-consulting', label: 'F&B Consulting' },
-    { value: 'visa-assistance', label: 'Visa Assistance' },
-    { value: 'language-support', label: 'Language Support' },
-    { value: 'other', label: 'Other' },
+    { value: 'study-abroad', label: 'Study Abroad', icon: '🎓', color: 'from-blue-500 to-blue-600' },
+    { value: 'fb-consulting', label: 'F&B Consulting', icon: '🍽️', color: 'from-green-500 to-green-600' },
+    { value: 'extra-services', label: 'Extra Services', icon: '⭐', color: 'from-purple-500 to-purple-600' },
+    { value: 'visa-assistance', label: 'Visa Assistance', icon: '📋', color: 'from-orange-500 to-orange-600' },
+    { value: 'language-support', label: 'Language Support', icon: '💬', color: 'from-pink-500 to-pink-600' },
   ];
+
+  // Categorize services for better display
+  const categorizeServices = () => {
+    const grouped = services.reduce((acc, service) => {
+      if (!acc[service.category]) {
+        acc[service.category] = [];
+      }
+      acc[service.category].push(service);
+      return acc;
+    }, {} as Record<string, Service[]>);
+    return grouped;
+  };
+
+  const groupedServices = categorizeServices();
+
+  const getCategoryInfo = (categoryValue: string) => {
+    return categories.find(c => c.value === categoryValue) || 
+           { value: categoryValue, label: categoryValue, icon: '📦', color: 'from-gray-500 to-gray-600' };
+  };
 
   const currencies = [
     { value: 'USD', label: 'USD ($)' },
@@ -289,58 +308,76 @@ const ServicesManager = () => {
         </Card>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {services.map((service) => (
-          <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle className="text-lg">{service.name}</CardTitle>
-                  <div className="flex items-center space-x-2 mt-2">
-                    <Badge variant="secondary">
-                      {categories.find(c => c.value === service.category)?.label}
-                    </Badge>
-                    <Badge variant={service.is_active ? "default" : "destructive"}>
-                      {service.is_active ? "Active" : "Inactive"}
-                    </Badge>
-                  </div>
-                </div>
-                <div className="flex space-x-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleEdit(service)}
-                  >
-                    <Edit className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleDelete(service.id)}
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="mb-4">
-                {service.description}
-              </CardDescription>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center text-lg font-semibold text-green-600">
-                  <DollarSign className="w-4 h-4 mr-1" />
-                  {service.price} {service.currency}
-                </div>
-                {service.duration && (
-                  <span className="text-sm text-slate-500">{service.duration}</span>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/* Services grouped by category */}
+      {Object.entries(groupedServices).map(([categoryKey, categoryServices]) => {
+        const categoryInfo = getCategoryInfo(categoryKey);
+        return (
+          <div key={categoryKey} className="space-y-4">
+            <div className={`bg-gradient-to-r ${categoryInfo.color} text-white p-4 rounded-2xl`}>
+              <h3 className="text-xl font-bold flex items-center">
+                <span className="text-2xl mr-3">{categoryInfo.icon}</span>
+                {categoryInfo.label}
+                <Badge variant="secondary" className="ml-3 text-slate-700">
+                  {categoryServices.length} services
+                </Badge>
+              </h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {categoryServices.map((service) => (
+                <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg">{service.name}</CardTitle>
+                        <div className="flex items-center space-x-2 mt-2">
+                          <Badge variant={service.is_active ? "default" : "destructive"}>
+                            {service.is_active ? "Active" : "Inactive"}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="flex space-x-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEdit(service)}
+                          className="hover:bg-blue-50 rounded-xl"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDelete(service.id)}
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="mb-4 text-sm">
+                      {service.description}
+                    </CardDescription>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center text-lg font-semibold text-green-600">
+                        <DollarSign className="w-4 h-4 mr-1" />
+                        {service.price} {service.currency}
+                      </div>
+                      {service.duration && (
+                        <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
+                          {service.duration}
+                        </span>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        );
+      })}
 
       {services.length === 0 && !loading && (
         <Card className="text-center p-8">
