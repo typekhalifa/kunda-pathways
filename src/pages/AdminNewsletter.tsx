@@ -570,10 +570,10 @@ The Kunda Pathways Team`
                     <SelectTrigger className="h-12 rounded-xl border-2 border-slate-200 dark:border-slate-700 focus:border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
                       <SelectValue placeholder="Choose a template" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl border-2">
-                      <SelectItem value="welcome">Welcome Email</SelectItem>
-                      <SelectItem value="update">Monthly Update</SelectItem>
-                      <SelectItem value="announcement">Announcement</SelectItem>
+                    <SelectContent className="rounded-xl border-2 border-slate-200 bg-white shadow-xl z-50">
+                      <SelectItem value="welcome" className="rounded-lg hover:bg-blue-50 focus:bg-blue-50 cursor-pointer m-1">Welcome Email</SelectItem>
+                      <SelectItem value="update" className="rounded-lg hover:bg-blue-50 focus:bg-blue-50 cursor-pointer m-1">Monthly Update</SelectItem>
+                      <SelectItem value="announcement" className="rounded-lg hover:bg-blue-50 focus:bg-blue-50 cursor-pointer m-1">Announcement</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

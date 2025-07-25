@@ -174,7 +174,7 @@ const ServicesManager = () => {
       </div>
 
       {showAddForm && (
-        <Card className="border-blue-200 bg-blue-50">
+        <Card className="border-blue-200 bg-blue-50 rounded-3xl border-2 shadow-lg">
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               {editingService ? 'Edit Service' : 'Add New Service'}
@@ -182,6 +182,7 @@ const ServicesManager = () => {
                 variant="ghost"
                 size="sm"
                 onClick={resetForm}
+                className="rounded-xl"
               >
                 <X className="w-4 h-4" />
               </Button>
@@ -290,7 +291,7 @@ const ServicesManager = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service) => (
-          <Card key={service.id} className="relative">
+          <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-shadow">
             <CardHeader>
               <div className="flex justify-between items-start">
                 <div>
