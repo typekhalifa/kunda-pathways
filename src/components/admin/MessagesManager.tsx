@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,45 +12,82 @@ import {
   Check,
   Clock
 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+
+interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  subject?: string;
+  message: string;
+  created_at: string;
+  is_read: boolean;
+  replied_at?: string;
+}
 
 const MessagesManager = () => {
-  const [messages] = useState([
-    {
-      id: '1',
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '+1 234 567 8900',
-      subject: 'Inquiry about study programs',
-      message: 'Hello, I would like to know more about your educational consulting services for studying in Korea.',
-      created_at: '2024-01-15T10:30:00Z',
-      is_read: false
-    },
-    {
-      id: '2',
-      name: 'Sarah Johnson',
-      email: 'sarah@example.com',
-      phone: '+1 234 567 8901',
-      subject: 'University application help',
-      message: 'I need assistance with my university application process. Can you help me with the requirements?',
-      created_at: '2024-01-14T14:20:00Z',
-      is_read: true
-    },
-    {
-      id: '3',
-      name: 'Mike Chen',
-      email: 'mike@example.com',
-      phone: null,
-      subject: 'Scholarship opportunities',
-      message: 'Are there any scholarship opportunities available for international students?',
-      created_at: '2024-01-13T09:15:00Z',
-      is_read: false
+  const [messages, setMessages] = useState<ContactMessage[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
+
+  const fetchMessages = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('contact_messages')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setMessages(data || []);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      toast.error('Failed to load messages');
+    } finally {
+      setLoading(false);
     }
-  ]);
+  };
+
+  const markAsRead = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .update({ is_read: true })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      setMessages(prev => 
+        prev.map(msg => 
+          msg.id === id ? { ...msg, is_read: true } : msg
+        )
+      );
+      toast.success('Message marked as read');
+    } catch (error) {
+      console.error('Error updating message:', error);
+      toast.error('Failed to update message');
+    }
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading messages...</p>
+        </div>
+      </div>
+    );
+  }
 
   const unreadCount = messages.filter(msg => !msg.is_read).length;
   const totalCount = messages.length;
@@ -144,8 +181,10 @@ const MessagesManager = () => {
                       </div>
 
                       <div className="mb-3">
-                        <p className="font-medium text-sm mb-1">Subject: {message.subject}</p>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
+                        {message.subject && (
+                          <p className="font-medium text-sm mb-1">Subject: {message.subject}</p>
+                        )}
+                        <p className="text-sm text-muted-foreground line-clamp-3">
                           {message.message}
                         </p>
                       </div>
@@ -161,7 +200,11 @@ const MessagesManager = () => {
                         Reply
                       </Button>
                       {!message.is_read && (
-                        <Button size="sm" variant="ghost">
+                        <Button 
+                          size="sm" 
+                          variant="ghost"
+                          onClick={() => markAsRead(message.id)}
+                        >
                           <Check className="w-4 h-4 mr-2" />
                           Mark Read
                         </Button>

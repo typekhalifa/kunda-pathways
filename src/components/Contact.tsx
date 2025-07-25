@@ -7,25 +7,51 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const Contact = () => {
   const { translations } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert(translations.messageSent || 'Message sent successfully!');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || null,
+            subject: formData.subject,
+            message: formData.message,
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast.success(translations.messageSent || 'Message sent successfully!');
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -68,19 +94,32 @@ const Contact = () => {
                     />
                   </div>
                   
-                  <div>
-                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-                      {translations.yourEmail || "Your Email"}
-                    </label>
-                    <Input 
-                      type="email" 
-                      placeholder={translations.yourEmail || "Your Email"}
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      required
-                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
-                    />
-                  </div>
+                   <div>
+                     <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                       {translations.yourEmail || "Your Email"}
+                     </label>
+                     <Input 
+                       type="email" 
+                       placeholder={translations.yourEmail || "Your Email"}
+                       value={formData.email}
+                       onChange={(e) => handleInputChange('email', e.target.value)}
+                       required
+                       className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+                     />
+                   </div>
+
+                   <div>
+                     <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                       {translations.phoneNumber || "Phone Number (Optional)"}
+                     </label>
+                     <Input 
+                       type="tel" 
+                       placeholder={translations.phoneNumber || "Phone Number"}
+                       value={formData.phone}
+                       onChange={(e) => handleInputChange('phone', e.target.value)}
+                       className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-xl"
+                     />
+                   </div>
 
                   <div>
                     <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
@@ -114,9 +153,13 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl">
-                    {translations.sendMessage || "Send Message"}
-                  </Button>
+                   <Button 
+                     type="submit" 
+                     disabled={isSubmitting}
+                     className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white py-3 rounded-xl"
+                   >
+                     {isSubmitting ? 'Sending...' : (translations.sendMessage || "Send Message")}
+                   </Button>
                 </form>
               </CardContent>
             </Card>

@@ -29,6 +29,7 @@ import { Link } from 'react-router-dom';
 const AdminDashboard = () => {
   const { profile, signOut } = useAuth();
   const [consultationCount, setConsultationCount] = useState(0);
+  const [messageCount, setMessageCount] = useState(0);
   const [showSignOutDialog, setShowSignOutDialog] = useState(false);
 
   useEffect(() => {
@@ -47,7 +48,21 @@ const AdminDashboard = () => {
       }
     };
 
+    const fetchMessageCount = async () => {
+      try {
+        const { count, error } = await supabase
+          .from('contact_messages')
+          .select('*', { count: 'exact', head: true });
+        
+        if (error) throw error;
+        setMessageCount(count || 0);
+      } catch (error) {
+        console.error('Error fetching message count:', error);
+      }
+    };
+
     fetchConsultationCount();
+    fetchMessageCount();
   }, []);
 
 
@@ -159,7 +174,7 @@ const AdminDashboard = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">0</div>
+              <div className="text-3xl font-bold">{messageCount}</div>
               <p className="text-orange-100 text-sm">New inquiries</p>
             </CardContent>
           </Card>
