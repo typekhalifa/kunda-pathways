@@ -97,9 +97,9 @@ const AdminDashboard = () => {
     const fetchTotalRevenue = async () => {
       try {
         const [studyRes, fbRes, extraRes] = await Promise.all([
-          supabase.from('study_abroad_bookings').select('total_price, payment_status'),
-          supabase.from('fb_consultation_bookings').select('total_price, payment_status'),
-          supabase.from('extra_service_bookings').select('total_price, payment_status'),
+          supabase.from('study_abroad_bookings').select('total_price, payment_status, status'),
+          supabase.from('fb_consultation_bookings').select('total_price, payment_status, status'),
+          supabase.from('extra_service_bookings').select('total_price, payment_status, status'),
         ]);
 
         const allBookings = [
@@ -108,8 +108,12 @@ const AdminDashboard = () => {
           ...(extraRes.data || [])
         ];
 
+        // Only count revenue from existing bookings that are confirmed/completed and paid
         const revenue = allBookings
-          .filter(b => b.payment_status === 'completed' || b.payment_status === 'paid')
+          .filter(b => 
+            (b.payment_status === 'completed' || b.payment_status === 'paid') &&
+            (b.status === 'confirmed' || b.status === 'completed')
+          )
           .reduce((sum, b) => sum + (parseFloat(String(b.total_price)) || 0), 0);
 
         setTotalRevenue(revenue);

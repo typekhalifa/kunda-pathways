@@ -399,95 +399,241 @@ const ConsultationsManager = () => {
 
       {/* View Details Dialog */}
       <Dialog open={viewDetailsOpen} onOpenChange={setViewDetailsOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Consultation Details</DialogTitle>
-            <DialogDescription>
-              Complete information for this consultation booking
-            </DialogDescription>
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader className="pb-6 border-b border-border/50">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <Calendar className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Consultation Details
+                </DialogTitle>
+                <DialogDescription className="text-base mt-1">
+                  Complete information for this consultation booking
+                </DialogDescription>
+              </div>
+            </div>
           </DialogHeader>
+          
           {selectedConsultation && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-semibold mb-2">Client Information</h4>
-                  <div className="space-y-2 text-sm">
-                    <p><strong>Name:</strong> {selectedConsultation.full_name}</p>
-                    <p><strong>Email:</strong> {selectedConsultation.email}</p>
-                    {selectedConsultation.phone && <p><strong>Phone:</strong> {selectedConsultation.phone}</p>}
-                    {selectedConsultation.company_name && <p><strong>Company:</strong> {selectedConsultation.company_name}</p>}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Booking Details</h4>
-                  <div className="space-y-2 text-sm">
-                    <p><strong>Type:</strong> {selectedConsultation.booking_type}</p>
-                    <p><strong>Date:</strong> {selectedConsultation.preferred_date}</p>
-                    <p><strong>Time:</strong> {selectedConsultation.preferred_time}</p>
-                    <p><strong>Price:</strong> ${selectedConsultation.total_price}</p>
-                  </div>
-                </div>
+            <div className="space-y-8 py-6">
+              {/* Header with Key Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-800 rounded-xl">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Calendar className="w-8 h-8 text-blue-600" />
+                      <div>
+                        <p className="text-sm font-medium text-blue-700 dark:text-blue-300">Date</p>
+                        <p className="text-lg font-bold text-blue-900 dark:text-blue-100">
+                          {selectedConsultation.preferred_date ? 
+                            new Date(selectedConsultation.preferred_date).toLocaleDateString() : 'N/A'}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-purple-200 dark:border-purple-800 rounded-xl">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Clock className="w-8 h-8 text-purple-600" />
+                      <div>
+                        <p className="text-sm font-medium text-purple-700 dark:text-purple-300">Time</p>
+                        <p className="text-lg font-bold text-purple-900 dark:text-purple-100">
+                          {selectedConsultation.preferred_time || 'N/A'}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 border-emerald-200 dark:border-emerald-800 rounded-xl">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <DollarSign className="w-8 h-8 text-emerald-600" />
+                      <div>
+                        <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">Price</p>
+                        <p className="text-lg font-bold text-emerald-900 dark:text-emerald-100">
+                          ${selectedConsultation.total_price || 0}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 border-amber-200 dark:border-amber-800 rounded-xl">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <Badge className={getStatusColor(selectedConsultation.status)}>
+                        {selectedConsultation.status}
+                      </Badge>
+                      <div className="ml-2">
+                        <Badge className={getPaymentStatusColor(selectedConsultation.payment_status)}>
+                          {selectedConsultation.payment_status}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Main Content Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Client Information */}
+                <Card className="rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-shadow">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                        <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      Client Information
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wide">Full Name</p>
+                          <p className="font-semibold">{selectedConsultation.full_name}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                        <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wide">Email Address</p>
+                          <p className="font-semibold break-all">{selectedConsultation.email}</p>
+                        </div>
+                      </div>
+                      
+                      {selectedConsultation.phone && (
+                        <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                          <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                          <div>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wide">Phone Number</p>
+                            <p className="font-semibold">{selectedConsultation.phone}</p>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {selectedConsultation.company_name && (
+                        <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                          <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                          <div>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wide">Company</p>
+                            <p className="font-semibold">{selectedConsultation.company_name}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Booking Details */}
+                <Card className="rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-shadow">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                        <Calendar className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                      </div>
+                      Booking Details
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                        <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wide">Service Type</p>
+                          <p className="font-semibold">{selectedConsultation.booking_type}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wide">Created Date</p>
+                          <p className="font-semibold">
+                            {new Date(selectedConsultation.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
               
-              <div>
-                <h4 className="font-semibold mb-2">Service Details</h4>
-                <p className="text-sm bg-muted p-3 rounded">
-                  {selectedConsultation.service_type}
-                </p>
-              </div>
+              {/* Service Details */}
+              <Card className="rounded-xl border border-border/50 shadow-sm">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center">
+                      <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    Service Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                    <p className="text-sm font-medium leading-relaxed">
+                      {selectedConsultation.service_type}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
 
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <h4 className="font-semibold mb-2">Status</h4>
-                  <Badge className={getStatusColor(selectedConsultation.status)}>
-                    {selectedConsultation.status}
-                  </Badge>
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-semibold mb-2">Payment Status</h4>
-                  <Badge className={getPaymentStatusColor(selectedConsultation.payment_status)}>
-                    {selectedConsultation.payment_status}
-                  </Badge>
-                </div>
-              </div>
-
+              {/* Message Section */}
               {selectedConsultation.message && (
-                <div>
-                  <h4 className="font-semibold mb-2">Message</h4>
-                  <p className="text-sm bg-muted p-3 rounded">
-                    {selectedConsultation.message}
-                  </p>
-                </div>
+                <Card className="rounded-xl border border-border/50 shadow-sm">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
+                        <Mail className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                      </div>
+                      Additional Message
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl border border-amber-200 dark:border-amber-800">
+                      <p className="text-sm leading-relaxed italic">
+                        "{selectedConsultation.message}"
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
               )}
 
-              <div className="flex gap-2 pt-4 border-t">
-                {selectedConsultation.status === 'pending' && (
-                  <>
-                    <Button 
-                      variant="default"
-                      onClick={() => {
-                        handleStatusUpdate(selectedConsultation, 'confirmed');
-                        setViewDetailsOpen(false);
-                      }}
-                      disabled={actionLoading}
-                    >
-                      <Check className="w-4 h-4 mr-2" />
-                      Confirm Booking
-                    </Button>
-                    <Button 
-                      variant="destructive"
-                      onClick={() => {
-                        handleStatusUpdate(selectedConsultation, 'cancelled');
-                        setViewDetailsOpen(false);
-                      }}
-                      disabled={actionLoading}
-                    >
-                      <X className="w-4 h-4 mr-2" />
-                      Cancel Booking
-                    </Button>
-                  </>
-                )}
-              </div>
+              {/* Action Buttons */}
+              {selectedConsultation.status === 'pending' && (
+                <div className="flex gap-3 pt-6 border-t border-border/50">
+                  <Button 
+                    className="flex-1 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    onClick={() => {
+                      handleStatusUpdate(selectedConsultation, 'confirmed');
+                      setViewDetailsOpen(false);
+                    }}
+                    disabled={actionLoading}
+                  >
+                    <Check className="w-5 h-5 mr-2" />
+                    Confirm & Mark as Paid
+                  </Button>
+                  <Button 
+                    variant="destructive"
+                    className="flex-1 rounded-xl py-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    onClick={() => {
+                      handleStatusUpdate(selectedConsultation, 'cancelled');
+                      setViewDetailsOpen(false);
+                    }}
+                    disabled={actionLoading}
+                  >
+                    <X className="w-5 h-5 mr-2" />
+                    Cancel Booking
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </DialogContent>

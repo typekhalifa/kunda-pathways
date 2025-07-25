@@ -57,6 +57,10 @@ export const useConsultationActions = () => {
         : `Booking ${status} successfully`;
         
       toast.success(statusMessage);
+      
+      // Trigger dashboard update
+      window.dispatchEvent(new CustomEvent('bookingUpdated'));
+      
       return true;
     } catch (error) {
       console.error('Error updating consultation:', error);
