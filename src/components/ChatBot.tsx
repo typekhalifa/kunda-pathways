@@ -1,7 +1,7 @@
 
-import { useState } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, X, Send } from "lucide-react";
+import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
@@ -11,19 +11,48 @@ const ChatBot = () => {
     { text: "Hello! I'm Aria, your Kunda Pathways Assistant. I'm here to help you with study abroad opportunities in Korea and F&B consulting services. How can I assist you today?", isBot: true }
   ]);
   const [inputMessage, setInputMessage] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Enhanced AI knowledge base for the bot
-  const getResponse = (userMessage: string) => {
-    const message = userMessage.toLowerCase();
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Sanitize input to prevent XSS
+  const sanitizeInput = useCallback((input: string) => {
+    return input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                .replace(/javascript:/gi, '')
+                .replace(/on\w+\s*=/gi, '')
+                .trim();
+  }, []);
+
+  // Enhanced AI knowledge base with better intent matching
+  const getResponse = useCallback((userMessage: string) => {
+    const message = userMessage.toLowerCase().trim();
     
-    // 1. How to book consultation
-    if (message.includes('book') && (message.includes('consultation') || message.includes('appointment'))) {
-      return "To book a consultation, here are the steps: 1) Click the 'Book Now' button on our website, 2) Select your preferred service (Study Abroad or F&B Consulting), 3) Choose your preferred date and time from available slots, 4) Fill in your contact details, 5) Confirm your booking. You'll receive a confirmation email with meeting details. You can also call us at +250 788 123 456 or WhatsApp us for direct booking assistance!";
+    // Multi-keyword matching for better intent detection
+    const hasKeywords = (keywords: string[]) => 
+      keywords.some(keyword => message.includes(keyword.toLowerCase()));
+    
+    const hasAllKeywords = (keywords: string[]) => 
+      keywords.every(keyword => message.includes(keyword.toLowerCase()));
+    
+    // 1. How to book consultation - Enhanced matching
+    if (hasKeywords(['book', 'schedule', 'appointment']) || 
+        hasAllKeywords(['how', 'book']) || 
+        hasKeywords(['consultation', 'meeting']) && hasKeywords(['book', 'schedule'])) {
+      return "📅 **How to Book Your Consultation:**\n\n✅ **Quick Steps:**\n1️⃣ Click the 'Book Now' button on our website\n2️⃣ Select your preferred service (Study Abroad or F&B Consulting)\n3️⃣ Choose your preferred date and time\n4️⃣ Fill in your contact details\n5️⃣ Confirm your booking\n\n📧 You'll receive instant confirmation via email!\n\n🚀 **Need faster booking?** Call/WhatsApp: +250 788 123 456\n\nReady to get started? What service interests you most?";
     }
     
-    // 2. What services do you offer / List of services
-    if ((message.includes('what') && message.includes('services')) || message.includes('list') || message.includes('offer')) {
-      return "We offer three main service categories:\n\n📚 **Study Abroad Consulting:**\n- University admissions support\n- Scholarship guidance (KGSP & others)\n- Visa applications\n- Korean language training\n\n🍽️ **F&B Market Entry Support:**\n- Business planning & strategy\n- Market analysis & research\n- Menu development\n- Regulatory compliance\n\n⭐ **Extra Services:**\n- Visa support\n- Document translation\n- Cultural orientation\n- Post-arrival support\n\nWhich service interests you most?";
+    // 2. Services offered - Better intent detection
+    if (hasKeywords(['what', 'services']) || 
+        hasKeywords(['list', 'services']) || 
+        hasKeywords(['offer', 'provide']) || 
+        hasKeywords(['help', 'with']) ||
+        message.includes('what can you do') ||
+        message.includes('what do you do')) {
+      return "🌟 **Our Complete Service Portfolio:**\n\n📚 **Study Abroad Consulting:**\n• University admissions & application support\n• KGSP & scholarship guidance (85%+ success rate)\n• Visa applications & document preparation\n• Korean language training & TOPIK prep\n• Post-arrival support in Korea\n\n🍽️ **F&B Market Entry Support:**\n• Complete business planning & strategy\n• Market research & competitive analysis\n• Menu development & food regulations\n• Operational setup & compliance\n• Korean market entry expertise\n\n⭐ **Additional Services:**\n• Document translation & apostille\n• Cultural orientation programs\n• Emergency visa support\n• Academic transcript evaluation\n\n💡 **Which area interests you most?** I can provide detailed information!";
     }
     
     // 3. Pricing questions
@@ -99,23 +128,44 @@ const ChatBot = () => {
       return "Thank you for chatting with me! 👋 Before you go, remember our FREE 15-minute consultation offer. Whether it's studying in Korea or F&B consulting, we're here to support your dreams. Have a wonderful day!";
     }
     
-    // Default response with call-to-action
-    return "That's a great question! 🤔 I'd love to provide you with detailed, personalized information. For comprehensive guidance tailored to your specific situation, I recommend scheduling a FREE 15-minute consultation with our expert advisors. Would you be interested in booking this consultation? I can help you schedule it right now! 📅";
-  };
-
-  const handleSendMessage = () => {
-    if (!inputMessage.trim()) return;
-
-    setMessages(prev => [...prev, { text: inputMessage, isBot: false }]);
+    // Default response with smart suggestions
+    const commonQuestions = [
+      "📅 How to book a consultation",
+      "🏷️ Service pricing information", 
+      "💳 Payment methods accepted",
+      "📍 Our location & contact info",
+      "🎓 Korean university applications",
+      "🍽️ F&B business consulting"
+    ];
     
-    // Generate intelligent response
-    setTimeout(() => {
-      const response = getResponse(inputMessage);
-      setMessages(prev => [...prev, { text: response, isBot: true }]);
-    }, 1000);
+    return `I'd be happy to help! 🤖 Here are some topics I can assist with:\n\n${commonQuestions.join('\n')}\n\n💬 **Just ask me about any of these, or feel free to ask anything else!**\n\n🆓 **Remember:** We offer FREE 15-minute consultations with our expert advisors. Would you like me to help you schedule one?`;
+  }, []);
 
+  const handleSendMessage = useCallback(() => {
+    const sanitizedInput = sanitizeInput(inputMessage);
+    if (!sanitizedInput.trim()) return;
+
+    // Add user message immediately
+    setMessages(prev => [...prev, { text: sanitizedInput, isBot: false }]);
     setInputMessage("");
-  };
+    setIsTyping(true);
+    
+    // Simulate more natural response timing (300-800ms)
+    const responseTime = Math.random() * 500 + 300;
+    
+    setTimeout(() => {
+      const response = getResponse(sanitizedInput);
+      setMessages(prev => [...prev, { text: response, isBot: true }]);
+      setIsTyping(false);
+    }, responseTime);
+  }, [inputMessage, sanitizeInput, getResponse]);
+
+  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  }, [handleSendMessage]);
 
   return (
     <>
@@ -150,10 +200,10 @@ const ChatBot = () => {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
+                className={`flex ${message.isBot ? 'justify-start' : 'justify-end'} animate-in slide-in-from-bottom-2 duration-300`}
               >
                 <div
-                  className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${
+                  className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-line ${
                     message.isBot
                       ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 shadow-sm border border-slate-200 dark:border-slate-600'
                       : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md'
@@ -163,6 +213,17 @@ const ChatBot = () => {
                 </div>
               </div>
             ))}
+            
+            {/* Typing indicator */}
+            {isTyping && (
+              <div className="flex justify-start animate-in slide-in-from-bottom-2 duration-300">
+                <div className="bg-white dark:bg-slate-700 p-3 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-600 flex items-center space-x-2">
+                  <Loader2 className="h-4 w-4 animate-spin text-purple-600" />
+                  <span className="text-sm text-slate-600 dark:text-slate-300">Aria is typing...</span>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input */}
@@ -172,15 +233,18 @@ const ChatBot = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Type your message..."
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                className="flex-1 rounded-xl border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
+                onKeyDown={handleKeyPress}
+                disabled={isTyping}
+                maxLength={1000}
+                className="flex-1 rounded-xl border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm disabled:opacity-50"
               />
               <Button 
                 onClick={handleSendMessage}
                 size="sm"
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-xl px-4 shadow-md hover:shadow-lg transition-all duration-200"
+                disabled={isTyping || !inputMessage.trim()}
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-xl px-4 shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send size={16} />
+                {isTyping ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
               </Button>
             </div>
           </div>
