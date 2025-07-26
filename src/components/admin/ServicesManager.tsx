@@ -40,7 +40,7 @@ const ServicesManager = () => {
   const categories = [
     { value: 'study-abroad', label: 'Study Abroad', icon: '🎓', color: 'from-blue-500 to-blue-600' },
     { value: 'fb-consulting', label: 'F&B Consulting', icon: '🍽️', color: 'from-green-500 to-green-600' },
-    { value: 'extra-services', label: 'Extra Services', icon: '⭐', color: 'from-purple-500 to-purple-600' },
+    { value: 'extra-services', label: 'Additional Services', icon: '⭐', color: 'from-purple-500 to-purple-600' },
   ];
 
   // Categorize services for better display
