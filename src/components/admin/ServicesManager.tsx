@@ -51,8 +51,10 @@ const ServicesManager = ({ filterCategory = 'individual' }: ServicesManagerProps
   // Filter services by category based on the filterCategory prop
   const filteredServices = services.filter(service => {
     if (filterCategory === 'individual') {
-      return service.category === 'study-abroad' || service.category === 'extra-services';
+      // Individual Services: for all-services page (study-abroad, fb-consulting, extra-services)
+      return service.category === 'study-abroad' || service.category === 'fb-consulting' || service.category === 'extra-services';
     } else {
+      // General Services: for fb-consulting and study-programs pages
       return service.category === 'fb-consulting' || service.category === 'study-programs';
     }
   });
