@@ -227,8 +227,8 @@ const AllServices = () => {
                       ))}
                     </ul>
                       <Link to={
-                        pkg.name.toLowerCase().includes("study") ? "/book/complete-package" :
-                        pkg.name.toLowerCase().includes("f&b") ? "/book/fb-package" :
+                        pkg.name.toLowerCase().includes("study") ? "/complete-package" :
+                        pkg.name.toLowerCase().includes("f&b") ? "/fb-complete-package" :
                         "/book-consultation"
                       }>
                         <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
