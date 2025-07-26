@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, CreditCard, Smartphone, Building, Plane } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const BookExtraServices = () => {
   const { translations } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
+  const [extraServices, setExtraServices] = useState<Array<{id: string, name: string, price: number}>>([]);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -23,12 +26,35 @@ const BookExtraServices = () => {
     preferredTime: ''
   });
 
-  const extraServices = [
-    { id: 'hotel', name: 'Hotel Booking Assistance', price: 60 },
-    { id: 'phone', name: 'Phone Consultation', price: 20 },
-    { id: 'airport', name: 'Airport Pickup Service', price: 50 },
-    { id: 'orientation', name: 'Cultural Orientation', price: 120 }
-  ];
+  useEffect(() => {
+    fetchExtraServices();
+  }, []);
+
+  const fetchExtraServices = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .eq('category', 'extra-services')
+        .eq('is_active', true)
+        .order('name');
+
+      if (error) throw error;
+
+      const formattedServices = data.map(service => ({
+        id: service.id,
+        name: service.name,
+        price: Number(service.price)
+      }));
+
+      setExtraServices(formattedServices);
+    } catch (error) {
+      console.error('Error fetching extra services:', error);
+      toast.error('Failed to load services');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -55,6 +81,22 @@ const BookExtraServices = () => {
       extraServices.find(s => s.id === id)
     ).filter(Boolean);
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+        <Header />
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <p className="text-slate-600 dark:text-slate-300">Loading services...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
