@@ -174,7 +174,7 @@ const ServicesManager = ({ filterCategory = 'individual' }: ServicesManagerProps
 
   const getFilteredCategories = () => {
     if (filterCategory === 'individual') {
-      return categories.filter(c => c.value === 'study-abroad' || c.value === 'extra-services');
+      return categories.filter(c => c.value === 'study-abroad' || c.value === 'fb-consulting' || c.value === 'extra-services');
     } else {
       return categories.filter(c => c.value === 'fb-consulting' || c.value === 'study-programs');
     }
@@ -237,19 +237,19 @@ const ServicesManager = ({ filterCategory = 'individual' }: ServicesManagerProps
                     value={formData.category}
                     onValueChange={(value) => setFormData({ ...formData, category: value })}
                   >
-                    <SelectTrigger className="rounded-xl border-2 focus:border-primary bg-background">
+                    <SelectTrigger className="rounded-xl border-2 focus:border-primary bg-white dark:bg-slate-800 shadow-sm">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl border-2 bg-background shadow-lg z-50">
+                    <SelectContent className="rounded-xl border-2 bg-white dark:bg-slate-800 shadow-xl z-[9999] min-w-[200px]">
                       {getFilteredCategories().map((category) => (
                         <SelectItem 
                           key={category.value} 
                           value={category.value}
-                          className="rounded-lg hover:bg-accent focus:bg-accent cursor-pointer"
+                          className="rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 cursor-pointer py-3 px-4"
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">{category.icon}</span>
-                            <span>{category.label}</span>
+                          <div className="flex items-center gap-3">
+                            <span className="text-xl">{category.icon}</span>
+                            <span className="font-medium text-slate-700 dark:text-slate-200">{category.label}</span>
                           </div>
                         </SelectItem>
                       ))}
@@ -291,17 +291,17 @@ const ServicesManager = ({ filterCategory = 'individual' }: ServicesManagerProps
                     value={formData.currency}
                     onValueChange={(value) => setFormData({ ...formData, currency: value })}
                   >
-                    <SelectTrigger className="rounded-xl border-2 focus:border-primary bg-background">
+                    <SelectTrigger className="rounded-xl border-2 focus:border-primary bg-white dark:bg-slate-800 shadow-sm">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl border-2 bg-background shadow-lg z-50">
+                    <SelectContent className="rounded-xl border-2 bg-white dark:bg-slate-800 shadow-xl z-[9999] min-w-[120px]">
                       {currencies.map((currency) => (
                         <SelectItem 
                           key={currency.value} 
                           value={currency.value}
-                          className="rounded-lg hover:bg-accent focus:bg-accent cursor-pointer"
+                          className="rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 cursor-pointer py-2 px-3"
                         >
-                          {currency.label}
+                          <span className="font-medium text-slate-700 dark:text-slate-200">{currency.label}</span>
                         </SelectItem>
                       ))}
                     </SelectContent>
