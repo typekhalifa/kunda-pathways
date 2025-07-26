@@ -27,6 +27,7 @@ const ServicesManager = () => {
   const [loading, setLoading] = useState(true);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [activeTab, setActiveTab] = useState<'individual' | 'packages' | 'general'>('individual');
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -44,23 +45,9 @@ const ServicesManager = () => {
     { value: 'extra-services', label: 'Additional Services', icon: '⭐', color: 'from-purple-500 to-purple-600' },
   ];
 
-  // Categorize services for better display
-  const categorizeServices = () => {
-    const grouped = services.reduce((acc, service) => {
-      if (!acc[service.category]) {
-        acc[service.category] = [];
-      }
-      acc[service.category].push(service);
-      return acc;
-    }, {} as Record<string, Service[]>);
-    return grouped;
-  };
-
-  const groupedServices = categorizeServices();
-  
-  // Filter services for different sections
-  const individualServicesData = services.filter(s => s.category === 'study-abroad' || s.category === 'extra-services');
-  const generalServicesData = services.filter(s => s.category === 'fb-consulting' || s.category === 'study-programs');
+  // Filter services by category for different tabs
+  const individualServices = services.filter(s => s.category === 'study-abroad' || s.category === 'extra-services');
+  const generalServices = services.filter(s => s.category === 'fb-consulting' || s.category === 'study-programs');
 
   const getCategoryInfo = (categoryValue: string) => {
     return categories.find(c => c.value === categoryValue) || 
@@ -195,6 +182,40 @@ const ServicesManager = () => {
         </Button>
       </div>
 
+      {/* Tab Navigation */}
+      <div className="flex space-x-4 border-b border-gray-200">
+        <button
+          onClick={() => setActiveTab('individual')}
+          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
+            activeTab === 'individual'
+              ? 'border-blue-500 text-blue-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Individual Services
+        </button>
+        <button
+          onClick={() => setActiveTab('packages')}
+          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
+            activeTab === 'packages'
+              ? 'border-blue-500 text-blue-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Package Deals
+        </button>
+        <button
+          onClick={() => setActiveTab('general')}
+          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
+            activeTab === 'general'
+              ? 'border-blue-500 text-blue-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          General Services
+        </button>
+      </div>
+
       {showAddForm && (
         <Card className="border-blue-200 bg-blue-50 rounded-3xl border-2 shadow-lg">
           <CardHeader>
@@ -326,143 +347,132 @@ const ServicesManager = () => {
         </Card>
       )}
 
-      {/* Individual Services Section */}
-      <div className="space-y-6">
-        <div className="bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 rounded-2xl">
-          <h3 className="text-2xl font-bold flex items-center">
-            <span className="text-3xl mr-3">⚡</span>
-            Individual Services
-            <Badge variant="secondary" className="ml-3 text-slate-700">
-              {individualServicesData.length} services
-            </Badge>
-          </h3>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {individualServicesData.map((service) => (
-            <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="text-lg">{service.name}</CardTitle>
-                    <div className="flex items-center space-x-2 mt-2">
-                      <Badge variant={service.is_active ? "default" : "destructive"}>
-                        {service.is_active ? "Active" : "Inactive"}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        {getCategoryInfo(service.category).label}
-                      </Badge>
+      {/* Tab Content */}
+      {activeTab === 'individual' && (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {individualServices.map((service) => (
+              <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-lg">{service.name}</CardTitle>
+                      <div className="flex items-center space-x-2 mt-2">
+                        <Badge variant={service.is_active ? "default" : "destructive"}>
+                          {service.is_active ? "Active" : "Inactive"}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {getCategoryInfo(service.category).label}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="flex space-x-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(service)}
+                        className="hover:bg-blue-50 rounded-xl"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(service.id)}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
                     </div>
                   </div>
-                  <div className="flex space-x-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleEdit(service)}
-                      className="hover:bg-blue-50 rounded-xl"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(service.id)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="mb-4 text-sm">
+                    {service.description}
+                  </CardDescription>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center text-lg font-semibold text-green-600">
+                      <DollarSign className="w-4 h-4 mr-1" />
+                      {service.price} {service.currency}
+                    </div>
+                    {service.duration && (
+                      <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
+                        {service.duration}
+                      </span>
+                    )}
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="mb-4 text-sm">
-                  {service.description}
-                </CardDescription>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center text-lg font-semibold text-green-600">
-                    <DollarSign className="w-4 h-4 mr-1" />
-                    {service.price} {service.currency}
-                  </div>
-                  {service.duration && (
-                    <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
-                      {service.duration}
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* General Services Section */}
-      <div className="space-y-6">
-        <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-4 rounded-2xl">
-          <h3 className="text-2xl font-bold flex items-center">
-            <span className="text-3xl mr-3">🏢</span>
-            General Services
-            <Badge variant="secondary" className="ml-3 text-slate-700">
-              {generalServicesData.length} services
-            </Badge>
-          </h3>
+      {activeTab === 'packages' && (
+        <div className="text-center py-8">
+          <p className="text-slate-500">Package management coming soon...</p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {generalServicesData.map((service) => (
-            <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="text-lg">{service.name}</CardTitle>
-                    <div className="flex items-center space-x-2 mt-2">
-                      <Badge variant={service.is_active ? "default" : "destructive"}>
-                        {service.is_active ? "Active" : "Inactive"}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        {getCategoryInfo(service.category).label}
-                      </Badge>
+      )}
+
+      {activeTab === 'general' && (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {generalServices.map((service) => (
+              <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-lg">{service.name}</CardTitle>
+                      <div className="flex items-center space-x-2 mt-2">
+                        <Badge variant={service.is_active ? "default" : "destructive"}>
+                          {service.is_active ? "Active" : "Inactive"}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {getCategoryInfo(service.category).label}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="flex space-x-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(service)}
+                        className="hover:bg-blue-50 rounded-xl"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(service.id)}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
                     </div>
                   </div>
-                  <div className="flex space-x-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleEdit(service)}
-                      className="hover:bg-blue-50 rounded-xl"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDelete(service.id)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="mb-4 text-sm">
+                    {service.description}
+                  </CardDescription>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center text-lg font-semibold text-green-600">
+                      <DollarSign className="w-4 h-4 mr-1" />
+                      {service.price} {service.currency}
+                    </div>
+                    {service.duration && (
+                      <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
+                        {service.duration}
+                      </span>
+                    )}
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="mb-4 text-sm">
-                  {service.description}
-                </CardDescription>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center text-lg font-semibold text-green-600">
-                    <DollarSign className="w-4 h-4 mr-1" />
-                    {service.price} {service.currency}
-                  </div>
-                  {service.duration && (
-                    <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
-                      {service.duration}
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {services.length === 0 && !loading && (
         <Card className="text-center p-8">
