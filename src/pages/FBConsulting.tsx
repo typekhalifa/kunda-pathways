@@ -6,103 +6,109 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Utensils, TrendingUp, Globe, BarChart, Shield, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 const FBConsulting = () => {
   const { translations } = useLanguage();
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const consultingServices = [
-    {
-      id: 1,
-      title: translations.marketEntryStrategyService || "Market Entry Strategy",
-      price: "$2,500",
-      duration: translations.twoToThreeWeeks || "2-3 weeks",
-      icon: <Globe className="w-8 h-8 text-blue-600" />,
-      description: translations.marketEntryStrategyDesc || "Comprehensive market analysis and entry strategy for Asian F&B markets",
-      features: [
-        translations.marketSizing || "Market size analysis",
-        translations.competitorAnalysis || "Competitor landscape mapping", 
-        translations.strategyDevelopment || "Entry strategy development",
-        "Risk assessment",
-        "Timeline and milestones"
-      ]
-    },
-    {
-      id: 2,
-      title: "Regulatory Compliance",
-      price: "$1,800",
-      duration: "1-2 weeks",
-      icon: <Shield className="w-8 h-8 text-green-600" />,
-      description: "Navigate complex food safety regulations across Asian markets",
-      features: [
-        "Regulatory requirements analysis",
-        "Documentation preparation",
-        "Compliance roadmap",
-        "Certification guidance",
-        "Ongoing support"
-      ]
-    },
-    {
-      id: 3,
-      title: "Food Product Development",
-      price: "$3,200",
-      duration: "4-6 weeks",
-      icon: <TrendingUp className="w-8 h-8 text-purple-600" />,
-      description: "Develop products tailored for Asian consumer preferences",
-      features: [
-        "Consumer preference research",
-        "Recipe adaptation",
-        "Nutritional optimization",
-        "Food quality control",
-        "Packaging design guidance",
-        "Test market strategy"
-      ]
-    },
-    {
-      id: 4,
-      title: "Supply Chain Optimization",
-      price: "$2,200",
-      duration: "2-4 weeks",
-      icon: <BarChart className="w-8 h-8 text-orange-600" />,
-      description: "Optimize your supply chain for Asian market efficiency",
-      features: [
-        "Supplier identification",
-        "Cost optimization",
-        "Quality assurance",
-        "Logistics planning",
-        "Risk mitigation"
-      ]
-    },
-    {
-      id: 5,
-      title: "Brand Localization",
-      price: "$1,500",
-      duration: "1-3 weeks",
-      icon: <Users className="w-8 h-8 text-pink-600" />,
-      description: "Adapt your brand for local Asian markets",
-      features: [
-        "Cultural adaptation strategy",
-        "Brand messaging localization",
-        "Visual identity adjustment",
-        "Marketing channel selection",
-        "Launch campaign planning"
-      ]
-    },
-    {
-      id: 6,
-      title: "Partnership & Distribution",
-      price: "$2,800",
-      duration: "3-5 weeks",
-      icon: <Utensils className="w-8 h-8 text-red-600" />,
-      description: "Connect with local partners and establish distribution networks",
-      features: [
-        "Partner identification",
-        "Due diligence support",
-        "Contract negotiation guidance",
-        "Distribution strategy",
-        "Relationship management"
-      ]
+  const getServiceIcon = (name) => {
+    switch (name.toLowerCase()) {
+      case 'market entry strategy':
+        return <Globe className="w-8 h-8 text-blue-600" />;
+      case 'regulatory compliance':
+        return <Shield className="w-8 h-8 text-green-600" />;
+      case 'food product development':
+        return <TrendingUp className="w-8 h-8 text-purple-600" />;
+      case 'supply chain optimization':
+        return <BarChart className="w-8 h-8 text-orange-600" />;
+      case 'brand localization':
+        return <Users className="w-8 h-8 text-pink-600" />;
+      case 'partnership & distribution':
+        return <Utensils className="w-8 h-8 text-red-600" />;
+      default:
+        return <Globe className="w-8 h-8 text-blue-600" />;
     }
-  ];
+  };
+
+  const getServiceFeatures = (name) => {
+    switch (name.toLowerCase()) {
+      case 'market entry strategy':
+        return [
+          translations.marketSizing || "Market size analysis",
+          translations.competitorAnalysis || "Competitor landscape mapping", 
+          translations.strategyDevelopment || "Entry strategy development",
+          "Risk assessment",
+          "Timeline and milestones"
+        ];
+      case 'regulatory compliance':
+        return [
+          "Regulatory requirements analysis",
+          "Documentation preparation",
+          "Compliance roadmap",
+          "Certification guidance",
+          "Ongoing support"
+        ];
+      case 'food product development':
+        return [
+          "Consumer preference research",
+          "Recipe adaptation",
+          "Nutritional optimization",
+          "Food quality control",
+          "Packaging design guidance",
+          "Test market strategy"
+        ];
+      case 'supply chain optimization':
+        return [
+          "Supplier identification",
+          "Cost optimization",
+          "Quality assurance",
+          "Logistics planning",
+          "Risk mitigation"
+        ];
+      case 'brand localization':
+        return [
+          "Cultural adaptation strategy",
+          "Brand messaging localization",
+          "Visual identity adjustment",
+          "Marketing channel selection",
+          "Launch campaign planning"
+        ];
+      case 'partnership & distribution':
+        return [
+          "Partner identification",
+          "Due diligence support",
+          "Contract negotiation guidance",
+          "Distribution strategy",
+          "Relationship management"
+        ];
+      default:
+        return ["Service details", "Professional support", "Expert guidance"];
+    }
+  };
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('services')
+          .select('*')
+          .eq('category', 'fb-consulting')
+          .eq('is_active', true);
+
+        if (error) throw error;
+        setServices(data || []);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -130,15 +136,20 @@ const FBConsulting = () => {
 
           {/* Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {consultingServices.map((service) => (
+            {loading ? (
+              <div className="col-span-full text-center py-8">
+                <div className="text-slate-600 dark:text-slate-400">Loading services...</div>
+              </div>
+            ) : (
+              services.map((service) => (
               <Card key={service.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
-                    {service.icon}
-                    <span className="text-2xl font-bold text-green-600">{service.price}</span>
+                    {getServiceIcon(service.name)}
+                    <span className="text-2xl font-bold text-green-600">${service.price}</span>
                   </div>
                   <CardTitle className="text-xl text-slate-800 dark:text-white mb-2">
-                    {service.title}
+                    {service.name}
                   </CardTitle>
                   <p className="text-slate-600 dark:text-slate-300 text-sm">
                     Duration: {service.duration}
@@ -152,7 +163,7 @@ const FBConsulting = () => {
                   <div className="mb-6">
                     <h4 className="font-semibold text-slate-800 dark:text-white mb-3">What's Included:</h4>
                     <ul className="space-y-2">
-                      {service.features.map((feature, index) => (
+                      {getServiceFeatures(service.name).map((feature, index) => (
                         <li key={index} className="flex items-start text-sm text-slate-600 dark:text-slate-300">
                           <div className="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
                           {feature}
@@ -168,7 +179,8 @@ const FBConsulting = () => {
                   </Link>
                 </CardContent>
               </Card>
-            ))}
+              ))
+            )}
           </div>
 
           {/* Package Deal */}
@@ -181,7 +193,7 @@ const FBConsulting = () => {
               <span className="text-4xl font-bold mr-4">$12,000</span>
               <span className="text-2xl line-through opacity-70">$16,000</span>
             </div>
-            <Link to="/book/fb-package">
+            <Link to="/fb-complete-package">
               <Button className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
                 Get Complete Package
               </Button>

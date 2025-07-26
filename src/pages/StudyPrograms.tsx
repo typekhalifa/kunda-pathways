@@ -6,64 +6,80 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, GraduationCap, CheckCircle, Users, Award, Globe, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 const StudyPrograms = () => {
   const { translations } = useLanguage();
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const programs = [
-    {
-      id: 1,
-      title: translations.scholarshipGuidance,
-      price: "$100",
-      duration: "1-2 weeks",
-      icon: <Award className="w-8 h-8 text-blue-600" />,
-      description: translations.scholarshipGuidanceDesc,
-      features: [
-        translations.scholarshipSearch,
-        translations.applicationAssistance,
-        translations.documentPreparation
-      ]
-    },
-    {
-      id: 2,
-      title: translations.universityAdmissions,
-      price: "$70", 
-      duration: "2-3 weeks",
-      icon: <GraduationCap className="w-8 h-8 text-green-600" />,
-      description: translations.universityAdmissionSupportDesc,
-      features: [
-        translations.universitySelection,
-        translations.applicationReview,
-        translations.interviewPreparation
-      ]
-    },
-    {
-      id: 3,
-      title: translations.visaApplicationAssistance,
-      price: "$100",
-      duration: "1 week", 
-      icon: <Globe className="w-8 h-8 text-purple-600" />,
-      description: translations.visaApplicationAssistanceDesc,
-      features: [
-        translations.documentPreparation,
-        translations.applicationFiling,
-        translations.interviewCoaching
-      ]
-    },
-    {
-      id: 4,
-      title: translations.koreanLanguagePreparation,
-      price: "$80/month",
-      duration: "Ongoing",
-      icon: <Users className="w-8 h-8 text-orange-600" />,
-      description: translations.languagePreparationDesc,
-      features: [
-        translations.topikPreparation,
-        translations.conversationPractice,
-        translations.culturalOrientation
-      ]
+  const getServiceIcon = (name) => {
+    switch (name.toLowerCase()) {
+      case 'scholarship guidance':
+        return <Award className="w-8 h-8 text-blue-600" />;
+      case 'university admissions':
+        return <GraduationCap className="w-8 h-8 text-green-600" />;
+      case 'visa application assistance':
+        return <Globe className="w-8 h-8 text-purple-600" />;
+      case 'korean language preparation':
+        return <Users className="w-8 h-8 text-orange-600" />;
+      default:
+        return <GraduationCap className="w-8 h-8 text-blue-600" />;
     }
-  ];
+  };
+
+  const getServiceFeatures = (name) => {
+    switch (name.toLowerCase()) {
+      case 'scholarship guidance':
+        return [
+          translations.scholarshipSearch || "Scholarship search assistance",
+          translations.applicationAssistance || "Application assistance",
+          translations.documentPreparation || "Document preparation"
+        ];
+      case 'university admissions':
+        return [
+          translations.universitySelection || "University selection",
+          translations.applicationReview || "Application review",
+          translations.interviewPreparation || "Interview preparation"
+        ];
+      case 'visa application assistance':
+        return [
+          translations.documentPreparation || "Document preparation",
+          translations.applicationFiling || "Application filing",
+          translations.interviewCoaching || "Interview coaching"
+        ];
+      case 'korean language preparation':
+        return [
+          translations.topikPreparation || "TOPIK preparation",
+          translations.conversationPractice || "Conversation practice",
+          translations.culturalOrientation || "Cultural orientation"
+        ];
+      default:
+        return ["Professional guidance", "Expert support", "Personalized assistance"];
+    }
+  };
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('services')
+          .select('*')
+          .eq('category', 'study-programs')
+          .eq('is_active', true);
+
+        if (error) throw error;
+        setServices(data || []);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -91,29 +107,34 @@ const StudyPrograms = () => {
 
           {/* Programs Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {programs.map((program) => (
-              <Card key={program.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            {loading ? (
+              <div className="col-span-full text-center py-8">
+                <div className="text-slate-600 dark:text-slate-400">Loading services...</div>
+              </div>
+            ) : (
+              services.map((service) => (
+              <Card key={service.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
-                    {program.icon}
-                    <span className="text-2xl font-bold text-blue-600">{program.price}</span>
+                    {getServiceIcon(service.name)}
+                    <span className="text-2xl font-bold text-blue-600">${service.price}</span>
                   </div>
                   <CardTitle className="text-xl text-slate-800 dark:text-white mb-2">
-                    {program.title}
+                    {service.name}
                   </CardTitle>
                   <p className="text-slate-600 dark:text-slate-300 text-sm">
-                    Duration: {program.duration}
+                    Duration: {service.duration}
                   </p>
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-600 dark:text-slate-300 mb-4">
-                    {program.description}
+                    {service.description}
                   </p>
                   
                   <div className="mb-6">
                     <h4 className="font-semibold text-slate-800 dark:text-white mb-3">What's Included:</h4>
                     <ul className="space-y-2">
-                      {program.features.map((feature, index) => (
+                      {getServiceFeatures(service.name).map((feature, index) => (
                         <li key={index} className="flex items-center text-sm text-slate-600 dark:text-slate-300">
                           <CheckCircle size={16} className="mr-3 text-green-500" />
                           {feature}
@@ -122,14 +143,15 @@ const StudyPrograms = () => {
                     </ul>
                   </div>
                   
-                  <Link to="/book/study-abroad">
+                  <Link to="/book-study-abroad-consultation">
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                      {translations.bookConsultation}
+                      {translations.bookConsultation || "Book Consultation"}
                     </Button>
                   </Link>
                 </CardContent>
               </Card>
-            ))}
+              ))
+            )}
           </div>
 
           {/* Complete Package */}
@@ -142,7 +164,7 @@ const StudyPrograms = () => {
               <span className="text-4xl font-bold mr-4">$250</span>
               <span className="text-2xl line-through opacity-70">$350</span>
             </div>
-            <Link to="/book/complete-package">
+            <Link to="/complete-package">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
                 Get Complete Package
               </Button>
