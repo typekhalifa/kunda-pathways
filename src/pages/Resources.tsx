@@ -1,6 +1,7 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Newsletter from "@/components/Newsletter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Clock, User, Tag } from "lucide-react";
@@ -172,16 +173,7 @@ const Resources = () => {
             <p className="text-lg mb-6 opacity-90">
               {translations.newsletterDescription || 'Get the latest scholarship announcements, study abroad tips, and F&B industry insights delivered to your inbox.'}
             </p>
-            <div className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder={translations.enterEmailAddress || 'Enter your email address'}
-                className="flex-1 px-4 py-3 rounded-xl text-slate-800 border-0 placeholder:text-slate-500"
-              />
-              <Button className="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-xl font-semibold">
-                {translations.subscribe || 'Subscribe'}
-              </Button>
-            </div>
+            <Newsletter />
           </div>
         </div>
       </div>
