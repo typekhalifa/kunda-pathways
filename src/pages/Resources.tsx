@@ -1,7 +1,6 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Newsletter from "@/components/Newsletter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Clock, User, Tag } from "lucide-react";
@@ -164,17 +163,6 @@ const Resources = () => {
               ))}
             </div>
           )}
-
-          {/* Newsletter CTA */}
-          <div className="mt-16 bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl p-8 text-center text-white">
-            <h2 className="text-2xl font-bold mb-4">
-              {translations.newsletterTitle || 'Stay Updated with Global Opportunities'}
-            </h2>
-            <p className="text-lg mb-6 opacity-90">
-              {translations.newsletterDescription || 'Get the latest scholarship announcements, study abroad tips, and F&B industry insights delivered to your inbox.'}
-            </p>
-            <Newsletter />
-          </div>
         </div>
       </div>
       
