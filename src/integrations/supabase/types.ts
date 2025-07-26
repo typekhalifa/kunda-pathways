@@ -364,6 +364,51 @@ export type Database = {
         }
         Relationships: []
       }
+      packages: {
+        Row: {
+          category: string
+          created_at: string
+          currency: string
+          description: string | null
+          discounted_price: number
+          id: string
+          is_active: boolean
+          is_popular: boolean
+          name: string
+          original_price: number
+          services: string[]
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          discounted_price: number
+          id?: string
+          is_active?: boolean
+          is_popular?: boolean
+          name: string
+          original_price: number
+          services?: string[]
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          discounted_price?: number
+          id?: string
+          is_active?: boolean
+          is_popular?: boolean
+          name?: string
+          original_price?: number
+          services?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null

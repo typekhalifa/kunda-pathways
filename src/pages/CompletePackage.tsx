@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -17,15 +17,32 @@ const CompletePackage = () => {
     phone: "",
     message: "",
   });
-
+  const [packageData, setPackageData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchPackageData();
+  }, []);
+
+  const fetchPackageData = async () => {
+    const { data } = await supabase
+      .from("packages")
+      .select("*")
+      .eq("category", "study-abroad")
+      .eq("is_active", true)
+      .single();
+    
+    if (data) {
+      setPackageData(data);
+    }
+  };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const totalPrice = 250;
-  const serviceName = "Complete Korean Study Package";
+  const totalPrice = packageData?.discounted_price || 250;
+  const serviceName = packageData?.name || "Complete Korean Study Package";
   
   const rwfRate = 1437.50;
   const rwfAmount = totalPrice * rwfRate;

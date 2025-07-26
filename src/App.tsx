@@ -33,6 +33,7 @@ import ContentManager from '@/components/admin/ContentManager';
 import MessagesManager from '@/components/admin/MessagesManager';
 import ConsultationsManager from '@/components/admin/ConsultationsManager';
 import ServicesManager from '@/components/admin/ServicesManager';
+import PackagesManager from '@/components/admin/PackagesManager';
 import BookStudyAbroadConsultation from '@/pages/BookStudyAbroadConsultation';
 import CompletePackage from '@/pages/CompletePackage';
 import FBCompletePackage from '@/pages/FBCompletePackage';
@@ -101,35 +102,62 @@ const AdminMessages = () => (
 );
 
 
-const AdminServices = () => (
-  <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-    <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link to="/admin/dashboard">
-              <Button variant="outline" size="sm">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Dashboard
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-                Services Management
-              </h1>
-              <p className="text-slate-600 dark:text-slate-400">
-                Manage all your website services and pricing
-              </p>
+const AdminServices = () => {
+  const [activeTab, setActiveTab] = React.useState("services");
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <Link to="/admin/dashboard">
+                <Button variant="outline" size="sm">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Dashboard
+                </Button>
+              </Link>
+              <div>
+                <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+                  Services & Packages Management
+                </h1>
+                <p className="text-slate-600 dark:text-slate-400">
+                  Manage all your website services, pricing and package deals
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex space-x-1 mb-6 p-1 bg-slate-100 dark:bg-slate-800 rounded-lg">
+          <button
+            onClick={() => setActiveTab("services")}
+            className={`px-4 py-2 rounded-md font-medium transition-colors ${
+              activeTab === "services"
+                ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            Individual Services
+          </button>
+          <button
+            onClick={() => setActiveTab("packages")}
+            className={`px-4 py-2 rounded-md font-medium transition-colors ${
+              activeTab === "packages"
+                ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            Package Deals
+          </button>
+        </div>
+        
+        {activeTab === "services" ? <ServicesManager /> : <PackagesManager />}
+      </div>
     </div>
-    <div className="container mx-auto px-4 py-8">
-      <ServicesManager />
-    </div>
-  </div>
-);
+  );
+};
 
 const queryClient = new QueryClient();
 
@@ -163,8 +191,8 @@ const App = () => (
               <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/about-advisor" element={<AboutAdvisor />} />
               <Route path="/book/study-abroad" element={<BookStudyAbroadConsultation />} />
-              <Route path="/book/complete-package" element={<CompletePackage />} />
-              <Route path="/book/fb-package" element={<FBCompletePackage />} />
+              <Route path="/complete-package" element={<CompletePackage />} />
+              <Route path="/fb-complete-package" element={<FBCompletePackage />} />
               <Route path="/book/extra-services" element={<BookExtraServices />} />
               <Route path="/custom-quote" element={<CustomQuote />} />
               <Route 

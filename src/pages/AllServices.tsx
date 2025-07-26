@@ -150,37 +150,23 @@ const AllServices = () => {
     },
   ];
 
-  const packages = [
-    {
-      name: translations.studyAbroadCompletePackage || "Study Abroad Complete Package",
-      originalPrice: 500,
-      discountedPrice: 320,
-      discount: translations.twentyPercentOff || "38% OFF",
-      services: [
-        translations.scholarshipGuidance || "Scholarship Guidance", 
-        translations.universityAdmissions || "University Admissions", 
-        translations.visaApplicationAssistance || "Visa Application", 
-        `${translations.koreanLanguagePreparation || "Korean Language"} (1 ${translations.perMonth?.replace('/', '') || "month"})`, 
-        translations.culturalOrientation || "Cultural Orientation"
-      ],
-      popular: true
-    },
-    {
-      name: translations.fbMarketEntryComplete || "F&B Market Entry Complete",
-      originalPrice: 16000,
-      discountedPrice: 12000,
-      discount: translations.twentyFivePercentOff || "25% OFF",
-      services: [
-        translations.marketEntryStrategyService || "Market Entry Strategy", 
-        translations.regulatoryComplianceService || "Regulatory Compliance", 
-        translations.productDevelopmentService || "Product Development", 
-        translations.supplyChainOptimizationService || "Supply Chain", 
-        translations.brandLocalizationService || "Brand Localization", 
-        translations.partnershipDistributionService || "Partnership Support"
-      ],
-      popular: false
-    },
-  ];
+  const [packages, setPackages] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchPackages();
+  }, []);
+
+  const fetchPackages = async () => {
+    const { data } = await supabase
+      .from("packages")
+      .select("*")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false });
+    
+    if (data) {
+      setPackages(data);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { supabase } from "@/lib/supabase";
 const FBCompletePackage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [packageData, setPackageData] = useState<any>(null);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -21,14 +22,31 @@ const FBCompletePackage = () => {
     message: "",
   });
 
+  useEffect(() => {
+    fetchPackageData();
+  }, []);
+
+  const fetchPackageData = async () => {
+    const { data } = await supabase
+      .from("packages")
+      .select("*")
+      .eq("category", "fb-consulting")
+      .eq("is_active", true)
+      .single();
+    
+    if (data) {
+      setPackageData(data);
+    }
+  };
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const totalPrice = 12000;
+  const totalPrice = packageData?.discounted_price || 12000;
   const rwfRate = 1437.5;
   const rwfAmount = totalPrice * rwfRate;
-  const serviceName = "F&B Market Entry Complete Package";
+  const serviceName = packageData?.name || "F&B Market Entry Complete Package";
 
   const handleSubmit = async () => {
     setLoading(true);
