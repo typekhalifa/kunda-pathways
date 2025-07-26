@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -10,9 +10,21 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/lib/supabase";
 
+interface Service {
+  id: string;
+  name: string;
+  price: number;
+  currency: string;
+  description: string;
+  category: string;
+  is_active: boolean;
+}
+
 const BookConsultation = () => {
   const { translations } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -24,25 +36,27 @@ const BookConsultation = () => {
     preferredTime: "",
   });
 
-  const allServices = [
-    { id: "scholarship-guidance", name: "Scholarship Guidance", price: 100 },
-    { id: "university-admissions", name: "University Admissions", price: 70 },
-    { id: "visa-application", name: "Visa Application Help", price: 100 },
-    { id: "korean-language", name: "Korean Language Training", price: 80 },
-    { id: "relocations", name: "Visits Help & Relocations", price: 100 },
-    { id: "market-entry", name: "Market Entry Strategy", price: 2500 },
-    { id: "regulatory", name: "Regulatory Compliance", price: 1800 },
-    { id: "product-dev", name: "Product Development", price: 3200 },
-    { id: "supply-chain", name: "Supply Chain Optimization", price: 2200 },
-    { id: "brand-local", name: "Brand Localization", price: 1500 },
-    { id: "partnership", name: "Partnership & Distribution", price: 2800 },
-    { id: "hotel", name: "Hotel Booking Assistance", price: 60 },
-    { id: "phone", name: "Phone Consultation", price: 20 },
-    { id: "airport", name: "Airport Pickup Service", price: 50 },
-    { id: "orientation", name: "Cultural Orientation", price: 120 },
-    { id: "study-package", name: "Study Abroad Complete Package", price: 320 },
-    { id: "fb-package", name: "F&B Market Entry Package", price: 12000 },
-  ];
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .eq('is_active', true)
+        .order('category', { ascending: true });
+
+      if (error) throw error;
+      setServices(data || []);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -59,7 +73,7 @@ const BookConsultation = () => {
 
   const getSelectedServicesDetails = () => {
     return formData.selectedServices
-      .map((id) => allServices.find((s) => s.id === id))
+      .map((id) => services.find((s) => s.id === id))
       .filter(Boolean);
   };
 
@@ -191,7 +205,10 @@ const BookConsultation = () => {
                     Select Services (Choose multiple)
                   </label>
                   <div className="grid gap-3">
-                    {allServices.map((service) => (
+                    {loading ? (
+                      <div className="text-center py-4">Loading services...</div>
+                    ) : (
+                      services.map((service) => (
                       <div
                         key={service.id}
                         onClick={() => handleServiceToggle(service.id)}
@@ -203,10 +220,14 @@ const BookConsultation = () => {
                       >
                         <div className="flex justify-between items-center">
                           <span className="text-slate-800 dark:text-white">{service.name}</span>
-                          <span className="text-blue-600 font-bold">${service.price.toLocaleString()}</span>
+                          <span className="text-blue-600 font-bold">
+                            {service.currency === 'USD' ? '$' : service.currency === 'EUR' ? '€' : ''}
+                            {service.price.toLocaleString()} {service.currency}
+                          </span>
                         </div>
                       </div>
-                    ))}
+                      ))
+                    )}
                   </div>
                 </div>
 

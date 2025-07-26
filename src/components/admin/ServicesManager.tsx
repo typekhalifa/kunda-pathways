@@ -37,12 +37,17 @@ const ServicesManager = () => {
     is_active: true,
   });
 
-  const categories = [
+  const individualServicesCategories = [
     { value: 'study-abroad', label: 'Study Abroad Services', icon: '🎓', color: 'from-blue-500 to-blue-600' },
-    { value: 'fb-consulting', label: 'F&B Consulting Services', icon: '🍽️', color: 'from-green-500 to-green-600' },
-    { value: 'study-programs', label: 'Study Programs Services', icon: '📚', color: 'from-indigo-500 to-indigo-600' },
     { value: 'extra-services', label: 'Additional Services', icon: '⭐', color: 'from-purple-500 to-purple-600' },
   ];
+
+  const generalServicesCategories = [
+    { value: 'fb-consulting', label: 'F&B Consulting Services', icon: '🍽️', color: 'from-green-500 to-green-600' },
+    { value: 'study-programs', label: 'Study Programs Services', icon: '📚', color: 'from-indigo-500 to-indigo-600' },
+  ];
+
+  const allCategories = [...individualServicesCategories, ...generalServicesCategories];
 
   // Categorize services for better display
   const categorizeServices = () => {
@@ -57,9 +62,25 @@ const ServicesManager = () => {
   };
 
   const groupedServices = categorizeServices();
+  
+  // Separate services by section
+  const individualServices: Record<string, Service[]> = {};
+  const generalServices: Record<string, Service[]> = {};
+  
+  individualServicesCategories.forEach(cat => {
+    if (groupedServices[cat.value]) {
+      individualServices[cat.value] = groupedServices[cat.value];
+    }
+  });
+  
+  generalServicesCategories.forEach(cat => {
+    if (groupedServices[cat.value]) {
+      generalServices[cat.value] = groupedServices[cat.value];
+    }
+  });
 
   const getCategoryInfo = (categoryValue: string) => {
-    return categories.find(c => c.value === categoryValue) || 
+    return allCategories.find(c => c.value === categoryValue) || 
            { value: categoryValue, label: categoryValue, icon: '📦', color: 'from-gray-500 to-gray-600' };
   };
 
@@ -230,7 +251,7 @@ const ServicesManager = () => {
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent className="rounded-xl border-2 bg-background shadow-lg z-50">
-                      {categories.map((category) => (
+                      {allCategories.map((category) => (
                         <SelectItem 
                           key={category.value} 
                           value={category.value}
@@ -322,76 +343,171 @@ const ServicesManager = () => {
         </Card>
       )}
 
-      {/* Services grouped by category */}
-      {Object.entries(groupedServices).map(([categoryKey, categoryServices]) => {
-        const categoryInfo = getCategoryInfo(categoryKey);
-        return (
-          <div key={categoryKey} className="space-y-4">
-            <div className={`bg-gradient-to-r ${categoryInfo.color} text-white p-4 rounded-2xl`}>
-              <h3 className="text-xl font-bold flex items-center">
-                <span className="text-2xl mr-3">{categoryInfo.icon}</span>
-                {categoryInfo.label}
-                <Badge variant="secondary" className="ml-3 text-slate-700">
-                  {categoryServices.length} services
-                </Badge>
-              </h3>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {categoryServices.map((service) => (
-                <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle className="text-lg">{service.name}</CardTitle>
-                        <div className="flex items-center space-x-2 mt-2">
-                          <Badge variant={service.is_active ? "default" : "destructive"}>
-                            {service.is_active ? "Active" : "Inactive"}
-                          </Badge>
+      {/* Individual Services Section */}
+      <div className="space-y-6">
+        <div className="bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 rounded-2xl">
+          <h3 className="text-2xl font-bold flex items-center">
+            <span className="text-3xl mr-3">⚡</span>
+            Individual Services
+            <Badge variant="secondary" className="ml-3 text-slate-700">
+              {Object.values(individualServices).flat().length} services
+            </Badge>
+          </h3>
+        </div>
+        
+        {Object.entries(individualServices).map(([categoryKey, categoryServices]) => {
+          const categoryInfo = getCategoryInfo(categoryKey);
+          return (
+            <div key={categoryKey} className="space-y-4">
+              <div className={`bg-gradient-to-r ${categoryInfo.color} text-white p-4 rounded-2xl`}>
+                <h4 className="text-xl font-bold flex items-center">
+                  <span className="text-2xl mr-3">{categoryInfo.icon}</span>
+                  {categoryInfo.label}
+                  <Badge variant="secondary" className="ml-3 text-slate-700">
+                    {categoryServices.length} services
+                  </Badge>
+                </h4>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categoryServices.map((service) => (
+                  <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-lg">{service.name}</CardTitle>
+                          <div className="flex items-center space-x-2 mt-2">
+                            <Badge variant={service.is_active ? "default" : "destructive"}>
+                              {service.is_active ? "Active" : "Inactive"}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div className="flex space-x-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(service)}
+                            className="hover:bg-blue-50 rounded-xl"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(service.id)}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
                         </div>
                       </div>
-                      <div className="flex space-x-1">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleEdit(service)}
-                          className="hover:bg-blue-50 rounded-xl"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(service.id)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="mb-4 text-sm">
+                        {service.description}
+                      </CardDescription>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center text-lg font-semibold text-green-600">
+                          <DollarSign className="w-4 h-4 mr-1" />
+                          {service.price} {service.currency}
+                        </div>
+                        {service.duration && (
+                          <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
+                            {service.duration}
+                          </span>
+                        )}
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="mb-4 text-sm">
-                      {service.description}
-                    </CardDescription>
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center text-lg font-semibold text-green-600">
-                        <DollarSign className="w-4 h-4 mr-1" />
-                        {service.price} {service.currency}
-                      </div>
-                      {service.duration && (
-                        <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
-                          {service.duration}
-                        </span>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+
+      {/* General Services Section */}
+      <div className="space-y-6">
+        <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-4 rounded-2xl">
+          <h3 className="text-2xl font-bold flex items-center">
+            <span className="text-3xl mr-3">🏢</span>
+            General Services
+            <Badge variant="secondary" className="ml-3 text-slate-700">
+              {Object.values(generalServices).flat().length} services
+            </Badge>
+          </h3>
+        </div>
+        
+        {Object.entries(generalServices).map(([categoryKey, categoryServices]) => {
+          const categoryInfo = getCategoryInfo(categoryKey);
+          return (
+            <div key={categoryKey} className="space-y-4">
+              <div className={`bg-gradient-to-r ${categoryInfo.color} text-white p-4 rounded-2xl`}>
+                <h4 className="text-xl font-bold flex items-center">
+                  <span className="text-2xl mr-3">{categoryInfo.icon}</span>
+                  {categoryInfo.label}
+                  <Badge variant="secondary" className="ml-3 text-slate-700">
+                    {categoryServices.length} services
+                  </Badge>
+                </h4>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categoryServices.map((service) => (
+                  <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-lg">{service.name}</CardTitle>
+                          <div className="flex items-center space-x-2 mt-2">
+                            <Badge variant={service.is_active ? "default" : "destructive"}>
+                              {service.is_active ? "Active" : "Inactive"}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div className="flex space-x-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(service)}
+                            className="hover:bg-blue-50 rounded-xl"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(service.id)}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="mb-4 text-sm">
+                        {service.description}
+                      </CardDescription>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center text-lg font-semibold text-green-600">
+                          <DollarSign className="w-4 h-4 mr-1" />
+                          {service.price} {service.currency}
+                        </div>
+                        {service.duration && (
+                          <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
+                            {service.duration}
+                          </span>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       {services.length === 0 && !loading && (
         <Card className="text-center p-8">
