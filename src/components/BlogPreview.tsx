@@ -2,33 +2,75 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
+
+interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  created_at: string;
+  slug: string;
+  is_published: boolean;
+}
 
 const BlogPreview = () => {
   const { translations } = useLanguage();
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const posts = [
-    {
-      title: translations.blogPost1Title || "2024 Complete Guide to Korean University Scholarships",
-      excerpt: translations.blogPost1Excerpt || "Everything you need to know about scholarship applications in Korea, including KGSP and university-specific programs. Discover eligibility criteria, application deadlines, and expert tips for success.",
-      date: translations.march152024 || "March 15, 2024",
-      category: translations.education || "Education",
-      readTime: translations.eightMinRead || "8 min read"
-    },
-    {
-      title: translations.blogPost2Title || "Korean F&B Market Entry Strategies",
-      excerpt: translations.blogPost2Excerpt || "Learn the essential steps to successfully enter the Korean food and beverage market with expert insights. From regulatory compliance to consumer preferences and distribution channels.",
-      date: translations.march102024 || "March 10, 2024", 
-      category: translations.business || "Business",
-      readTime: translations.twelveMinRead || "12 min read"
-    },
-    {
-      title: translations.blogPost3Title || "TOPIK Preparation: Your Path to Korean Universities",
-      excerpt: translations.blogPost3Excerpt || "Master the Test of Proficiency in Korean with our comprehensive preparation guide. Includes study schedules, practice resources, and test-taking strategies.",
-      date: translations.march52024 || "March 5, 2024",
-      category: translations.scholarships || "Scholarships", 
-      readTime: translations.sixMinRead || "6 min read"
-    },
-  ];
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('id, title, excerpt, category, created_at, slug, is_published')
+        .eq('is_published', true)
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      if (error) throw error;
+      setPosts(data || []);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'education': return '🎓';
+      case 'business': return '💼';
+      case 'scholarships': return '🏆';
+      case 'study-abroad': return '🌍';
+      case 'korean-culture': return '🇰🇷';
+      default: return '📝';
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  if (loading) {
+    return (
+      <section id="blog" className="py-20 px-4 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+        <div className="container mx-auto text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-slate-600 dark:text-slate-400">Loading latest posts...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="blog" className="py-20 px-4 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -42,28 +84,45 @@ const BlogPreview = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {posts.map((post, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow border-0 shadow-md bg-white dark:bg-slate-800">
-              <CardHeader>
-                <div className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-2">{post.category}</div>
-                <CardTitle className="text-xl leading-tight dark:text-white">{post.title}</CardTitle>
-                <CardDescription className="text-slate-600 dark:text-slate-400">
-                  {post.excerpt}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm text-slate-500 dark:text-slate-400">{post.date}</span>
-                  <span className="text-xs text-slate-400 dark:text-slate-500">{post.readTime}</span>
-                </div>
-                <Button variant="ghost" className="w-full text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 justify-center">
-                  {translations.readMore} →
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {posts.length === 0 ? (
+          <div className="text-center py-12">
+            <h3 className="text-xl font-semibold text-slate-600 dark:text-slate-400 mb-2">No blog posts yet</h3>
+            <p className="text-slate-500 dark:text-slate-500">Check back soon for the latest updates!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {posts.map((post) => (
+              <Card key={post.id} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-md bg-white dark:bg-slate-800 hover:scale-[1.02] cursor-pointer">
+                <Link to={`/blog/${post.slug}`} className="block h-full">
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg">{getCategoryIcon(post.category)}</span>
+                        <span className="text-sm text-blue-600 dark:text-blue-400 font-medium capitalize">
+                          {post.category.replace('-', ' ')}
+                        </span>
+                      </div>
+                      <span className="text-xs text-slate-400 dark:text-slate-500">
+                        {formatDate(post.created_at)}
+                      </span>
+                    </div>
+                    <CardTitle className="text-xl leading-tight dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                      {post.title}
+                    </CardTitle>
+                    <CardDescription className="text-slate-600 dark:text-slate-400 line-clamp-3">
+                      {post.excerpt}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="ghost" className="w-full text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 justify-center group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-all">
+                      {translations.readMore} →
+                    </Button>
+                  </CardContent>
+                </Link>
+              </Card>
+            ))}
+          </div>
+        )}
 
         <div className="text-center mt-12">
           <Link to="/resources">

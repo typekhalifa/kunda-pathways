@@ -24,6 +24,7 @@ import AllServices from "./pages/AllServices";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/admin/AdminBlog";
+import BlogPost from "./pages/BlogPost";
 import AdminSettings from "./pages/AdminSettings";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import AdminNewsletter from "./pages/AdminNewsletter";
@@ -230,6 +231,7 @@ const App = () => (
                   </ProtectedRoute>
                 } 
               />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
