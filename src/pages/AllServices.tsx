@@ -6,9 +6,50 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, GraduationCap, Utensils, Plane, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Service {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  currency: string;
+  category: string;
+  duration: string;
+  is_active: boolean;
+}
 
 const AllServices = () => {
   const { translations } = useLanguage();
+  const [databaseServices, setDatabaseServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setDatabaseServices(data || []);
+    } catch (error) {
+      console.error('Failed to load services:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Group services by category
+  const getServicesByCategory = (category: string) => {
+    return databaseServices.filter(service => service.category === category);
+  };
 
   const studyServices = [
     { 
@@ -216,85 +257,190 @@ const AllServices = () => {
           </div>
 
           {/* Study Abroad Services */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
-              <GraduationCap className="mr-3 text-blue-600" size={32} />
-              {translations.studyAbroadServices || "Study Abroad Services"}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {studyServices.map((service, index) => (
-                <Card key={index} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
-                      <span className="text-blue-600 font-bold text-lg">{service.price}</span>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
-                    <Link to="/book/study-abroad">
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                        {translations.bookNow || "Book Now"}
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))}
+          {getServicesByCategory('study-abroad').length > 0 && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
+                <GraduationCap className="mr-3 text-blue-600" size={32} />
+                {translations.studyAbroadServices || "Study Abroad Services"}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {getServicesByCategory('study-abroad').map((service) => (
+                  <Card key={service.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
+                        <span className="text-blue-600 font-bold text-lg">{service.price} {service.currency}</span>
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
+                      {service.duration && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
+                      )}
+                      <Link to="/book/study-abroad">
+                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+                          {translations.bookNow || "Book Now"}
+                        </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+          
+          {/* Fallback Study Services if no database services */}
+          {getServicesByCategory('study-abroad').length === 0 && !loading && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
+                <GraduationCap className="mr-3 text-blue-600" size={32} />
+                {translations.studyAbroadServices || "Study Abroad Services"}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {studyServices.map((service, index) => (
+                  <Card key={index} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
+                        <span className="text-blue-600 font-bold text-lg">{service.price}</span>
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
+                      <Link to="/book/study-abroad">
+                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+                          {translations.bookNow || "Book Now"}
+                        </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* F&B Consulting Services */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
-              <Utensils className="mr-3 text-green-600" size={32} />
-              {translations.fbConsultingServices || "F&B Consulting Services"}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {fbServices.map((service, index) => (
-                <Card key={index} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
-                      <span className="text-green-600 font-bold text-lg">{service.price}</span>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
-                    <Link to="/book-fb-consultation">
-                      <Button className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl">
-                        {translations.bookNow || "Book Now"}
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))}
+          {getServicesByCategory('fb-consulting').length > 0 && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
+                <Utensils className="mr-3 text-green-600" size={32} />
+                {translations.fbConsultingServices || "F&B Consulting Services"}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {getServicesByCategory('fb-consulting').map((service) => (
+                  <Card key={service.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
+                        <span className="text-green-600 font-bold text-lg">{service.price} {service.currency}</span>
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
+                      {service.duration && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
+                      )}
+                      <Link to="/book-fb-consultation">
+                        <Button className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl">
+                          {translations.bookNow || "Book Now"}
+                        </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Additional Services */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
-              <Plane className="mr-3 text-purple-600" size={32} />
-              {translations.additionalServices || "Additional Services"}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {additionalServices.map((service, index) => (
-                <Card key={index} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="text-center mb-3">
-                      <h3 className="font-semibold text-slate-800 dark:text-white mb-2">{service.name}</h3>
-                      <span className="text-purple-600 font-bold text-xl">{service.price}</span>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 text-center mb-2">{service.description}</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 text-center mb-4">{translations.duration || "Duration"}: {service.duration}</p>
-                   <Link to="/book/extra-services">
-                      <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-xl">
-                        {translations.bookNow || "Book Now"}
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))}
+          {/* Fallback F&B Services if no database services */}
+          {getServicesByCategory('fb-consulting').length === 0 && !loading && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
+                <Utensils className="mr-3 text-green-600" size={32} />
+                {translations.fbConsultingServices || "F&B Consulting Services"}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {fbServices.map((service, index) => (
+                  <Card key={index} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
+                        <span className="text-green-600 font-bold text-lg">{service.price}</span>
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
+                      <Link to="/book-fb-consultation">
+                        <Button className="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl">
+                          {translations.bookNow || "Book Now"}
+                        </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Additional/Extra Services */}
+          {getServicesByCategory('extra-services').length > 0 && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
+                <Plane className="mr-3 text-purple-600" size={32} />
+                {translations.additionalServices || "Additional Services"}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {getServicesByCategory('extra-services').map((service) => (
+                  <Card key={service.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="text-center mb-3">
+                        <h3 className="font-semibold text-slate-800 dark:text-white mb-2">{service.name}</h3>
+                        <span className="text-purple-600 font-bold text-xl">{service.price} {service.currency}</span>
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 text-center mb-2">{service.description}</p>
+                      {service.duration && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400 text-center mb-4">{translations.duration || "Duration"}: {service.duration}</p>
+                      )}
+                      <Link to="/book/extra-services">
+                        <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-xl">
+                          {translations.bookNow || "Book Now"}
+                        </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Fallback Additional Services if no database services */}
+          {getServicesByCategory('extra-services').length === 0 && !loading && (
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-8 flex items-center">
+                <Plane className="mr-3 text-purple-600" size={32} />
+                {translations.additionalServices || "Additional Services"}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {additionalServices.map((service, index) => (
+                  <Card key={index} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="text-center mb-3">
+                        <h3 className="font-semibold text-slate-800 dark:text-white mb-2">{service.name}</h3>
+                        <span className="text-purple-600 font-bold text-xl">{service.price}</span>
+                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 text-center mb-2">{service.description}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 text-center mb-4">{translations.duration || "Duration"}: {service.duration}</p>
+                      <Link to="/book/extra-services">
+                        <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-xl">
+                          {translations.bookNow || "Book Now"}
+                        </Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {loading && (
+            <div className="text-center py-8">
+              <p className="text-slate-600 dark:text-slate-400">Loading services...</p>
+            </div>
+          )}
 
           {/* Contact CTA */}
           <div className="text-center bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl p-8 text-white">
