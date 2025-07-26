@@ -30,6 +30,7 @@ const BlogPreview = () => {
         .from('blog_posts')
         .select('id, title, excerpt, category, created_at, slug, is_published')
         .eq('is_published', true)
+        .eq('is_featured', true)
         .order('created_at', { ascending: false })
         .limit(3);
 

@@ -21,6 +21,7 @@ interface BlogPost {
   category: string;
   tags: string[];
   is_published: boolean;
+  is_featured: boolean;
   language_code: string;
   created_at: string;
   updated_at: string;
@@ -38,6 +39,7 @@ const BlogManager = () => {
     category: 'general',
     tags: [],
     is_published: false,
+    is_featured: false,
     language_code: 'EN'
   });
   const [loading, setLoading] = useState(true);
@@ -100,6 +102,7 @@ const BlogManager = () => {
         category: 'general',
         tags: [],
         is_published: false,
+        is_featured: false,
         language_code: 'EN'
       });
       fetchPosts();
@@ -142,6 +145,7 @@ const BlogManager = () => {
       category: 'general',
       tags: [],
       is_published: false,
+      is_featured: false,
       language_code: 'EN'
     });
   };
@@ -315,17 +319,30 @@ const BlogManager = () => {
                 </Select>
               </div>
 
-              <div className="flex items-center space-x-3 mt-8">
-                <Switch
-                  id="published"
-                  checked={editingPost.is_published || false}
-                  onCheckedChange={(checked) => setEditingPost({ ...editingPost, is_published: checked })}
-                  className="data-[state=checked]:bg-green-600"
-                />
-                <Label htmlFor="published" className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center">
-                  <Eye className="w-4 h-4 mr-1" />
-                  {editingPost.is_published ? 'Published' : 'Draft'}
-                </Label>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <Switch
+                    id="published"
+                    checked={editingPost.is_published || false}
+                    onCheckedChange={(checked) => setEditingPost({ ...editingPost, is_published: checked })}
+                    className="data-[state=checked]:bg-green-600"
+                  />
+                  <Label htmlFor="published" className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center">
+                    <Eye className="w-4 h-4 mr-1" />
+                    {editingPost.is_published ? 'Published' : 'Draft'}
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Switch
+                    id="featured"
+                    checked={editingPost.is_featured || false}
+                    onCheckedChange={(checked) => setEditingPost({ ...editingPost, is_featured: checked })}
+                    className="data-[state=checked]:bg-blue-600"
+                  />
+                  <Label htmlFor="featured" className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center">
+                    ⭐ Feature on homepage (max 3)
+                  </Label>
+                </div>
               </div>
             </div>
 
@@ -371,16 +388,26 @@ const BlogManager = () => {
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-3">
                       <h3 className="font-bold text-lg text-slate-800 dark:text-white">{post.title}</h3>
-                      <Badge 
-                        variant={post.is_published ? "default" : "secondary"}
-                        className="rounded-full px-3 py-1"
-                      >
-                        {post.is_published ? (
-                          <><Eye className="w-3 h-3 mr-1" /> Published</>
-                        ) : (
-                          <><Edit className="w-3 h-3 mr-1" /> Draft</>
+                      <div className="flex space-x-2">
+                        <Badge 
+                          variant={post.is_published ? "default" : "secondary"}
+                          className="rounded-full px-3 py-1"
+                        >
+                          {post.is_published ? (
+                            <><Eye className="w-3 h-3 mr-1" /> Published</>
+                          ) : (
+                            <><Edit className="w-3 h-3 mr-1" /> Draft</>
+                          )}
+                        </Badge>
+                        {post.is_featured && (
+                          <Badge 
+                            variant="outline" 
+                            className="rounded-full px-3 py-1 bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900 dark:text-blue-300"
+                          >
+                            ⭐ Featured
+                          </Badge>
                         )}
-                      </Badge>
+                      </div>
                     </div>
                     
                     <div className="flex items-center space-x-2 mb-3">
