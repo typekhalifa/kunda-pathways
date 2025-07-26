@@ -178,5 +178,10 @@ export const enTranslations: Translations = {
   aboutUs: "About Us",
   legal: "Legal",
   contactInfo: "Contact Info",
-  allRightsReserved: "All rights reserved."
+  allRightsReserved: "All rights reserved.",
+  
+  // 404 page translations
+  pageNotFound: "Page Not Found",
+  pageNotFoundDesc: "The page you're looking for doesn't exist or has been moved.",
+  returnHome: "Return to Home",
 };

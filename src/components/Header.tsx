@@ -19,19 +19,33 @@ const Header = () => {
   }, [location.pathname]);
 
   const navigationItems = [
-    { name: translations.home || "Home", href: "/" },
-    { name: translations.about || "About", href: "#about" },
-    { name: translations.services || "Services", href: "#services" },
-    { name: translations.resources || "Resources", href: "/resources" },
-    { name: translations.contact || "Contact", href: "#contact" },
+    { name: translations.home || "Home", href: "/", type: "link" },
+    { name: translations.about || "About", href: "#about", type: "scroll" },
+    { name: translations.services || "Services", href: "#services", type: "scroll" },
+    { name: translations.resources || "Resources", href: "/resources", type: "link" },
+    { name: translations.contact || "Contact", href: "#contact", type: "scroll" },
   ];
 
-  const handleNavClick = (href: string) => {
-    if (href.startsWith("#")) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+  const handleNavClick = (href: string, type: string) => {
+    if (type === "scroll" && href.startsWith("#")) {
+      // Handle scroll navigation
+      if (location.pathname !== "/") {
+        // If not on home page, navigate to home first then scroll
+        window.location.href = `/${href}`;
+      } else {
+        // If on home page, just scroll
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
       }
+    } else if (type === "link") {
+      // Handle regular navigation
+      if (href === "/" && location.pathname === "/") {
+        // If already on home, scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      // Let React Router handle the navigation for other cases
     }
     setIsMenuOpen(false);
   };
@@ -45,20 +59,31 @@ const Header = () => {
             <img 
               src="/lovable-uploads/f220c9e1-8cfe-42b0-af8c-5cbf33524148.png" 
               alt="Kunda Pathways Logo" 
-              className="h-16 w-auto filter dark:brightness-150 dark:contrast-125 dark:saturate-200 dark:hue-rotate-15"
+              className="h-12 md:h-16 w-auto object-contain filter dark:brightness-150 dark:contrast-125 dark:saturate-200 dark:hue-rotate-15 transition-all duration-300"
             />
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navigationItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => handleNavClick(item.href)}
-                className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
-              >
-                {item.name}
-              </button>
+              item.type === "link" ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => handleNavClick(item.href, item.type)}
+                  className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <button
+                  key={item.name}
+                  onClick={() => handleNavClick(item.href, item.type)}
+                  className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+                >
+                  {item.name}
+                </button>
+              )
             ))}
           </nav>
 
@@ -92,13 +117,24 @@ const Header = () => {
           <div className="md:hidden py-4 border-t border-slate-200 dark:border-slate-700">
             <nav className="flex flex-col space-y-3">
               {navigationItems.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => handleNavClick(item.href)}
-                  className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium text-left py-2"
-                >
-                  {item.name}
-                </button>
+                item.type === "link" ? (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={() => handleNavClick(item.href, item.type)}
+                    className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium text-left py-2"
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <button
+                    key={item.name}
+                    onClick={() => handleNavClick(item.href, item.type)}
+                    className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium text-left py-2"
+                  >
+                    {item.name}
+                  </button>
+                )
               ))}
               <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700">
                 <div className="flex items-center space-x-3">

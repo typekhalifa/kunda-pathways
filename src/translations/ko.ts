@@ -380,5 +380,10 @@ export const koTranslations: Translations = {
   foodSafetyRegulations: "아시아 시장의 식품 안전 규정",
   foodSafetyExcerpt: "아시아로 확장하는 F&B 기업을 위한 준수 요건 이해...",
   culturalAdaptationGuide: "국제 학생을 위한 문화 적응 가이드",
-  culturalAdaptationExcerpt: "한국 문화와 학업 환경에 적응하기 위한 필수 팁..."
+  culturalAdaptationExcerpt: "한국 문화와 학업 환경에 적응하기 위한 필수 팁...",
+  
+  // 404 page translations
+  pageNotFound: "페이지를 찾을 수 없습니다",
+  pageNotFoundDesc: "찾고 계신 페이지가 존재하지 않거나 이동되었습니다.",
+  returnHome: "홈으로 돌아가기",
 };

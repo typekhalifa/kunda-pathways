@@ -380,5 +380,10 @@ export const frTranslations: Translations = {
   foodSafetyRegulations: "Réglementations de sécurité alimentaire sur les marchés asiatiques",
   foodSafetyExcerpt: "Comprendre les exigences de conformité pour les entreprises F&B qui s'étendent en Asie...",
   culturalAdaptationGuide: "Guide d'adaptation culturelle pour les étudiants internationaux",
-  culturalAdaptationExcerpt: "Conseils essentiels pour s'adapter à la culture coréenne et à l'environnement académique..."
+  culturalAdaptationExcerpt: "Conseils essentiels pour s'adapter à la culture coréenne et à l'environnement académique...",
+  
+  // 404 page translations
+  pageNotFound: "Page non trouvée",
+  pageNotFoundDesc: "La page que vous recherchez n'existe pas ou a été déplacée.",
+  returnHome: "Retour à l'accueil",
 };
