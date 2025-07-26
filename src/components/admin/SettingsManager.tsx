@@ -8,7 +8,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useWebsiteSettings } from '@/hooks/useWebsiteSettings';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Loader2, KeyRound, User, Shield, Save, Upload, Edit } from 'lucide-react';
+import { Loader2, KeyRound, User, Shield, Save, Upload, Edit, UserPlus, Users } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const SettingsManager = () => {
   const { profile, updatePassword } = useAuth();
@@ -24,6 +25,14 @@ const SettingsManager = () => {
   const [loading, setLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
+  const [userManagementLoading, setUserManagementLoading] = useState(false);
+  const [users, setUsers] = useState<any[]>([]);
+  const [newUserData, setNewUserData] = useState({
+    email: '',
+    password: '',
+    fullName: '',
+    role: 'user' as 'admin' | 'user'
+  });
   const [formData, setFormData] = useState({
     site_info: {
       title: '',
@@ -62,6 +71,82 @@ const SettingsManager = () => {
       });
     }
   }, [profile]);
+
+  React.useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setUsers(data || []);
+    } catch (error: any) {
+      console.error('Error fetching users:', error.message);
+    }
+  };
+
+  const handleCreateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setUserManagementLoading(true);
+
+    try {
+      // Create user with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: newUserData.email,
+        password: newUserData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            full_name: newUserData.fullName
+          }
+        }
+      });
+
+      if (authError) throw authError;
+
+      if (authData.user) {
+        // Update the user's role in the profiles table
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update({
+            role: newUserData.role,
+            full_name: newUserData.fullName
+          })
+          .eq('id', authData.user.id);
+
+        if (profileError) throw profileError;
+      }
+
+      toast.success(`${newUserData.role === 'admin' ? 'Admin' : 'User'} created successfully!`);
+      setNewUserData({ email: '', password: '', fullName: '', role: 'user' });
+      fetchUsers();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to create user');
+    } finally {
+      setUserManagementLoading(false);
+    }
+  };
+
+  const handleUpdateUserRole = async (userId: string, newRole: 'admin' | 'user') => {
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ role: newRole })
+        .eq('id', userId);
+
+      if (error) throw error;
+
+      toast.success('User role updated successfully!');
+      fetchUsers();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update user role');
+    }
+  };
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -258,6 +343,170 @@ const SettingsManager = () => {
               Update Password
             </Button>
           </form>
+        </CardContent>
+      </Card>
+
+      {/* Admin User Management */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <Users className="w-5 h-5 mr-2" />
+            Admin User Management
+          </CardTitle>
+          <CardDescription>
+            Create and manage admin users and their access levels
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Create New User */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-slate-800 flex items-center">
+              <UserPlus className="w-4 h-4 mr-2" />
+              Create New User
+            </h4>
+            <form onSubmit={handleCreateUser} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="new-user-email">Email</Label>
+                  <Input
+                    id="new-user-email"
+                    type="email"
+                    placeholder="user@example.com"
+                    value={newUserData.email}
+                    onChange={(e) => setNewUserData({ ...newUserData, email: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="new-user-password">Password</Label>
+                  <Input
+                    id="new-user-password"
+                    type="password"
+                    placeholder="Minimum 6 characters"
+                    value={newUserData.password}
+                    onChange={(e) => setNewUserData({ ...newUserData, password: e.target.value })}
+                    required
+                    minLength={6}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="new-user-name">Full Name</Label>
+                  <Input
+                    id="new-user-name"
+                    placeholder="User's full name"
+                    value={newUserData.fullName}
+                    onChange={(e) => setNewUserData({ ...newUserData, fullName: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="new-user-role">Role</Label>
+                  <Select 
+                    value={newUserData.role} 
+                    onValueChange={(value: 'admin' | 'user') => setNewUserData({ ...newUserData, role: value })}
+                  >
+                    <SelectTrigger className="rounded-xl border-2 focus:border-primary bg-white dark:bg-slate-800 shadow-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-xl border-2 bg-white dark:bg-slate-800 shadow-xl z-[9999]">
+                      <SelectItem value="user" className="rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer">
+                        <div className="flex items-center gap-2">
+                          <User className="w-4 h-4" />
+                          <span>User</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="admin" className="rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer">
+                        <div className="flex items-center gap-2">
+                          <Shield className="w-4 h-4" />
+                          <span>Admin</span>
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <Button 
+                type="submit" 
+                disabled={userManagementLoading}
+                className="w-full md:w-auto"
+              >
+                {userManagementLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                <UserPlus className="mr-2 h-4 w-4" />
+                Create User
+              </Button>
+            </form>
+          </div>
+
+          <hr className="border-slate-200" />
+
+          {/* Existing Users */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-slate-800">Existing Users</h4>
+            <div className="space-y-3">
+              {users.map((user) => (
+                <div 
+                  key={user.id} 
+                  className="flex items-center justify-between p-4 border border-slate-200 rounded-lg bg-slate-50 dark:bg-slate-800 dark:border-slate-700"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center justify-center w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full">
+                      {user.role === 'admin' ? (
+                        <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                      ) : (
+                        <User className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium text-slate-900 dark:text-slate-100">
+                        {user.full_name || 'No name set'}
+                      </p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{user.email}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-500">
+                        Created: {new Date(user.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      user.role === 'admin' 
+                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' 
+                        : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
+                    }`}>
+                      {user.role}
+                    </span>
+                    {user.id !== profile?.id && (
+                      <Select 
+                        value={user.role} 
+                        onValueChange={(newRole: 'admin' | 'user') => handleUpdateUserRole(user.id, newRole)}
+                      >
+                        <SelectTrigger className="w-32 h-8 text-xs rounded-lg border border-slate-300 dark:border-slate-600">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="rounded-lg border bg-white dark:bg-slate-800 shadow-xl z-[9999]">
+                          <SelectItem value="user" className="text-xs rounded hover:bg-slate-100 dark:hover:bg-slate-700">
+                            User
+                          </SelectItem>
+                          <SelectItem value="admin" className="text-xs rounded hover:bg-slate-100 dark:hover:bg-slate-700">
+                            Admin
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                    {user.id === profile?.id && (
+                      <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">
+                        (You)
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+              {users.length === 0 && (
+                <p className="text-slate-500 dark:text-slate-400 text-center py-4">
+                  No users found
+                </p>
+              )}
+            </div>
+          </div>
         </CardContent>
       </Card>
 
