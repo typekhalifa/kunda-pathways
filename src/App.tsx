@@ -151,9 +151,19 @@ const AdminServices = () => {
           >
             Package Deals
           </button>
+          <button
+            onClick={() => setActiveTab("general")}
+            className={`px-4 py-2 rounded-md font-medium transition-colors ${
+              activeTab === "general"
+                ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            General Services
+          </button>
         </div>
         
-        {activeTab === "services" ? <ServicesManager /> : <PackagesManager />}
+        {activeTab === "services" ? <ServicesManager filterCategory="individual" /> : activeTab === "packages" ? <PackagesManager /> : <ServicesManager filterCategory="general" />}
       </div>
     </div>
   );

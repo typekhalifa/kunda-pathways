@@ -22,12 +22,15 @@ interface Service {
   created_at: string;
 }
 
-const ServicesManager = () => {
+interface ServicesManagerProps {
+  filterCategory?: 'individual' | 'general';
+}
+
+const ServicesManager = ({ filterCategory = 'individual' }: ServicesManagerProps) => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [activeTab, setActiveTab] = useState<'individual' | 'packages' | 'general'>('individual');
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -45,9 +48,14 @@ const ServicesManager = () => {
     { value: 'extra-services', label: 'Additional Services', icon: '⭐', color: 'from-purple-500 to-purple-600' },
   ];
 
-  // Filter services by category for different tabs
-  const individualServices = services.filter(s => s.category === 'study-abroad' || s.category === 'extra-services');
-  const generalServices = services.filter(s => s.category === 'fb-consulting' || s.category === 'study-programs');
+  // Filter services by category based on the filterCategory prop
+  const filteredServices = services.filter(service => {
+    if (filterCategory === 'individual') {
+      return service.category === 'study-abroad' || service.category === 'extra-services';
+    } else {
+      return service.category === 'fb-consulting' || service.category === 'study-programs';
+    }
+  });
 
   const getCategoryInfo = (categoryValue: string) => {
     return categories.find(c => c.value === categoryValue) || 
@@ -154,12 +162,20 @@ const ServicesManager = () => {
       description: '',
       price: '',
       currency: 'USD',
-      category: 'study-abroad',
+      category: filterCategory === 'individual' ? 'study-abroad' : 'fb-consulting',
       duration: '',
       is_active: true,
     });
     setEditingService(null);
     setShowAddForm(false);
+  };
+
+  const getFilteredCategories = () => {
+    if (filterCategory === 'individual') {
+      return categories.filter(c => c.value === 'study-abroad' || c.value === 'extra-services');
+    } else {
+      return categories.filter(c => c.value === 'fb-consulting' || c.value === 'study-programs');
+    }
   };
 
   if (loading && services.length === 0) {
@@ -171,7 +187,9 @@ const ServicesManager = () => {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-slate-800">Services Management</h2>
-          <p className="text-slate-600">Manage your consultation services and pricing</p>
+          <p className="text-slate-600">
+            Manage your {filterCategory === 'individual' ? 'individual' : 'general'} services and pricing
+          </p>
         </div>
         <Button
           onClick={() => setShowAddForm(true)}
@@ -180,40 +198,6 @@ const ServicesManager = () => {
           <Plus className="w-4 h-4 mr-2" />
           Add Service
         </Button>
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="flex space-x-4 border-b border-gray-200">
-        <button
-          onClick={() => setActiveTab('individual')}
-          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-            activeTab === 'individual'
-              ? 'border-blue-500 text-blue-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          Individual Services
-        </button>
-        <button
-          onClick={() => setActiveTab('packages')}
-          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-            activeTab === 'packages'
-              ? 'border-blue-500 text-blue-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          Package Deals
-        </button>
-        <button
-          onClick={() => setActiveTab('general')}
-          className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-            activeTab === 'general'
-              ? 'border-blue-500 text-blue-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          General Services
-        </button>
       </div>
 
       {showAddForm && (
@@ -255,7 +239,7 @@ const ServicesManager = () => {
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent className="rounded-xl border-2 bg-background shadow-lg z-50">
-                      {categories.map((category) => (
+                      {getFilteredCategories().map((category) => (
                         <SelectItem 
                           key={category.value} 
                           value={category.value}
@@ -347,134 +331,66 @@ const ServicesManager = () => {
         </Card>
       )}
 
-      {/* Tab Content */}
-      {activeTab === 'individual' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {individualServices.map((service) => (
-              <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg">{service.name}</CardTitle>
-                      <div className="flex items-center space-x-2 mt-2">
-                        <Badge variant={service.is_active ? "default" : "destructive"}>
-                          {service.is_active ? "Active" : "Inactive"}
-                        </Badge>
-                        <Badge variant="outline" className="text-xs">
-                          {getCategoryInfo(service.category).label}
-                        </Badge>
-                      </div>
-                    </div>
-                    <div className="flex space-x-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEdit(service)}
-                        className="hover:bg-blue-50 rounded-xl"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(service.id)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+      {/* Services Grid */}
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredServices.map((service) => (
+            <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+              <CardHeader>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className="text-lg">{service.name}</CardTitle>
+                    <div className="flex items-center space-x-2 mt-2">
+                      <Badge variant={service.is_active ? "default" : "destructive"}>
+                        {service.is_active ? "Active" : "Inactive"}
+                      </Badge>
+                      <Badge variant="outline" className="text-xs">
+                        {getCategoryInfo(service.category).label}
+                      </Badge>
                     </div>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="mb-4 text-sm">
-                    {service.description}
-                  </CardDescription>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center text-lg font-semibold text-green-600">
-                      <DollarSign className="w-4 h-4 mr-1" />
-                      {service.price} {service.currency}
-                    </div>
-                    {service.duration && (
-                      <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
-                        {service.duration}
-                      </span>
-                    )}
+                  <div className="flex space-x-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleEdit(service)}
+                      className="hover:bg-blue-50 rounded-xl"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDelete(service.id)}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="mb-4 text-sm">
+                  {service.description}
+                </CardDescription>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center text-lg font-semibold text-green-600">
+                    <DollarSign className="w-4 h-4 mr-1" />
+                    {service.price} {service.currency}
+                  </div>
+                  {service.duration && (
+                    <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
+                      {service.duration}
+                    </span>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      )}
+      </div>
 
-      {activeTab === 'packages' && (
-        <div className="text-center py-8">
-          <p className="text-slate-500">Package management coming soon...</p>
-        </div>
-      )}
-
-      {activeTab === 'general' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {generalServices.map((service) => (
-              <Card key={service.id} className="relative rounded-3xl border-2 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg">{service.name}</CardTitle>
-                      <div className="flex items-center space-x-2 mt-2">
-                        <Badge variant={service.is_active ? "default" : "destructive"}>
-                          {service.is_active ? "Active" : "Inactive"}
-                        </Badge>
-                        <Badge variant="outline" className="text-xs">
-                          {getCategoryInfo(service.category).label}
-                        </Badge>
-                      </div>
-                    </div>
-                    <div className="flex space-x-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleEdit(service)}
-                        className="hover:bg-blue-50 rounded-xl"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(service.id)}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="mb-4 text-sm">
-                    {service.description}
-                  </CardDescription>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center text-lg font-semibold text-green-600">
-                      <DollarSign className="w-4 h-4 mr-1" />
-                      {service.price} {service.currency}
-                    </div>
-                    {service.duration && (
-                      <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">
-                        {service.duration}
-                      </span>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {services.length === 0 && !loading && (
+      {filteredServices.length === 0 && !loading && (
         <Card className="text-center p-8">
           <CardContent>
             <p className="text-slate-500 mb-4">No services found. Add your first service to get started!</p>
