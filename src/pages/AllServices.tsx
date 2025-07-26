@@ -212,9 +212,11 @@ const AllServices = () => {
                       {pkg.name}
                     </CardTitle>
                     <div className="text-center">
-                      <span className="text-3xl font-bold text-blue-600">${pkg.discountedPrice}</span>
-                      <span className="text-lg line-through text-slate-500 ml-2">${pkg.originalPrice}</span>
-                      <div className="text-green-600 font-bold text-sm mt-1">{pkg.discount}</div>
+                      <span className="text-3xl font-bold text-blue-600">${pkg.discounted_price}</span>
+                      <span className="text-lg line-through text-slate-500 ml-2">${pkg.original_price}</span>
+                      <div className="text-green-600 font-bold text-sm mt-1">
+                        {Math.round(((pkg.original_price - pkg.discounted_price) / pkg.original_price) * 100)}% OFF
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent>
