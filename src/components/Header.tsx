@@ -3,14 +3,11 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
-import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { translations } = useLanguage();
   const { user, signOut } = useAuth();
   const location = useLocation();
 
@@ -19,11 +16,11 @@ const Header = () => {
   }, [location.pathname]);
 
   const navigationItems = [
-    { name: translations.home || "Home", href: "/", type: "link" },
-    { name: translations.about || "About", href: "#about", type: "scroll" },
-    { name: translations.services || "Services", href: "#services", type: "scroll" },
-    { name: translations.resources || "Resources", href: "/resources", type: "link" },
-    { name: translations.contact || "Contact", href: "#contact", type: "scroll" },
+    { name: "Home", href: "/", type: "link" },
+    { name: "About", href: "#about", type: "scroll" },
+    { name: "Services", href: "#services", type: "scroll" },
+    { name: "Resources", href: "/resources", type: "link" },
+    { name: "Contact", href: "#contact", type: "scroll" },
   ];
 
   const handleNavClick = (href: string, type: string) => {
@@ -89,12 +86,11 @@ const Header = () => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <LanguageSwitcher />
             <ThemeToggle />
             
             <Link to="/book-consultation">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6">
-                {translations.bookConsultation || "Book Consultation"}
+                Book Consultation
               </Button>
             </Link>
           </div>
@@ -138,13 +134,12 @@ const Header = () => {
               ))}
               <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700">
                 <div className="flex items-center space-x-3">
-                  <LanguageSwitcher />
                   <ThemeToggle />
                 </div>
               </div>
               <Link to="/book-consultation" className="pt-2">
                 <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                  {translations.bookConsultation || "Book Consultation"}
+                  Book Consultation
                 </Button>
               </Link>
             </nav>

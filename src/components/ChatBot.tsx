@@ -16,89 +16,91 @@ const ChatBot = () => {
   const getResponse = (userMessage: string) => {
     const message = userMessage.toLowerCase();
     
+    // 1. How to book consultation
+    if (message.includes('book') && (message.includes('consultation') || message.includes('appointment'))) {
+      return "To book a consultation, here are the steps: 1) Click the 'Book Now' button on our website, 2) Select your preferred service (Study Abroad or F&B Consulting), 3) Choose your preferred date and time from available slots, 4) Fill in your contact details, 5) Confirm your booking. You'll receive a confirmation email with meeting details. You can also call us at +250 788 123 456 or WhatsApp us for direct booking assistance!";
+    }
+    
+    // 2. What services do you offer / List of services
+    if ((message.includes('what') && message.includes('services')) || message.includes('list') || message.includes('offer')) {
+      return "We offer three main service categories:\n\n📚 **Study Abroad Consulting:**\n- University admissions support\n- Scholarship guidance (KGSP & others)\n- Visa applications\n- Korean language training\n\n🍽️ **F&B Market Entry Support:**\n- Business planning & strategy\n- Market analysis & research\n- Menu development\n- Regulatory compliance\n\n⭐ **Extra Services:**\n- Visa support\n- Document translation\n- Cultural orientation\n- Post-arrival support\n\nWhich service interests you most?";
+    }
+    
+    // 3. Pricing questions
+    if (message.includes('price') || message.includes('cost') || message.includes('how much') || message.includes('complete') || message.includes('package') || message.includes('full')) {
+      return "Here's our pricing structure:\n\n💰 **Study Abroad Services:** Starting from $200\n💰 **F&B Complete Package:** $12,000 (currently 25% discount available!)\n💰 **Individual Consultations:** Starting from $50\n💰 **Extra Services:** Varies by service\n\nWe offer FREE 15-minute initial consultations to discuss your needs and provide accurate quotes. The F&B package includes comprehensive market entry support. Would you like to book a consultation to get a customized quote?";
+    }
+    
+    // 4. Payment methods
+    if (message.includes('pay') || message.includes('payment') || message.includes('mobile money') || message.includes('bank')) {
+      return "We accept multiple payment methods for your convenience:\n\n📱 **Mobile Money:**\n- MTN Mobile Money\n- Airtel Money\n\n🏦 **Bank Transfer:**\n- Bank of Kigali (BK)\n- Equity Bank\n- Other local banks\n\n💳 **Cards:**\n- Debit/Credit Cards\n- International payments accepted\n\nWe'll provide payment details after your consultation booking. Which payment method would be most convenient for you?";
+    }
+    
+    // 5. Discounts and promotions
+    if (message.includes('discount') || message.includes('promo') || message.includes('offer') || message.includes('sale')) {
+      return "🎉 **Yes, we have active promotions!**\n\n✨ **Current Offer:** 25% OFF on our F&B Complete Package (normally $16,000, now $12,000)\n✨ **Study Abroad:** Early bird discounts available for next semester applications\n✨ **First-time clients:** FREE initial consultation (15 minutes)\n\nThese promotions are limited time offers. Would you like to book a consultation to learn more about how these discounts apply to your specific needs?";
+    }
+    
+    // 6. Location
+    if (message.includes('where') || message.includes('location') || message.includes('office') || message.includes('address')) {
+      return "📍 **Our Location:**\n\nWe operate primarily online to serve clients globally, but our head office is located in **Kigali, Rwanda**.\n\n🌐 **Virtual Services:** Most consultations are conducted online via Zoom/Google Meet for convenience\n🏢 **In-person meetings:** Available in Kigali by appointment\n📞 **Contact:** +250 788 123 456\n📧 **Email:** info@kundapathways.com\n\nWould you prefer an online or in-person consultation?";
+    }
+    
+    // 7. Reschedule consultation
+    if (message.includes('reschedule') || message.includes('change') || message.includes('move')) {
+      return "📅 **Rescheduling Your Consultation:**\n\nYes, you can reschedule! Here's how:\n\n⏰ **Notice Required:** Please contact us at least 24 hours before your scheduled appointment\n📞 **Contact Methods:**\n- Call/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n✅ **We'll help you find a new time slot that works for both parties**\n\nDo you need to reschedule an existing appointment?";
+    }
+    
+    // 8. Email/booking issues
+    if (message.includes('email') || message.includes('confirmation') || message.includes('booking') || message.includes('didn') || message.includes('through')) {
+      return "📧 **Booking & Email Issues - Let's fix this!**\n\n🔍 **Troubleshooting steps:**\n1. Check your spam/junk folder\n2. Verify the email address you provided\n3. Wait up to 10 minutes for delivery\n\n📞 **Immediate Support:**\n- Call/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n✅ **We'll verify your booking and resend confirmation immediately**\n\nWhat email address did you use for booking? I can help you resolve this right away!";
+    }
+    
+    // 9. Korean university applications
+    if (message.includes('korean') || message.includes('university') || message.includes('application') || message.includes('korea')) {
+      return "🇰🇷 **Yes! Korean University Applications is our specialty!**\n\nWe help with:\n✅ **Top Universities:** Seoul National, Yonsei, Korea University, KAIST, POSTECH\n✅ **Application Strategy:** Program selection, requirements, deadlines\n✅ **Documentation:** Personal statements, recommendation letters, portfolios\n✅ **Scholarships:** KGSP, university-specific scholarships\n✅ **Language:** TOPIK preparation, language school options\n\n🎯 **Success Rate:** 95%+ acceptance rate\n💰 **Starting from:** $200\n\nWhich field of study interests you? Let's discuss your Korean university goals!";
+    }
+    
+    // 10. Talk to human/live agent
+    if (message.includes('human') || message.includes('agent') || message.includes('person') || message.includes('talk') || message.includes('speak')) {
+      return "👥 **Connect with Our Human Experts!**\n\n📞 **Direct Contact:**\n- Phone/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n⏰ **Business Hours:**\n- Monday-Friday: 8 AM - 6 PM (EAT)\n- Saturday: 9 AM - 2 PM (EAT)\n- Emergency support available\n\n🗓️ **Or book a consultation:** Our expert advisors are ready to discuss your goals in detail!\n\nWould you like me to help you schedule a call with our team right now?";
+    }
+    
     // Study in Korea related queries
-    if (message.includes('study') || message.includes('korea') || message.includes('university') || message.includes('education')) {
+    if (message.includes('study') || message.includes('education') || message.includes('scholarship')) {
       if (message.includes('scholarship')) {
-        return "We offer comprehensive scholarship guidance for studying in Korea! Our services include KGSP (Korean Government Scholarship Program), university-specific scholarships, and private foundation scholarships. Our success rate is over 85%. We help with application strategies, document preparation, and interview coaching. Would you like to schedule a consultation to discuss specific scholarships for your field? I can arrange a call with our expert advisor.";
+        return "🏆 **Scholarship Opportunities in Korea!** We specialize in KGSP (Korean Government Scholarship Program) and university-specific scholarships. Our success rate is 85%+. We help with application strategies, document preparation, and interview coaching. Starting from $200. Would you like to schedule a consultation to discuss scholarships for your field?";
       }
-      if (message.includes('admission') || message.includes('apply')) {
-        return "Our university admission services include: application strategy development, document preparation and review, personal statement writing assistance, interview preparation, and application tracking. We work with top Korean universities like Seoul National University, Yonsei, Korea University, and KAIST. Which field of study interests you most? I'd be happy to schedule a consultation call to discuss your options in detail.";
-      }
-      if (message.includes('visa')) {
-        return "We provide complete visa application support including D-2 (study visa), D-4 (language training visa), and F-2 (residence visa) applications. Our team ensures all documentation is properly prepared and submitted. Processing typically takes 2-4 weeks. We also provide guidance on maintaining visa status and extensions. Would you like to speak with our visa specialist? I can arrange a consultation call.";
-      }
-      if (message.includes('language') || message.includes('korean') || message.includes('topik')) {
-        return "We offer comprehensive Korean language training programs from beginner to advanced levels, including TOPIK exam preparation. Our certified instructors help you achieve the language proficiency needed for university admission (usually TOPIK Level 3-4). We also provide cultural orientation and conversation practice sessions. Would you be interested in a consultation call to assess your current level and create a personalized study plan?";
-      }
-      return "We provide comprehensive study abroad services for Korea including: scholarship guidance (KGSP & others), university admissions support, visa applications, Korean language training, and post-arrival support. Our services range from $500-$3,000 depending on your needs. Would you like to schedule a FREE consultation call to discuss your specific goals? I can arrange that for you right away.";
+      return "📚 **Study Abroad Services for Korea:** University admissions, scholarship guidance, visa applications, Korean language training, and post-arrival support. Services range from $200-$3,000. We offer FREE 15-minute initial consultations. Ready to start your Korean education journey?";
     }
     
     // F&B Consulting related queries
     if (message.includes('food') || message.includes('beverage') || message.includes('restaurant') || message.includes('business') || message.includes('consulting')) {
-      if (message.includes('market') || message.includes('analysis')) {
-        return "Our F&B market analysis services include: comprehensive market research, competitor analysis, consumer behavior studies, trend identification, and feasibility studies. We specialize in Korean and East Asian markets with particular expertise in Korean food culture and regulations. What type of F&B business are you planning to start? I'd love to connect you with our MSc Food Science expert for a detailed consultation call.";
-      }
-      if (message.includes('menu') || message.includes('product') || message.includes('development')) {
-        return "We offer menu development and product consulting services including: recipe development and optimization, nutritional analysis, cost optimization strategies, supplier sourcing, and regulatory compliance. Our MSc Food Science expert ensures quality and safety standards are met. We can help with both traditional and innovative food concepts. Would you like to schedule a call to discuss your product development needs?";
-      }
-      if (message.includes('license') || message.includes('permit') || message.includes('regulation') || message.includes('compliance')) {
-        return "We help with F&B business licensing and regulatory compliance including: business registration in Korea, food safety permits, health department approvals, import/export documentation, and ongoing compliance monitoring. We ensure full compliance with Korean regulations and can guide you through the entire legal process. Shall I arrange a consultation call with our regulatory compliance specialist?";
-      }
-      return "Our F&B consulting services include: business planning and strategy development, market analysis, menu development, regulatory compliance, supplier network access, and operational setup. We have expertise in Korean market entry and MSc Food Science background. Our F&B consulting packages start from $800. Would you be interested in a consultation call to discuss your specific F&B business goals?";
-    }
-    
-    // Call/consultation related queries
-    if (message.includes('call') || message.includes('consultation') || message.includes('speak') || message.includes('talk') || message.includes('meeting')) {
-      return "I'd be happy to arrange a consultation call for you! We offer FREE 15-minute initial consultations to understand your needs and provide personalized guidance. You can book directly through our website, or I can help you schedule right now. What type of consultation are you interested in - Study Abroad or F&B Consulting? You can also reach us at +82-10-1234-5678 or email info@kundapathways.com.";
-    }
-    
-    // Pricing queries
-    if (message.includes('cost') || message.includes('price') || message.includes('fee') || message.includes('how much') || message.includes('pricing')) {
-      return "Our service fees vary based on your specific needs: Study abroad services start from $500 for basic consultation, while comprehensive packages range $1,500-$3,000. F&B consulting starts from $800. We offer a FREE 15-minute initial consultation to discuss your requirements and provide accurate pricing. Would you like me to schedule this consultation call for you? Individual services can also be customized based on your budget.";
-    }
-    
-    // Success rate queries
-    if (message.includes('success') || message.includes('rate') || message.includes('guarantee') || message.includes('results')) {
-      return "Our success rates are impressive: 85%+ scholarship approval rate, 95%+ university admission rate, 98%+ visa approval rate. While we can't guarantee outcomes (they depend on individual qualifications), our expertise and proven track record significantly improve your chances. We provide realistic assessments during consultation and work closely with you to maximize success. Would you like to schedule a call to discuss your specific situation?";
-    }
-    
-    // Timeline queries
-    if (message.includes('time') || message.includes('long') || message.includes('when') || message.includes('duration') || message.includes('timeline')) {
-      return "Timelines vary by service: University applications take 3-6 months, scholarship applications 4-8 months, visa processing 2-4 weeks. F&B consulting projects typically take 2-12 weeks depending on scope. We provide detailed project timelines during your consultation and keep you updated throughout the process. Would you like to schedule a consultation call to get a personalized timeline for your goals?";
+      return "🍽️ **F&B Market Entry Support:** Business planning, market analysis, menu development, regulatory compliance, and operational setup. Our complete package is $12,000 (25% discount available!). We have MSc Food Science expertise and Korean market specialization. Ready to expand your F&B business?";
     }
     
     // Contact information queries
-    if (message.includes('contact') || message.includes('phone') || message.includes('email') || message.includes('reach')) {
-      return "You can reach us in several ways: 📧 Email: info@kundapathways.com | 📞 Phone: +82-10-1234-5678 | 💬 WhatsApp: +82-10-1234-5678 | 🕐 Hours: Monday-Friday 9AM-5PM KST, Saturday 10AM-4PM KST. Would you prefer a scheduled consultation call or immediate contact? I can help arrange either option for you!";
-    }
-    
-    // Who is the advisor/team
-    if (message.includes('who') || message.includes('advisor') || message.includes('consultant') || message.includes('team') || message.includes('expert')) {
-      return "Our team is led by experienced consultants with over 8 years in international education and F&B business development. Our principal advisor holds an MSc in Food Science and has helped over 500 students achieve their academic dreams in Korea, plus assisted 50+ businesses with market entry. We're passionate about creating pathways to success! Would you like to schedule a call to meet our team personally?";
-    }
-    
-    // Interested/yes responses
-    if (message.includes('yes') || message.includes('interested') || message.includes('sure') || message.includes('okay') || message.includes('ok')) {
-      return "Perfect! I'm excited to help you move forward. To schedule your FREE 15-minute consultation, you can: 1) Visit our booking page directly on the website, 2) Call us at +82-10-1234-5678, 3) Email us at info@kundapathways.com, or 4) Send a WhatsApp message to +82-10-1234-5678. Which method would be most convenient for you? I'm here to guide you through the process!";
+    if (message.includes('contact') || message.includes('phone') || message.includes('reach')) {
+      return "📞 **Contact Us:** Phone/WhatsApp: +250 788 123 456 | 📧 Email: info@kundapathways.com | ⏰ Hours: Mon-Fri 8AM-6PM, Sat 9AM-2PM (EAT). Would you prefer a scheduled consultation or immediate contact?";
     }
     
     // Greetings
-    if (message.includes('hello') || message.includes('hi') || message.includes('hey') || message.includes('good morning') || message.includes('good afternoon')) {
-      return "Hello! Welcome to Kunda Pathways! I'm Aria, your personal assistant. Whether you're dreaming of studying in Korea or expanding your F&B business into Asian markets, I'm here to guide you every step of the way. What brings you here today? Are you interested in education opportunities or business consulting? I'd love to learn about your goals and see how we can help you achieve them!";
+    if (message.includes('hello') || message.includes('hi') || message.includes('hey') || message.includes('good')) {
+      return "Hello! 👋 Welcome to Kunda Pathways! I'm Aria, your personal assistant. I can help you with Study Abroad opportunities in Korea or F&B business consulting. What brings you here today? Are you interested in education or business consulting?";
     }
     
     // Thanks
-    if (message.includes('thank') || message.includes('thanks') || message.includes('appreciate')) {
-      return "You're absolutely welcome! I'm thrilled I could help. Remember, we're here for you throughout your entire journey - whether it's studying in Korea or growing your F&B business. If you'd like personalized guidance, I highly recommend booking our FREE 15-minute consultation. Our experts would love to discuss your specific goals and create a tailored plan for success. Feel free to ask me anything else!";
+    if (message.includes('thank') || message.includes('appreciate')) {
+      return "You're absolutely welcome! 😊 I'm here to help you achieve your goals. Remember, we offer FREE 15-minute consultations with our expert advisors. Feel free to ask me anything else about our services!";
     }
     
     // Goodbye
-    if (message.includes('bye') || message.includes('goodbye') || message.includes('see you')) {
-      return "Thank you for chatting with me today! Before you go, remember that we offer a FREE 15-minute consultation if you'd like to discuss your goals with our expert advisors. Whether it's studying in Korea or F&B consulting, we're here to support your dreams. Have a wonderful day, and don't hesitate to return anytime you need guidance on your journey to success!";
+    if (message.includes('bye') || message.includes('goodbye')) {
+      return "Thank you for chatting with me! 👋 Before you go, remember our FREE 15-minute consultation offer. Whether it's studying in Korea or F&B consulting, we're here to support your dreams. Have a wonderful day!";
     }
     
     // Default response with call-to-action
-    return "That's a great question! I'd love to provide you with detailed, personalized information. For the most comprehensive guidance tailored to your specific situation, I recommend scheduling a FREE 15-minute consultation with our expert advisors. They can address all your questions about study abroad opportunities, F&B consulting, pricing, timelines, and success strategies. Would you be interested in booking this consultation call? I can help you schedule it right now!";
+    return "That's a great question! 🤔 I'd love to provide you with detailed, personalized information. For comprehensive guidance tailored to your specific situation, I recommend scheduling a FREE 15-minute consultation with our expert advisors. Would you be interested in booking this consultation? I can help you schedule it right now! 📅";
   };
 
   const handleSendMessage = () => {
