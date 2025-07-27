@@ -83,11 +83,6 @@ const AuthForm = () => {
               2. Add User: typekhalifa@gmail.com / admin123<br/>
               3. Enable "Auto Confirm"
             </p>
-            <p className="text-xs text-amber-600 dark:text-amber-400">
-              1. Go to Authentication → Users<br/>
-              2. Add User: jeandh023@gmail.com / MbwegerI$120<br/>
-              3. Enable "Auto Confirm"
-            </p>
           </div>
         </CardContent>
       </Card>
