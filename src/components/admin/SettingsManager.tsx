@@ -148,6 +148,30 @@ const SettingsManager = () => {
     }
   };
 
+  const handleUpdateUserEmail = async (userId: string, newEmail: string) => {
+    try {
+      // Update auth email using admin privileges
+      const { error: authError } = await supabase.auth.admin.updateUserById(userId, {
+        email: newEmail
+      });
+
+      if (authError) throw authError;
+
+      // Update profiles table
+      const { error } = await supabase
+        .from('profiles')
+        .update({ email: newEmail })
+        .eq('id', userId);
+
+      if (error) throw error;
+
+      toast.success('User email updated successfully!');
+      fetchUsers();
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update user email. Admin privileges required.');
+    }
+  };
+
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setProfileLoading(true);
