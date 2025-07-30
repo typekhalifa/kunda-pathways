@@ -153,6 +153,17 @@ const SettingsManager = () => {
     setProfileLoading(true);
     
     try {
+      // Update email in Supabase Auth if it changed
+      if (profileData.email !== profile?.email) {
+        const { error: authError } = await supabase.auth.updateUser({
+          email: profileData.email
+        });
+        
+        if (authError) throw authError;
+        toast.success('Email updated! Please check your new email for verification.');
+      }
+
+      // Update profile data
       const { error } = await supabase
         .from('profiles')
         .update({
@@ -163,7 +174,9 @@ const SettingsManager = () => {
 
       if (error) throw error;
       
-      toast.success('Profile updated successfully!');
+      if (profileData.email === profile?.email) {
+        toast.success('Profile updated successfully!');
+      }
     } catch (error: any) {
       toast.error(error.message || 'Failed to update profile');
     } finally {

@@ -42,7 +42,7 @@ const ChatBot = () => {
     if (hasKeywords(['book', 'schedule', 'appointment']) || 
         hasAllKeywords(['how', 'book']) || 
         hasKeywords(['consultation', 'meeting']) && hasKeywords(['book', 'schedule'])) {
-      return "📅 **How to Book Your Consultation:**\n\n✅ **Quick Steps:**\n1️⃣ Click the 'Book Now' button on our website\n2️⃣ Select your preferred service (Study Abroad or F&B Consulting)\n3️⃣ Choose your preferred date and time\n4️⃣ Fill in your contact details\n5️⃣ Confirm your booking\n\n📧 You'll receive instant confirmation via email!\n\n🚀 **Need faster booking?** Call/WhatsApp: +250 788 123 456\n\nReady to get started? What service interests you most?";
+      return "📅 How to Book Your Consultation:\n\n✅ Quick Steps:\n1️⃣ Click the 'Book Now' button on our website\n2️⃣ Select your preferred service (Study Abroad or F&B Consulting)\n3️⃣ Choose your preferred date and time\n4️⃣ Fill in your contact details\n5️⃣ Confirm your booking\n\n📧 You'll receive instant confirmation via email!\n\n🚀 Need faster booking? Call/WhatsApp: +250 788 123 456\n\nReady to get started? What service interests you most?";
     }
     
     // 2. Services offered - Better intent detection
@@ -52,7 +52,7 @@ const ChatBot = () => {
         hasKeywords(['help', 'with']) ||
         message.includes('what can you do') ||
         message.includes('what do you do')) {
-      return "🌟 **Our Complete Service Portfolio:**\n\n📚 **Study Abroad Consulting:**\n• University admissions & application support\n• KGSP & scholarship guidance (85%+ success rate)\n• Visa applications & document preparation\n• Korean language training & TOPIK prep\n• Post-arrival support in Korea\n\n🍽️ **F&B Market Entry Support:**\n• Complete business planning & strategy\n• Market research & competitive analysis\n• Menu development & food regulations\n• Operational setup & compliance\n• Korean market entry expertise\n\n⭐ **Additional Services:**\n• Document translation & apostille\n• Cultural orientation programs\n• Emergency visa support\n• Academic transcript evaluation\n\n💡 **Which area interests you most?** I can provide detailed information!";
+      return "🌟 Our Complete Service Portfolio:\n\n📚 Study Abroad Consulting:\n• University admissions & application support\n• KGSP & scholarship guidance (85%+ success rate)\n• Visa applications & document preparation\n• Korean language training & TOPIK prep\n• Post-arrival support in Korea\n\n🍽️ F&B Market Entry Support:\n• Complete business planning & strategy\n• Market research & competitive analysis\n• Menu development & food regulations\n• Operational setup & compliance\n• Korean market entry expertise\n\n⭐ Additional Services:\n• Document translation & apostille\n• Cultural orientation programs\n• Emergency visa support\n• Academic transcript evaluation\n\n💡 Which area interests you most? I can provide detailed information!";
     }
     
     // 3. Pricing questions
@@ -67,50 +67,50 @@ const ChatBot = () => {
     
     // 5. Discounts and promotions
     if (message.includes('discount') || message.includes('promo') || message.includes('offer') || message.includes('sale')) {
-      return "🎉 **Yes, we have active promotions!**\n\n✨ **Current Offer:** 25% OFF on our F&B Complete Package (normally $16,000, now $12,000)\n✨ **Study Abroad:** Early bird discounts available for next semester applications\n✨ **First-time clients:** FREE initial consultation (15 minutes)\n\nThese promotions are limited time offers. Would you like to book a consultation to learn more about how these discounts apply to your specific needs?";
+      return "🎉 Yes, we have active promotions!\n\n✨ Current Offer: 25% OFF on our F&B Complete Package (normally $16,000, now $12,000)\n✨ Study Abroad: Early bird discounts available for next semester applications\n✨ First-time clients: FREE initial consultation (15 minutes)\n\nThese promotions are limited time offers. Would you like to book a consultation to learn more about how these discounts apply to your specific needs?";
     }
     
     // 6. Location
     if (message.includes('where') || message.includes('location') || message.includes('office') || message.includes('address')) {
-      return "📍 **Our Location:**\n\nWe operate primarily online to serve clients globally, but our head office is located in **Kigali, Rwanda**.\n\n🌐 **Virtual Services:** Most consultations are conducted online via Zoom/Google Meet for convenience\n🏢 **In-person meetings:** Available in Kigali by appointment\n📞 **Contact:** +250 788 123 456\n📧 **Email:** info@kundapathways.com\n\nWould you prefer an online or in-person consultation?";
+      return "📍 Our Location:\n\nWe operate primarily online to serve clients globally, but our head office is located in Kigali, Rwanda.\n\n🌐 Virtual Services: Most consultations are conducted online via Zoom/Google Meet for convenience\n🏢 In-person meetings: Available in Kigali by appointment\n📞 Contact: +250 788 123 456\n📧 Email: info@kundapathways.com\n\nWould you prefer an online or in-person consultation?";
     }
     
     // 7. Reschedule consultation
     if (message.includes('reschedule') || message.includes('change') || message.includes('move')) {
-      return "📅 **Rescheduling Your Consultation:**\n\nYes, you can reschedule! Here's how:\n\n⏰ **Notice Required:** Please contact us at least 24 hours before your scheduled appointment\n📞 **Contact Methods:**\n- Call/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n✅ **We'll help you find a new time slot that works for both parties**\n\nDo you need to reschedule an existing appointment?";
+      return "📅 Rescheduling Your Consultation:\n\nYes, you can reschedule! Here's how:\n\n⏰ Notice Required: Please contact us at least 24 hours before your scheduled appointment\n📞 Contact Methods:\n- Call/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n✅ We'll help you find a new time slot that works for both parties\n\nDo you need to reschedule an existing appointment?";
     }
     
     // 8. Email/booking issues
     if (message.includes('email') || message.includes('confirmation') || message.includes('booking') || message.includes('didn') || message.includes('through')) {
-      return "📧 **Booking & Email Issues - Let's fix this!**\n\n🔍 **Troubleshooting steps:**\n1. Check your spam/junk folder\n2. Verify the email address you provided\n3. Wait up to 10 minutes for delivery\n\n📞 **Immediate Support:**\n- Call/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n✅ **We'll verify your booking and resend confirmation immediately**\n\nWhat email address did you use for booking? I can help you resolve this right away!";
+      return "📧 Booking & Email Issues - Let's fix this!\n\n🔍 Troubleshooting steps:\n1. Check your spam/junk folder\n2. Verify the email address you provided\n3. Wait up to 10 minutes for delivery\n\n📞 Immediate Support:\n- Call/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n✅ We'll verify your booking and resend confirmation immediately\n\nWhat email address did you use for booking? I can help you resolve this right away!";
     }
     
     // 9. Korean university applications
     if (message.includes('korean') || message.includes('university') || message.includes('application') || message.includes('korea')) {
-      return "🇰🇷 **Yes! Korean University Applications is our specialty!**\n\nWe help with:\n✅ **Top Universities:** Seoul National, Yonsei, Korea University, KAIST, POSTECH\n✅ **Application Strategy:** Program selection, requirements, deadlines\n✅ **Documentation:** Personal statements, recommendation letters, portfolios\n✅ **Scholarships:** KGSP, university-specific scholarships\n✅ **Language:** TOPIK preparation, language school options\n\n🎯 **Success Rate:** 95%+ acceptance rate\n💰 **Starting from:** $200\n\nWhich field of study interests you? Let's discuss your Korean university goals!";
+      return "🇰🇷 Yes! Korean University Applications is our specialty!\n\nWe help with:\n✅ Top Universities: Seoul National, Yonsei, Korea University, KAIST, POSTECH\n✅ Application Strategy: Program selection, requirements, deadlines\n✅ Documentation: Personal statements, recommendation letters, portfolios\n✅ Scholarships: KGSP, university-specific scholarships\n✅ Language: TOPIK preparation, language school options\n\n🎯 Success Rate: 95%+ acceptance rate\n💰 Starting from: $200\n\nWhich field of study interests you? Let's discuss your Korean university goals!";
     }
     
     // 10. Talk to human/live agent
     if (message.includes('human') || message.includes('agent') || message.includes('person') || message.includes('talk') || message.includes('speak')) {
-      return "👥 **Connect with Our Human Experts!**\n\n📞 **Direct Contact:**\n- Phone/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n⏰ **Business Hours:**\n- Monday-Friday: 8 AM - 6 PM (EAT)\n- Saturday: 9 AM - 2 PM (EAT)\n- Emergency support available\n\n🗓️ **Or book a consultation:** Our expert advisors are ready to discuss your goals in detail!\n\nWould you like me to help you schedule a call with our team right now?";
+      return "👥 Connect with Our Human Experts!\n\n📞 Direct Contact:\n- Phone/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n⏰ Business Hours:\n- Monday-Friday: 8 AM - 6 PM (EAT)\n- Saturday: 9 AM - 2 PM (EAT)\n- Emergency support available\n\n🗓️ Or book a consultation: Our expert advisors are ready to discuss your goals in detail!\n\nWould you like me to help you schedule a call with our team right now?";
     }
     
     // Study in Korea related queries
     if (message.includes('study') || message.includes('education') || message.includes('scholarship')) {
       if (message.includes('scholarship')) {
-        return "🏆 **Scholarship Opportunities in Korea!** We specialize in KGSP (Korean Government Scholarship Program) and university-specific scholarships. Our success rate is 85%+. We help with application strategies, document preparation, and interview coaching. Starting from $200. Would you like to schedule a consultation to discuss scholarships for your field?";
+        return "🏆 Scholarship Opportunities in Korea! We specialize in KGSP (Korean Government Scholarship Program) and university-specific scholarships. Our success rate is 85%+. We help with application strategies, document preparation, and interview coaching. Starting from $200. Would you like to schedule a consultation to discuss scholarships for your field?";
       }
-      return "📚 **Study Abroad Services for Korea:** University admissions, scholarship guidance, visa applications, Korean language training, and post-arrival support. Services range from $200-$3,000. We offer FREE 15-minute initial consultations. Ready to start your Korean education journey?";
+      return "📚 Study Abroad Services for Korea: University admissions, scholarship guidance, visa applications, Korean language training, and post-arrival support. Services range from $200-$3,000. We offer FREE 15-minute initial consultations. Ready to start your Korean education journey?";
     }
     
     // F&B Consulting related queries
     if (message.includes('food') || message.includes('beverage') || message.includes('restaurant') || message.includes('business') || message.includes('consulting')) {
-      return "🍽️ **F&B Market Entry Support:** Business planning, market analysis, menu development, regulatory compliance, and operational setup. Our complete package is $12,000 (25% discount available!). We have MSc Food Science expertise and Korean market specialization. Ready to expand your F&B business?";
+      return "🍽️ F&B Market Entry Support: Business planning, market analysis, menu development, regulatory compliance, and operational setup. Our complete package is $12,000 (25% discount available!). We have MSc Food Science expertise and Korean market specialization. Ready to expand your F&B business?";
     }
     
     // Contact information queries
     if (message.includes('contact') || message.includes('phone') || message.includes('reach')) {
-      return "📞 **Contact Us:** Phone/WhatsApp: +250 788 123 456 | 📧 Email: info@kundapathways.com | ⏰ Hours: Mon-Fri 8AM-6PM, Sat 9AM-2PM (EAT). Would you prefer a scheduled consultation or immediate contact?";
+      return "📞 Contact Us: Phone/WhatsApp: +250 788 123 456 | 📧 Email: info@kundapathways.com | ⏰ Hours: Mon-Fri 8AM-6PM, Sat 9AM-2PM (EAT). Would you prefer a scheduled consultation or immediate contact?";
     }
     
     // Greetings
@@ -138,7 +138,7 @@ const ChatBot = () => {
       "🍽️ F&B business consulting"
     ];
     
-    return `I'd be happy to help! 🤖 Here are some topics I can assist with:\n\n${commonQuestions.join('\n')}\n\n💬 **Just ask me about any of these, or feel free to ask anything else!**\n\n🆓 **Remember:** We offer FREE 15-minute consultations with our expert advisors. Would you like me to help you schedule one?`;
+    return `I'd be happy to help! 🤖 Here are some topics I can assist with:\n\n${commonQuestions.join('\n')}\n\n💬 Just ask me about any of these, or feel free to ask anything else!\n\n🆓 Remember: We offer FREE 15-minute consultations with our expert advisors. Would you like me to help you schedule one?`;
   }, []);
 
   const handleSendMessage = useCallback(() => {
