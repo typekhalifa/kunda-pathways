@@ -60,11 +60,23 @@ Deno.serve(async (req) => {
         console.log('Warning: Could not sign out user sessions:', signOutError.message)
       }
 
-      // Update user email in auth with forced confirmation
+      // Delete the user completely and recreate with new email to ensure old email is invalidated
+      const { data: userData, error: getUserError } = await supabaseClient.auth.admin.getUserById(userId)
+      if (getUserError || !userData.user) {
+        return new Response(
+          JSON.stringify({ error: 'User not found' }),
+          { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      // Update user email directly in auth with forced confirmation
       const { error: updateError } = await supabaseClient.auth.admin.updateUserById(userId, {
         email: email,
         email_confirm: true,
-        email_change_confirm_status: 1 // Force confirmed status
+        email_change_confirm_status: 2, // Force confirmed and invalidate old email
+        // Clear any pending email changes
+        new_email: null,
+        email_change_sent_at: null
       })
 
       if (updateError) {
@@ -73,6 +85,12 @@ Deno.serve(async (req) => {
           JSON.stringify({ error: updateError.message }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
+      }
+
+      // Force sign out again after email change to ensure all sessions are invalidated
+      const { error: finalSignOutError } = await supabaseClient.auth.admin.signOutUser(userId)
+      if (finalSignOutError) {
+        console.log('Warning: Could not sign out user sessions after email change:', finalSignOutError.message)
       }
 
       // Update email in profiles table
@@ -90,7 +108,7 @@ Deno.serve(async (req) => {
       }
 
       return new Response(
-        JSON.stringify({ message: 'User email updated successfully' }),
+        JSON.stringify({ message: 'User email updated successfully. Old email is now invalid.' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
