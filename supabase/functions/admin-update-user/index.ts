@@ -54,9 +54,10 @@ Deno.serve(async (req) => {
     const { userId, email, action } = await req.json()
 
     if (action === 'update-email') {
-      // Update user email in auth
+      // Update user email in auth (skip confirmation for admin changes)
       const { error: updateError } = await supabaseClient.auth.admin.updateUserById(userId, {
-        email: email
+        email: email,
+        email_confirm: true
       })
 
       if (updateError) {
