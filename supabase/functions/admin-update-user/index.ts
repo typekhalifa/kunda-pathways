@@ -69,34 +69,41 @@ Deno.serve(async (req) => {
         )
       }
 
-      // Update user email directly in auth with forced confirmation
-      const { error: updateError } = await supabaseClient.auth.admin.updateUserById(userId, {
+      // Delete the user and recreate to completely invalidate old email
+      const oldUserData = userData.user;
+      
+      // Delete the user completely
+      const { error: deleteError } = await supabaseClient.auth.admin.deleteUser(userId)
+      if (deleteError) {
+        console.error('Error deleting user:', deleteError)
+      }
+
+      // Recreate user with new email
+      const { data: newUser, error: createError } = await supabaseClient.auth.admin.createUser({
         email: email,
         email_confirm: true,
-        email_change_confirm_status: 2, // Force confirmed and invalidate old email
-        // Clear any pending email changes
-        new_email: null,
-        email_change_sent_at: null
+        user_metadata: oldUserData.user_metadata,
+        app_metadata: oldUserData.app_metadata
       })
 
-      if (updateError) {
-        console.error('Error updating user email:', updateError)
+      if (createError) {
+        console.error('Error recreating user:', createError)
         return new Response(
-          JSON.stringify({ error: updateError.message }),
+          JSON.stringify({ error: createError.message }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
 
-      // Force sign out again after email change to ensure all sessions are invalidated
-      const { error: finalSignOutError } = await supabaseClient.auth.admin.signOutUser(userId)
-      if (finalSignOutError) {
-        console.log('Warning: Could not sign out user sessions after email change:', finalSignOutError.message)
-      }
+      const newUserId = newUser.user.id
 
-      // Update email in profiles table
+      // Update the profiles table with the new user ID and email
       const { error: profileUpdateError } = await supabaseClient
         .from('profiles')
-        .update({ email })
+        .update({ 
+          id: newUserId, 
+          email: email,
+          full_name: oldUserData.user_metadata?.full_name || null
+        })
         .eq('id', userId)
 
       if (profileUpdateError) {
