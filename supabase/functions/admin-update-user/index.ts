@@ -54,10 +54,17 @@ Deno.serve(async (req) => {
     const { userId, email, action } = await req.json()
 
     if (action === 'update-email') {
-      // Update user email in auth (skip confirmation for admin changes)
+      // First, invalidate all existing sessions for security
+      const { error: signOutError } = await supabaseClient.auth.admin.signOutUser(userId)
+      if (signOutError) {
+        console.log('Warning: Could not sign out user sessions:', signOutError.message)
+      }
+
+      // Update user email in auth with forced confirmation
       const { error: updateError } = await supabaseClient.auth.admin.updateUserById(userId, {
         email: email,
-        email_confirm: true
+        email_confirm: true,
+        email_change_confirm_status: 1 // Force confirmed status
       })
 
       if (updateError) {
