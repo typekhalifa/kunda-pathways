@@ -60,50 +60,35 @@ Deno.serve(async (req) => {
         console.log('Warning: Could not sign out user sessions:', signOutError.message)
       }
 
-      // Delete the user completely and recreate with new email to ensure old email is invalidated
-      const { data: userData, error: getUserError } = await supabaseClient.auth.admin.getUserById(userId)
-      if (getUserError || !userData.user) {
-        return new Response(
-          JSON.stringify({ error: 'User not found' }),
-          { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        )
-      }
-
-      // Delete the user and recreate to completely invalidate old email
-      const oldUserData = userData.user;
-      
-      // Delete the user completely
-      const { error: deleteError } = await supabaseClient.auth.admin.deleteUser(userId)
-      if (deleteError) {
-        console.error('Error deleting user:', deleteError)
-      }
-
-      // Recreate user with new email
-      const { data: newUser, error: createError } = await supabaseClient.auth.admin.createUser({
+      // Update user email with forced confirmation and invalidate old email
+      const { error: updateError } = await supabaseClient.auth.admin.updateUserById(userId, {
         email: email,
         email_confirm: true,
-        user_metadata: oldUserData.user_metadata,
-        app_metadata: oldUserData.app_metadata
+        // Force the old email to be completely replaced
+        new_email: null,
+        email_change_sent_at: null,
+        email_change_token: null,
+        email_change_confirm_status: 0
       })
 
-      if (createError) {
-        console.error('Error recreating user:', createError)
+      if (updateError) {
+        console.error('Error updating user email:', updateError)
         return new Response(
-          JSON.stringify({ error: createError.message }),
+          JSON.stringify({ error: updateError.message }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
 
-      const newUserId = newUser.user.id
+      // Force sign out all sessions after email change
+      const { error: finalSignOutError } = await supabaseClient.auth.admin.signOutUser(userId)
+      if (finalSignOutError) {
+        console.log('Warning: Could not sign out user sessions after email change:', finalSignOutError.message)
+      }
 
-      // Update the profiles table with the new user ID and email
+      // Update email in profiles table
       const { error: profileUpdateError } = await supabaseClient
         .from('profiles')
-        .update({ 
-          id: newUserId, 
-          email: email,
-          full_name: oldUserData.user_metadata?.full_name || null
-        })
+        .update({ email })
         .eq('id', userId)
 
       if (profileUpdateError) {
