@@ -37,21 +37,25 @@ Deno.serve(async (req) => {
       )
     }
 
-    // Check if user is admin
+    // Check if user is admin or updating their own profile
     const { data: profile, error: profileError } = await supabaseClient
       .from('profiles')
       .select('role')
       .eq('id', user.id)
       .single()
 
-    if (profileError || profile?.role !== 'admin') {
+    const { userId, email, action } = await req.json()
+
+    // Allow if user is admin OR if user is updating their own email
+    const isAdmin = profile?.role === 'admin'
+    const isUpdatingOwnProfile = userId === user.id
+    
+    if (profileError || (!isAdmin && !isUpdatingOwnProfile)) {
       return new Response(
-        JSON.stringify({ error: 'Unauthorized: Admin access required' }),
+        JSON.stringify({ error: 'Unauthorized: You can only update your own profile' }),
         { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
-
-    const { userId, email, action } = await req.json()
 
     if (action === 'update-email') {
       console.log('Starting email update for user:', userId, 'to email:', email)
