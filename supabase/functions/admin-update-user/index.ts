@@ -37,14 +37,15 @@ Deno.serve(async (req) => {
       )
     }
 
+    // Parse request body first
+    const { userId, email, action } = await req.json()
+
     // Check if user is admin or updating their own profile
     const { data: profile, error: profileError } = await supabaseClient
       .from('profiles')
       .select('role')
       .eq('id', user.id)
       .single()
-
-    const { userId, email, action } = await req.json()
 
     // Allow if user is admin OR if user is updating their own email
     const isAdmin = profile?.role === 'admin'
