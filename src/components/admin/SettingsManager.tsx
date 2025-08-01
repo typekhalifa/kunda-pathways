@@ -172,14 +172,18 @@ const SettingsManager = () => {
     setProfileLoading(true);
     
     try {
-      // Update email in Supabase Auth if it changed
+      // Update email using admin edge function if it changed
       if (profileData.email !== profile?.email) {
-        const { error: authError } = await supabase.auth.updateUser({
-          email: profileData.email
+        const { error: authError } = await supabase.functions.invoke('admin-update-user', {
+          body: {
+            userId: profile?.id,
+            email: profileData.email,
+            action: 'update-email'
+          }
         });
         
         if (authError) throw authError;
-        toast.success('Email updated! Please check your new email for verification.');
+        toast.success('Email updated successfully! Please log in with your new email.');
       }
 
       // Update profile data
