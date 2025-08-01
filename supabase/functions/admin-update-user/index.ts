@@ -12,6 +12,8 @@ Deno.serve(async (req) => {
   }
 
   try {
+    console.log('Admin update user function called')
+    
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -19,7 +21,10 @@ Deno.serve(async (req) => {
 
     // Get the authorization header
     const authHeader = req.headers.get('Authorization')
+    console.log('Auth header present:', !!authHeader)
+    
     if (!authHeader) {
+      console.log('No authorization header')
       return new Response(
         JSON.stringify({ error: 'No authorization header' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -28,9 +33,13 @@ Deno.serve(async (req) => {
 
     // Verify the user is authenticated and is an admin
     const token = authHeader.replace('Bearer ', '')
+    console.log('Getting user from token')
+    
     const { data: { user }, error: authError } = await supabaseClient.auth.getUser(token)
+    console.log('Auth result:', { user: !!user, authError })
     
     if (authError || !user) {
+      console.log('Invalid token or auth error:', authError)
       return new Response(
         JSON.stringify({ error: 'Invalid token' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -38,7 +47,9 @@ Deno.serve(async (req) => {
     }
 
     // Parse request body first
+    console.log('Parsing request body')
     const { userId, email, action } = await req.json()
+    console.log('Request data:', { userId, email, action })
 
     // Check if user is admin or updating their own profile
     const { data: profile, error: profileError } = await supabaseClient
