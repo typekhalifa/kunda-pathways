@@ -72,12 +72,6 @@ Deno.serve(async (req) => {
     if (action === 'update-email') {
       console.log('Starting email update for user:', userId, 'to email:', email)
       
-      // Sign out all existing sessions FIRST
-      const { error: signOutError1 } = await supabaseClient.auth.admin.signOutUser(userId)
-      if (signOutError1) {
-        console.error('Error signing out user (first):', signOutError1)
-      }
-
       // Update user email with forced confirmation
       const { data: updateData, error: updateError } = await supabaseClient.auth.admin.updateUserById(userId, {
         email: email,
@@ -93,12 +87,6 @@ Deno.serve(async (req) => {
       }
 
       console.log('User email updated successfully:', updateData)
-
-      // Sign out again to force re-authentication
-      const { error: signOutError2 } = await supabaseClient.auth.admin.signOutUser(userId)
-      if (signOutError2) {
-        console.error('Error signing out user (second):', signOutError2)
-      }
 
       // Update email in profiles table
       const { error: profileUpdateError } = await supabaseClient
