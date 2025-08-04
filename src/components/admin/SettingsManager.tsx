@@ -174,6 +174,12 @@ const SettingsManager = () => {
     try {
       // Update email using admin edge function if it changed
       if (profileData.email !== profile?.email) {
+        console.log('Calling admin-update-user with:', {
+          userId: profile?.id,
+          email: profileData.email,
+          action: 'update-email'
+        });
+        
         const { data, error: authError } = await supabase.functions.invoke('admin-update-user', {
           body: {
             userId: profile?.id,
@@ -181,6 +187,8 @@ const SettingsManager = () => {
             action: 'update-email'
           }
         });
+        
+        console.log('Edge function response:', { data, authError });
         
         if (authError) {
           console.error('Edge function error:', authError);
