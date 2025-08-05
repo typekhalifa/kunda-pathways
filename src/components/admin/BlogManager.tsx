@@ -279,16 +279,16 @@ const BlogManager = () => {
                   <SelectTrigger className="rounded-xl border-2 focus:border-blue-500 bg-background">
                     <SelectValue placeholder="Choose category" />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl border-2 bg-background shadow-xl z-50">
+                  <SelectContent className="rounded-xl border-2 bg-white dark:bg-slate-800 shadow-xl z-[100] min-w-[200px]">
                     {categories.map((category) => (
                       <SelectItem 
                         key={category.value} 
                         value={category.value}
-                        className="rounded-lg hover:bg-accent focus:bg-accent cursor-pointer"
+                        className="rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 cursor-pointer py-3 px-4"
                       >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-3">
                           <span className="text-lg">{category.icon}</span>
-                          <span>{category.label}</span>
+                          <span className="font-medium">{category.label}</span>
                         </div>
                       </SelectItem>
                     ))}
@@ -305,14 +305,14 @@ const BlogManager = () => {
                   <SelectTrigger className="rounded-xl border-2 focus:border-blue-500 bg-background">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl border-2 bg-background shadow-xl z-50">
-                    <SelectItem value="EN" className="rounded-lg hover:bg-accent focus:bg-accent cursor-pointer">
+                  <SelectContent className="rounded-xl border-2 bg-white dark:bg-slate-800 shadow-xl z-[100] min-w-[200px]">
+                    <SelectItem value="EN" className="rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 cursor-pointer py-3 px-4">
                       🇺🇸 English
                     </SelectItem>
-                    <SelectItem value="KO" className="rounded-lg hover:bg-accent focus:bg-accent cursor-pointer">
+                    <SelectItem value="KO" className="rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 cursor-pointer py-3 px-4">
                       🇰🇷 Korean
                     </SelectItem>
-                    <SelectItem value="FR" className="rounded-lg hover:bg-accent focus:bg-accent cursor-pointer">
+                    <SelectItem value="FR" className="rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 cursor-pointer py-3 px-4">
                       🇫🇷 French
                     </SelectItem>
                   </SelectContent>
