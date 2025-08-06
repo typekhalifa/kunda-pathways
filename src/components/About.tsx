@@ -3,9 +3,89 @@ import { Button } from "@/components/ui/button";
 import { Award, Users, Target, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Stat {
+  label: string;
+  value: string;
+  color: string;
+}
+
+interface AboutContent {
+  title: string | null;
+  description: string | null;
+  mission_text: string | null;
+  advisor_name: string | null;
+  advisor_title: string | null;
+  advisor_description: string | null;
+  advisor_image_url: string | null;
+  stats: Stat[];
+}
 
 const About = () => {
   const { translations } = useLanguage();
+  const [content, setContent] = useState<AboutContent | null>(null);
+  
+  useEffect(() => {
+    fetchContent();
+  }, []);
+  
+  const fetchContent = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('about_content')
+        .select('*')
+        .eq('section_key', 'main')
+        .eq('is_active', true)
+        .maybeSingle();
+
+      if (error) throw error;
+      
+      if (data) {
+        setContent({
+          ...data,
+          stats: Array.isArray(data.stats) ? data.stats as unknown as Stat[] : []
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching about content:', error);
+    }
+  };
+
+  // Fallback to default content if database content is not available
+  const displayContent = content || {
+    title: 'About Kunda Pathways',
+    description: 'Empowering dreams through education and business excellence. We bridge cultures and create opportunities for global success.',
+    mission_text: 'To provide comprehensive, personalized guidance that transforms educational aspirations and business ventures into successful realities. We believe in the power of quality education and strategic business planning to change lives.',
+    advisor_name: 'Kunda John',
+    advisor_title: 'International Education & F&B Expert',
+    advisor_description: 'With over 5 years of experience in international education consulting and MSc in Food Science, our team has helped over 500 students achieve their academic dreams and numerous businesses expand globally.',
+    advisor_image_url: '/lovable-uploads/khali.jpg',
+    stats: [
+      { label: 'Successful Students', value: '53+', color: 'blue' },
+      { label: 'Businesses Helped', value: '42+', color: 'green' },
+      { label: 'Scholarship Success Rate', value: '87%', color: 'purple' },
+      { label: 'Years Experience', value: '5+', color: 'orange' }
+    ]
+  };
+
+  const getStatColorClasses = (color: string) => {
+    switch (color) {
+      case 'blue': return 'from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 bg-blue-600 text-blue-600';
+      case 'green': return 'from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 bg-green-600 text-green-600';
+      case 'purple': return 'from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 bg-purple-600 text-purple-600';
+      case 'orange': return 'from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 bg-orange-600 text-orange-600';
+      case 'red': return 'from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 bg-red-600 text-red-600';
+      case 'yellow': return 'from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20 bg-yellow-600 text-yellow-600';
+      default: return 'from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 bg-blue-600 text-blue-600';
+    }
+  };
+
+  const getStatIcon = (index: number) => {
+    const icons = [Award, Users, Target, Heart];
+    return icons[index % icons.length];
+  };
 
   return (
     <section id="about" className="py-20 bg-white dark:bg-slate-900">
@@ -13,10 +93,10 @@ const About = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6">
-              {translations.about || "About"} <span className="text-blue-600">Kunda Pathways</span>
+              {displayContent.title || translations.about || "About"} <span className="text-blue-600">Kunda Pathways</span>
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-              {translations.aboutDescription || "Empowering dreams through education and business excellence. We bridge cultures and create opportunities for global success."}
+              {displayContent.description || translations.aboutDescription || "Empowering dreams through education and business excellence. We bridge cultures and create opportunities for global success."}
             </p>
           </div>
 
@@ -26,7 +106,7 @@ const About = () => {
                 {translations.ourMission || "Our Mission"}
               </h3>
               <p className="text-lg text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-                {translations.missionDescription || "To provide comprehensive, personalized guidance that transforms educational aspirations and business ventures into successful realities. We believe in the power of quality education and strategic business planning to change lives."}
+                {displayContent.mission_text || translations.missionDescription || "To provide comprehensive, personalized guidance that transforms educational aspirations and business ventures into successful realities. We believe in the power of quality education and strategic business planning to change lives."}
               </p>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
@@ -50,17 +130,17 @@ const About = () => {
               </h4>
               <div className="flex items-center space-x-4 mb-6">
                 <img 
-                  src="/lovable-uploads/khali.jpg" 
+                  src={displayContent.advisor_image_url || "/lovable-uploads/khali.jpg"} 
                   alt="Global Advisor" 
                   className="w-16 h-16 rounded-full object-cover border-4 border-blue-200 dark:border-blue-700"
                 />
                 <div>
-                  <h5 className="font-semibold text-slate-800 dark:text-white">{translations.advisorName || "Kunda John"}</h5>
-                  <p className="text-slate-600 dark:text-slate-300 text-sm">{translations.advisorTitle || "International Education & F&B Expert"}</p>
+                  <h5 className="font-semibold text-slate-800 dark:text-white">{displayContent.advisor_name || translations.advisorName || "Kunda John"}</h5>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm">{displayContent.advisor_title || translations.advisorTitle || "International Education & F&B Expert"}</p>
                 </div>
               </div>
               <p className="text-slate-600 dark:text-slate-300 mb-4">
-                {translations.advisorDescription || "With over 5 years of experience in international education consulting and MSc in Food Science, our team has helped over 500 students achieve their academic dreams and numerous businesses expand globally."}
+                {displayContent.advisor_description || translations.advisorDescription || "With over 5 years of experience in international education consulting and MSc in Food Science, our team has helped over 500 students achieve their academic dreams and numerous businesses expand globally."}
               </p>
               <Link to="/about-advisor">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
@@ -71,45 +151,25 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="text-center bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Award className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-blue-600 mb-2">53+</h3>
-                <p className="text-slate-600 dark:text-slate-300">{translations.successfulStudents || "Successful Students"}</p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-green-600 mb-2">42+</h3>
-                <p className="text-slate-600 dark:text-slate-300">{translations.businessesHelped || "Businesses Helped"}</p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-purple-600 mb-2">87%</h3>
-                <p className="text-slate-600 dark:text-slate-300">{translations.scholarshipSuccessRate || "Scholarship Success Rate"}</p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Heart className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-orange-600 mb-2">5+</h3>
-                <p className="text-slate-600 dark:text-slate-300">{translations.yearsExperience || "Years Experience"}</p>
-              </CardContent>
-            </Card>
+            {displayContent.stats.map((stat, index) => {
+              const colorClasses = getStatColorClasses(stat.color);
+              const IconComponent = getStatIcon(index);
+              const [bgGradient, ...iconClasses] = colorClasses.split(' ');
+              const iconBgClass = iconClasses.find(c => c.startsWith('bg-'));
+              const textColorClass = iconClasses.find(c => c.startsWith('text-'));
+              
+              return (
+                <Card key={index} className={`text-center bg-gradient-to-br ${bgGradient} border-0 shadow-lg hover:shadow-xl transition-all duration-300`}>
+                  <CardContent className="p-8">
+                    <div className={`w-16 h-16 ${iconBgClass} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                      <IconComponent className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className={`text-2xl font-bold ${textColorClass} mb-2`}>{stat.value}</h3>
+                    <p className="text-slate-600 dark:text-slate-300">{stat.label}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>

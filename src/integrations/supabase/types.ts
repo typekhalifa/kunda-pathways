@@ -29,6 +29,54 @@ export type Database = {
         }
         Relationships: []
       }
+      about_content: {
+        Row: {
+          advisor_description: string | null
+          advisor_image_url: string | null
+          advisor_name: string | null
+          advisor_title: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          mission_text: string | null
+          section_key: string
+          stats: Json | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          advisor_description?: string | null
+          advisor_image_url?: string | null
+          advisor_name?: string | null
+          advisor_title?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          mission_text?: string | null
+          section_key: string
+          stats?: Json | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          advisor_description?: string | null
+          advisor_image_url?: string | null
+          advisor_name?: string | null
+          advisor_title?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          mission_text?: string | null
+          section_key?: string
+          stats?: Json | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author_id: string | null
@@ -409,6 +457,39 @@ export type Database = {
         }
         Relationships: []
       }
+      partners: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          logo_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          logo_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          logo_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -601,6 +682,48 @@ export type Database = {
         }
         Relationships: []
       }
+      testimonials: {
+        Row: {
+          avatar_url: string | null
+          content: string
+          country: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          name: string
+          rating: number | null
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          content: string
+          country?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          rating?: number | null
+          role: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          content?: string
+          country?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          rating?: number | null
+          role?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       website_content: {
         Row: {
           content_key: string
@@ -680,16 +803,22 @@ export type Database = {
         Returns: boolean
       }
       log_security_event: {
-        Args: {
-          p_action: string
-          p_resource?: string
-          p_success?: boolean
-          p_details?: Json
-        }
+        Args:
+          | { event_type: string; event_details?: Json }
+          | {
+              p_action: string
+              p_resource?: string
+              p_success?: boolean
+              p_details?: Json
+            }
         Returns: undefined
       }
       validate_input: {
         Args: { p_input: string; p_type?: string }
+        Returns: boolean
+      }
+      validate_input_security: {
+        Args: { input_text: string; max_length?: number }
         Returns: boolean
       }
     }

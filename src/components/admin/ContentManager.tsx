@@ -5,7 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { Loader2, Save, Edit, Home, Info, Briefcase } from 'lucide-react';
+import { Loader2, Save, Edit, Home, Info, Briefcase, Users, MessageSquare, Building } from 'lucide-react';
+import PartnersManager from './PartnersManager';
+import AboutContentManager from './AboutContentManager';
+import TestimonialsManager from './TestimonialsManager';
 
 const ContentManager = () => {
   const [loading, setLoading] = useState(false);
@@ -43,7 +46,10 @@ const ContentManager = () => {
   const tabs = [
     { id: 'hero', label: 'Hero Section', icon: Home },
     { id: 'about', label: 'About Section', icon: Info },
-    { id: 'services', label: 'Services Section', icon: Briefcase }
+    { id: 'services', label: 'Services Section', icon: Briefcase },
+    { id: 'partners', label: 'Partners', icon: Building },
+    { id: 'about-content', label: 'About Content', icon: Users },
+    { id: 'testimonials', label: 'Success Stories', icon: MessageSquare }
   ];
 
   return (
@@ -226,6 +232,12 @@ const ContentManager = () => {
           </CardContent>
         </Card>
       )}
+
+      {activeTab === 'partners' && <PartnersManager />}
+      
+      {activeTab === 'about-content' && <AboutContentManager />}
+      
+      {activeTab === 'testimonials' && <TestimonialsManager />}
     </div>
   );
 };

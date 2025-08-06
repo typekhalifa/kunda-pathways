@@ -1,19 +1,38 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Partner {
+  id: string;
+  name: string;
+  logo_url: string | null;
+  alt_text: string | null;
+  display_order: number;
+}
 
 const Partners = () => {
   const { translations } = useLanguage();
+  const [partners, setPartners] = useState<Partner[]>([]);
   
-  const partners = [
-    { name: "Seoul National University", logo: "🏛️", alt: "SNU Logo" },
-    { name: "KAIST", logo: "🔬", alt: "KAIST Logo" },
-    { name: "Yonsei University", logo: "🎓", alt: "Yonsei Logo" },
-    { name: "Korea University", logo: "📚", alt: "Korea University Logo" },
-    { name: "POSTECH", logo: "⚗️", alt: "POSTECH Logo" },
-    { name: "Hanyang University", logo: "🏗️", alt: "Hanyang Logo" },
-    { name: "Korean Government", logo: "🇰🇷", alt: "Korean Government Logo" },
-    { name: "KOTRA", logo: "🌐", alt: "KOTRA Logo" },
-  ];
+  useEffect(() => {
+    fetchPartners();
+  }, []);
+  
+  const fetchPartners = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('partners')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order');
+
+      if (error) throw error;
+      setPartners(data || []);
+    } catch (error) {
+      console.error('Error fetching partners:', error);
+    }
+  };
 
   // Safe function to split text and style the last word
   const renderStyledTitle = (text: string) => {
@@ -52,9 +71,17 @@ const Partners = () => {
                 className="flex-shrink-0 mx-8 bg-gray-50 dark:bg-slate-800 rounded-lg p-6 min-w-[200px] text-center shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="w-16 h-16 mx-auto mb-3 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center border-2 border-gray-200 dark:border-slate-600">
-                  <span className="text-2xl" role="img" aria-label={partner.alt}>
-                    {partner.logo}
-                  </span>
+                  {partner.logo_url ? (
+                    <img 
+                      src={partner.logo_url} 
+                      alt={partner.alt_text || partner.name}
+                      className="w-12 h-12 object-contain rounded-full"
+                    />
+                  ) : (
+                    <span className="text-2xl" role="img" aria-label={partner.alt_text || partner.name}>
+                      🏛️
+                    </span>
+                  )}
                 </div>
                 <div className="text-sm font-medium text-slate-700 dark:text-slate-300">
                   {partner.name}
@@ -72,9 +99,17 @@ const Partners = () => {
                   className="flex-shrink-0 mx-4 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 min-w-[150px] text-center shadow-sm"
                 >
                   <div className="w-12 h-12 mx-auto mb-2 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center border-2 border-gray-200 dark:border-slate-600">
-                    <span className="text-lg" role="img" aria-label={partner.alt}>
-                      {partner.logo}
-                    </span>
+                    {partner.logo_url ? (
+                      <img 
+                        src={partner.logo_url} 
+                        alt={partner.alt_text || partner.name}
+                        className="w-10 h-10 object-contain rounded-full"
+                      />
+                    ) : (
+                      <span className="text-lg" role="img" aria-label={partner.alt_text || partner.name}>
+                        🏛️
+                      </span>
+                    )}
                   </div>
                   <div className="text-xs font-medium text-slate-700 dark:text-slate-300">
                     {partner.name}
@@ -89,9 +124,17 @@ const Partners = () => {
                   className="flex-shrink-0 mx-4 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 min-w-[150px] text-center shadow-sm"
                 >
                   <div className="w-12 h-12 mx-auto mb-2 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center border-2 border-gray-200 dark:border-slate-600">
-                    <span className="text-lg" role="img" aria-label={partner.alt}>
-                      {partner.logo}
-                    </span>
+                    {partner.logo_url ? (
+                      <img 
+                        src={partner.logo_url} 
+                        alt={partner.alt_text || partner.name}
+                        className="w-10 h-10 object-contain rounded-full"
+                      />
+                    ) : (
+                      <span className="text-lg" role="img" aria-label={partner.alt_text || partner.name}>
+                        🏛️
+                      </span>
+                    )}
                   </div>
                   <div className="text-xs font-medium text-slate-700 dark:text-slate-300">
                     {partner.name}

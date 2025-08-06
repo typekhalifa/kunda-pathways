@@ -2,33 +2,79 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, User } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  content: string;
+  country: string | null;
+  rating: number;
+  avatar_url: string | null;
+  display_order: number;
+}
 
 const Testimonials = () => {
   const { translations } = useLanguage();
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   
-  const testimonials = [
-    {
-      name: "Marie Uwimana",
-      role: "University Student in Seoul",
-      content: "Thanks to Kunda Pathways, I'm now studying at a top Korean university with a full scholarship. The guidance was incredible!",
-      country: "Rwanda",
-      rating: 5,
-    },
-    {
-      name: "Type Khalifa",
-      role: "F&B Entrepreneur",
-      content: "The food industry consulting helped me launch my beverage company in the Korean market. Invaluable expertise!",
-      country: "Uganda",
-      rating: 5,
-    },
-    {
-      name: "Sarah Nkunda",
-      role: "Graduate Student",
-      content: "From visa application to finding accommodation, every step was handled professionally. Highly recommended!",
-      country: "Rwanda",
-      rating: 5,
-    },
-  ];
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+  
+  const fetchTestimonials = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order');
+
+      if (error) throw error;
+      
+      if (data && data.length > 0) {
+        setTestimonials(data);
+      } else {
+        // Fallback to default testimonials if none in database
+        setTestimonials([
+          {
+            id: '1',
+            name: "Marie Uwimana",
+            role: "University Student in Seoul",
+            content: "Thanks to Kunda Pathways, I'm now studying at a top Korean university with a full scholarship. The guidance was incredible!",
+            country: "Rwanda",
+            rating: 5,
+            avatar_url: null,
+            display_order: 1,
+          },
+          {
+            id: '2',
+            name: "Type Khalifa",
+            role: "F&B Entrepreneur",
+            content: "The food industry consulting helped me launch my beverage company in the Korean market. Invaluable expertise!",
+            country: "Uganda",
+            rating: 5,
+            avatar_url: null,
+            display_order: 2,
+          },
+          {
+            id: '3',
+            name: "Sarah Nkunda",
+            role: "Graduate Student",
+            content: "From visa application to finding accommodation, every step was handled professionally. Highly recommended!",
+            country: "Rwanda",
+            rating: 5,
+            avatar_url: null,
+            display_order: 3,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+    }
+  };
 
   // Helper function to safely split text
   const renderStyledTitle = (text: string) => {
@@ -79,12 +125,22 @@ const Testimonials = () => {
                 {/* User Info */}
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-4 hover:scale-110 transition-transform duration-300">
-                    <User className="w-6 h-6 text-white" />
+                    {testimonial.avatar_url ? (
+                      <img 
+                        src={testimonial.avatar_url} 
+                        alt={testimonial.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-6 h-6 text-white" />
+                    )}
                   </div>
                   <div>
                     <div className="font-semibold text-slate-800 dark:text-white">{testimonial.name}</div>
                     <div className="text-sm text-slate-500 dark:text-slate-400">{testimonial.role}</div>
-                    <div className="text-sm text-blue-600 font-medium">{testimonial.country}</div>
+                    {testimonial.country && (
+                      <div className="text-sm text-blue-600 font-medium">{testimonial.country}</div>
+                    )}
                   </div>
                 </div>
               </CardContent>
