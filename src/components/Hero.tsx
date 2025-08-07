@@ -4,16 +4,38 @@ import { ArrowDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCountingAnimation } from "@/hooks/useCountingAnimation";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
 
 const Hero = () => {
   const { translations } = useLanguage();
+  const [aboutContent, setAboutContent] = useState(null);
   
   // Counting animations for statistics
   const studentsCount = useCountingAnimation(53, 2000, 500);
   const countriesCount = useCountingAnimation(13, 2000, 700);
 
+  useEffect(() => {
+    fetchAboutContent();
+  }, []);
+
+  const fetchAboutContent = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('about_content')
+        .select('*')
+        .eq('section_key', 'main')
+        .maybeSingle();
+
+      if (error) throw error;
+      setAboutContent(data);
+    } catch (error) {
+      console.error('Error fetching about content:', error);
+    }
+  };
+
   // Safe handling of heroTitle to prevent undefined error
-  const heroTitle = translations.heroTitle || "Your Gateway to Global Education and Business Success";
+  const heroTitle = aboutContent?.title || translations.heroTitle || "Your Gateway to Global Education and Business Success";
   const heroTitleParts = heroTitle.split(' ');
   const mainTitle = heroTitleParts.slice(0, -2).join(' ');
   const highlightedTitle = heroTitleParts.slice(-2).join(' ');
@@ -38,7 +60,7 @@ const Hero = () => {
             <span className="text-blue-400"> {highlightedTitle}</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed font-semibold">
-            {translations.heroSubtitle || "Expert guidance for Korean university admissions, scholarships, and F&B business consulting"}
+            {aboutContent?.description || translations.heroSubtitle || "Expert guidance for Korean university admissions, scholarships, and F&B business consulting"}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">

@@ -7,23 +7,57 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
 
 const AboutAdvisor = () => {
   const { translations } = useLanguage();
-
-  // Editable advisor information - change these values as needed
-  const advisorInfo = {
-    name: translations.advisorName || "Kunda John",
-    title: translations.advisorTitle || "Global Education & F&B Consultant",
+  const [advisorInfo, setAdvisorInfo] = useState({
+    name: "Kunda John",
+    title: "Global Education & F&B Consultant",
     photoUrl: "/lovable-uploads/khali.jpg",
     email: "info@kundapath.com",
     phone: "+82-10-1234-5678",
-    location: translations.location || "Seoul, South Korea",
+    location: "Seoul, South Korea",
     experience: "5+",
     studentsHelped: "53+",
     successRate: "87%",
     countriesReached: "13+",
-    description: translations.advisorDescription || "With over 5 years of experience in international education consulting and F&B business development, I specialize in helping students achieve their academic dreams in Korea while also supporting entrepreneurs in navigating the Asian F&B market. My dual expertise in education and Food Science and Technology (MSc) allows me to provide comprehensive guidance for both academic and business ventures."
+    description: "With over 5 years of experience in international education consulting and F&B business development, I specialize in helping students achieve their academic dreams in Korea while also supporting entrepreneurs in navigating the Asian F&B market. My dual expertise in education and Food Science and Technology (MSc) allows me to provide comprehensive guidance for both academic and business ventures."
+  });
+
+  useEffect(() => {
+    fetchAdvisorInfo();
+  }, []);
+
+  const fetchAdvisorInfo = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('about_content')
+        .select('*')
+        .eq('section_key', 'main')
+        .maybeSingle();
+
+      if (error) throw error;
+      
+      if (data) {
+        setAdvisorInfo({
+          name: data.advisor_name || "Kunda John",
+          title: data.advisor_title || "Global Education & F&B Consultant",
+          photoUrl: data.advisor_image_url || "/lovable-uploads/khali.jpg",
+          email: "info@kundapath.com",
+          phone: "+82-10-1234-5678",
+          location: "Seoul, South Korea",
+          experience: "5+",
+          studentsHelped: "53+",
+          successRate: "87%",
+          countriesReached: "13+",
+          description: data.advisor_description || "With over 5 years of experience in international education consulting and F&B business development, I specialize in helping students achieve their academic dreams in Korea while also supporting entrepreneurs in navigating the Asian F&B market. My dual expertise in education and Food Science and Technology (MSc) allows me to provide comprehensive guidance for both academic and business ventures."
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching advisor info:', error);
+    }
   };
 
   const handleEmailClick = () => {

@@ -13,6 +13,9 @@ interface BlogPost {
   created_at: string;
   slug: string;
   is_published: boolean;
+  featured_image_url?: string;
+  reading_time?: number;
+  content?: string;
 }
 
 const BlogPreview = () => {
@@ -28,7 +31,7 @@ const BlogPreview = () => {
     try {
       const { data, error } = await supabase
         .from('blog_posts')
-        .select('id, title, excerpt, category, created_at, slug, is_published')
+        .select('id, title, excerpt, category, created_at, slug, is_published, featured_image_url, reading_time, content')
         .eq('is_published', true)
         .eq('is_featured', true)
         .order('created_at', { ascending: false })
@@ -60,6 +63,14 @@ const BlogPreview = () => {
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  const calculateReadingTime = (post: BlogPost) => {
+    if (post.reading_time) return post.reading_time;
+    const wordsPerMinute = 200;
+    const text = post.content || post.excerpt || '';
+    const wordCount = text.split(/\s+/).length;
+    return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
   };
 
   if (loading) {
@@ -95,6 +106,15 @@ const BlogPreview = () => {
             {posts.map((post) => (
               <Card key={post.id} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-md bg-white dark:bg-slate-800 hover:scale-[1.02] cursor-pointer">
                 <Link to={`/blog/${post.slug}`} className="block h-full">
+                  {post.featured_image_url && (
+                    <div className="aspect-video overflow-hidden rounded-t-lg">
+                      <img 
+                        src={post.featured_image_url} 
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
                   <CardHeader>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-2">
@@ -104,7 +124,7 @@ const BlogPreview = () => {
                         </span>
                       </div>
                       <span className="text-xs text-slate-400 dark:text-slate-500">
-                        {formatDate(post.created_at)}
+                        {calculateReadingTime(post)} min read
                       </span>
                     </div>
                     <CardTitle className="text-xl leading-tight dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">

@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Loader2, Save, Plus, Trash2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import FileUpload from './FileUpload';
 
 interface Stat {
   label: string;
@@ -230,12 +231,12 @@ const AboutContentManager = () => {
             </div>
           </div>
           <div>
-            <Label htmlFor="advisor-image">Advisor Image URL</Label>
-            <Input
-              id="advisor-image"
-              value={content.advisor_image_url || ''}
-              onChange={(e) => setContent({ ...content, advisor_image_url: e.target.value })}
-              placeholder="/lovable-uploads/khali.jpg"
+            <FileUpload
+              label="Advisor Image"
+              currentUrl={content.advisor_image_url || ''}
+              onUpload={(url) => setContent({ ...content, advisor_image_url: url })}
+              accept="image/*"
+              folder="advisors"
             />
           </div>
           <div>

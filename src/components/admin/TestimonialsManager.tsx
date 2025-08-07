@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Loader2, Plus, Edit, Trash2, Save, X, Star } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import FileUpload from './FileUpload';
 
 interface Testimonial {
   id: string;
@@ -255,12 +256,12 @@ const TestimonialsManager = () => {
               />
             </div>
             <div>
-              <Label htmlFor="new-avatar">Avatar URL (Optional)</Label>
-              <Input
-                id="new-avatar"
-                value={formData.avatar_url}
-                onChange={(e) => setFormData({ ...formData, avatar_url: e.target.value })}
-                placeholder="https://example.com/avatar.jpg"
+              <FileUpload
+                label="Avatar Image"
+                currentUrl={formData.avatar_url}
+                onUpload={(url) => setFormData({ ...formData, avatar_url: url })}
+                accept="image/*"
+                folder="testimonials"
               />
             </div>
             <div className="flex gap-2">
@@ -349,11 +350,12 @@ const TestimonialsManager = () => {
                     />
                   </div>
                   <div>
-                    <Label>Avatar URL</Label>
-                    <Input
-                      value={formData.avatar_url}
-                      onChange={(e) => setFormData({ ...formData, avatar_url: e.target.value })}
-                      placeholder="https://example.com/avatar.jpg"
+                    <FileUpload
+                      label="Avatar Image"
+                      currentUrl={formData.avatar_url}
+                      onUpload={(url) => setFormData({ ...formData, avatar_url: url })}
+                      accept="image/*"
+                      folder="testimonials"
                     />
                   </div>
                   <div className="flex gap-2">

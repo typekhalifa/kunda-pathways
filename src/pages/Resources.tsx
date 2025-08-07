@@ -18,6 +18,9 @@ interface BlogPost {
   slug: string;
   is_published: boolean;
   tags: string[];
+  featured_image_url?: string;
+  reading_time?: number;
+  content?: string;
 }
 
 const Resources = () => {
@@ -33,7 +36,7 @@ const Resources = () => {
     try {
       const { data, error } = await supabase
         .from('blog_posts')
-        .select('id, title, excerpt, category, created_at, slug, is_published, tags')
+        .select('id, title, excerpt, category, created_at, slug, is_published, tags, featured_image_url, reading_time, content')
         .eq('is_published', true)
         .order('created_at', { ascending: false });
 
@@ -65,10 +68,12 @@ const Resources = () => {
     });
   };
 
-  const estimateReadTime = (content: string = '') => {
+  const calculateReadingTime = (article: BlogPost) => {
+    if (article.reading_time) return article.reading_time;
     const wordsPerMinute = 200;
-    const wordCount = content.split(/\s+/).length;
-    return Math.ceil(wordCount / wordsPerMinute);
+    const text = article.content || article.excerpt || '';
+    const wordCount = text.split(/\s+/).length;
+    return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
   };
 
   return (
@@ -111,7 +116,17 @@ const Resources = () => {
               {articles.map((article) => (
                 <Card key={article.id} className="group bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
                   <Link to={`/blog/${article.slug}`} className="block h-full">
-                    <div className="aspect-video bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900 dark:to-green-900 rounded-t-lg"></div>
+                    <div className="aspect-video overflow-hidden rounded-t-lg">
+                      {article.featured_image_url ? (
+                        <img 
+                          src={article.featured_image_url} 
+                          alt={article.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900 dark:to-green-900"></div>
+                      )}
+                    </div>
                     <CardHeader>
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center space-x-2">
@@ -122,7 +137,7 @@ const Resources = () => {
                         </div>
                         <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm">
                           <Clock size={14} className="mr-1" />
-                          {estimateReadTime(article.excerpt)} min read
+                          {calculateReadingTime(article)} min read
                         </div>
                       </div>
                       <CardTitle className="text-lg text-slate-800 dark:text-white line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">

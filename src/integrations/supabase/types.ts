@@ -89,6 +89,7 @@ export type Database = {
           is_featured: boolean | null
           is_published: boolean | null
           language_code: string | null
+          reading_time: number | null
           slug: string
           tags: string[] | null
           title: string
@@ -105,6 +106,7 @@ export type Database = {
           is_featured?: boolean | null
           is_published?: boolean | null
           language_code?: string | null
+          reading_time?: number | null
           slug: string
           tags?: string[] | null
           title: string
@@ -121,6 +123,7 @@ export type Database = {
           is_featured?: boolean | null
           is_published?: boolean | null
           language_code?: string | null
+          reading_time?: number | null
           slug?: string
           tags?: string[] | null
           title?: string

@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Loader2, Plus, Edit, Trash2, Save, X, Upload } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import FileUpload from './FileUpload';
 
 interface Partner {
   id: string;
@@ -187,12 +188,12 @@ const PartnersManager = () => {
               </div>
             </div>
             <div>
-              <Label htmlFor="new-logo">Logo URL</Label>
-              <Input
-                id="new-logo"
-                value={formData.logo_url}
-                onChange={(e) => setFormData({ ...formData, logo_url: e.target.value })}
-                placeholder="https://example.com/logo.png"
+              <FileUpload
+                label="Partner Logo"
+                currentUrl={formData.logo_url}
+                onUpload={(url) => setFormData({ ...formData, logo_url: url })}
+                accept="image/*"
+                folder="partners"
               />
             </div>
             <div>
@@ -251,11 +252,12 @@ const PartnersManager = () => {
                     </div>
                   </div>
                   <div>
-                    <Label>Logo URL</Label>
-                    <Input
-                      value={formData.logo_url}
-                      onChange={(e) => setFormData({ ...formData, logo_url: e.target.value })}
-                      placeholder="https://example.com/logo.png"
+                    <FileUpload
+                      label="Partner Logo"
+                      currentUrl={formData.logo_url}
+                      onUpload={(url) => setFormData({ ...formData, logo_url: url })}
+                      accept="image/*"
+                      folder="partners"
                     />
                   </div>
                   <div>
