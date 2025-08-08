@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { 
   MessageSquare, 
   Mail, 
@@ -10,7 +14,9 @@ import {
   Eye, 
   Reply,
   Check,
-  Clock
+  Clock,
+  Send,
+  X
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -30,6 +36,11 @@ interface ContactMessage {
 const MessagesManager = () => {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [viewMessage, setViewMessage] = useState<ContactMessage | null>(null);
+  const [replyMessage, setReplyMessage] = useState<ContactMessage | null>(null);
+  const [replyContent, setReplyContent] = useState('');
+  const [replySubject, setReplySubject] = useState('');
+  const [sendingReply, setSendingReply] = useState(false);
 
   useEffect(() => {
     fetchMessages();
@@ -70,6 +81,68 @@ const MessagesManager = () => {
     } catch (error) {
       console.error('Error updating message:', error);
       toast.error('Failed to update message');
+    }
+  };
+
+  const handleViewMessage = (message: ContactMessage) => {
+    setViewMessage(message);
+    if (!message.is_read) {
+      markAsRead(message.id);
+    }
+  };
+
+  const handleReplyMessage = (message: ContactMessage) => {
+    setReplyMessage(message);
+    setReplySubject(`Re: ${message.subject || 'Your inquiry'}`);
+    setReplyContent('');
+    if (!message.is_read) {
+      markAsRead(message.id);
+    }
+  };
+
+  const sendReply = async () => {
+    if (!replyMessage || !replyContent.trim()) {
+      toast.error('Please enter a reply message');
+      return;
+    }
+
+    setSendingReply(true);
+    try {
+      const { error } = await supabase.functions.invoke('send-reply-email', {
+        body: {
+          to: replyMessage.email,
+          subject: replySubject,
+          message: replyContent,
+          originalMessage: replyMessage.message,
+          customerName: replyMessage.name
+        }
+      });
+
+      if (error) throw error;
+
+      // Update the message as replied
+      await supabase
+        .from('contact_messages')
+        .update({ replied_at: new Date().toISOString() })
+        .eq('id', replyMessage.id);
+
+      setMessages(prev => 
+        prev.map(msg => 
+          msg.id === replyMessage.id 
+            ? { ...msg, replied_at: new Date().toISOString() } 
+            : msg
+        )
+      );
+
+      toast.success('Reply sent successfully!');
+      setReplyMessage(null);
+      setReplyContent('');
+      setReplySubject('');
+    } catch (error) {
+      console.error('Error sending reply:', error);
+      toast.error('Failed to send reply');
+    } finally {
+      setSendingReply(false);
     }
   };
 
@@ -191,11 +264,19 @@ const MessagesManager = () => {
                     </div>
 
                     <div className="flex flex-col gap-2 ml-4">
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => handleViewMessage(message)}
+                      >
                         <Eye className="w-4 h-4 mr-2" />
                         View
                       </Button>
-                      <Button size="sm" variant="default">
+                      <Button 
+                        size="sm" 
+                        variant="default"
+                        onClick={() => handleReplyMessage(message)}
+                      >
                         <Reply className="w-4 h-4 mr-2" />
                         Reply
                       </Button>
@@ -208,6 +289,12 @@ const MessagesManager = () => {
                           <Check className="w-4 h-4 mr-2" />
                           Mark Read
                         </Button>
+                      )}
+                      {message.replied_at && (
+                        <Badge variant="secondary" className="text-xs">
+                          <Clock className="w-3 h-3 mr-1" />
+                          Replied
+                        </Badge>
                       )}
                     </div>
                   </div>
@@ -225,6 +312,142 @@ const MessagesManager = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* View Message Dialog */}
+      <Dialog open={!!viewMessage} onOpenChange={() => setViewMessage(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              Message from {viewMessage?.name}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setViewMessage(null)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </DialogTitle>
+          </DialogHeader>
+          {viewMessage && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm font-medium text-muted-foreground">Name</Label>
+                  <p className="text-sm">{viewMessage.name}</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-muted-foreground">Email</Label>
+                  <p className="text-sm">{viewMessage.email}</p>
+                </div>
+              </div>
+              
+              {viewMessage.phone && (
+                <div>
+                  <Label className="text-sm font-medium text-muted-foreground">Phone</Label>
+                  <p className="text-sm">{viewMessage.phone}</p>
+                </div>
+              )}
+              
+              {viewMessage.subject && (
+                <div>
+                  <Label className="text-sm font-medium text-muted-foreground">Subject</Label>
+                  <p className="text-sm">{viewMessage.subject}</p>
+                </div>
+              )}
+              
+              <div>
+                <Label className="text-sm font-medium text-muted-foreground">Date</Label>
+                <p className="text-sm">{formatDate(viewMessage.created_at)}</p>
+              </div>
+              
+              <div>
+                <Label className="text-sm font-medium text-muted-foreground">Message</Label>
+                <div className="mt-2 p-4 bg-muted rounded-lg">
+                  <p className="text-sm whitespace-pre-wrap">{viewMessage.message}</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-2 pt-4">
+                <Button onClick={() => {
+                  setViewMessage(null);
+                  handleReplyMessage(viewMessage);
+                }}>
+                  <Reply className="w-4 h-4 mr-2" />
+                  Reply to this message
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Reply Message Dialog */}
+      <Dialog open={!!replyMessage} onOpenChange={() => setReplyMessage(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Reply to {replyMessage?.name}</DialogTitle>
+            <DialogDescription>
+              Compose your reply to {replyMessage?.email}
+            </DialogDescription>
+          </DialogHeader>
+          {replyMessage && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="reply-subject">Subject</Label>
+                <Input
+                  id="reply-subject"
+                  value={replySubject}
+                  onChange={(e) => setReplySubject(e.target.value)}
+                  placeholder="Enter email subject"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="reply-content">Your Reply</Label>
+                <Textarea
+                  id="reply-content"
+                  value={replyContent}
+                  onChange={(e) => setReplyContent(e.target.value)}
+                  placeholder="Type your reply here..."
+                  rows={8}
+                  className="resize-none"
+                />
+              </div>
+              
+              <div className="bg-muted p-3 rounded-lg">
+                <Label className="text-sm font-medium text-muted-foreground">Original Message</Label>
+                <p className="text-sm mt-1 whitespace-pre-wrap">{replyMessage.message}</p>
+              </div>
+              
+              <div className="flex gap-2 pt-4">
+                <Button
+                  onClick={sendReply}
+                  disabled={sendingReply || !replyContent.trim()}
+                >
+                  {sendingReply ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" />
+                      Send Reply
+                    </>
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setReplyMessage(null)}
+                  disabled={sendingReply}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

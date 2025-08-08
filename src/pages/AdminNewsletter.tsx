@@ -187,6 +187,60 @@ const AdminNewsletter = () => {
     }
   };
 
+  const handleSendNow = async () => {
+    if (!campaignTitle || !campaignSubject || !campaignContent) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
+    if (activeSubscribers === 0) {
+      toast.error('No active subscribers to send to');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      // First save the campaign
+      const { data: campaignData, error: saveError } = await supabase
+        .from('newsletter_campaigns')
+        .insert([{
+          title: campaignTitle,
+          subject: campaignSubject,
+          content: campaignContent,
+          status: 'sending',
+          created_by: user?.id,
+          recipient_count: activeSubscribers
+        }])
+        .select()
+        .single();
+
+      if (saveError) throw saveError;
+
+      // Send the newsletter
+      const { error: sendError } = await supabase.functions.invoke('send-newsletter', {
+        body: {
+          campaignId: campaignData.id,
+          subject: campaignSubject,
+          content: campaignContent
+        }
+      });
+
+      if (sendError) throw sendError;
+
+      toast.success('Newsletter sent successfully!');
+      setComposeOpen(false);
+      resetCampaignForm();
+      fetchCampaigns();
+    } catch (error) {
+      console.error('Error sending newsletter:', error);
+      toast.error('Failed to send newsletter');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const resetCampaignForm = () => {
     setCampaignTitle('');
     setCampaignSubject('');
@@ -643,11 +697,12 @@ The Kunda Pathways Team`
                   {loading ? 'Saving...' : 'Save as Draft'}
                 </Button>
                 <Button 
+                  onClick={handleSendNow}
                   disabled={loading}
                   className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 font-medium shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <Send className="w-5 h-5 mr-2" />
-                  Send Now
+                  {loading ? 'Sending...' : 'Send Now'}
                 </Button>
               </div>
             </div>
