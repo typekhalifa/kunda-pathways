@@ -152,7 +152,10 @@ const AdminNewsletter = () => {
 
   const handleSaveDraft = async () => {
     if (!campaignTitle || !campaignSubject || !campaignContent) {
-      toast.error('Please fill in all required fields');
+      toast.error('Please fill in all required fields', {
+        description: 'Title, subject, and content are required',
+        className: 'bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 border-orange-200 dark:border-orange-800'
+      });
       return;
     }
 
@@ -189,12 +192,18 @@ const AdminNewsletter = () => {
 
   const handleSendNow = async () => {
     if (!campaignTitle || !campaignSubject || !campaignContent) {
-      toast.error('Please fill in all required fields');
+      toast.error('Please fill in all required fields', {
+        description: 'Title, subject, and content are required',
+        className: 'bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 border-orange-200 dark:border-orange-800'
+      });
       return;
     }
 
     if (activeSubscribers === 0) {
-      toast.error('No active subscribers to send to');
+      toast.error('No active subscribers to send to', {
+        description: 'Add some subscribers before sending a newsletter',
+        className: 'bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 border-orange-200 dark:border-orange-800'
+      });
       return;
     }
 
@@ -229,13 +238,21 @@ const AdminNewsletter = () => {
 
       if (sendError) throw sendError;
 
-      toast.success('Newsletter sent successfully!');
+      toast.success('Newsletter sent successfully!', {
+        description: `Sent to ${activeSubscribers} subscribers`,
+        duration: 5000,
+        className: 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-800'
+      });
       setComposeOpen(false);
       resetCampaignForm();
       fetchCampaigns();
     } catch (error) {
       console.error('Error sending newsletter:', error);
-      toast.error('Failed to send newsletter');
+      toast.error('Failed to send newsletter', {
+        description: 'Please check your email configuration and try again.',
+        duration: 5000,
+        className: 'bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 border-red-200 dark:border-red-800'
+      });
     } finally {
       setLoading(false);
     }
