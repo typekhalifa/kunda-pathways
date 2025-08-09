@@ -24,11 +24,32 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { campaignId, subject, content, htmlContent }: SendNewsletterRequest = await req.json();
+    console.log("Newsletter function called with request method:", req.method);
+    
+    const requestBody = await req.json();
+    console.log("Request body received:", requestBody);
+    
+    const { campaignId, subject, content, htmlContent }: SendNewsletterRequest = requestBody;
+    
+    if (!campaignId || !subject || !content) {
+      throw new Error('Missing required fields: campaignId, subject, or content');
+    }
     
     // Initialize Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    const resendKey = Deno.env.get('RESEND_API_KEY');
+    
+    console.log("Environment check:", {
+      hasSupabaseUrl: !!supabaseUrl,
+      hasSupabaseKey: !!supabaseKey,
+      hasResendKey: !!resendKey
+    });
+    
+    if (!supabaseUrl || !supabaseKey || !resendKey) {
+      throw new Error('Missing required environment variables');
+    }
+    
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     console.log("Processing newsletter campaign:", campaignId);
@@ -83,17 +104,21 @@ const handler = async (req: Request): Promise<Response> => {
     for (const batch of batches) {
       const emailPromises = batch.map(async (subscriber) => {
         try {
-          await resend.emails.send({
+          const emailResult = await resend.emails.send({
             from: "Africa Korea Connect <noreply@resend.dev>", // Update with your verified domain
             to: [subscriber.email],
             subject: subject,
             html: emailHtml,
           });
           sentCount++;
-          console.log(`Email sent to: ${subscriber.email}`);
+          console.log(`Email sent to: ${subscriber.email}, Result:`, emailResult);
         } catch (error) {
           errorCount++;
           console.error(`Failed to send email to ${subscriber.email}:`, error);
+          // Log more detailed error information
+          if (error instanceof Error) {
+            console.error(`Error details: ${error.message}, Stack: ${error.stack}`);
+          }
         }
       });
 
