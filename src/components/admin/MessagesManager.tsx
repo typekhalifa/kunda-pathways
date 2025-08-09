@@ -16,7 +16,9 @@ import {
   Check,
   Clock,
   Send,
-  X
+  X,
+  MailMinus,
+  Trash2
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -81,6 +83,48 @@ const MessagesManager = () => {
     } catch (error) {
       console.error('Error updating message:', error);
       toast.error('Failed to update message');
+    }
+  };
+
+  const markAsUnread = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .update({ is_read: false })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      setMessages(prev => 
+        prev.map(msg => 
+          msg.id === id ? { ...msg, is_read: false } : msg
+        )
+      );
+      toast.success('Message marked as unread');
+    } catch (error) {
+      console.error('Error updating message:', error);
+      toast.error('Failed to update message');
+    }
+  };
+
+  const deleteMessage = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this message? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      setMessages(prev => prev.filter(msg => msg.id !== id));
+      toast.success('Message deleted successfully');
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      toast.error('Failed to delete message');
     }
   };
 
@@ -280,7 +324,7 @@ const MessagesManager = () => {
                         <Reply className="w-4 h-4 mr-2" />
                         Reply
                       </Button>
-                      {!message.is_read && (
+                      {!message.is_read ? (
                         <Button 
                           size="sm" 
                           variant="ghost"
@@ -289,7 +333,24 @@ const MessagesManager = () => {
                           <Check className="w-4 h-4 mr-2" />
                           Mark Read
                         </Button>
+                      ) : (
+                        <Button 
+                          size="sm" 
+                          variant="ghost"
+                          onClick={() => markAsUnread(message.id)}
+                        >
+                          <MailMinus className="w-4 h-4 mr-2" />
+                          Mark Unread
+                        </Button>
                       )}
+                      <Button 
+                        size="sm" 
+                        variant="destructive"
+                        onClick={() => deleteMessage(message.id)}
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Delete
+                      </Button>
                       {message.replied_at && (
                         <Badge variant="secondary" className="text-xs">
                           <Clock className="w-3 h-3 mr-1" />
