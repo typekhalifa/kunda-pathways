@@ -79,10 +79,16 @@ const MessagesManager = () => {
           msg.id === id ? { ...msg, is_read: true } : msg
         )
       );
-      toast.success('Message marked as read');
+      toast.success('Message marked as read', {
+        description: 'The message status has been updated',
+        className: 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-800'
+      });
     } catch (error) {
       console.error('Error updating message:', error);
-      toast.error('Failed to update message');
+      toast.error('Failed to update message', {
+        description: 'Please try again or contact support',
+        className: 'bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 border-red-200 dark:border-red-800'
+      });
     }
   };
 
@@ -100,7 +106,10 @@ const MessagesManager = () => {
           msg.id === id ? { ...msg, is_read: false } : msg
         )
       );
-      toast.success('Message marked as unread');
+      toast.success('Message marked as unread', {
+        description: 'The message is now marked as unread',
+        className: 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-800'
+      });
     } catch (error) {
       console.error('Error updating message:', error);
       toast.error('Failed to update message');
@@ -121,10 +130,16 @@ const MessagesManager = () => {
       if (error) throw error;
       
       setMessages(prev => prev.filter(msg => msg.id !== id));
-      toast.success('Message deleted successfully');
+      toast.success('Message deleted successfully', {
+        description: 'The message has been permanently removed',
+        className: 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-800'
+      });
     } catch (error) {
       console.error('Error deleting message:', error);
-      toast.error('Failed to delete message');
+      toast.error('Failed to delete message', {
+        description: 'Please try again or contact support',
+        className: 'bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 border-red-200 dark:border-red-800'
+      });
     }
   };
 
@@ -178,13 +193,21 @@ const MessagesManager = () => {
         )
       );
 
-      toast.success('Reply sent successfully!');
+      toast.success('Reply sent successfully!', {
+        description: `Email reply sent to ${replyMessage.name}`,
+        duration: 5000,
+        className: 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-800'
+      });
       setReplyMessage(null);
       setReplyContent('');
       setReplySubject('');
     } catch (error) {
       console.error('Error sending reply:', error);
-      toast.error('Failed to send reply');
+      toast.error('Failed to send reply', {
+        description: 'Please check your email configuration and try again',
+        duration: 5000,
+        className: 'bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 border-red-200 dark:border-red-800'
+      });
     } finally {
       setSendingReply(false);
     }
