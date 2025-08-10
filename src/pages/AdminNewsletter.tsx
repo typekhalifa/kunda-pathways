@@ -41,6 +41,9 @@ const AdminNewsletter = () => {
   const [campaignSubject, setCampaignSubject] = useState('');
   const [campaignContent, setCampaignContent] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState('');
+  
+  // View campaign state
+  const [viewCampaign, setViewCampaign] = useState<any>(null);
 
   useEffect(() => {
     fetchSubscribers();
@@ -339,6 +342,33 @@ The Kunda Pathways Team`
     }
   };
 
+  const handleDeleteCampaign = async (campaignId: string) => {
+    if (!window.confirm('Are you sure you want to delete this campaign? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('newsletter_campaigns')
+        .delete()
+        .eq('id', campaignId);
+
+      if (error) throw error;
+
+      setCampaigns(prev => prev.filter(c => c.id !== campaignId));
+      toast.success('Campaign deleted successfully', {
+        description: 'The campaign has been permanently removed',
+        className: 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-800'
+      });
+    } catch (error) {
+      console.error('Error deleting campaign:', error);
+      toast.error('Failed to delete campaign', {
+        description: 'Please try again or contact support',
+        className: 'bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 border-red-200 dark:border-red-800'
+      });
+    }
+  };
+
   const exportSubscribers = () => {
     const csv = subscribers.map(s => 
       `"${s.email}","${s.name || ''}","${s.is_active ? 'Active' : 'Inactive'}","${new Date(s.subscribed_at).toLocaleDateString()}"`
@@ -587,7 +617,7 @@ The Kunda Pathways Team`
                           )}
                         </div>
                         <div className="flex gap-2">
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" onClick={() => setViewCampaign(campaign)}>
                             <Eye className="w-4 h-4 mr-2" />
                             View
                           </Button>
@@ -597,6 +627,15 @@ The Kunda Pathways Team`
                               Edit
                             </Button>
                           )}
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            onClick={() => handleDeleteCampaign(campaign.id)}
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Delete
+                          </Button>
                         </div>
                       </div>
                     </Card>
@@ -723,6 +762,78 @@ The Kunda Pathways Team`
                 </Button>
               </div>
             </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* View Campaign Dialog */}
+        <Dialog open={!!viewCampaign} onOpenChange={() => setViewCampaign(null)}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 rounded-3xl border-2 border-slate-200 dark:border-slate-700 shadow-2xl">
+            <DialogHeader className="pb-6 border-b border-slate-200 dark:border-slate-600">
+              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                  <Eye className="w-5 h-5 text-white" />
+                </div>
+                Campaign Details
+              </DialogTitle>
+              <DialogDescription className="text-base text-slate-600 dark:text-slate-300">
+                View campaign content and details
+              </DialogDescription>
+            </DialogHeader>
+            
+            {viewCampaign && (
+              <div className="space-y-6 py-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Campaign Title</label>
+                    <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl border">
+                      {viewCampaign.title}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Status</label>
+                    <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl border">
+                      <Badge className={
+                        viewCampaign.status === 'sent' ? 'bg-green-100 text-green-800' :
+                        viewCampaign.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-blue-100 text-blue-800'
+                      }>
+                        {viewCampaign.status}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email Subject</label>
+                  <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl border">
+                    {viewCampaign.subject}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email Content</label>
+                  <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-xl border max-h-96 overflow-y-auto">
+                    <pre className="whitespace-pre-wrap text-sm">{viewCampaign.content}</pre>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-slate-600 dark:text-slate-300">
+                  <div>
+                    <strong>Created:</strong> {new Date(viewCampaign.created_at).toLocaleString()}
+                  </div>
+                  {viewCampaign.sent_at && (
+                    <div>
+                      <strong>Sent:</strong> {new Date(viewCampaign.sent_at).toLocaleString()}
+                    </div>
+                  )}
+                  {viewCampaign.recipient_count && (
+                    <div>
+                      <strong>Recipients:</strong> {viewCampaign.recipient_count}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </DialogContent>
         </Dialog>
       </div>

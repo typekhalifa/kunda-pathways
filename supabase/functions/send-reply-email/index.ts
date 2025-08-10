@@ -29,7 +29,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Sending reply email to:", to);
 
     const emailResponse = await resend.emails.send({
-      from: "Africa Korea Connect <noreply@resend.dev>", // Update this with your verified domain
+      from: "Africa Korea Connect <onboarding@resend.dev>", // This is a verified domain by Resend
       to: [to],
       subject: subject,
       html: `

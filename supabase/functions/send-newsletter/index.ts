@@ -105,7 +105,7 @@ const handler = async (req: Request): Promise<Response> => {
       const emailPromises = batch.map(async (subscriber) => {
         try {
           const emailResult = await resend.emails.send({
-            from: "Africa Korea Connect <noreply@resend.dev>", // Update with your verified domain
+            from: "Africa Korea Connect <onboarding@resend.dev>", // This is a verified domain by Resend
             to: [subscriber.email],
             subject: subject,
             html: emailHtml,
