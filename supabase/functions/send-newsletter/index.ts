@@ -1,8 +1,9 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { Resend } from "npm:resend@2.0.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.50.0";
+import { Resend } from "npm:resend@4.0.0";
+import { renderAsync } from 'npm:@react-email/components@0.0.22';
+import React from 'npm:react@18.3.1';
+import { NewsletterEmail } from './_templates/newsletter.tsx';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,119 +19,195 @@ interface SendNewsletterRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
+  console.log("Newsletter function started");
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log("Newsletter function called with request method:", req.method);
-    
-    const requestBody = await req.json();
-    console.log("Request body received:", requestBody);
-    
-    const { campaignId, subject, content, htmlContent }: SendNewsletterRequest = requestBody;
-    
+    const { campaignId, subject, content, htmlContent }: SendNewsletterRequest = await req.json();
+    console.log("Request parsed:", { campaignId, subject: subject?.substring(0, 50) });
+
+    // Validate required fields
     if (!campaignId || !subject || !content) {
-      throw new Error('Missing required fields: campaignId, subject, or content');
+      console.error("Missing required fields");
+      return new Response(
+        JSON.stringify({ error: "Missing required fields: campaignId, subject, content" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
-    
-    // Initialize Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL');
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    const resendKey = Deno.env.get('RESEND_API_KEY');
-    
-    console.log("Environment check:", {
-      hasSupabaseUrl: !!supabaseUrl,
-      hasSupabaseKey: !!supabaseKey,
-      hasResendKey: !!resendKey
-    });
-    
-    if (!supabaseUrl || !supabaseKey || !resendKey) {
-      throw new Error('Missing required environment variables');
+
+    // Initialize Resend
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error("RESEND_API_KEY is not configured");
+      return new Response(
+        JSON.stringify({ error: "Email service not configured" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
-    
+
+    const resend = new Resend(resendApiKey);
+    console.log("Resend initialized");
+
+    // Initialize Supabase
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error("Supabase configuration missing");
+      return new Response(
+        JSON.stringify({ error: "Database configuration missing" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     const supabase = createClient(supabaseUrl, supabaseKey);
+    console.log("Supabase initialized");
 
-    console.log("Processing newsletter campaign:", campaignId);
-
-    // Get active subscribers
+    // Fetch active subscribers
     const { data: subscribers, error: subscribersError } = await supabase
-      .from('newsletter_subscribers')
-      .select('email, name')
-      .eq('is_active', true);
+      .from("newsletter_subscribers")
+      .select("email, name")
+      .eq("is_active", true);
 
     if (subscribersError) {
-      throw new Error(`Failed to fetch subscribers: ${subscribersError.message}`);
+      console.error("Error fetching subscribers:", subscribersError);
+      return new Response(
+        JSON.stringify({ error: "Failed to fetch subscribers" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
+
+    console.log(`Found ${subscribers?.length || 0} active subscribers`);
 
     if (!subscribers || subscribers.length === 0) {
-      throw new Error('No active subscribers found');
+      return new Response(
+        JSON.stringify({ error: "No active subscribers found" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
-    console.log(`Found ${subscribers.length} active subscribers`);
+    // Create the email HTML using React Email
+    let emailHtml: string;
+    try {
+      emailHtml = await renderAsync(
+        React.createElement(NewsletterEmail, {
+          subject: subject,
+          content: content,
+          unsubscribeUrl: `${supabaseUrl}/unsubscribe`
+        })
+      );
+      console.log("Email HTML generated successfully with React Email");
+    } catch (emailError) {
+      console.error("Failed to generate React Email, falling back to basic HTML:", emailError);
+      // Fallback to basic HTML if React Email fails
+      emailHtml = `
+        <html>
+          <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #2563eb; padding-bottom: 20px;">
+              <h1 style="color: #2563eb; margin-bottom: 10px; font-size: 32px;">Africa Korea Connect</h1>
+              <p style="color: #666; margin: 0; font-style: italic;">Your Gateway to Global Education and Business Success</p>
+            </div>
+            
+            <div style="background-color: #f8fafc; padding: 30px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #2563eb;">
+              <div style="white-space: pre-wrap; font-size: 16px; line-height: 1.6;">${content}</div>
+            </div>
+            
+            <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
+              <p style="margin: 0; color: #64748b; font-size: 14px;">
+                Best regards,<br>
+                <strong>Kunda John Kim</strong><br>
+                Global Education & F&B Consultant<br>
+                Africa Korea Connect
+              </p>
+            </div>
+          </body>
+        </html>
+      `;
+    }
 
-    // Prepare email content
-    const emailHtml = htmlContent || `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #2563eb; margin: 0;">Africa Korea Connect</h1>
-          <p style="color: #64748b; margin: 5px 0 0 0;">Your Gateway to Global Education and Business Success</p>
-        </div>
-        
-        <div style="background-color: #f8fafc; padding: 30px; border-radius: 12px; margin-bottom: 30px;">
-          <div style="white-space: pre-wrap; line-height: 1.6; color: #334155;">${content}</div>
-        </div>
-        
-        <div style="text-align: center; padding-top: 20px; border-top: 1px solid #e2e8f0;">
-          <p style="margin: 0; color: #64748b; font-size: 14px;">
-            You're receiving this email because you subscribed to our newsletter.<br>
-            <a href="#" style="color: #2563eb; text-decoration: none;">Unsubscribe</a>
-          </p>
-        </div>
-      </div>
-    `;
-
-    // Send emails in batches to avoid rate limits
+    // Split subscribers into batches of 10 to avoid rate limiting
     const batchSize = 10;
     const batches = [];
     for (let i = 0; i < subscribers.length; i += batchSize) {
       batches.push(subscribers.slice(i, i + batchSize));
     }
 
+    console.log(`Sending emails in ${batches.length} batches of ${batchSize} emails each`);
+
     let sentCount = 0;
     let errorCount = 0;
+    const failedEmails: string[] = [];
 
-    for (const batch of batches) {
+    // Update campaign status to "sending"
+    await supabase
+      .from('newsletter_campaigns')
+      .update({ status: 'sending' })
+      .eq('id', campaignId);
+
+    for (const [batchIndex, batch] of batches.entries()) {
+      console.log(`Processing batch ${batchIndex + 1}/${batches.length} with ${batch.length} emails`);
+      
       const emailPromises = batch.map(async (subscriber) => {
         try {
+          console.log(`Attempting to send email to: ${subscriber.email}`);
+          
           const emailResult = await resend.emails.send({
-            from: "Africa Korea Connect <onboarding@resend.dev>", // This is a verified domain by Resend
+            from: "Africa Korea Connect <onboarding@resend.dev>",
             to: [subscriber.email],
             subject: subject,
             html: emailHtml,
           });
+          
           sentCount++;
-          console.log(`Email sent to: ${subscriber.email}, Result:`, emailResult);
+          console.log(`✅ Email sent successfully to: ${subscriber.email}, Resend ID: ${emailResult.data?.id}`);
+          return { success: true, email: subscriber.email, id: emailResult.data?.id };
         } catch (error) {
           errorCount++;
-          console.error(`Failed to send email to ${subscriber.email}:`, error);
-          // Log more detailed error information
+          failedEmails.push(subscriber.email);
+          console.error(`❌ Failed to send email to ${subscriber.email}:`, error);
+          
           if (error instanceof Error) {
-            console.error(`Error details: ${error.message}, Stack: ${error.stack}`);
+            console.error(`Error message: ${error.message}`);
           }
+          return { success: false, email: subscriber.email, error: error.message };
         }
       });
 
-      await Promise.all(emailPromises);
+      const batchResults = await Promise.all(emailPromises);
+      const batchSuccess = batchResults.filter(r => r.success).length;
+      const batchFailed = batchResults.filter(r => !r.success).length;
       
-      // Add a small delay between batches
-      if (batches.indexOf(batch) < batches.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log(`Batch ${batchIndex + 1} completed. Success: ${batchSuccess}, Failed: ${batchFailed}`);
+      
+      // Add a delay between batches to avoid rate limiting
+      if (batchIndex < batches.length - 1) {
+        console.log("Waiting 2 seconds before next batch...");
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
     }
 
-    // Update campaign status
+    console.log(`Newsletter sending completed. Total sent: ${sentCount}, Total failed: ${errorCount}`);
+
+    // Update campaign status to "sent"
     const { error: updateError } = await supabase
       .from('newsletter_campaigns')
       .update({
@@ -141,27 +218,53 @@ const handler = async (req: Request): Promise<Response> => {
       .eq('id', campaignId);
 
     if (updateError) {
-      console.error('Failed to update campaign status:', updateError);
+      console.error('Error updating campaign status:', updateError);
     }
 
-    console.log(`Newsletter sent successfully. Sent: ${sentCount}, Errors: ${errorCount}`);
-
-    return new Response(JSON.stringify({
-      success: true,
+    const responseData = { 
+      success: true, 
+      message: `Newsletter sent successfully to ${sentCount} subscribers`,
       sentCount,
       errorCount,
       totalSubscribers: subscribers.length
-    }), {
+    };
+
+    if (failedEmails.length > 0) {
+      responseData.failedEmails = failedEmails;
+    }
+
+    return new Response(JSON.stringify(responseData), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
+
   } catch (error: any) {
-    console.error("Error in send-newsletter function:", error);
+    console.error("❌ Critical error in send-newsletter function:", error);
+    console.error("Error stack:", error.stack);
+    
+    // Try to update campaign status to failed if we have a campaignId
+    try {
+      const { campaignId } = await req.json();
+      if (campaignId) {
+        const supabase = createClient(
+          Deno.env.get("SUPABASE_URL")!,
+          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+        );
+        await supabase
+          .from('newsletter_campaigns')
+          .update({ status: 'failed' })
+          .eq('id', campaignId);
+      }
+    } catch (updateError) {
+      console.error('Failed to update campaign status to failed:', updateError);
+    }
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: error.stack,
+        timestamp: new Date().toISOString()
+      }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
