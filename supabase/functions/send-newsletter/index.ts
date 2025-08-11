@@ -44,6 +44,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Initialize Resend
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    console.log("RESEND_API_KEY exists:", !!resendApiKey);
+    console.log("RESEND_API_KEY length:", resendApiKey?.length || 0);
+    
     if (!resendApiKey) {
       console.error("RESEND_API_KEY is not configured");
       return new Response(
@@ -56,7 +59,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const resend = new Resend(resendApiKey);
-    console.log("Resend initialized");
+    console.log("Resend initialized successfully");
 
     // Initialize Supabase
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
