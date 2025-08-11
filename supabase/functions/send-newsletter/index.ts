@@ -176,7 +176,7 @@ const handler = async (req: Request): Promise<Response> => {
           console.log(`Sending email to: ${subscriber.email} with subject: ${subject}`);
           
           const emailResult = await resend.emails.send({
-            from: "Africa Korea Connect <onboarding@resend.dev>",
+            from: "Africa Korea Connect <noreply@yourdomain.com>", // Replace with your verified domain
             to: [subscriber.email],
             subject: subject,
             html: emailHtml,
