@@ -79,6 +79,16 @@ const handler = async (req: Request): Promise<Response> => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     console.log("Supabase initialized");
 
+    // Fetch advisor information from about_content
+    const { data: advisorData } = await supabase
+      .from("about_content")
+      .select("advisor_name, advisor_title")
+      .eq("section_key", "advisor")
+      .eq("is_active", true)
+      .single();
+
+    console.log("Advisor data fetched:", advisorData);
+
     // Fetch active subscribers
     const { data: subscribers, error: subscribersError } = await supabase
       .from("newsletter_subscribers")
@@ -115,7 +125,9 @@ const handler = async (req: Request): Promise<Response> => {
         React.createElement(NewsletterEmail, {
           subject: subject,
           content: content,
-          unsubscribeUrl: `${supabaseUrl}/unsubscribe`
+          unsubscribeUrl: `${supabaseUrl}/unsubscribe`,
+          advisorName: advisorData?.advisor_name || "Kunda John Kim",
+          advisorTitle: advisorData?.advisor_title || "Global Education & F&B Consultant"
         })
       );
       console.log("Email HTML generated successfully with React Email");
@@ -126,7 +138,7 @@ const handler = async (req: Request): Promise<Response> => {
         <html>
           <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #2563eb; padding-bottom: 20px;">
-              <h1 style="color: #2563eb; margin-bottom: 10px; font-size: 32px;">Africa Korea Connect</h1>
+              <h1 style="color: #2563eb; margin-bottom: 10px; font-size: 32px;">Kunda Pathways</h1>
               <p style="color: #666; margin: 0; font-style: italic;">Your Gateway to Global Education and Business Success</p>
             </div>
             
@@ -137,9 +149,9 @@ const handler = async (req: Request): Promise<Response> => {
             <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
               <p style="margin: 0; color: #64748b; font-size: 14px;">
                 Best regards,<br>
-                <strong>Kunda John Kim</strong><br>
-                Global Education & F&B Consultant<br>
-                Africa Korea Connect
+                <strong>${advisorData?.advisor_name || "Kunda John Kim"}</strong><br>
+                ${advisorData?.advisor_title || "Global Education & F&B Consultant"}<br>
+                Kunda Pathways
               </p>
             </div>
           </body>
@@ -176,7 +188,7 @@ const handler = async (req: Request): Promise<Response> => {
           console.log(`Sending email to: ${subscriber.email} with subject: ${subject}`);
           
           const emailResult = await resend.emails.send({
-            from: "Africa Korea Connect <onboarding@resend.dev>", // Using Resend's testing address
+            from: "Kunda Pathways <onboarding@resend.dev>", // Using Resend's testing address
             to: ["jeandh023@gmail.com"], // Testing with your verified email
             subject: subject,
             html: emailHtml,

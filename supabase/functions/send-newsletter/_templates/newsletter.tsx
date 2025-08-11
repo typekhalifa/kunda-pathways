@@ -16,12 +16,16 @@ interface NewsletterEmailProps {
   subject: string
   content: string
   unsubscribeUrl?: string
+  advisorName?: string
+  advisorTitle?: string
 }
 
 export const NewsletterEmail = ({
   subject,
   content,
-  unsubscribeUrl = "#"
+  unsubscribeUrl = "#",
+  advisorName = "Kunda John Kim",
+  advisorTitle = "Global Education & F&B Consultant"
 }: NewsletterEmailProps) => (
   <Html>
     <Head />
@@ -29,7 +33,7 @@ export const NewsletterEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Section style={header}>
-          <Heading style={h1}>Africa Korea Connect</Heading>
+          <Heading style={h1}>Kunda Pathways</Heading>
           <Text style={tagline}>Your Gateway to Global Education and Business Success</Text>
         </Section>
         
@@ -50,9 +54,9 @@ export const NewsletterEmail = ({
         <Section style={footer_section}>
           <Text style={footer_text}>
             Best regards,<br />
-            <strong>Kunda John Kim</strong><br />
-            Global Education & F&B Consultant<br />
-            Africa Korea Connect
+            <strong>{advisorName}</strong><br />
+            {advisorTitle}<br />
+            Kunda Pathways
           </Text>
           
           <Text style={unsubscribe_text}>
