@@ -170,6 +170,8 @@ const handler = async (req: Request): Promise<Response> => {
         try {
           console.log(`Attempting to send email to: ${subscriber.email}`);
           
+          console.log(`Sending email to: ${subscriber.email} with subject: ${subject}`);
+          
           const emailResult = await resend.emails.send({
             from: "Africa Korea Connect <onboarding@resend.dev>",
             to: [subscriber.email],
@@ -177,9 +179,19 @@ const handler = async (req: Request): Promise<Response> => {
             html: emailHtml,
           });
           
+          console.log(`Resend API response:`, JSON.stringify(emailResult, null, 2));
+          
+          if (emailResult.error) {
+            throw new Error(`Resend API error: ${JSON.stringify(emailResult.error)}`);
+          }
+          
+          if (!emailResult.data?.id) {
+            throw new Error(`No email ID returned from Resend: ${JSON.stringify(emailResult)}`);
+          }
+          
           sentCount++;
-          console.log(`✅ Email sent successfully to: ${subscriber.email}, Resend ID: ${emailResult.data?.id}`);
-          return { success: true, email: subscriber.email, id: emailResult.data?.id };
+          console.log(`✅ Email sent successfully to: ${subscriber.email}, Resend ID: ${emailResult.data.id}`);
+          return { success: true, email: subscriber.email, id: emailResult.data.id };
         } catch (error) {
           errorCount++;
           failedEmails.push(subscriber.email);
