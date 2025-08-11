@@ -83,7 +83,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { data: advisorData } = await supabase
       .from("about_content")
       .select("advisor_name, advisor_title")
-      .eq("section_key", "advisor")
+      .eq("section_key", "main")
       .eq("is_active", true)
       .single();
 
@@ -189,7 +189,7 @@ const handler = async (req: Request): Promise<Response> => {
           
           const emailResult = await resend.emails.send({
             from: "Kunda Pathways <onboarding@resend.dev>", // Using Resend's testing address
-            to: ["jeandh023@gmail.com"], // Testing with your verified email
+            to: "jeandh023@gmail.com", // Testing with your verified email
             subject: subject,
             html: emailHtml,
           });
