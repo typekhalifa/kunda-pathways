@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { validateEmail, sanitizeHtml, rateLimiter } from '@/lib/security';
 
 interface Profile {
   id: string;
@@ -133,25 +134,86 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error };
+    try {
+      // Input validation
+      if (!validateEmail(email)) {
+        return { error: { message: 'Invalid email format' } };
+      }
+      
+      // Rate limiting check
+      if (!rateLimiter.isAllowed(email, 5, 900000)) { // 5 attempts per 15 minutes
+        return { error: { message: 'Too many login attempts. Please try again later.' } };
+      }
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email: sanitizeHtml(email),
+        password
+      });
+
+      // Log security event
+      try {
+        await supabase.rpc('log_security_event', {
+          p_action: 'auth_attempt',
+          p_resource: 'authentication',
+          p_success: !error,
+          p_details: { email, timestamp: new Date().toISOString() }
+        });
+      } catch (logError) {
+        console.warn('Failed to log security event:', logError);
+      }
+
+      if (error) {
+        console.error('Sign-in error:', error);
+      } else {
+        rateLimiter.reset(email);
+      }
+
+      return { error };
+    } catch (error) {
+      console.error('Sign-in error:', error);
+      return { error };
+    }
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
+    try {
+      // Input validation
+      if (!validateEmail(email)) {
+        return { error: { message: 'Invalid email format' } };
+      }
+      
+      if (password.length < 8) {
+        return { error: { message: 'Password must be at least 8 characters long' } };
+      }
+
+      const { error } = await supabase.auth.signUp({
+        email: sanitizeHtml(email),
+        password,
+        options: {
+          data: {
+            full_name: sanitizeHtml(fullName),
+          },
+          emailRedirectTo: `${window.location.origin}/admin/dashboard`,
         },
-        emailRedirectTo: `${window.location.origin}/admin/dashboard`,
-      },
-    });
-    return { error };
+      });
+
+      // Log security event
+      try {
+        await supabase.rpc('log_security_event', {
+          p_action: 'user_signup',
+          p_resource: 'authentication',
+          p_success: !error,
+          p_details: { email, timestamp: new Date().toISOString() }
+        });
+      } catch (logError) {
+        console.warn('Failed to log security event:', logError);
+      }
+
+      return { error };
+    } catch (error) {
+      console.error('Sign-up error:', error);
+      return { error };
+    }
   };
 
   const signOut = async () => {
