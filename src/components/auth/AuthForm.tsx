@@ -8,8 +8,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 const AuthForm = () => {
-  const [email, setEmail] = useState('typekhalifa@gmail.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { signIn } = useAuth();
   const { toast } = useToast();
@@ -76,12 +76,12 @@ const AuthForm = () => {
           </form>
           <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
             <p className="text-sm text-amber-700 dark:text-amber-300 mb-2">
-              <strong>Setup Required:</strong> Create this user in Supabase Dashboard first:
+              <strong>Setup Required:</strong> Create admin user in Supabase Dashboard
             </p>
             <p className="text-xs text-amber-600 dark:text-amber-400">
               1. Go to Authentication → Users<br/>
-              2. Add User: typekhalifa@gmail.com / admin123<br/>
-              3. Enable "Auto Confirm"
+              2. Add admin user with strong password<br/>
+              3. Set role to 'admin' in profiles table
             </p>
           </div>
         </CardContent>

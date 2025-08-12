@@ -48,10 +48,10 @@ export const SecurityProvider: React.FC<SecurityProviderProps> = ({ children }) 
       csp.content = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https: wss:; frame-ancestors 'none';";
       head.appendChild(csp);
 
-      // X-Frame-Options
+      // X-Frame-Options (removed DENY to allow iframe embedding)
       const frameOptions = document.createElement('meta');
       frameOptions.httpEquiv = 'X-Frame-Options';
-      frameOptions.content = 'DENY';
+      frameOptions.content = 'SAMEORIGIN';
       head.appendChild(frameOptions);
 
       // X-Content-Type-Options
