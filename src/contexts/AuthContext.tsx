@@ -4,6 +4,41 @@ import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { validateEmail, sanitizeHtml, rateLimiter } from '@/lib/security';
 
+// Enhanced password validation function
+const validatePassword = (password: string): string | null => {
+  if (!password || password.length < 8) {
+    return 'Password must be at least 8 characters long';
+  }
+  
+  // Check for character variety
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumbers = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  
+  if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
+    return 'Password must contain uppercase, lowercase, numbers, and special characters';
+  }
+  
+  // Check for common weak patterns
+  const commonPatterns = [
+    /123456/, /password/, /qwerty/, /abc123/, /admin/, /letmein/,
+    /welcome/, /monkey/, /dragon/, /master/, /sunshine/, /princess/,
+    /football/, /baseball/, /superman/, /batman/
+  ];
+  
+  if (commonPatterns.some(pattern => pattern.test(password.toLowerCase()))) {
+    return 'Password contains common patterns and may be easily guessed';
+  }
+  
+  // Check for repeated characters
+  if (/(.)\1{2,}/.test(password)) {
+    return 'Password cannot contain more than 2 consecutive identical characters';
+  }
+  
+  return null;
+};
+
 interface Profile {
   id: string;
   email: string | null;
@@ -182,8 +217,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: { message: 'Invalid email format' } };
       }
       
-      if (password.length < 8) {
-        return { error: { message: 'Password must be at least 8 characters long' } };
+      // Enhanced password validation
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        return { error: { message: passwordError } };
       }
 
       const { error } = await supabase.auth.signUp({
