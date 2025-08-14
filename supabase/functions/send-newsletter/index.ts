@@ -188,7 +188,7 @@ const handler = async (req: Request): Promise<Response> => {
           console.log(`Sending email to: ${subscriber.email} with subject: ${subject}`);
           
           const emailResult = await resend.emails.send({
-            from: "Africa Korea Connect <noreply@yourdomain.com>", // Update this to your verified domain
+            from: "Kunda Pathways <noreply@yourdomain.com>", // Update this to your verified domain
             to: subscriber.email, // Send to actual subscriber
             subject: subject,
             html: emailHtml,
