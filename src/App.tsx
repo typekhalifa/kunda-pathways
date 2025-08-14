@@ -200,6 +200,7 @@ const App = () => (
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/about-advisor" element={<AboutAdvisor />} />
+              <Route path="/book-study-abroad-consultation" element={<BookStudyAbroadConsultation />} />
               <Route path="/book/study-abroad" element={<BookStudyAbroadConsultation />} />
               <Route path="/complete-package" element={<CompletePackage />} />
               <Route path="/fb-complete-package" element={<FBCompletePackage />} />

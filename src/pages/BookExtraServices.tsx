@@ -107,10 +107,11 @@ const BookExtraServices = () => {
         full_name: formData.fullName,
         email: formData.email,
         phone: formData.phone,
-        services: formData.selectedServices,
+        services: getSelectedServiceDetails(),
         preferred_date: formData.preferredDate,
         preferred_time: formData.preferredTime,
-        message: formData.message
+        message: formData.message,
+        total_price: getTotalPrice()
       }
     ]);
 
@@ -134,7 +135,7 @@ const BookExtraServices = () => {
       full_name: formData.fullName,
       email: formData.email,
       phone: formData.phone,
-      selected_services: formData.selectedServices,
+      services: getSelectedServiceDetails(),
       message: formData.message,
       preferred_date: formData.preferredDate,
       preferred_time: formData.preferredTime,
