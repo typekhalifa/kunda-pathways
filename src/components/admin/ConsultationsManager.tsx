@@ -322,7 +322,11 @@ const ConsultationsManager = () => {
 
                        <div className="mb-3">
                          <p className="font-medium text-sm mb-1">
-                           Service: {Array.isArray(consultation.service_type) ? consultation.service_type.join(', ') : consultation.service_type}
+                           Service: {(() => {
+                             const serviceText = Array.isArray(consultation.service_type) ? consultation.service_type.join(', ') : consultation.service_type;
+                             // Extract only the service name, removing IDs and extra numbers
+                             return serviceText.split(',').map(s => s.trim()).filter(s => !s.match(/^[a-f0-9-]+$/)).filter(s => isNaN(Number(s))).join(', ') || 'N/A';
+                           })()}
                          </p>
                         {consultation.message && (
                           <p className="text-sm text-muted-foreground line-clamp-2">
