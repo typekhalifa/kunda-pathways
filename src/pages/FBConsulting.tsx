@@ -190,8 +190,8 @@ const FBConsulting = () => {
               Get all services at a 25% discount - Perfect for comprehensive market entry
             </p>
             <div className="flex items-center justify-center mb-6">
-              <span className="text-4xl font-bold mr-4">$12,000</span>
-              <span className="text-2xl line-through opacity-70">$16,000</span>
+              <span className="text-4xl font-bold mr-4">$1,049</span>
+              <span className="text-2xl line-through opacity-70">$1,400</span>
             </div>
             <Link to="/fb-complete-package">
               <Button className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
