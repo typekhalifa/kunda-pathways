@@ -80,9 +80,7 @@ const BookConsultation = () => {
   const getTotalPrice = () => {
     return getSelectedServicesDetails().reduce((sum, s) => sum + (s?.price || 0), 0);
   };
-  const rwfRate = 1437.50;
-  const rwfAmount = totalPrice * rwfRate;
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
