@@ -248,17 +248,25 @@ const BookFBConsultation = () => {
                 </Button>
 
                 <div className="space-y-4 mt-4">
-                  <p className="text-slate-600 dark:text-slate-300 text-sm">
-                    💡 <strong>Payment Instructions:</strong> Please make a payment of 
-                    <span className="font-bold text-green-600"> ${totalPrice.toLocaleString()} </span> using one of the methods below:
+                  <p className="text-slate-700 dark:text-slate-300">
+                    Thank you <strong>{formData.fullName}</strong>! Your request has been received.
                   </p>
-                  <ul className="list-disc pl-6 text-sm text-slate-800 dark:text-white space-y-1">
-                    <li>📱 <strong>MTN Mobile Money:</strong> +250 788 214 751</li>
-                    <li>🏦 <strong>Bank Transfer:</strong> We'll share details upon request</li>
-                    <li>🌏 <strong>International:</strong> SWIFT transfers available — contact us via WhatsApp</li>
+                  <p className="text-slate-700 dark:text-slate-300">
+                    Total to pay: <span className="text-green-600 font-bold">${totalPrice}</span>
+                  </p>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm">
+                    Please pay <strong>${totalPrice}</strong> which is approximately <strong>{(totalPrice * 1437.5).toLocaleString()} RWF</strong> to <strong>0788214751</strong>.
+                    <br />
+                    Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*0788214751*{totalPrice * 1437.5}#</code>
+                  </p>
+                  <ul className="space-y-2 text-sm text-slate-800 dark:text-white pl-4 list-disc">
+                    For further modes
+                    <li>📱 <strong>Mobile Money:</strong> +250 788 214 751</li>
+                    <li>🏦 <strong>Bank of Kigali:</strong> 00005677XXXXXXX</li>
+                    <li>🏦 <strong>Equity Bank:</strong> 4065373xxxxxxxxxxxxx</li>
                   </ul>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    After paying, please message us on WhatsApp with your full name and service selected.
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-4">
+                    Need a quick reach out? We're one message away.
                   </p>
                 </div>
 

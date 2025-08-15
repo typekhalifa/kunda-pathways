@@ -13,6 +13,7 @@ const FBCompletePackage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [packageData, setPackageData] = useState<any>(null);
+  const [fbServices, setFbServices] = useState<any[]>([]);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -24,6 +25,7 @@ const FBCompletePackage = () => {
 
   useEffect(() => {
     fetchPackageData();
+    fetchFBServices();
   }, []);
 
   const fetchPackageData = async () => {
@@ -39,11 +41,30 @@ const FBCompletePackage = () => {
     }
   };
 
+  const fetchFBServices = async () => {
+    const { data } = await supabase
+      .from("services")
+      .select("*")
+      .eq("category", "fb-consulting")
+      .eq("is_active", true);
+    
+    if (data) {
+      setFbServices(data);
+    }
+  };
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const totalPrice = packageData?.discounted_price || 12000;
+  // Calculate total price dynamically from all FB services with 25% discount
+  const calculateTotalPrice = () => {
+    if (fbServices.length === 0) return 1049; // fallback
+    const originalTotal = fbServices.reduce((sum, service) => sum + Number(service.price), 0);
+    return Math.round(originalTotal * 0.75); // 25% discount
+  };
+
+  const totalPrice = calculateTotalPrice();
   const rwfRate = 1437.5;
   const rwfAmount = totalPrice * rwfRate;
   const serviceName = packageData?.name || "F&B Market Entry Complete Package";
