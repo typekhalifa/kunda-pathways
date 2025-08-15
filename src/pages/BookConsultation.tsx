@@ -275,7 +275,7 @@ const BookConsultation = () => {
                   />
                 </div>
 
-                {/* Total and Submit */}
+                {/* Total Price and Submit */}
                 {formData.selectedServices.length > 0 && (
                   <div className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-xl font-bold text-slate-800 dark:text-white">
                     Total: <span className="text-blue-600">${getTotalPrice().toLocaleString()}</span>
