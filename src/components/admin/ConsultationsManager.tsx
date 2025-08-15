@@ -58,18 +58,32 @@ const ConsultationsManager = () => {
 
         const studyBookings = (studyRes.data || []).map((b) => ({
           ...b,
-          service_type: typeof b.service === 'string' ? b.service : 
-            (Array.isArray(b.service) ? b.service.join(', ') : 
-             (b.service && typeof b.service === 'object' ? Object.values(b.service).join(', ') : 'N/A')),
+          service_type: (() => {
+            if (typeof b.service === 'string') return b.service;
+            if (Array.isArray(b.service)) {
+              return b.service.map(s => typeof s === 'object' && s && 'name' in s ? String(s.name) : String(s)).join(', ');
+            }
+            if (b.service && typeof b.service === 'object' && 'name' in b.service) {
+              return String(b.service.name);
+            }
+            return 'N/A';
+          })(),
           booking_type: 'Study Abroad',
         }));
         console.log('📚 Processed Study Bookings:', studyBookings);
 
         const fbBookings = (fbRes.data || []).map((b) => ({
           ...b,
-          service_type: typeof b.services === 'string' ? b.services : 
-            (Array.isArray(b.services) ? b.services.join(', ') : 
-             (b.services && typeof b.services === 'object' ? Object.values(b.services).join(', ') : 'N/A')),
+          service_type: (() => {
+            if (typeof b.services === 'string') return b.services;
+            if (Array.isArray(b.services)) {
+              return b.services.map(s => typeof s === 'object' && s && 'name' in s ? String(s.name) : String(s)).filter(Boolean).join(', ');
+            }
+            if (b.services && typeof b.services === 'object') {
+              return Object.values(b.services).filter(v => v && typeof v === 'string').join(', ') || 'N/A';
+            }
+            return 'N/A';
+          })(),
           company_name: b.company || '',
           booking_type: 'F&B Consulting',
         }));
@@ -77,9 +91,20 @@ const ConsultationsManager = () => {
 
         const extraBookings = (extraRes.data || []).map((b) => ({
           ...b,
-          service_type: typeof b.services === 'string' ? b.services : 
-            (Array.isArray(b.services) ? b.services.join(', ') : 
-             (b.services && typeof b.services === 'object' ? Object.values(b.services).join(', ') : 'N/A')),
+          service_type: (() => {
+            if (typeof b.services === 'string') return b.services;
+            if (Array.isArray(b.services)) {
+              return b.services.map(s => {
+                if (typeof s === 'object' && s && 'name' in s) return String(s.name);
+                if (typeof s === 'string') return s;
+                return null;
+              }).filter(Boolean).join(', ') || 'N/A';
+            }
+            if (b.services && typeof b.services === 'object') {
+              return Object.values(b.services).filter(v => v && typeof v === 'string').join(', ') || 'N/A';
+            }
+            return 'N/A';
+          })(),
           booking_type: 'Extra Services',
         }));
         console.log('🔧 Processed Extra Bookings:', extraBookings);
