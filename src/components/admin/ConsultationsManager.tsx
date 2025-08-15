@@ -323,9 +323,17 @@ const ConsultationsManager = () => {
                        <div className="mb-3">
                          <p className="font-medium text-sm mb-1">
                            Service: {(() => {
-                             const serviceText = Array.isArray(consultation.service_type) ? consultation.service_type.join(', ') : consultation.service_type;
-                             // Extract only the service name, removing IDs and extra numbers
-                             return serviceText.split(',').map(s => s.trim()).filter(s => !s.match(/^[a-f0-9-]+$/)).filter(s => isNaN(Number(s))).join(', ') || 'N/A';
+                             if (typeof consultation.service_type === 'string') {
+                               return consultation.service_type;
+                             } else if (Array.isArray(consultation.service_type)) {
+                               return consultation.service_type
+                                 .map(service => typeof service === 'object' && service?.name ? service.name : service)
+                                 .filter(name => name && typeof name === 'string')
+                                 .join(', ') || 'N/A';
+                             } else if (typeof consultation.service_type === 'object' && consultation.service_type?.name) {
+                               return consultation.service_type.name;
+                             }
+                             return 'N/A';
                            })()}
                          </p>
                         {consultation.message && (
