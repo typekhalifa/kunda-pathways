@@ -18,10 +18,12 @@ const CompletePackage = () => {
     message: "",
   });
   const [packageData, setPackageData] = useState<any>(null);
+  const [studyAbroadServices, setStudyAbroadServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchPackageData();
+    fetchStudyAbroadServices();
   }, []);
 
   const fetchPackageData = async () => {
@@ -37,11 +39,30 @@ const CompletePackage = () => {
     }
   };
 
+  const fetchStudyAbroadServices = async () => {
+    const { data } = await supabase
+      .from("services")
+      .select("*")
+      .eq("category", "study-abroad")
+      .eq("is_active", true);
+    
+    if (data) {
+      setStudyAbroadServices(data);
+    }
+  };
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const totalPrice = packageData?.discounted_price || 452;
+  // Calculate total price dynamically from all Study Abroad services with 29% discount
+  const calculateTotalPrice = () => {
+    if (studyAbroadServices.length === 0) return 452; // fallback
+    const originalTotal = studyAbroadServices.reduce((sum, service) => sum + Number(service.price), 0);
+    return Math.round(originalTotal * 0.71); // 29% discount
+  };
+
+  const totalPrice = calculateTotalPrice();
   const serviceName = packageData?.name || "Complete Korean Study Package";
   
   const rwfRate = 1437.50;

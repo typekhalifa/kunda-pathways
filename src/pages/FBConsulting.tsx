@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 const FBConsulting = () => {
   const { translations } = useLanguage();
   const [services, setServices] = useState([]);
+  const [fbServices, setFbServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const getServiceIcon = (name) => {
@@ -100,6 +101,7 @@ const FBConsulting = () => {
 
         if (error) throw error;
         setServices(data || []);
+        setFbServices(data || []);
       } catch (error) {
         console.error('Error fetching services:', error);
       } finally {
@@ -109,6 +111,16 @@ const FBConsulting = () => {
 
     fetchServices();
   }, []);
+
+  // Calculate total price dynamically from all FB services with 25% discount
+  const calculatePackagePrice = () => {
+    if (fbServices.length === 0) return { original: 1402, discounted: 1052 };
+    const originalTotal = Math.round(fbServices.reduce((sum, service) => sum + Number(service.price), 0));
+    const discountedTotal = Math.round(originalTotal * 0.75); // 25% discount
+    return { original: originalTotal, discounted: discountedTotal };
+  };
+
+  const packagePricing = calculatePackagePrice();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -190,8 +202,8 @@ const FBConsulting = () => {
               Get all services at a 25% discount - Perfect for comprehensive market entry
             </p>
             <div className="flex items-center justify-center mb-6">
-              <span className="text-4xl font-bold mr-4">$1,052</span>
-              <span className="text-2xl line-through opacity-70">~$1,402~</span>
+              <span className="text-4xl font-bold mr-4">${packagePricing.discounted}</span>
+              <span className="text-2xl line-through opacity-70">~${packagePricing.original}~</span>
             </div>
             <Link to="/fb-complete-package">
               <Button className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">

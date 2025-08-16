@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 const StudyPrograms = () => {
   const { translations } = useLanguage();
   const [services, setServices] = useState([]);
+  const [studyAbroadServices, setStudyAbroadServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const getServiceIcon = (name) => {
@@ -78,8 +79,31 @@ const StudyPrograms = () => {
       }
     };
 
+    const fetchStudyAbroadServices = async () => {
+      const { data } = await supabase
+        .from("services")
+        .select("*")
+        .eq("category", "study-abroad")
+        .eq("is_active", true);
+      
+      if (data) {
+        setStudyAbroadServices(data);
+      }
+    };
+
     fetchServices();
+    fetchStudyAbroadServices();
   }, []);
+
+  // Calculate total price dynamically from all Study Abroad services with 29% discount
+  const calculatePackagePrice = () => {
+    if (studyAbroadServices.length === 0) return { original: 565, discounted: 401 };
+    const originalTotal = studyAbroadServices.reduce((sum, service) => sum + Number(service.price), 0);
+    const discountedTotal = Math.round(originalTotal * 0.71); // 29% discount
+    return { original: originalTotal, discounted: discountedTotal };
+  };
+
+  const packagePricing = calculatePackagePrice();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -158,11 +182,11 @@ const StudyPrograms = () => {
           <div className="bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl p-8 text-white text-center mb-16">
             <h2 className="text-3xl font-bold mb-4">Complete Study Abroad Package</h2>
             <p className="text-xl mb-6 opacity-90">
-              Get all services at a 20% discount - Perfect for your Korean education journey
+              Get all services at a 29% discount - Perfect for your Korean education journey
             </p>
             <div className="flex items-center justify-center mb-6">
-              <span className="text-4xl font-bold mr-4">$452</span>
-              <span className="text-2xl line-through opacity-70">~$565~</span>
+              <span className="text-4xl font-bold mr-4">${packagePricing.discounted}</span>
+              <span className="text-2xl line-through opacity-70">~${packagePricing.original}~</span>
             </div>
             <Link to="/complete-package">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">
