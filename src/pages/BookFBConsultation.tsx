@@ -221,31 +221,10 @@ const BookFBConsultation = () => {
             <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border-0">
               <CardHeader>
                 <CardTitle className="text-2xl text-slate-800 dark:text-white">
-                  Payment Methods
+                  Booking Confirmed
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <Button 
-                  onClick={() => handlePayment('Credit Card')}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl flex items-center justify-center"
-                >
-                  <CreditCard className="mr-3" size={20} />
-                  Pay with Credit/Debit Card
-                </Button>
-                <Button 
-                  onClick={() => handlePayment('Mobile Money')}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl flex items-center justify-center"
-                >
-                  <Smartphone className="mr-3" size={20} />
-                  Pay with Mobile Money
-                </Button>
-                <Button 
-                  onClick={() => handlePayment('Bank Transfer')}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 rounded-xl flex items-center justify-center"
-                >
-                  <Building className="mr-3" size={20} />
-                  Pay with Bank Transfer
-                </Button>
 
                 <div className="space-y-4 mt-4">
                   <p className="text-slate-700 dark:text-slate-300">
@@ -289,20 +268,22 @@ const BookFBConsultation = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button className="w-full bg-blue-600 text-white mt-3">
-                        💬 Message Us on WhatsApp
-                      </Button>
+                       <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-3 transition-all duration-300">
+                         💬 Message Us on WhatsApp
+                       </Button>
                     </a>
                   </CardContent>
                 </Card>
 
-                <Button 
-                  onClick={() => setCurrentStep(1)}
-                  variant="outline"
-                  className="w-full py-4 rounded-xl border-slate-300 dark:border-slate-600 bg-white/10 dark:bg-white/10 text-slate-800 dark:text-white hover:bg-white/20 dark:hover:bg-white/20"
-                >
-                  Back to Edit Details
-                </Button>
+                 <Link to="/">
+                   <Button 
+                     variant="outline"
+                     className="w-full py-4 rounded-xl border-slate-300 dark:border-slate-600 bg-white/10 dark:bg-white/10 text-slate-800 dark:text-white hover:bg-white/20 dark:hover:bg-white/20"
+                   >
+                     <ArrowLeft size={16} className="mr-2" />
+                     Back to Home
+                   </Button>
+                 </Link>
               </CardContent>
             </Card>
           </div>

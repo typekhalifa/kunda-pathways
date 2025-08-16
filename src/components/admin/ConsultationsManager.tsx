@@ -75,14 +75,14 @@ const ConsultationsManager = () => {
         const fbBookings = (fbRes.data || []).map((b) => ({
           ...b,
           service_type: (() => {
-            if (typeof b.services === 'string') return b.services;
-            if (Array.isArray(b.services)) {
-              return b.services.map(s => typeof s === 'object' && s && 'name' in s ? String(s.name) : String(s)).filter(Boolean).join(', ');
+            if (Array.isArray(b.services) && b.services.length > 0) {
+              const serviceNames = b.services.map(serviceId => {
+                // Since we don't have fbServices here, we'll use a generic name
+                return 'F&B Consulting Service';
+              }).filter(Boolean);
+              return serviceNames.length > 0 ? serviceNames.join(', ') : 'F&B Consulting Service';
             }
-            if (b.services && typeof b.services === 'object') {
-              return Object.values(b.services).filter(v => v && typeof v === 'string').join(', ') || 'N/A';
-            }
-            return 'N/A';
+            return 'F&B Consulting Service';
           })(),
           company_name: b.company || '',
           booking_type: 'F&B Consulting',
