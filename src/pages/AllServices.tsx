@@ -211,13 +211,13 @@ const AllServices = () => {
                     <CardTitle className="text-xl text-slate-800 dark:text-white text-center">
                       {pkg.name}
                     </CardTitle>
-                    <div className="text-center">
-                      <span className="text-3xl font-bold text-blue-600">${pkg.discounted_price}</span>
-                      <span className="text-lg line-through text-slate-500 ml-2">${pkg.original_price}</span>
-                      <div className="text-green-600 font-bold text-sm mt-1">
-                        {Math.round(((pkg.original_price - pkg.discounted_price) / pkg.original_price) * 100)}% OFF
-                      </div>
-                    </div>
+                     <div className="text-center">
+                       <span className="text-3xl font-bold text-blue-600">${pkg.discounted_price}</span>
+                       <span className="text-lg line-through text-slate-500 ml-2">~${pkg.original_price}~</span>
+                       <div className="text-green-600 font-bold text-sm mt-1">
+                         {Math.round(((pkg.original_price - pkg.discounted_price) / pkg.original_price) * 100)}% OFF
+                       </div>
+                     </div>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 mb-6">
@@ -255,10 +255,10 @@ const AllServices = () => {
                 {getServicesByCategory('study-abroad').map((service) => (
                   <Card key={service.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
                     <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
-                        <span className="text-blue-600 font-bold text-lg">{service.price} {service.currency}</span>
-                      </div>
+                     <div className="flex justify-between items-start mb-3">
+                         <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
+                         <span className="text-blue-600 font-bold text-lg">${service.price}</span>
+                       </div>
                       <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
                       {service.duration && (
                         <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>
@@ -315,10 +315,10 @@ const AllServices = () => {
                 {getServicesByCategory('fb-consulting').map((service) => (
                   <Card key={service.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
                     <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
-                        <span className="text-green-600 font-bold text-lg">{service.price} {service.currency}</span>
-                      </div>
+                     <div className="flex justify-between items-start mb-3">
+                         <h3 className="font-semibold text-slate-800 dark:text-white">{service.name}</h3>
+                         <span className="text-green-600 font-bold text-lg">${service.price}</span>
+                       </div>
                       <p className="text-sm text-slate-600 dark:text-slate-300 mb-2">{service.description}</p>
                       {service.duration && (
                         <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">{translations.duration || "Duration"}: {service.duration}</p>

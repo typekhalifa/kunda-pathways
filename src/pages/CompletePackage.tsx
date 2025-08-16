@@ -41,7 +41,7 @@ const CompletePackage = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const totalPrice = packageData?.discounted_price || 250;
+  const totalPrice = packageData?.discounted_price || 452;
   const serviceName = packageData?.name || "Complete Korean Study Package";
   
   const rwfRate = 1437.50;

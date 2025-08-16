@@ -161,8 +161,8 @@ const StudyPrograms = () => {
               Get all services at a 20% discount - Perfect for your Korean education journey
             </p>
             <div className="flex items-center justify-center mb-6">
-              <span className="text-4xl font-bold mr-4">$250</span>
-              <span className="text-2xl line-through opacity-70">$350</span>
+              <span className="text-4xl font-bold mr-4">$452</span>
+              <span className="text-2xl line-through opacity-70">~$565~</span>
             </div>
             <Link to="/complete-package">
               <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold rounded-xl shadow-lg">

@@ -59,7 +59,7 @@ const FBCompletePackage = () => {
 
   // Calculate total price dynamically from all FB services with 25% discount
   const calculateTotalPrice = () => {
-    if (fbServices.length === 0) return 1049; // fallback
+    if (fbServices.length === 0) return 1052; // fallback with realistic pricing
     const originalTotal = fbServices.reduce((sum, service) => sum + Number(service.price), 0);
     return Math.round(originalTotal * 0.75); // 25% discount
   };
