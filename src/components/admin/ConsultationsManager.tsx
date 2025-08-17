@@ -32,10 +32,11 @@ const ConsultationsManager = () => {
     const fetchAllBookings = async () => {
       console.log('🔄 Starting to fetch bookings...');
       try {
-        const [studyRes, fbRes, extraRes] = await Promise.all([
+        const [studyRes, fbRes, extraRes, consultationRes] = await Promise.all([
           supabase.from('study_abroad_bookings').select('*'),
           supabase.from('fb_consultation_bookings').select('*'),
           supabase.from('extra_service_bookings').select('*'),
+          supabase.from('consultation_bookings').select('*'),
         ]);
 
         if (studyRes.error) {
@@ -54,6 +55,12 @@ const ConsultationsManager = () => {
           console.error('❌ Extra Services Fetch Error:', extraRes.error);
         } else {
           console.log('✅ Extra Raw Data:', extraRes.data);
+        }
+
+        if (consultationRes.error) {
+          console.error('❌ Consultation Fetch Error:', consultationRes.error);
+        } else {
+          console.log('✅ Consultation Raw Data:', consultationRes.data);
         }
 
         const studyBookings = (studyRes.data || []).map((b) => ({
@@ -109,7 +116,14 @@ const ConsultationsManager = () => {
         }));
         console.log('🔧 Processed Extra Bookings:', extraBookings);
 
-        const all = [...studyBookings, ...fbBookings, ...extraBookings];
+        const consultationBookings = (consultationRes.data || []).map((b) => ({
+          ...b,
+          service_type: b.services || 'General Consultation',
+          booking_type: 'General Consultation',
+        }));
+        console.log('📞 Processed Consultation Bookings:', consultationBookings);
+
+        const all = [...studyBookings, ...fbBookings, ...extraBookings, ...consultationBookings];
         console.log('📋 All Combined Bookings:', all);
 
         const sorted = all.sort(
@@ -285,6 +299,7 @@ const ConsultationsManager = () => {
                   <SelectItem value="Study Abroad">Study Abroad</SelectItem>
                   <SelectItem value="F&B Consulting">F&B Consulting</SelectItem>
                   <SelectItem value="Extra Services">Extra Services</SelectItem>
+                  <SelectItem value="General Consultation">General Consultation</SelectItem>
                 </SelectContent>
               </Select>
             </div>

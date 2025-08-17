@@ -4,16 +4,60 @@ import { ArrowDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCountingAnimation } from "@/hooks/useCountingAnimation";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Hero = () => {
   const { translations } = useLanguage();
+  const [heroContent, setHeroContent] = useState({
+    title: "",
+    subtitle: "",
+    backgroundImage: "",
+    studentsCount: 53,
+    countriesCount: 13
+  });
   
   // Counting animations for statistics
-  const studentsCount = useCountingAnimation(53, 2000, 500);
-  const countriesCount = useCountingAnimation(13, 2000, 700);
+  const studentsCount = useCountingAnimation(heroContent.studentsCount, 2000, 500);
+  const countriesCount = useCountingAnimation(heroContent.countriesCount, 2000, 700);
+
+  useEffect(() => {
+    const fetchHeroContent = async () => {
+      const { data } = await supabase
+        .from('website_content')
+        .select('*')
+        .eq('section', 'hero')
+        .eq('language_code', 'EN');
+      
+      if (data && data.length > 0) {
+        const content = data.reduce((acc: any, item) => {
+          acc[item.content_key] = item.content_value;
+          return acc;
+        }, {} as any);
+        
+        setHeroContent({
+          title: content.title || translations.heroTitle || "Your Gateway to Global Education and Business Success",
+          subtitle: content.subtitle || translations.heroSubtitle || "Expert guidance for Korean university admissions, scholarships, and F&B business consulting",
+          backgroundImage: content.backgroundImage || "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+          studentsCount: content.studentsCount || 53,
+          countriesCount: content.countriesCount || 13
+        });
+      } else {
+        setHeroContent({
+          title: translations.heroTitle || "Your Gateway to Global Education and Business Success",
+          subtitle: translations.heroSubtitle || "Expert guidance for Korean university admissions, scholarships, and F&B business consulting",
+          backgroundImage: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+          studentsCount: 53,
+          countriesCount: 13
+        });
+      }
+    };
+
+    fetchHeroContent();
+  }, [translations]);
 
   // Safe handling of heroTitle to prevent undefined error
-  const heroTitle = translations.heroTitle || "Your Gateway to Global Education and Business Success";
+  const heroTitle = heroContent.title;
   const heroTitleParts = heroTitle.split(' ');
   const mainTitle = heroTitleParts.slice(0, -2).join(' ');
   const highlightedTitle = heroTitleParts.slice(-2).join(' ');
@@ -25,7 +69,7 @@ const Hero = () => {
       id="home" 
       className="pt-24 pb-16 px-4 relative overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${heroContent.backgroundImage}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
@@ -38,7 +82,7 @@ const Hero = () => {
             <span className="text-blue-400"> {highlightedTitle}</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed font-semibold">
-            {translations.heroSubtitle || "Expert guidance for Korean university admissions, scholarships, and F&B business consulting"}
+            {heroContent.subtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">

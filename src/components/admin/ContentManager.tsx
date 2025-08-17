@@ -18,7 +18,10 @@ const ContentManager = () => {
     hero: {
       title: 'Professional Educational Consulting',
       subtitle: 'Expert guidance for your academic journey',
-      description: 'Get personalized advice for studying abroad and educational opportunities.'
+      description: 'Get personalized advice for studying abroad and educational opportunities.',
+      backgroundImage: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      studentsCount: 53,
+      countriesCount: 13
     },
     about: {
       title: 'About Our Services',
@@ -97,7 +100,7 @@ const ContentManager = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="hero-subtitle">Subtitle</Label>
-              <Input
+              <Textarea
                 id="hero-subtitle"
                 value={content.hero.subtitle}
                 onChange={(e) => setContent({
@@ -105,20 +108,48 @@ const ContentManager = () => {
                   hero: { ...content.hero, subtitle: e.target.value }
                 })}
                 placeholder="Enter subtitle"
+                rows={2}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="hero-description">Description</Label>
-              <Textarea
-                id="hero-description"
-                value={content.hero.description}
+              <Label htmlFor="hero-background">Background Image URL</Label>
+              <Input
+                id="hero-background"
+                value={content.hero.backgroundImage}
                 onChange={(e) => setContent({
                   ...content,
-                  hero: { ...content.hero, description: e.target.value }
+                  hero: { ...content.hero, backgroundImage: e.target.value }
                 })}
-                placeholder="Enter description"
-                rows={3}
+                placeholder="Enter background image URL"
               />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="hero-students">Students Count</Label>
+                <Input
+                  id="hero-students"
+                  type="number"
+                  value={content.hero.studentsCount}
+                  onChange={(e) => setContent({
+                    ...content,
+                    hero: { ...content.hero, studentsCount: parseInt(e.target.value) || 0 }
+                  })}
+                  placeholder="Students assisted"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="hero-countries">Countries Count</Label>
+                <Input
+                  id="hero-countries"
+                  type="number"
+                  value={content.hero.countriesCount}
+                  onChange={(e) => setContent({
+                    ...content,
+                    hero: { ...content.hero, countriesCount: parseInt(e.target.value) || 0 }
+                  })}
+                  placeholder="Countries reached"
+                />
+              </div>
             </div>
             <Button 
               onClick={() => handleSave('Hero')} 
