@@ -57,6 +57,14 @@ const BookConsultation = () => {
     }
   };
 
+  // Force refresh when component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchServices();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -294,51 +302,51 @@ const BookConsultation = () => {
             </>
           ) : (
             <>
-              <h1 className="text-3xl font-bold text-center mb-8 text-slate-800 dark:text-white">
-                Review Your Consultation Request
-              </h1>
-              <Card className="bg-white dark:bg-slate-800 p-8 shadow-lg border-0 mb-8">
+              <Card className="bg-white/90 dark:bg-slate-800/90 p-6 rounded-xl shadow-lg border-0">
                 <CardHeader>
-                  <CardTitle className="text-2xl">Booking Details</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div><strong>Name:</strong> {formData.fullName}</div>
-                  <div><strong>Email:</strong> {formData.email}</div>
-                  <div><strong>Phone:</strong> {formData.phone}</div>
-                  <div><strong>Date:</strong> {formData.preferredDate}</div>
-                  <div><strong>Time:</strong> {formData.preferredTime}</div>
-                  <div><strong>Message:</strong> {formData.message}</div>
-                  <div><strong>Selected Services:</strong></div>
-                  <ul className="pl-4 list-disc">
-                    {selectedServices.map((s) => (
-                      <li key={s?.id}>{s?.name} - <span className="font-bold text-blue-600">${s?.price}</span></li>
-                    ))}
-                  </ul>
-                  <div className="font-bold text-xl text-blue-600 pt-4">Total: ${total.toLocaleString()}</div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white dark:bg-slate-800 p-8 shadow-lg border-0">
-                <CardHeader>
-                  <CardTitle className="text-2xl">Payment Instructions</CardTitle>
+                  <CardTitle className="text-2xl text-slate-800 dark:text-white flex items-center">
+                    <Smartphone className="mr-3 text-blue-600" />
+                    Booking Confirmed
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p>Please pay <span className="font-bold text-blue-600">${total}</span> using one of the following:</p>
-                  <ul className="pl-5 list-disc">
-                    <li><strong>Mobile Money (MTN):</strong> +250 788 214 751</li>
-                    <li><strong>Bank Transfer:</strong> Account details available upon request</li>
+                  <p className="text-slate-700 dark:text-slate-300">
+                    Thank you <strong>{formData.fullName}</strong>! Your request has been received.
+                  </p>
+                  <p className="text-slate-700 dark:text-slate-300">
+                    Total to pay: <span className="text-blue-600 font-bold">${total}</span>
+                  </p>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm">
+                    Please pay <strong>${total}</strong> which is approximately <strong>{(total * 1437.5).toLocaleString()} RWF</strong> to <strong>0788214751</strong>.
+                    <br />
+                    Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*0788214751*{total * 1437.5}#</code>
+                  </p>
+                  <ul className="space-y-2 text-sm text-slate-800 dark:text-white pl-4 list-disc">
+                    For further modes
+                    <li>📱 <strong>Mobile Money:</strong> +250 788 214 751</li>
+                    <li>🏦 <strong>Bank of Kigali:</strong> 00005677XXXXXXX</li>
+                    <li>🏦 <strong>Equity Bank:</strong> 4065373xxxxxxxxxxxxx</li>
                   </ul>
-                  <p className="text-sm text-slate-600">After paying, contact us via WhatsApp with your full name and service name.</p>
+
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-4">
+                    Need a quick reach out? We're one message away.
+                  </p>
+
                   <a
-                    href={`https://wa.me/250788214751?text=Hello! I’ve just paid for the consultation. My name is ${encodeURIComponent(formData.fullName)}.`}
+                    href={`https://wa.me/250788214751?text=Hello! I've paid for the consultation services. My name is ${encodeURIComponent(formData.fullName)}.`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Button className="w-full bg-green-600 text-white mt-3">📩 Message Us on WhatsApp</Button>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-3">
+                      📩 Message Us on WhatsApp
+                    </Button>
                   </a>
-                  <Button onClick={() => setCurrentStep(1)} variant="outline" className="w-full mt-4">
-                    Back to Edit
-                  </Button>
+
+                  <Link to="/">
+                    <Button variant="outline" className="w-full mt-4">
+                      Back to Home
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </>

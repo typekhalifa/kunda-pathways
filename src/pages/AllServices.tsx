@@ -154,17 +154,45 @@ const AllServices = () => {
 
   useEffect(() => {
     fetchPackages();
-  }, []);
+  }, [databaseServices]); // Re-fetch when services change
 
   const fetchPackages = async () => {
-    const { data } = await supabase
-      .from("packages")
-      .select("*")
-      .eq("is_active", true)
-      .order("created_at", { ascending: false });
-    
-    if (data) {
-      setPackages(data);
+    try {
+      // Calculate dynamic package prices based on actual services
+      const studyAbroadServices = databaseServices.filter(s => s.category === 'study-abroad');
+      const fbServices = databaseServices.filter(s => s.category === 'fb-consulting');
+      
+      const studyAbroadTotal = studyAbroadServices.reduce((sum, s) => sum + Number(s.price), 0);
+      const fbTotal = fbServices.reduce((sum, s) => sum + Number(s.price), 0);
+      
+      // Create dynamic packages with real-time pricing
+      const dynamicPackages = [];
+      
+      if (studyAbroadTotal > 0) {
+        dynamicPackages.push({
+          id: 'study-abroad-package',
+          name: 'Complete Korean Study Package',
+          original_price: studyAbroadTotal,
+          discounted_price: Math.round(studyAbroadTotal * 0.71), // 29% off
+          services: studyAbroadServices.map(s => s.name),
+          popular: true
+        });
+      }
+      
+      if (fbTotal > 0) {
+        dynamicPackages.push({
+          id: 'fb-package',
+          name: 'Complete F&B Package',
+          original_price: fbTotal,
+          discounted_price: Math.round(fbTotal * 0.75), // 25% off
+          services: fbServices.map(s => s.name),
+          popular: false
+        });
+      }
+      
+      setPackages(dynamicPackages);
+    } catch (error) {
+      console.error('Error calculating packages:', error);
     }
   };
 
