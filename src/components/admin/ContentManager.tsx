@@ -17,9 +17,8 @@ const ContentManager = () => {
 
   const [content, setContent] = useState({
     hero: {
-      title: 'Professional Educational Consulting',
-      subtitle: 'Expert guidance for your academic journey',
-      description: 'Get personalized advice for studying abroad and educational opportunities.',
+      title: 'Your Gateway to Global Education and Business Success',
+      subtitle: 'Expert guidance for Korean university admissions, scholarships, and F&B business consulting',
       backgroundImage: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
       studentsCount: 53,
       countriesCount: 13

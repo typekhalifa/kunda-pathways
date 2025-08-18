@@ -116,9 +116,23 @@ const ConsultationsManager = () => {
         }));
         console.log('🔧 Processed Extra Bookings:', extraBookings);
 
+        // Fetch services to display names instead of IDs
+        const { data: servicesData } = await supabase.from('services').select('id, name');
+        const servicesMap = (servicesData || []).reduce((acc: any, service) => {
+          acc[service.id] = service.name;
+          return acc;
+        }, {});
+
         const consultationBookings = (consultationRes.data || []).map((b) => ({
           ...b,
-          service_type: b.services || 'General Consultation',
+          service_type: (() => {
+            if (typeof b.services === 'string') {
+              // Try to find service name by ID
+              const serviceName = servicesMap[b.services];
+              return serviceName || b.services;
+            }
+            return b.services || 'General Consultation';
+          })(),
           booking_type: 'General Consultation',
         }));
         console.log('📞 Processed Consultation Bookings:', consultationBookings);
