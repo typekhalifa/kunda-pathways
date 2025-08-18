@@ -9,6 +9,7 @@ import { Loader2, Save, Edit, Home, Info, Briefcase, Users, MessageSquare, Build
 import PartnersManager from './PartnersManager';
 import AboutContentManager from './AboutContentManager';
 import TestimonialsManager from './TestimonialsManager';
+import FileUpload from './FileUpload';
 
 const ContentManager = () => {
   const [loading, setLoading] = useState(false);
@@ -112,15 +113,15 @@ const ContentManager = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="hero-background">Background Image URL</Label>
-              <Input
-                id="hero-background"
-                value={content.hero.backgroundImage}
-                onChange={(e) => setContent({
+              <FileUpload
+                label="Background Image"
+                currentUrl={content.hero.backgroundImage}
+                onUpload={(url) => setContent({
                   ...content,
-                  hero: { ...content.hero, backgroundImage: e.target.value }
+                  hero: { ...content.hero, backgroundImage: url }
                 })}
-                placeholder="Enter background image URL"
+                accept="image/*"
+                folder="hero"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">

@@ -301,7 +301,70 @@ const BookConsultation = () => {
 
             </>
           ) : (
-            <>
+            <div className="space-y-6">
+              {/* Booking Details Card */}
+              <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border-0">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-slate-800 dark:text-white">📋 Booking Details</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                        Full Name
+                      </label>
+                      <p className="text-slate-800 dark:text-white">{formData.fullName}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                        Email
+                      </label>
+                      <p className="text-slate-800 dark:text-white">{formData.email}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                        Phone
+                      </label>
+                      <p className="text-slate-800 dark:text-white">{formData.phone || 'Not provided'}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                        Company
+                      </label>
+                      <p className="text-slate-800 dark:text-white">{formData.company || 'Not provided'}</p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                      Selected Services
+                    </label>
+                    <div className="space-y-2 mt-2">
+                      {selectedServices.map((service, index) => (
+                        <div key={index} className="flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                          <span className="text-slate-800 dark:text-white">{service?.name}</span>
+                          <span className="text-green-600 font-bold">${service?.price}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                      Message
+                    </label>
+                    <p className="text-slate-800 dark:text-white">{formData.message}</p>
+                  </div>
+                  
+                  <div className="border-t border-slate-200 dark:border-slate-600 pt-4">
+                    <div className="flex justify-between items-center text-2xl font-bold">
+                      <span className="text-slate-800 dark:text-white">Total Price:</span>
+                      <span className="text-green-600">${total.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
               <Card className="bg-white/90 dark:bg-slate-800/90 p-6 rounded-xl shadow-lg border-0">
                 <CardHeader>
                   <CardTitle className="text-2xl text-slate-800 dark:text-white flex items-center">
@@ -349,7 +412,7 @@ const BookConsultation = () => {
                   </Link>
                 </CardContent>
               </Card>
-            </>
+            </div>
           )}
         </div>
       </div>
