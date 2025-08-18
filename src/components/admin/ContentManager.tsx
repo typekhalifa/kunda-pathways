@@ -48,8 +48,6 @@ const ContentManager = () => {
 
   const tabs = [
     { id: 'hero', label: 'Hero Section', icon: Home },
-    { id: 'about', label: 'About Section', icon: Info },
-    { id: 'services', label: 'Services Section', icon: Briefcase },
     { id: 'partners', label: 'Partners', icon: Building },
     { id: 'about-content', label: 'About Content', icon: Users },
     { id: 'testimonials', label: 'Success Stories', icon: MessageSquare }
@@ -164,105 +162,6 @@ const ContentManager = () => {
         </Card>
       )}
 
-      {activeTab === 'about' && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Info className="w-5 h-5 mr-2" />
-              About Section
-            </CardTitle>
-            <CardDescription>
-              Edit the about section content
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="about-title">Section Title</Label>
-              <Input
-                id="about-title"
-                value={content.about.title}
-                onChange={(e) => setContent({
-                  ...content,
-                  about: { ...content.about, title: e.target.value }
-                })}
-                placeholder="Enter section title"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="about-description">Description</Label>
-              <Textarea
-                id="about-description"
-                value={content.about.description}
-                onChange={(e) => setContent({
-                  ...content,
-                  about: { ...content.about, description: e.target.value }
-                })}
-                placeholder="Enter about description"
-                rows={6}
-              />
-            </div>
-            <Button 
-              onClick={() => handleSave('About')} 
-              disabled={loading}
-              className="w-full md:w-auto"
-            >
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              <Save className="mr-2 h-4 w-4" />
-              Save About Content
-            </Button>
-          </CardContent>
-        </Card>
-      )}
-
-      {activeTab === 'services' && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Briefcase className="w-5 h-5 mr-2" />
-              Services Section
-            </CardTitle>
-            <CardDescription>
-              Edit the services section content
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="services-title">Section Title</Label>
-              <Input
-                id="services-title"
-                value={content.services.title}
-                onChange={(e) => setContent({
-                  ...content,
-                  services: { ...content.services, title: e.target.value }
-                })}
-                placeholder="Enter section title"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="services-description">Description</Label>
-              <Textarea
-                id="services-description"
-                value={content.services.description}
-                onChange={(e) => setContent({
-                  ...content,
-                  services: { ...content.services, description: e.target.value }
-                })}
-                placeholder="Enter services description"
-                rows={4}
-              />
-            </div>
-            <Button 
-              onClick={() => handleSave('Services')} 
-              disabled={loading}
-              className="w-full md:w-auto"
-            >
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              <Save className="mr-2 h-4 w-4" />
-              Save Services Content
-            </Button>
-          </CardContent>
-        </Card>
-      )}
 
       {activeTab === 'partners' && <PartnersManager />}
       

@@ -126,9 +126,11 @@ const ConsultationsManager = () => {
         const consultationBookings = (consultationRes.data || []).map((b) => ({
           ...b,
           service_type: (() => {
+            console.log('🔍 Processing consultation booking services:', b.services, typeof b.services);
             if (typeof b.services === 'string') {
               // Try to find service name by ID
               const serviceName = servicesMap[b.services];
+              console.log('🎯 Found service name for ID', b.services, ':', serviceName);
               return serviceName || b.services;
             }
             return b.services || 'General Consultation';
