@@ -127,13 +127,34 @@ const ConsultationsManager = () => {
           ...b,
           service_type: (() => {
             console.log('🔍 Processing consultation booking services:', b.services, typeof b.services);
+            
+            // Handle array of service IDs (stored as JSON string or actual array)
+            let serviceIds = [];
             if (typeof b.services === 'string') {
-              // Try to find service name by ID
-              const serviceName = servicesMap[b.services];
-              console.log('🎯 Found service name for ID', b.services, ':', serviceName);
-              return serviceName || b.services;
+              try {
+                // Try to parse if it's a JSON string
+                const parsed = JSON.parse(b.services);
+                if (Array.isArray(parsed)) {
+                  serviceIds = parsed;
+                } else {
+                  // Single service ID as string
+                  serviceIds = [b.services];
+                }
+              } catch {
+                // If parsing fails, treat as single ID
+                serviceIds = [b.services];
+              }
+            } else if (Array.isArray(b.services)) {
+              serviceIds = b.services;
             }
-            return b.services || 'General Consultation';
+            
+            // Map service IDs to names
+            const serviceNames = serviceIds
+              .map(id => servicesMap[id] || id)
+              .filter(Boolean);
+            
+            console.log('🎯 Service IDs:', serviceIds, 'Names:', serviceNames);
+            return serviceNames.length > 0 ? serviceNames.join(', ') : 'General Consultation';
           })(),
           booking_type: 'General Consultation',
         }));
