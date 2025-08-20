@@ -48,7 +48,20 @@ const AdminDashboard = () => {
           supabase.from('consultation_bookings').select('*', { count: 'exact', head: true }),
         ]);
 
-        const totalCount = (studyRes.count || 0) + (fbRes.count || 0) + (extraRes.count || 0) + (generalRes.count || 0);
+        const studyCount = studyRes.count || 0;
+        const fbCount = fbRes.count || 0;
+        const extraCount = extraRes.count || 0;
+        const generalCount = generalRes.count || 0;
+        const totalCount = studyCount + fbCount + extraCount + generalCount;
+        
+        console.log('📊 Consultation counts:', {
+          study: studyCount,
+          fb: fbCount,
+          extra: extraCount,
+          general: generalCount,
+          total: totalCount
+        });
+        
         setConsultationCount(totalCount);
       } catch (error) {
         console.error("❌ Error fetching consultations count:", error);
