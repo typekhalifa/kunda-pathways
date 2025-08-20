@@ -41,13 +41,14 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchConsultationCount = async () => {
       try {
-        const [studyRes, fbRes, extraRes] = await Promise.all([
+        const [studyRes, fbRes, extraRes, generalRes] = await Promise.all([
           supabase.from('study_abroad_bookings').select('*', { count: 'exact', head: true }),
           supabase.from('fb_consultation_bookings').select('*', { count: 'exact', head: true }),
           supabase.from('extra_service_bookings').select('*', { count: 'exact', head: true }),
+          supabase.from('consultation_bookings').select('*', { count: 'exact', head: true }),
         ]);
 
-        const totalCount = (studyRes.count || 0) + (fbRes.count || 0) + (extraRes.count || 0);
+        const totalCount = (studyRes.count || 0) + (fbRes.count || 0) + (extraRes.count || 0) + (generalRes.count || 0);
         setConsultationCount(totalCount);
       } catch (error) {
         console.error("❌ Error fetching consultations count:", error);
@@ -96,16 +97,18 @@ const AdminDashboard = () => {
 
     const fetchTotalRevenue = async () => {
       try {
-        const [studyRes, fbRes, extraRes] = await Promise.all([
+        const [studyRes, fbRes, extraRes, generalRes] = await Promise.all([
           supabase.from('study_abroad_bookings').select('total_price, payment_status, status'),
           supabase.from('fb_consultation_bookings').select('total_price, payment_status, status'),
           supabase.from('extra_service_bookings').select('total_price, payment_status, status'),
+          supabase.from('consultation_bookings').select('total_price, payment_status, status'),
         ]);
 
         const allBookings = [
           ...(studyRes.data || []),
           ...(fbRes.data || []),
-          ...(extraRes.data || [])
+          ...(extraRes.data || []),
+          ...(generalRes.data || [])
         ];
 
         // Only count revenue from existing bookings that are confirmed/completed and paid
@@ -139,6 +142,10 @@ const AdminDashboard = () => {
         fetchTotalRevenue();
       })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'extra_service_bookings' }, () => {
+        fetchConsultationCount();
+        fetchTotalRevenue();
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'consultation_bookings' }, () => {
         fetchConsultationCount();
         fetchTotalRevenue();
       })
