@@ -41,11 +41,15 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchConsultationCount = async () => {
       try {
+        // Add timestamp to prevent caching
+        const timestamp = Date.now();
+        console.log('🔄 Fetching consultation counts at:', new Date().toISOString());
+        
         const [studyRes, fbRes, extraRes, generalRes] = await Promise.all([
-          supabase.from('study_abroad_bookings').select('*', { count: 'exact', head: true }),
-          supabase.from('fb_consultation_bookings').select('*', { count: 'exact', head: true }),
-          supabase.from('extra_service_bookings').select('*', { count: 'exact', head: true }),
-          supabase.from('consultation_bookings').select('*', { count: 'exact', head: true }),
+          supabase.from('study_abroad_bookings').select('id', { count: 'exact', head: true }),
+          supabase.from('fb_consultation_bookings').select('id', { count: 'exact', head: true }),
+          supabase.from('extra_service_bookings').select('id', { count: 'exact', head: true }),
+          supabase.from('consultation_bookings').select('id', { count: 'exact', head: true }),
         ]);
 
         const studyCount = studyRes.count || 0;
@@ -54,12 +58,13 @@ const AdminDashboard = () => {
         const generalCount = generalRes.count || 0;
         const totalCount = studyCount + fbCount + extraCount + generalCount;
         
-        console.log('📊 Consultation counts:', {
+        console.log('📊 Fresh consultation counts:', {
           study: studyCount,
           fb: fbCount,
           extra: extraCount,
           general: generalCount,
-          total: totalCount
+          total: totalCount,
+          timestamp: timestamp
         });
         
         setConsultationCount(totalCount);
