@@ -169,7 +169,7 @@ const AdminLogin = () => {
                   <Input
                     id="reset-email"
                     type="email"
-                    placeholder="typekhalifa@gmail.com"
+                    placeholder="your@email.com"
                     value={resetEmail}
                     onChange={(e) => setResetEmail(e.target.value)}
                     className="h-11 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
