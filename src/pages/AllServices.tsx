@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, GraduationCap, Utensils, Plane, CheckCircle } from "lucide-react";
+import { ArrowLeft, GraduationCap, Utensils, Plane, CheckCircle, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState, useEffect } from "react";
@@ -222,8 +222,9 @@ const AllServices = () => {
 
           {/* Package Deals */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center text-slate-800 dark:text-white mb-8">
-              🎯 {translations.specialPackageDeals || "Special Package Deals"}
+            <h2 className="text-3xl font-bold text-center text-slate-800 dark:text-white mb-8 flex items-center justify-center">
+              <Target className="mr-3 text-blue-600" size={32} />
+              {translations.specialPackageDeals || "Special Package Deals"}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {packages.map((pkg, index) => (

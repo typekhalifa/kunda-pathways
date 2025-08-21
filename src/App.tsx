@@ -23,6 +23,7 @@ import BookFBConsultation from "./pages/BookFBConsultation";
 import AllServices from "./pages/AllServices";
 import AdminLogin from "./pages/AdminLogin";
 import ResetPassword from "./pages/ResetPassword";
+import AdminResetPassword from "./pages/AdminResetPassword";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/admin/AdminBlog";
 import BlogPost from "./pages/BlogPost";
@@ -184,7 +185,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/admin" element={<AdminLogin />} />
               <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin/reset-password" element={<ResetPassword />} />
+              <Route path="/admin/reset-password" element={<AdminResetPassword />} />
               <Route 
                 path="/admin/consultations" 
                 element={

@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Smartphone, Building, CreditCard, GraduationCap } from "lucide-react";
+import { ArrowLeft, Smartphone, Building, CreditCard, GraduationCap, Mail } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
@@ -111,8 +111,9 @@ const CompletePackage = () => {
           {currentStep === 1 ? (
             <Card className="p-6 rounded-xl shadow-lg bg-white dark:bg-slate-800 border-0 space-y-6">
               <CardHeader>
-                <CardTitle className="text-3xl text-center text-blue-700 dark:text-white">
-                  🎓 Complete Korean Study Package – ${totalPrice}
+                <CardTitle className="text-3xl text-center text-blue-700 dark:text-white flex items-center justify-center">
+                  <GraduationCap className="mr-3 text-blue-600" size={32} />
+                  Complete Korean Study Package – ${totalPrice}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -177,11 +178,11 @@ const CompletePackage = () => {
                   <br />
                   Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*0788214751*{rwfAmount}#</code>
                 </p>
-                <ul className="space-y-2 text-sm text-slate-800 dark:text-white pl-4 list-disc">
+                <ul className="space-y-2 text-sm text-slate-800 dark:text-white pl-4 list-none">
                   For further modes
-                  <li>📱 <strong>Mobile Money:</strong> +250 788 214 751</li>
-                  <li>🏦 <strong>Bank of Kigali:</strong> 00005677XXXXXXX</li>
-                  <li>🏦 <strong>Equity Bank:</strong> 4065373xxxxxxxxxxxxx</li>
+                  <li className="flex items-center"><Smartphone className="mr-2 w-4 h-4" /> <strong>Mobile Money:</strong> +250 788 214 751</li>
+                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Bank of Kigali:</strong> 00005677XXXXXXX</li>
+                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Equity Bank:</strong> 4065373xxxxxxxxxxxxx</li>
                 </ul>
 
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-4">
@@ -193,8 +194,9 @@ const CompletePackage = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-3">
-                    📩 Message Us on WhatsApp
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-3 flex items-center justify-center">
+                    <Mail className="mr-2 w-4 h-4" />
+                    Message Us on WhatsApp
                   </Button>
                 </a>
 
