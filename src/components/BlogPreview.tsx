@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useEffect } from "react";
+import { GraduationCap, Briefcase, Trophy, Globe, FileText } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -48,12 +49,12 @@ const BlogPreview = () => {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'education': return '🎓';
-      case 'business': return '💼';
-      case 'scholarships': return '🏆';
-      case 'study-abroad': return '🌍';
-      case 'korean-culture': return '🇰🇷';
-      default: return '📝';
+      case 'education': return <GraduationCap className="w-4 h-4" />;
+      case 'business': return <Briefcase className="w-4 h-4" />;
+      case 'scholarships': return <Trophy className="w-4 h-4" />;
+      case 'study-abroad': return <Globe className="w-4 h-4" />;
+      case 'korean-culture': return <Globe className="w-4 h-4" />;
+      default: return <FileText className="w-4 h-4" />;
     }
   };
 
@@ -118,7 +119,7 @@ const BlogPreview = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-2">
-                        <span className="text-lg">{getCategoryIcon(post.category)}</span>
+                        <span className="text-blue-600 dark:text-blue-400">{getCategoryIcon(post.category)}</span>
                         <span className="text-sm text-blue-600 dark:text-blue-400 font-medium capitalize">
                           {post.category.replace('-', ' ')}
                         </span>

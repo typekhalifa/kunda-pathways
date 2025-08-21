@@ -42,7 +42,7 @@ const ChatBot = () => {
     if (hasKeywords(['book', 'schedule', 'appointment']) || 
         hasAllKeywords(['how', 'book']) || 
         hasKeywords(['consultation', 'meeting']) && hasKeywords(['book', 'schedule'])) {
-      return "📅 How to Book Your Consultation:\n\n✅ Quick Steps:\n1️⃣ Click the 'Book Now' button on our website\n2️⃣ Select your preferred service (Study Abroad or F&B Consulting)\n3️⃣ Choose your preferred date and time\n4️⃣ Fill in your contact details\n5️⃣ Confirm your booking\n\n📧 You'll receive instant confirmation via email!\n\n🚀 Need faster booking? Call/WhatsApp: +250 788 123 456\n\nReady to get started? What service interests you most?";
+      return "📋 How to Book Your Consultation:\n\n✓ Quick Steps:\n• Click the 'Book Now' button on our website\n• Select your preferred service (Study Abroad or F&B Consulting)\n• Choose your preferred date and time\n• Fill in your contact details\n• Confirm your booking\n\n✉ You'll receive instant confirmation via email!\n\n⚡ Need faster booking? Call/WhatsApp: +250 788 123 456\n\nReady to get started? What service interests you most?";
     }
     
     // 2. Services offered - Better intent detection
@@ -52,7 +52,7 @@ const ChatBot = () => {
         hasKeywords(['help', 'with']) ||
         message.includes('what can you do') ||
         message.includes('what do you do')) {
-      return "🌟 Our Complete Service Portfolio:\n\n📚 Study Abroad Consulting:\n• University admissions & application support\n• KGSP & scholarship guidance (85%+ success rate)\n• Visa applications & document preparation\n• Korean language training & TOPIK prep\n• Post-arrival support in Korea\n\n🍽️ F&B Market Entry Support:\n• Complete business planning & strategy\n• Market research & competitive analysis\n• Menu development & food regulations\n• Operational setup & compliance\n• Korean market entry expertise\n\n⭐ Additional Services:\n• Document translation & apostille\n• Cultural orientation programs\n• Emergency visa support\n• Academic transcript evaluation\n\n💡 Which area interests you most? I can provide detailed information!";
+      return "★ Our Complete Service Portfolio:\n\n📚 Study Abroad Consulting:\n• University admissions & application support\n• KGSP & scholarship guidance (85%+ success rate)\n• Visa applications & document preparation\n• Korean language training & TOPIK prep\n• Post-arrival support in Korea\n\n🍽 F&B Market Entry Support:\n• Complete business planning & strategy\n• Market research & competitive analysis\n• Menu development & food regulations\n• Operational setup & compliance\n• Korean market entry expertise\n\n⭐ Additional Services:\n• Document translation & apostille\n• Cultural orientation programs\n• Emergency visa support\n• Academic transcript evaluation\n\n💡 Which area interests you most? I can provide detailed information!";
     }
     
     // 3. Pricing questions
@@ -178,12 +178,12 @@ const ChatBot = () => {
     
     // Default response with smart suggestions
     const commonQuestions = [
-      "📅 How to book a consultation",
-      "🏷️ Service pricing information", 
+      "📋 How to book a consultation",
+      "💵 Service pricing information", 
       "💳 Payment methods accepted",
       "📍 Our location & contact info",
       "🎓 Korean university applications",
-      "🍽️ F&B business consulting"
+      "🍽 F&B business consulting"
     ];
     
     return `I'd be happy to help! 🤖 Here are some topics I can assist with:\n\n${commonQuestions.join('\n')}\n\n💬 Just ask me about any of these, or feel free to ask anything else!\n\n🆓 Remember: We offer FREE 15-minute consultations with our expert advisors. Would you like me to help you schedule one?`;
