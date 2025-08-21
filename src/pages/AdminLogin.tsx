@@ -61,17 +61,34 @@ const AdminLogin = () => {
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!resetEmail) {
+      toast.error('Please enter your email address');
+      return;
+    }
+
+    if (!resetEmail.includes('@') || !resetEmail.includes('.')) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
     setLoading(true);
 
+    // Construct the proper redirect URL for the admin reset page
+    const redirectUrl = `${window.location.origin}/admin/reset-password`;
+    
+    console.log('Sending reset email with redirect to:', redirectUrl);
+
     const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: `${window.location.origin}/admin/reset-password`,
+      redirectTo: redirectUrl,
     });
 
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success('Password reset link sent to your email!');
+      toast.success('Password reset link sent! Check your email and click the link to reset your password.');
       setActiveTab('signin');
+      setResetEmail(''); // Clear the email field
     }
 
     setLoading(false);
