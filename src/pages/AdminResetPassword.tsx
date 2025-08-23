@@ -20,25 +20,37 @@ const AdminResetPassword = () => {
   });
 
   useEffect(() => {
-    const accessToken = searchParams.get('access_token');
-    const refreshToken = searchParams.get('refresh_token');
+    const handleAuthCallback = async () => {
+      // Check if we have a session or tokens in the URL
+      const accessToken = searchParams.get('access_token');
+      const refreshToken = searchParams.get('refresh_token');
 
-    if (!accessToken || !refreshToken) {
-      toast.error('Invalid reset link. Please request a new password reset.');
-      navigate('/admin/login');
-      return;
-    }
+      if (accessToken && refreshToken) {
+        // Set the session with the tokens from the URL
+        const { error } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken
+        });
 
-    // Set the session with the tokens from the URL
-    supabase.auth.setSession({
-      access_token: accessToken,
-      refresh_token: refreshToken
-    }).then(({ error }) => {
-      if (error) {
-        toast.error('Invalid or expired reset link.');
-        navigate('/admin/login');
+        if (error) {
+          console.error('Error setting session:', error);
+          toast.error('Invalid or expired reset link. Please request a new password reset.');
+          navigate('/admin/login');
+          return;
+        }
+      } else {
+        // Check for existing session
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error || !session) {
+          toast.error('Invalid reset link. Please request a new password reset.');
+          navigate('/admin/login');
+          return;
+        }
       }
-    });
+    };
+
+    handleAuthCallback();
   }, [searchParams, navigate]);
 
   const handlePasswordReset = async (e: React.FormEvent) => {
