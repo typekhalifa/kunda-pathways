@@ -18,21 +18,50 @@ const ResetPassword = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if we have the access_token in the URL
-    const accessToken = searchParams.get('access_token');
-    const refreshToken = searchParams.get('refresh_token');
-    
-    if (accessToken && refreshToken) {
-      // Set the session with the tokens from the URL
-      supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken
-      });
-    } else {
-      // If no tokens, redirect to login
-      toast.error('Invalid reset link. Please request a new password reset.');
-      navigate('/admin/login');
-    }
+    const handleAuthCallback = async () => {
+      // Get tokens from URL parameters  
+      const accessToken = searchParams.get('access_token');
+      const refreshToken = searchParams.get('refresh_token');
+      const type = searchParams.get('type');
+      
+      console.log('Reset password page - URL params:', { accessToken: !!accessToken, refreshToken: !!refreshToken, type });
+
+      if (type === 'recovery' && accessToken && refreshToken) {
+        try {
+          // Set the session with the tokens from the URL
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken
+          });
+
+          if (error) {
+            console.error('Error setting session:', error);
+            toast.error('Invalid or expired reset link. Please request a new password reset.');
+            navigate('/admin/login');
+            return;
+          }
+          
+          console.log('Session set successfully for password reset');
+        } catch (error) {
+          console.error('Exception setting session:', error);
+          toast.error('Invalid or expired reset link. Please request a new password reset.');
+          navigate('/admin/login');
+          return;
+        }
+      } else {
+        // Check for existing session as fallback
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error || !session) {
+          console.log('No valid session found, redirecting to login');
+          toast.error('Invalid reset link. Please request a new password reset.');
+          navigate('/admin/login');
+          return;
+        }
+      }
+    };
+
+    handleAuthCallback();
   }, [searchParams, navigate]);
 
   const handlePasswordReset = async (e: React.FormEvent) => {
