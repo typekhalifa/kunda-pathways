@@ -95,7 +95,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 border-white text-white hover:bg-white hover:text-slate-800 px-8 py-4 text-lg shadow-lg bg-black/20 backdrop-blur-sm font-semibold rounded-xl hover:scale-105 transition-all duration-300"
+                className="border-2 border-white/80 text-white hover:bg-white hover:text-slate-800 dark:border-blue-400 dark:text-blue-300 dark:hover:bg-blue-400 dark:hover:text-white px-8 py-4 text-lg shadow-lg bg-black/20 dark:bg-blue-900/30 backdrop-blur-sm font-semibold rounded-xl hover:scale-105 transition-all duration-300"
               >
                 {translations.fbConsulting || "F&B Consulting"}
               </Button>

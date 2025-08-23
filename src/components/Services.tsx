@@ -220,7 +220,7 @@ const Services = () => {
             <Button 
               variant="outline" 
               size="lg"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-4 sm:px-8 py-4 text-xs sm:text-sm md:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white dark:shadow-blue-500/25 px-4 sm:px-8 py-4 text-xs sm:text-sm md:text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               <Sparkles className="mr-2" size={20} />
               {translations.viewAllPackagesPricing || "View All Packages & Pricing"} - Get 25% Off!

@@ -105,19 +105,19 @@ const Newsletter = () => {
   }
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
+    <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-900 dark:to-blue-900/30">
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
               Join Our Newsletter
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground dark:text-slate-300">
               Get exclusive insights, study abroad tips, and business consulting updates delivered to your inbox
             </p>
           </div>
 
-          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-800 shadow-lg hover:shadow-xl transition-all duration-300 rounded-3xl">
+          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-white/80 to-blue-50/80 dark:from-slate-800/80 dark:to-blue-900/40 border-blue-200 dark:border-blue-700/50 shadow-lg hover:shadow-xl dark:shadow-blue-500/10 transition-all duration-300 rounded-3xl backdrop-blur-sm">
             <CardHeader className="text-center pb-4">
               <div className="flex justify-center mb-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
