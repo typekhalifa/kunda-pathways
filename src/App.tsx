@@ -185,6 +185,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/admin" element={<AdminLogin />} />
               <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/admin/reset-password" element={<AdminResetPassword />} />
               <Route 
                 path="/admin/consultations" 

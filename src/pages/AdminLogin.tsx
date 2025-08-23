@@ -74,8 +74,8 @@ const AdminLogin = () => {
 
     setLoading(true);
 
-    // Construct the proper redirect URL for the admin reset page
-    const redirectUrl = `${window.location.origin}/admin/reset-password`;
+    // Construct the proper redirect URL for the reset page
+    const redirectUrl = `${window.location.origin}/reset-password`;
     
     console.log('Sending reset email with redirect to:', redirectUrl);
 
