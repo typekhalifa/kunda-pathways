@@ -74,21 +74,32 @@ const AdminLogin = () => {
 
     setLoading(true);
 
-    // Construct the proper redirect URL for the reset page
-    const redirectUrl = `${window.location.origin}/reset-password`;
+    // Get the current origin, which works for both development and Netlify
+    const currentOrigin = window.location.origin;
+    const redirectUrl = `${currentOrigin}/reset-password`;
     
     console.log('Sending reset email with redirect to:', redirectUrl);
 
-    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: redirectUrl,
-    });
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+        redirectTo: redirectUrl,
+      });
 
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success('Password reset link sent! Check your email and click the link to reset your password.');
-      setActiveTab('signin');
-      setResetEmail(''); // Clear the email field
+      if (error) {
+        console.error('Password reset error:', error);
+        if (error.message.includes('redirect URL')) {
+          toast.error(`Please add ${currentOrigin} to your Supabase redirect URLs. Contact support if you need help.`);
+        } else {
+          toast.error(error.message);
+        }
+      } else {
+        toast.success('Password reset link sent! Check your email and click the link to reset your password.');
+        setActiveTab('signin');
+        setResetEmail(''); // Clear the email field
+      }
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error('Failed to send reset email. Please try again.');
     }
 
     setLoading(false);
