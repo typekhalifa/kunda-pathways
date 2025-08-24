@@ -87,11 +87,7 @@ const AdminLogin = () => {
 
       if (error) {
         console.error('Password reset error:', error);
-        if (error.message.includes('redirect URL')) {
-          toast.error(`Please add ${currentOrigin} to your Supabase redirect URLs. Contact support if you need help.`);
-        } else {
-          toast.error(error.message);
-        }
+        toast.error(error.message);
       } else {
         toast.success('Password reset link sent! Check your email and click the link to reset your password.');
         setActiveTab('signin');
