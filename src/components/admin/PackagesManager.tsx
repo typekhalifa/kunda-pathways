@@ -81,8 +81,6 @@ const PackagesManager = () => {
   };
 
   const generateAutoPackages = () => {
-    if (services.length === 0) return;
-
     const studyAbroadServices = services.filter(s => s.category === 'study-abroad');
     const fbServices = services.filter(s => s.category === 'fb-consulting');
     
@@ -141,10 +139,10 @@ const PackagesManager = () => {
   };
 
   useEffect(() => {
-    if (services.length > 0) {
+    if (services.length > 0 && packages.length >= 0) {
       generateAutoPackages();
     }
-  }, [services]);
+  }, [services, packages.length]);
 
   const handleEdit = (pkg: DisplayPackage) => {
     setEditingId(pkg.id);
@@ -235,10 +233,6 @@ const PackagesManager = () => {
     return Math.round(((original - discounted) / original) * 100);
   };
 
-  // Separate auto-generated and custom packages
-  const autoPackages = packages.filter(p => p.is_auto_generated);
-  const customPackages = packages.filter(p => !p.is_auto_generated);
-
   if (loading && packages.length === 0) {
     return <div className="text-center py-8">Loading packages...</div>;
   }
@@ -260,14 +254,19 @@ const PackagesManager = () => {
         </div>
         
         <div className="grid gap-6 md:grid-cols-2">
-          {autoPackages.length === 0 ? (
+          {packages.length === 0 ? (
             <Card>
               <CardContent className="p-6 text-center">
-                <p className="text-gray-500">No services found. Add services to generate packages automatically.</p>
+                <p className="text-gray-500">
+                  {services.length === 0 
+                    ? "No services found. Add services to generate packages automatically."
+                    : "No packages found. Click 'Refresh Packages' to generate packages from services."
+                  }
+                </p>
               </CardContent>
             </Card>
           ) : (
-            autoPackages.map((pkg) => (
+            packages.map((pkg) => (
               <Card key={pkg.id} className="relative">
                 {pkg.is_popular && (
                   <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
