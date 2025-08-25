@@ -21,9 +21,10 @@ const AdminResetPassword = () => {
 
   useEffect(() => {
     const handleAuthCallback = async () => {
-      // Check if we have a session or tokens in the URL
-      const accessToken = searchParams.get('access_token');
-      const refreshToken = searchParams.get('refresh_token');
+      // Parse tokens from URL hash (Supabase sends them as hash fragments)
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = hashParams.get('access_token');
+      const refreshToken = hashParams.get('refresh_token');
 
       if (accessToken && refreshToken) {
         // Set the session with the tokens from the URL
@@ -38,6 +39,9 @@ const AdminResetPassword = () => {
           navigate('/admin/login');
           return;
         }
+        
+        // Clear the hash from URL after processing
+        window.history.replaceState({}, document.title, window.location.pathname);
       } else {
         // Check for existing session
         const { data: { session }, error } = await supabase.auth.getSession();
@@ -51,7 +55,7 @@ const AdminResetPassword = () => {
     };
 
     handleAuthCallback();
-  }, [searchParams, navigate]);
+  }, [navigate]);
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
