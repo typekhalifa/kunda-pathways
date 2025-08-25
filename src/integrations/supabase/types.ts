@@ -421,9 +421,11 @@ export type Database = {
           created_at: string
           currency: string
           description: string | null
+          discount_percentage: number | null
           discounted_price: number
           id: string
           is_active: boolean
+          is_auto_generated: boolean | null
           is_popular: boolean
           name: string
           original_price: number
@@ -435,9 +437,11 @@ export type Database = {
           created_at?: string
           currency?: string
           description?: string | null
+          discount_percentage?: number | null
           discounted_price: number
           id?: string
           is_active?: boolean
+          is_auto_generated?: boolean | null
           is_popular?: boolean
           name: string
           original_price: number
@@ -449,9 +453,11 @@ export type Database = {
           created_at?: string
           currency?: string
           description?: string | null
+          discount_percentage?: number | null
           discounted_price?: number
           id?: string
           is_active?: boolean
+          is_auto_generated?: boolean | null
           is_popular?: boolean
           name?: string
           original_price?: number
