@@ -12,8 +12,21 @@ import Newsletter from "@/components/Newsletter";
 import Partners from "@/components/Partners";
 import ChatBot from "@/components/ChatBot";
 import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if we have reset tokens in the URL hash (from Supabase redirect)
+    const hash = window.location.hash;
+    if (hash.includes('access_token=') && hash.includes('type=recovery')) {
+      console.log('Detected password reset tokens on homepage, redirecting...');
+      // Preserve the hash and redirect to admin reset page
+      navigate('/admin/reset-password' + hash);
+    }
+  }, [navigate]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
       <Header />
