@@ -165,28 +165,37 @@ const AllServices = () => {
       const studyAbroadTotal = studyAbroadServices.reduce((sum, s) => sum + Number(s.price), 0);
       const fbTotal = fbServices.reduce((sum, s) => sum + Number(s.price), 0);
       
-      // Create dynamic packages with real-time pricing
+      // Get actual packages from database
+      const { data: databasePackages } = await supabase
+        .from("packages")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false });
+
+      // Create dynamic packages with real-time pricing, using database package names if available
       const dynamicPackages = [];
       
       if (studyAbroadTotal > 0) {
+        const studyPackage = databasePackages?.find(p => p.category === 'study-abroad');
         dynamicPackages.push({
-          id: 'study-abroad-package',
-          name: 'Complete Korean Study Package',
+          id: studyPackage?.id || 'study-abroad-package',
+          name: studyPackage?.name || 'Complete Korean Study Package',
           original_price: studyAbroadTotal,
           discounted_price: Math.round(studyAbroadTotal * 0.71), // 29% off
           services: studyAbroadServices.map(s => s.name),
-          popular: true
+          popular: studyPackage?.is_popular ?? true
         });
       }
       
       if (fbTotal > 0) {
+        const fbPackage = databasePackages?.find(p => p.category === 'fb-consulting');
         dynamicPackages.push({
-          id: 'fb-package',
-          name: 'Complete F&B Package',
+          id: fbPackage?.id || 'fb-package',
+          name: fbPackage?.name || 'Complete F&B Package',
           original_price: fbTotal,
           discounted_price: Math.round(fbTotal * 0.75), // 25% off
           services: fbServices.map(s => s.name),
-          popular: false
+          popular: fbPackage?.is_popular ?? false
         });
       }
       

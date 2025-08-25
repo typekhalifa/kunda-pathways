@@ -114,7 +114,7 @@ const CompletePackage = () => {
               <CardHeader>
                 <CardTitle className="text-3xl text-center text-blue-700 dark:text-white flex items-center justify-center">
                   <GraduationCap className="mr-3 text-blue-600" size={32} />
-                  Complete Korean Study Package – ${totalPrice}
+                  {serviceName} – ${totalPrice}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
