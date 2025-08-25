@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,17 +14,17 @@ const ResetPassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleAuthCallback = async () => {
-      // Get all possible auth parameters from URL
-      const accessToken = searchParams.get('access_token');
-      const refreshToken = searchParams.get('refresh_token');
-      const type = searchParams.get('type');
-      const error = searchParams.get('error');
-      const errorDescription = searchParams.get('error_description');
+      // Parse tokens from URL hash (Supabase sends them as hash fragments)
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = hashParams.get('access_token');
+      const refreshToken = hashParams.get('refresh_token');
+      const type = hashParams.get('type');
+      const error = hashParams.get('error');
+      const errorDescription = hashParams.get('error_description');
       
       console.log('Reset password page - URL params:', { 
         accessToken: !!accessToken, 
@@ -63,6 +63,8 @@ const ResetPassword = () => {
           if (data?.session) {
             console.log('Session set successfully for password reset');
             toast.success('Ready to set new password');
+            // Clear the hash from URL after processing
+            window.history.replaceState({}, document.title, window.location.pathname);
           } else {
             console.error('No session returned after setting tokens');
             toast.error('Failed to establish session. Please request a new password reset.');
@@ -96,7 +98,7 @@ const ResetPassword = () => {
     };
 
     handleAuthCallback();
-  }, [searchParams, navigate]);
+  }, [navigate]);
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
