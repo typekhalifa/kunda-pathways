@@ -110,7 +110,7 @@ const PackagesManager = () => {
       const discountedPrice = Math.round(studyAbroadTotal * (1 - discountPercentage / 100));
       
       autoPackages.push({
-        id: existingStudyPackage?.id || 'study-abroad-package',
+        id: existingStudyPackage?.id || `temp-study-abroad-${Date.now()}`,
         name: existingStudyPackage?.name || 'Complete Korean Study Package',
         description: existingStudyPackage?.description || 'Complete package for studying in Korea with all essential services',
         category: 'study-abroad',
@@ -130,7 +130,7 @@ const PackagesManager = () => {
       const discountedPrice = Math.round(fbTotal * (1 - discountPercentage / 100));
       
       autoPackages.push({
-        id: existingFbPackage?.id || 'fb-package',
+        id: existingFbPackage?.id || `temp-fb-${Date.now()}`,
         name: existingFbPackage?.name || 'Complete F&B Package',
         description: existingFbPackage?.description || 'Complete F&B market entry package for Korean market',
         category: 'fb-consulting',
@@ -189,13 +189,6 @@ const PackagesManager = () => {
       discountedPrice = Math.round(originalPrice * (1 - editForm.discount_percentage / 100));
     }
     
-    // Check if this package exists in the database
-    const existingPackage = await supabase
-      .from("packages")
-      .select("id")
-      .eq("id", pkg.id)
-      .single();
-    
     const packageData = {
       name: editForm.name,
       description: editForm.description,
@@ -212,7 +205,8 @@ const PackagesManager = () => {
     
     let error;
     
-    if (existingPackage.data) {
+    // Check if this package exists in the database (only for proper UUIDs)
+    if (!pkg.id.startsWith('temp-')) {
       // Update existing package
       const { error: updateError } = await supabase
         .from("packages")
@@ -220,10 +214,10 @@ const PackagesManager = () => {
         .eq("id", pkg.id);
       error = updateError;
     } else {
-      // Insert new package (for auto-generated ones that don't exist yet)
+      // Insert new package (without specifying ID, let the database generate UUID)
       const { error: insertError } = await supabase
         .from("packages")
-        .insert({ ...packageData, id: pkg.id });
+        .insert(packageData);
       error = insertError;
     }
 
