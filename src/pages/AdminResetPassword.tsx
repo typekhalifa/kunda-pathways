@@ -21,12 +21,35 @@ const AdminResetPassword = () => {
 
   useEffect(() => {
     const handleAuthCallback = async () => {
+      // Debug: Log the full URL and hash
+      console.log('AdminResetPassword - Full URL:', window.location.href);
+      console.log('AdminResetPassword - Hash:', window.location.hash);
+      
       // Parse tokens from URL hash (Supabase sends them as hash fragments)
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
       const accessToken = hashParams.get('access_token');
       const refreshToken = hashParams.get('refresh_token');
+      const type = hashParams.get('type');
+      const error = hashParams.get('error');
+      const errorDescription = hashParams.get('error_description');
+      
+      console.log('AdminResetPassword - Parsed params:', { 
+        accessToken: !!accessToken, 
+        refreshToken: !!refreshToken, 
+        type, 
+        error,
+        errorDescription 
+      });
 
-      if (accessToken && refreshToken) {
+      // Check for auth errors first
+      if (error) {
+        console.error('Auth error from URL:', error, errorDescription);
+        toast.error(`Authentication error: ${errorDescription || error}. Please request a new password reset.`);
+        navigate('/admin/login');
+        return;
+      }
+
+      if (type === 'recovery' && accessToken && refreshToken) {
         // Set the session with the tokens from the URL
         const { error } = await supabase.auth.setSession({
           access_token: accessToken,
