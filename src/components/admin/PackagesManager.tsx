@@ -176,13 +176,27 @@ const PackagesManager = () => {
 
     setLoading(true);
     
-    // Calculate new prices based on current services
-    const categoryServices = services.filter(s => s.category === pkg.category);
-    const originalPrice = categoryServices.reduce((sum, service) => sum + Number(service.price), 0);
-    const discountedPrice = Math.round(originalPrice * (1 - editForm.discount_percentage / 100));
+    // Calculate new prices based on current services for auto-generated packages
+    let originalPrice = pkg.original_price;
+    let discountedPrice = pkg.discounted_price;
+    
+    if (pkg.is_auto_generated) {
+      const categoryServices = services.filter(s => s.category === pkg.category);
+      originalPrice = categoryServices.reduce((sum, service) => sum + Number(service.price), 0);
+      discountedPrice = Math.round(originalPrice * (1 - editForm.discount_percentage / 100));
+    } else {
+      // For custom packages, recalculate discounted price based on new discount percentage
+      discountedPrice = Math.round(originalPrice * (1 - editForm.discount_percentage / 100));
+    }
+    
+    // Check if this package exists in the database
+    const existingPackage = await supabase
+      .from("packages")
+      .select("id")
+      .eq("id", pkg.id)
+      .single();
     
     const packageData = {
-      id: pkg.id,
       name: editForm.name,
       description: editForm.description,
       category: pkg.category,
@@ -193,12 +207,25 @@ const PackagesManager = () => {
       is_popular: editForm.is_popular,
       is_active: editForm.is_active,
       discount_percentage: editForm.discount_percentage,
-      is_auto_generated: true,
+      is_auto_generated: pkg.is_auto_generated,
     };
-
-    const { error } = await supabase
-      .from("packages")
-      .upsert(packageData, { onConflict: 'id' });
+    
+    let error;
+    
+    if (existingPackage.data) {
+      // Update existing package
+      const { error: updateError } = await supabase
+        .from("packages")
+        .update(packageData)
+        .eq("id", pkg.id);
+      error = updateError;
+    } else {
+      // Insert new package (for auto-generated ones that don't exist yet)
+      const { error: insertError } = await supabase
+        .from("packages")
+        .insert({ ...packageData, id: pkg.id });
+      error = insertError;
+    }
 
     if (error) {
       toast.error("Failed to save package configuration");
