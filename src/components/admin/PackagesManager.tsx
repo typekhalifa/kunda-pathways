@@ -214,10 +214,19 @@ const PackagesManager = () => {
         .eq("id", pkg.id);
       error = updateError;
     } else {
-      // Insert new package (without specifying ID, let the database generate UUID)
-      const { error: insertError } = await supabase
+      // Insert new package and get the new ID
+      const { data: insertData, error: insertError } = await supabase
         .from("packages")
-        .insert(packageData);
+        .insert(packageData)
+        .select("id")
+        .single();
+      
+      if (insertData && !insertError) {
+        // Update the local state with the new ID
+        setPackages(prev => prev.map(p => 
+          p.id === pkg.id ? { ...p, id: insertData.id } : p
+        ));
+      }
       error = insertError;
     }
 

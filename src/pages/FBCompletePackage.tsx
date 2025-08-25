@@ -34,10 +34,11 @@ const FBCompletePackage = () => {
       .select("*")
       .eq("category", "fb-consulting")
       .eq("is_active", true)
-      .single();
+      .order("created_at", { ascending: false })
+      .limit(1);
     
-    if (data) {
-      setPackageData(data);
+    if (data && data.length > 0) {
+      setPackageData(data[0]);
     }
   };
 
