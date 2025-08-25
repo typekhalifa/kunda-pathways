@@ -58,11 +58,12 @@ const FBCompletePackage = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Calculate total price dynamically from all FB services with 25% discount
+  // Calculate total price dynamically from all F&B services with dynamic discount
   const calculateTotalPrice = () => {
-    if (fbServices.length === 0) return 1052; // fallback with realistic pricing
+    if (fbServices.length === 0) return 1052; // fallback
     const originalTotal = fbServices.reduce((sum, service) => sum + Number(service.price), 0);
-    return Math.round(originalTotal * 0.75); // 25% discount
+    const discountPercentage = packageData?.discount_percentage || 25;
+    return Math.round(originalTotal * (1 - discountPercentage / 100));
   };
 
   const totalPrice = calculateTotalPrice();
@@ -116,7 +117,7 @@ const FBCompletePackage = () => {
               <CardHeader>
                 <CardTitle className="text-3xl text-center text-green-700 dark:text-white flex items-center justify-center">
                   <Utensils className="mr-3 text-green-600" size={32} />
-                  F&B Complete Package – ${totalPrice}
+                  {serviceName} – ${totalPrice}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">

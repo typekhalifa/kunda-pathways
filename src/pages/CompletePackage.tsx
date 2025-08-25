@@ -56,11 +56,12 @@ const CompletePackage = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Calculate total price dynamically from all Study Abroad services with 29% discount
+  // Calculate total price dynamically from all Study Abroad services with dynamic discount
   const calculateTotalPrice = () => {
     if (studyAbroadServices.length === 0) return 452; // fallback
     const originalTotal = studyAbroadServices.reduce((sum, service) => sum + Number(service.price), 0);
-    return Math.round(originalTotal * 0.71); // 29% discount
+    const discountPercentage = packageData?.discount_percentage || 29;
+    return Math.round(originalTotal * (1 - discountPercentage / 100));
   };
 
   const totalPrice = calculateTotalPrice();

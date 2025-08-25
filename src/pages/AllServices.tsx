@@ -177,11 +177,12 @@ const AllServices = () => {
       
       if (studyAbroadTotal > 0) {
         const studyPackage = databasePackages?.find(p => p.category === 'study-abroad');
+        const discountPercentage = studyPackage?.discount_percentage || 29;
         dynamicPackages.push({
           id: studyPackage?.id || 'study-abroad-package',
           name: studyPackage?.name || 'Complete Korean Study Package',
           original_price: studyAbroadTotal,
-          discounted_price: Math.round(studyAbroadTotal * 0.71), // 29% off
+          discounted_price: Math.round(studyAbroadTotal * (1 - discountPercentage / 100)),
           services: studyAbroadServices.map(s => s.name),
           popular: studyPackage?.is_popular ?? true
         });
@@ -189,11 +190,12 @@ const AllServices = () => {
       
       if (fbTotal > 0) {
         const fbPackage = databasePackages?.find(p => p.category === 'fb-consulting');
+        const discountPercentage = fbPackage?.discount_percentage || 25;
         dynamicPackages.push({
           id: fbPackage?.id || 'fb-package',
           name: fbPackage?.name || 'Complete F&B Package',
           original_price: fbTotal,
-          discounted_price: Math.round(fbTotal * 0.75), // 25% off
+          discounted_price: Math.round(fbTotal * (1 - discountPercentage / 100)),
           services: fbServices.map(s => s.name),
           popular: fbPackage?.is_popular ?? false
         });
