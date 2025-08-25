@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Edit, RefreshCw, Save, X } from "lucide-react";
+import { Edit, RefreshCw, Save, X, Trash2, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -29,6 +29,7 @@ const PackagesManager = () => {
   const [services, setServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [showAddForm, setShowAddForm] = useState(false);
   const [editForm, setEditForm] = useState({
     name: "",
     description: "",
@@ -36,6 +37,17 @@ const PackagesManager = () => {
     currency: "USD",
     is_popular: false,
     is_active: true,
+  });
+  const [addForm, setAddForm] = useState({
+    name: "",
+    description: "",
+    category: "study-abroad",
+    original_price: 0,
+    discount_percentage: 29,
+    currency: "USD",
+    is_popular: false,
+    is_active: true,
+    services: [] as string[],
   });
 
   useEffect(() => {
@@ -228,6 +240,84 @@ const PackagesManager = () => {
     setLoading(false);
   };
 
+  const handleDelete = async (packageId: string) => {
+    if (!confirm("Are you sure you want to delete this package?")) {
+      return;
+    }
+
+    setLoading(true);
+    
+    const { error } = await supabase
+      .from("packages")
+      .delete()
+      .eq("id", packageId);
+
+    if (error) {
+      toast.error("Failed to delete package");
+      console.error('Delete error:', error);
+    } else {
+      toast.success("Package deleted successfully");
+      await fetchPackages();
+    }
+    
+    setLoading(false);
+  };
+
+  const handleAddPackage = async () => {
+    if (!addForm.name || !addForm.description || addForm.original_price <= 0) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    setLoading(true);
+    
+    const discountedPrice = Math.round(addForm.original_price * (1 - addForm.discount_percentage / 100));
+    
+    const packageData = {
+      name: addForm.name,
+      description: addForm.description,
+      category: addForm.category,
+      original_price: addForm.original_price,
+      discounted_price: discountedPrice,
+      currency: addForm.currency,
+      services: addForm.services,
+      is_popular: addForm.is_popular,
+      is_active: addForm.is_active,
+      discount_percentage: addForm.discount_percentage,
+      is_auto_generated: false,
+    };
+
+    const { error } = await supabase
+      .from("packages")
+      .insert(packageData);
+
+    if (error) {
+      toast.error("Failed to create package");
+      console.error('Add error:', error);
+    } else {
+      toast.success("Package created successfully");
+      setShowAddForm(false);
+      setAddForm({
+        name: "",
+        description: "",
+        category: "study-abroad",
+        original_price: 0,
+        discount_percentage: 29,
+        currency: "USD",
+        is_popular: false,
+        is_active: true,
+        services: [],
+      });
+      await fetchPackages();
+    }
+    
+    setLoading(false);
+  };
+
+  const formatPrice = (price: number) => {
+    return Math.round(price * 100) / 100;
+  };
+
   const calculateDiscount = (original: number, discounted: number) => {
     if (original <= 0) return 0;
     return Math.round(((original - discounted) / original) * 100);
@@ -241,11 +331,138 @@ const PackagesManager = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Package Management</h2>
-        <Button onClick={refreshPackages} variant="outline" disabled={loading}>
-          <RefreshCw className="mr-2 h-4 w-4" />
-          Refresh Packages
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => setShowAddForm(true)} variant="default" disabled={loading || showAddForm}>
+            <Plus className="mr-2 h-4 w-4" />
+            Add Package
+          </Button>
+          <Button onClick={refreshPackages} variant="outline" disabled={loading}>
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Refresh Packages
+          </Button>
+        </div>
       </div>
+
+      {showAddForm && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Add New Package</CardTitle>
+            <CardDescription>Create a custom package with your own services and pricing</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Package Name</label>
+                  <Input
+                    value={addForm.name}
+                    onChange={(e) => setAddForm(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="Enter package name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Category</label>
+                  <select
+                    value={addForm.category}
+                    onChange={(e) => setAddForm(prev => ({ ...prev, category: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  >
+                    <option value="study-abroad">Study Abroad</option>
+                    <option value="fb-consulting">F&B Consulting</option>
+                    <option value="general">General</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Description</label>
+                <Textarea
+                  value={addForm.description}
+                  onChange={(e) => setAddForm(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Enter package description"
+                  rows={2}
+                />
+              </div>
+              
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Original Price</label>
+                  <Input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={addForm.original_price}
+                    onChange={(e) => setAddForm(prev => ({ ...prev, original_price: parseFloat(e.target.value) || 0 }))}
+                    placeholder="0.00"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Discount %</label>
+                  <Input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={addForm.discount_percentage}
+                    onChange={(e) => setAddForm(prev => ({ ...prev, discount_percentage: parseInt(e.target.value) || 0 }))}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Currency</label>
+                  <select
+                    value={addForm.currency}
+                    onChange={(e) => setAddForm(prev => ({ ...prev, currency: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  >
+                    <option value="USD">USD</option>
+                    <option value="RWF">RWF</option>
+                    <option value="EUR">EUR</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={addForm.is_popular}
+                    onCheckedChange={(checked) => setAddForm(prev => ({ ...prev, is_popular: checked }))}
+                  />
+                  <label className="text-sm font-medium">Popular Package</label>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={addForm.is_active}
+                    onCheckedChange={(checked) => setAddForm(prev => ({ ...prev, is_active: checked }))}
+                  />
+                  <label className="text-sm font-medium">Active</label>
+                </div>
+              </div>
+              
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => {
+                  setShowAddForm(false);
+                  setAddForm({
+                    name: "",
+                    description: "",
+                    category: "study-abroad",
+                    original_price: 0,
+                    discount_percentage: 29,
+                    currency: "USD",
+                    is_popular: false,
+                    is_active: true,
+                    services: [],
+                  });
+                }}>
+                  Cancel
+                </Button>
+                <Button onClick={handleAddPackage} disabled={loading}>
+                  Create Package
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <div className="space-y-4">
         <div className="flex items-center gap-2">
@@ -306,9 +523,14 @@ const PackagesManager = () => {
                           </Button>
                         </>
                       ) : (
-                        <Button size="sm" variant="outline" onClick={() => handleEdit(pkg)}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
+                        <>
+                          <Button size="sm" variant="outline" onClick={() => handleEdit(pkg)}>
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button size="sm" variant="destructive" onClick={() => handleDelete(pkg.id)} disabled={loading}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </>
                       )}
                     </div>
                   </div>
@@ -376,10 +598,10 @@ const PackagesManager = () => {
                       <>
                         <div className="flex items-center gap-2">
                           <span className="text-2xl font-bold text-green-600">
-                            {pkg.currency} {pkg.discounted_price}
+                            {pkg.currency} {formatPrice(pkg.discounted_price)}
                           </span>
                           <span className="text-lg text-gray-500 line-through">
-                            {pkg.currency} {pkg.original_price}
+                            {pkg.currency} {formatPrice(pkg.original_price)}
                           </span>
                           <Badge variant="outline" className="text-green-600">
                             {calculateDiscount(pkg.original_price, pkg.discounted_price)}% OFF
