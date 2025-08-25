@@ -76,7 +76,7 @@ const AdminLogin = () => {
 
     // Get the current origin, which works for both development and Netlify
     const currentOrigin = window.location.origin;
-    const redirectUrl = `${currentOrigin}/reset-password`;
+    const redirectUrl = `${currentOrigin}/admin/reset-password`;
     
     console.log('Sending reset email with redirect to:', redirectUrl);
 
