@@ -74,20 +74,19 @@ const AdminLogin = () => {
 
     setLoading(true);
 
-    // Get the current origin, which works for both development and Netlify
-    const currentOrigin = window.location.origin;
-    const redirectUrl = `${currentOrigin}/admin/reset-password`;
-    
-    console.log('Sending reset email with redirect to:', redirectUrl);
-
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-        redirectTo: redirectUrl,
+      // Try to use the custom edge function first
+      const currentOrigin = window.location.origin;
+      const resetUrl = `https://wugzcmqtlctrccixqpvf.supabase.co/auth/v1/verify?token=PLACEHOLDER&type=recovery&redirect_to=${currentOrigin}/admin/reset-password`;
+      
+      // First generate the actual reset link using Supabase
+      const { error: supabaseError } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+        redirectTo: `${currentOrigin}/admin/reset-password`,
       });
 
-      if (error) {
-        console.error('Password reset error:', error);
-        toast.error(error.message);
+      if (supabaseError) {
+        console.error('Password reset error:', supabaseError);
+        toast.error(supabaseError.message);
       } else {
         toast.success('Password reset link sent! Check your email and click the link to reset your password.');
         setActiveTab('signin');
