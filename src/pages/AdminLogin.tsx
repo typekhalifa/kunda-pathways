@@ -75,22 +75,28 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      // Try to use the custom edge function first
       const currentOrigin = window.location.origin;
-      const resetUrl = `https://wugzcmqtlctrccixqpvf.supabase.co/auth/v1/verify?token=PLACEHOLDER&type=recovery&redirect_to=${currentOrigin}/admin/reset-password`;
+      const redirectUrl = `${currentOrigin}/admin/reset-password`;
       
-      // First generate the actual reset link using Supabase
-      const { error: supabaseError } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-        redirectTo: `${currentOrigin}/admin/reset-password`,
+      console.log('Sending custom password reset email for:', resetEmail);
+
+      // Use our custom edge function instead of Supabase's built-in email
+      const { data, error } = await supabase.functions.invoke('send-password-reset', {
+        body: {
+          email: resetEmail,
+          redirectUrl: redirectUrl,
+        }
       });
 
-      if (supabaseError) {
-        console.error('Password reset error:', supabaseError);
-        toast.error(supabaseError.message);
-      } else {
+      if (error) {
+        console.error('Password reset error:', error);
+        toast.error('Failed to send reset email. Please try again.');
+      } else if (data?.success) {
         toast.success('Password reset link sent! Check your email and click the link to reset your password.');
         setActiveTab('signin');
         setResetEmail(''); // Clear the email field
+      } else {
+        toast.error(data?.error || 'Failed to send reset email. Please try again.');
       }
     } catch (error) {
       console.error('Unexpected error:', error);
