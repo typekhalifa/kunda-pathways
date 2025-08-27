@@ -50,7 +50,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email using Resend
     const emailResponse = await resend.emails.send({
-      from: "Kunda Pathways <noreply@resend.dev>",
+      from: "Kunda Pathways <noreply@kundapathways.com>",
       to: [email],
       subject: "Reset Your Password - Kunda Pathways",
       html: `
