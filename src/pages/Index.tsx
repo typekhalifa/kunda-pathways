@@ -35,9 +35,12 @@ const Index = () => {
     // If it's a recovery type, redirect to admin reset password
     if (type === 'recovery') {
       console.log('Password reset callback detected, redirecting to admin reset password');
+      console.log('About to navigate to:', '/admin/reset-password' + window.location.hash);
       navigate('/admin/reset-password' + window.location.hash);
       return;
     }
+    
+    console.log('No password reset detected, continuing with normal page load');
   }, [navigate]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
