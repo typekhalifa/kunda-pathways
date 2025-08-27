@@ -20,12 +20,20 @@ const Index = () => {
 
   useEffect(() => {
     // Check if this is a password reset callback
+    console.log('Index useEffect - Full URL:', window.location.href);
+    console.log('Index useEffect - Hash:', window.location.hash);
+    
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
     const type = hashParams.get('type');
     const accessToken = hashParams.get('access_token');
     
-    // If it's a recovery type with access token, redirect to admin reset password
-    if (type === 'recovery' && accessToken) {
+    console.log('Index useEffect - Parsed params:', { 
+      type, 
+      hasAccessToken: !!accessToken 
+    });
+    
+    // If it's a recovery type, redirect to admin reset password
+    if (type === 'recovery') {
       console.log('Password reset callback detected, redirecting to admin reset password');
       navigate('/admin/reset-password' + window.location.hash);
       return;
