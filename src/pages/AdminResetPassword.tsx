@@ -22,34 +22,40 @@ const AdminResetPassword = () => {
   useEffect(() => {
     const handleAuthCallback = async () => {
       // Debug: Log the full URL and hash
-      console.log('AdminResetPassword - Full URL:', window.location.href);
-      console.log('AdminResetPassword - Hash:', window.location.hash);
+      console.log('🔥 AdminResetPassword - Full URL:', window.location.href);
+      console.log('🔥 AdminResetPassword - Hash:', window.location.hash);
+      console.log('🔥 AdminResetPassword - Search:', window.location.search);
       
-      // Parse tokens from URL hash (Supabase sends them as hash fragments)
+      // Parse tokens from URL hash AND search params (Supabase can send them either way)
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
-      const accessToken = hashParams.get('access_token');
-      const refreshToken = hashParams.get('refresh_token');
-      const type = hashParams.get('type');
-      const error = hashParams.get('error');
-      const errorDescription = hashParams.get('error_description');
+      const searchParams = new URLSearchParams(window.location.search);
       
-      console.log('AdminResetPassword - Parsed params:', { 
+      const accessToken = hashParams.get('access_token') || searchParams.get('access_token');
+      const refreshToken = hashParams.get('refresh_token') || searchParams.get('refresh_token');
+      const type = hashParams.get('type') || searchParams.get('type');
+      const error = hashParams.get('error') || searchParams.get('error');
+      const errorDescription = hashParams.get('error_description') || searchParams.get('error_description');
+      
+      console.log('🔥 AdminResetPassword - Parsed params:', { 
         accessToken: !!accessToken, 
         refreshToken: !!refreshToken, 
         type, 
         error,
-        errorDescription 
+        errorDescription,
+        hashParams: Object.fromEntries(hashParams),
+        searchParams: Object.fromEntries(searchParams)
       });
 
       // Check for auth errors first
       if (error) {
-        console.error('Auth error from URL:', error, errorDescription);
+        console.error('🔥 Auth error from URL:', error, errorDescription);
         toast.error(`Authentication error: ${errorDescription || error}. Please request a new password reset.`);
         navigate('/admin/login');
         return;
       }
 
       if (type === 'recovery' && accessToken && refreshToken) {
+        console.log('🔥 Setting session with tokens...');
         // Set the session with the tokens from the URL
         const { error } = await supabase.auth.setSession({
           access_token: accessToken,
@@ -57,23 +63,28 @@ const AdminResetPassword = () => {
         });
 
         if (error) {
-          console.error('Error setting session:', error);
+          console.error('🔥 Error setting session:', error);
           toast.error('Invalid or expired reset link. Please request a new password reset.');
           navigate('/admin/login');
           return;
         }
         
+        console.log('🔥 Session set successfully!');
         // Clear the hash from URL after processing
         window.history.replaceState({}, document.title, window.location.pathname);
       } else {
+        console.log('🔥 No recovery tokens found, checking existing session...');
         // Check for existing session
         const { data: { session }, error } = await supabase.auth.getSession();
         
         if (error || !session) {
+          console.log('🔥 No valid session found');
           toast.error('Invalid reset link. Please request a new password reset.');
           navigate('/admin/login');
           return;
         }
+        
+        console.log('🔥 Found existing session');
       }
     };
 

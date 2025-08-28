@@ -36,12 +36,16 @@ const Index = () => {
       searchParams: Object.fromEntries(searchParams)
     });
     
-    // If it's a recovery type, redirect to admin reset password
+    // If it's a recovery type with access token, redirect immediately
     if (type === 'recovery' && accessToken) {
-      console.log('Password reset callback detected, redirecting to admin reset password');
+      console.log('🔥 Password reset callback detected, redirecting to admin reset password');
       const fullParams = window.location.hash || window.location.search;
-      console.log('About to navigate to:', '/admin/reset-password' + fullParams);
-      navigate('/admin/reset-password' + fullParams, { replace: true });
+      console.log('🔥 About to navigate to:', '/admin/reset-password' + fullParams);
+      
+      // Use setTimeout to ensure the navigation happens after component mount
+      setTimeout(() => {
+        navigate('/admin/reset-password' + fullParams, { replace: true });
+      }, 100);
       return;
     }
     
