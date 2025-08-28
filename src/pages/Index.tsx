@@ -20,36 +20,34 @@ const Index = () => {
 
   useEffect(() => {
     // Check if this is a password reset callback
-    console.log('Index useEffect - Full URL:', window.location.href);
-    console.log('Index useEffect - Hash:', window.location.hash);
-    console.log('Index useEffect - Search params:', window.location.search);
+    console.log('🚀 Index useEffect - Full URL:', window.location.href);
+    console.log('🚀 Index useEffect - Hash:', window.location.hash);
+    console.log('🚀 Index useEffect - Search params:', window.location.search);
     
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
     const searchParams = new URLSearchParams(window.location.search);
     const type = hashParams.get('type') || searchParams.get('type');
     const accessToken = hashParams.get('access_token') || searchParams.get('access_token');
     
-    console.log('Index useEffect - Parsed params:', { 
+    console.log('🚀 Index useEffect - Parsed params:', { 
       type, 
       hasAccessToken: !!accessToken,
       hashParams: Object.fromEntries(hashParams),
       searchParams: Object.fromEntries(searchParams)
     });
     
-    // If it's a recovery type with access token, redirect immediately
-    if (type === 'recovery' && accessToken) {
-      console.log('🔥 Password reset callback detected, redirecting to admin reset password');
+    // For ANY password reset tokens (regardless of type), redirect to admin reset password
+    if (accessToken) {
+      console.log('🔥 Password reset tokens detected, redirecting to admin reset password');
       const fullParams = window.location.hash || window.location.search;
       console.log('🔥 About to navigate to:', '/admin/reset-password' + fullParams);
       
-      // Use setTimeout to ensure the navigation happens after component mount
-      setTimeout(() => {
-        navigate('/admin/reset-password' + fullParams, { replace: true });
-      }, 100);
+      // Immediate redirect without setTimeout
+      navigate('/admin/reset-password' + fullParams, { replace: true });
       return;
     }
     
-    console.log('No password reset detected, continuing with normal page load');
+    console.log('🚀 No password reset tokens detected, continuing with normal page load');
   }, [navigate]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
