@@ -19,36 +19,21 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if this is a password reset callback
-    console.log('🚀 Index useEffect - Full URL:', window.location.href);
-    console.log('🚀 Index useEffect - Hash:', window.location.hash);
-    console.log('🚀 Index useEffect - Search params:', window.location.search);
+    console.log('🚀 Index useEffect running');
+    console.log('🚀 Full URL:', window.location.href);
+    console.log('🚀 Hash:', window.location.hash);
     
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const searchParams = new URLSearchParams(window.location.search);
-    const type = hashParams.get('type') || searchParams.get('type');
-    const accessToken = hashParams.get('access_token') || searchParams.get('access_token');
-    
-    console.log('🚀 Index useEffect - Parsed params:', { 
-      type, 
-      hasAccessToken: !!accessToken,
-      hashParams: Object.fromEntries(hashParams),
-      searchParams: Object.fromEntries(searchParams)
-    });
-    
-    // For ANY password reset tokens (regardless of type), redirect to admin reset password
-    if (accessToken) {
-      console.log('🔥 Password reset tokens detected, redirecting to admin reset password');
-      const fullParams = window.location.hash || window.location.search;
-      console.log('🔥 About to navigate to:', '/admin/reset-password' + fullParams);
-      
-      // Immediate redirect without setTimeout
-      navigate('/admin/reset-password' + fullParams, { replace: true });
+    // Check for access_token in URL hash (Supabase auth callback format)
+    const hash = window.location.hash;
+    if (hash && hash.includes('access_token=')) {
+      console.log('🔥 Access token found in URL, redirecting to admin reset password');
+      // Preserve the entire hash for the admin reset password page
+      window.location.href = '/admin/reset-password' + hash;
       return;
     }
     
-    console.log('🚀 No password reset tokens detected, continuing with normal page load');
-  }, [navigate]);
+    console.log('🚀 No access token found, normal page load');
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
       <Header />
