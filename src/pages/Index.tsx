@@ -17,6 +17,7 @@ import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton"
 
 
 const Index = () => {
+  console.log('Index page rendering...');
   const navigate = useNavigate();
 
   useEffect(() => {
