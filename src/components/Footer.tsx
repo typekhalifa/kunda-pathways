@@ -9,10 +9,6 @@ const Footer = () => {
   const { settings } = useWebsiteSettings();
   const currentYear = new Date().getFullYear();
   
-  // Debug logging
-  console.log('Footer settings:', settings);
-  console.log('Footer contact info:', settings?.contact);
-  
   // Get contact and social settings with fallbacks
   const contactInfo = settings?.contact || {
     email: "info@kundapathways.com",
@@ -20,8 +16,6 @@ const Footer = () => {
     whatsapp: "+82-10-1234-5678",
     location: "Seoul, South Korea"
   };
-  
-  console.log('Final contactInfo:', contactInfo);
   
   const socialLinks = settings?.social || {
     facebook: "",
