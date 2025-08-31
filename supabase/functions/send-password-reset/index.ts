@@ -32,6 +32,31 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
+    // First, check if the email belongs to an admin user
+    const { data: adminProfile, error: profileError } = await supabase
+      .from('profiles')
+      .select('id, role, email')
+      .eq('email', email)
+      .eq('role', 'admin')
+      .single();
+
+    if (profileError || !adminProfile) {
+      console.log('Password reset denied - email not found or not an admin:', email);
+      // Return success to prevent email enumeration attacks
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: 'If this email belongs to an admin account, a password reset link has been sent.' 
+      }), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+        },
+      });
+    }
+
+    console.log('Admin verification successful for:', email);
+
     // Generate a password reset link using Supabase Auth Admin API
     const { data, error } = await supabase.auth.admin.generateLink({
       type: 'recovery',
