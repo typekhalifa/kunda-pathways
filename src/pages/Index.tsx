@@ -18,12 +18,26 @@ import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton"
 // Check for password reset redirect IMMEDIATELY when module loads
 console.log('🚀 Index module loading - checking for password reset...');
 console.log('🚀 Current URL:', window.location.href);
+console.log('🚀 Current hash:', window.location.hash);
 
 if (typeof window !== 'undefined') {
   const hash = window.location.hash;
+  console.log('🚀 Hash details:', { hasHash: !!hash, includes: hash.includes('access_token='), hash });
+  
   if (hash && hash.includes('access_token=')) {
     console.log('🔥 PASSWORD RESET DETECTED - IMMEDIATE REDIRECT');
-    window.location.replace('/admin/reset-password' + hash);
+    alert('Password reset detected - redirecting now!'); // Make it obvious
+    
+    // Try multiple redirect methods
+    try {
+      window.location.href = '/admin/reset-password' + hash;
+    } catch (e) {
+      window.location.replace('/admin/reset-password' + hash);
+    }
+  } else if (hash) {
+    console.log('🚀 Hash found but no access_token:', hash);
+  } else {
+    console.log('🚀 No hash found');
   }
 }
 
