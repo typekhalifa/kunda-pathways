@@ -24,6 +24,23 @@ export interface WebsiteSettings {
     facebook_pixel_id: string;
     custom_css: string;
   };
+  contact?: {
+    email: string;
+    phone: string;
+    whatsapp: string;
+    location: string;
+    business_hours: {
+      weekday: string;
+      saturday: string;
+      sunday: string;
+    };
+  };
+  social?: {
+    facebook: string;
+    twitter: string;
+    linkedin: string;
+    instagram: string;
+  };
 }
 
 export const useWebsiteSettings = () => {
