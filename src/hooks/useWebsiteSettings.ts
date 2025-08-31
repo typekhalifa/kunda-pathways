@@ -63,10 +63,7 @@ export const useWebsiteSettings = () => {
       setSettings(settingsObj);
     } catch (error) {
       console.error('Error fetching settings:', error);
-      // Don't show error toast on initial load to avoid UI noise
-      if (settings !== null) {
-        toast.error('Failed to load website settings');
-      }
+      toast.error('Failed to load website settings');
     } finally {
       setLoading(false);
     }
