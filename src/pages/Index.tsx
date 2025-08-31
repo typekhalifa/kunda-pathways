@@ -19,6 +19,16 @@ import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton"
 const Index = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Check if this is a password reset callback
+    const hash = window.location.hash;
+    if (hash && (hash.includes('access_token=') || hash.includes('type=recovery'))) {
+      // Redirect to the appropriate reset password page
+      const targetPath = '/reset-password' + hash;
+      navigate(targetPath, { replace: true });
+    }
+  }, [navigate]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
       <Header />
