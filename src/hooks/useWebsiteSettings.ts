@@ -63,7 +63,10 @@ export const useWebsiteSettings = () => {
       setSettings(settingsObj);
     } catch (error) {
       console.error('Error fetching settings:', error);
-      toast.error('Failed to load website settings');
+      // Don't show error toast on initial load to avoid UI noise
+      if (settings !== null) {
+        toast.error('Failed to load website settings');
+      }
     } finally {
       setLoading(false);
     }
@@ -73,8 +76,12 @@ export const useWebsiteSettings = () => {
     try {
       const { error } = await supabase
         .from('website_settings')
-        .update({ setting_value: value })
-        .eq('setting_key', key);
+        .upsert({ 
+          setting_key: key,
+          setting_value: value 
+        }, {
+          onConflict: 'setting_key'
+        });
 
       if (error) throw error;
 

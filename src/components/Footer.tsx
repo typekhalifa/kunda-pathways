@@ -2,10 +2,27 @@
 import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useWebsiteSettings } from "@/hooks/useWebsiteSettings";
 
 const Footer = () => {
   const { translations } = useLanguage();
+  const { settings } = useWebsiteSettings();
   const currentYear = new Date().getFullYear();
+  
+  // Get contact and social settings with fallbacks
+  const contactInfo = settings?.contact || {
+    email: "info@kundapathways.com",
+    phone: "+82-10-1234-5678",
+    whatsapp: "+82-10-1234-5678",
+    location: "Seoul, South Korea"
+  };
+  
+  const socialLinks = settings?.social || {
+    facebook: "",
+    twitter: "",
+    linkedin: "",
+    instagram: ""
+  };
 
   return (
     <footer className="bg-slate-800 dark:bg-slate-950 text-white py-16 px-4">
@@ -22,18 +39,26 @@ const Footer = () => {
               {translations.footerDescription}
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
-                <Instagram size={20} />
-              </a>
+              {socialLinks.facebook && (
+                <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
+                  <Facebook size={20} />
+                </a>
+              )}
+              {socialLinks.twitter && (
+                <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
+                  <Twitter size={20} />
+                </a>
+              )}
+              {socialLinks.linkedin && (
+                <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
+                  <Linkedin size={20} />
+                </a>
+              )}
+              {socialLinks.instagram && (
+                <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors p-2 bg-slate-700 rounded-full">
+                  <Instagram size={20} />
+                </a>
+              )}
             </div>
           </div>
           
@@ -75,19 +100,19 @@ const Footer = () => {
             <div className="space-y-3 text-slate-400 dark:text-slate-300 text-sm lg:text-base">
               <div className="flex items-center space-x-2">
                 <Mail size={16} className="flex-shrink-0" />
-                <a href="mailto:info@kundapathways.com" className="hover:text-white transition-colors break-all">
-                  info@kundapathways.com
+                <a href={`mailto:${contactInfo.email}`} className="hover:text-white transition-colors break-all">
+                  {contactInfo.email}
                 </a>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone size={16} className="flex-shrink-0" />
-                <a href="tel:+821012345678" className="hover:text-white transition-colors">
-                  +82-10-1234-5678
+                <a href={`tel:${contactInfo.phone?.replace(/[^+\d]/g, '')}`} className="hover:text-white transition-colors">
+                  {contactInfo.phone}
                 </a>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin size={16} className="flex-shrink-0" />
-                <span>{translations.location}</span>
+                <span>{contactInfo.location}</span>
               </div>
             </div>
           </div>
