@@ -108,7 +108,7 @@ const Footer = () => {
               <div className="flex items-center space-x-2">
                 <Phone size={16} className="flex-shrink-0" />
                 <a href={`tel:${contactInfo.phone?.replace(/[^+\d]/g, '')}`} className="hover:text-white transition-colors">
-                  {contactInfo.phone}
+                  TESTING PHONE: {contactInfo.phone}
                 </a>
               </div>
               <div className="flex items-center space-x-2">
