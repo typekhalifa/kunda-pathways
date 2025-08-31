@@ -19,16 +19,32 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('🚀 Index useEffect running');
+    console.log('🚀🚀🚀 Index useEffect STARTED');
     console.log('🚀 Full URL:', window.location.href);
     console.log('🚀 Hash:', window.location.hash);
+    console.log('🚀 Search:', window.location.search);
+    console.log('🚀 Pathname:', window.location.pathname);
     
     // Check for access_token in URL hash (Supabase auth callback format)
     const hash = window.location.hash;
+    console.log('🔍 Hash check:', { 
+      hasHash: !!hash, 
+      hashLength: hash?.length, 
+      includesToken: hash?.includes('access_token='),
+      firstChars: hash?.substring(0, 50) 
+    });
+    
     if (hash && hash.includes('access_token=')) {
-      console.log('🔥 Access token found in URL, redirecting to admin reset password');
-      // Preserve the entire hash for the admin reset password page
-      window.location.href = '/admin/reset-password' + hash;
+      console.log('🔥🔥🔥 ACCESS TOKEN DETECTED - REDIRECTING NOW');
+      console.log('🔥 About to redirect to:', '/admin/reset-password' + hash);
+      
+      // Force immediate redirect
+      try {
+        window.location.href = '/admin/reset-password' + hash;
+        console.log('🔥 Redirect command executed');
+      } catch (error) {
+        console.error('🔥 Redirect failed:', error);
+      }
       return;
     }
     
