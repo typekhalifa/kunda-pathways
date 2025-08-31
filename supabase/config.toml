@@ -45,8 +45,8 @@ image_transformation = true
 [auth]
 enabled = true
 port = 54327
-site_url = "https://kunda-pathways.lovable.app"
-additional_redirect_urls = ["https://kunda-pathways.lovable.app/admin/reset-password", "http://127.0.0.1:3000", "https://127.0.0.1:3000"]
+site_url = "https://kunda-pathways.vercel.app"
+additional_redirect_urls = ["https://kunda-pathways.vercel.app/admin/reset-password", "https://kunda-pathways.vercel.app/reset-password", "http://127.0.0.1:3000", "https://127.0.0.1:3000"]
 jwt_expiry = 3600
 enable_signup = true
 enable_confirmations = false

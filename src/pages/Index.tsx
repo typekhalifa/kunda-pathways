@@ -15,67 +15,10 @@ import Partners from "@/components/Partners";
 import ChatBot from "@/components/ChatBot";
 import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
 
-// Check for password reset redirect IMMEDIATELY when module loads
-console.log('🚀 Index module loading - checking for password reset...');
-console.log('🚀 Current URL:', window.location.href);
-console.log('🚀 Current hash:', window.location.hash);
-
-if (typeof window !== 'undefined') {
-  const hash = window.location.hash;
-  console.log('🚀 Hash details:', { hasHash: !!hash, includes: hash.includes('access_token='), hash });
-  
-  if (hash && hash.includes('access_token=')) {
-    console.log('🔥 PASSWORD RESET DETECTED - IMMEDIATE REDIRECT');
-    alert('Password reset detected - redirecting now!'); // Make it obvious
-    
-    // Try multiple redirect methods
-    try {
-      window.location.href = '/admin/reset-password' + hash;
-    } catch (e) {
-      window.location.replace('/admin/reset-password' + hash);
-    }
-  } else if (hash) {
-    console.log('🚀 Hash found but no access_token:', hash);
-  } else {
-    console.log('🚀 No hash found');
-  }
-}
 
 const Index = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('🚀🚀🚀 Index useEffect STARTED');
-    console.log('🚀 Full URL:', window.location.href);
-    console.log('🚀 Hash:', window.location.hash);
-    console.log('🚀 Search:', window.location.search);
-    console.log('🚀 Pathname:', window.location.pathname);
-    
-    // Check for access_token in URL hash (Supabase auth callback format)
-    const hash = window.location.hash;
-    console.log('🔍 Hash check:', { 
-      hasHash: !!hash, 
-      hashLength: hash?.length, 
-      includesToken: hash?.includes('access_token='),
-      firstChars: hash?.substring(0, 50) 
-    });
-    
-    if (hash && hash.includes('access_token=')) {
-      console.log('🔥🔥🔥 ACCESS TOKEN DETECTED - REDIRECTING NOW');
-      console.log('🔥 About to redirect to:', '/admin/reset-password' + hash);
-      
-      // Force immediate redirect
-      try {
-        window.location.href = '/admin/reset-password' + hash;
-        console.log('🔥 Redirect command executed');
-      } catch (error) {
-        console.error('🔥 Redirect failed:', error);
-      }
-      return;
-    }
-    
-    console.log('🚀 No access token found, normal page load');
-  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
       <Header />
