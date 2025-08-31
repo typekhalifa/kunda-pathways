@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useWebsiteSettings } from "@/hooks/useWebsiteSettings";
 
 const Footer = () => {
+  console.log('Footer component rendering...');
   const { translations } = useLanguage();
   const { settings } = useWebsiteSettings();
   const currentYear = new Date().getFullYear();
