@@ -47,28 +47,19 @@ export const useWebsiteSettings = () => {
   const [settings, setSettings] = useState<WebsiteSettings | null>(null);
   const [loading, setLoading] = useState(true);
 
-  console.log('useWebsiteSettings hook initialized');
-
   const fetchSettings = async () => {
     try {
-      console.log('Fetching website settings...');
       const { data, error } = await supabase
         .from('website_settings')
         .select('setting_key, setting_value');
 
-      if (error) {
-        console.error('Supabase error:', error);
-        throw error;
-      }
-
-      console.log('Raw data from supabase:', data);
+      if (error) throw error;
 
       const settingsObj: any = {};
       data?.forEach(({ setting_key, setting_value }) => {
         settingsObj[setting_key] = setting_value;
       });
 
-      console.log('Processed settings object:', settingsObj);
       setSettings(settingsObj);
     } catch (error) {
       console.error('Error fetching settings:', error);

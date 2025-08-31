@@ -7,11 +7,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useWebsiteSettings } from "@/hooks/useWebsiteSettings";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const Contact = () => {
   const { translations } = useLanguage();
+  const { settings } = useWebsiteSettings();
+  
+  // Get contact info from settings
+  const contactInfo = settings?.contact || {
+    email: "info@kundapathways.com",
+    phone: "+82-10-1234-5678",
+    whatsapp: "+82-10-1234-5678",
+    location: "Seoul, South Korea"
+  };
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -180,7 +190,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-slate-800 dark:text-white">Email</h4>
-                      <p className="text-slate-600 dark:text-slate-300">info@kundapathways.com</p>
+                      <p className="text-slate-600 dark:text-slate-300">{contactInfo.email}</p>
                     </div>
                   </div>
                   
@@ -190,7 +200,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-slate-800 dark:text-white">{translations.phoneKorea || "Phone (Korea)"}</h4>
-                      <p className="text-slate-600 dark:text-slate-300">+82-10-1234-5678</p>
+                      <p className="text-slate-600 dark:text-slate-300">{contactInfo.phone}</p>
                     </div>
                   </div>
                   
@@ -200,7 +210,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-slate-800 dark:text-white">{translations.whatsapp || "WhatsApp"}</h4>
-                      <p className="text-slate-600 dark:text-slate-300">+82-10-1234-5678</p>
+                      <p className="text-slate-600 dark:text-slate-300">{contactInfo.whatsapp}</p>
                     </div>
                   </div>
                   
@@ -210,7 +220,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-slate-800 dark:text-white">{translations.location || "Location"}</h4>
-                      <p className="text-slate-600 dark:text-slate-300">Seoul, South Korea</p>
+                      <p className="text-slate-600 dark:text-slate-300">{contactInfo.location}</p>
                     </div>
                   </div>
                 </CardContent>
