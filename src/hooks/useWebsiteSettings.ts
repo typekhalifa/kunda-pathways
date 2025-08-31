@@ -93,17 +93,48 @@ export const useWebsiteSettings = () => {
     }
   };
 
-  const uploadFile = async (file: File, type: 'logo' | 'favicon') => {
-    const formData = new FormData();
-    formData.append('file', file);
-
+  const updateNestedSetting = async (parentKey: keyof WebsiteSettings, childKey: string, value: any) => {
     try {
-      // For now, we'll just return a placeholder URL
-      // In a real implementation, you'd upload to Supabase Storage
-      const fileName = `${type}_${Date.now()}_${file.name}`;
-      const url = `/lovable-uploads/${fileName}`;
+      const currentParentValue = settings?.[parentKey] || {};
+      const updatedParentValue = { ...currentParentValue, [childKey]: value };
       
-      return url;
+      const { error } = await supabase
+        .from('website_settings')
+        .upsert({ 
+          setting_key: parentKey,
+          setting_value: updatedParentValue 
+        }, {
+          onConflict: 'setting_key'
+        });
+
+      if (error) throw error;
+
+      setSettings(prev => prev ? { 
+        ...prev, 
+        [parentKey]: updatedParentValue 
+      } : null);
+      toast.success('Settings updated successfully');
+    } catch (error) {
+      console.error('Error updating nested setting:', error);
+      toast.error('Failed to update settings');
+    }
+  };
+
+  const uploadFile = async (file: File, type: 'logo' | 'favicon') => {
+    try {
+      const fileName = `${type}_${Date.now()}_${file.name}`;
+      
+      const { data, error } = await supabase.storage
+        .from('uploads')
+        .upload(fileName, file);
+
+      if (error) throw error;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('uploads')
+        .getPublicUrl(fileName);
+      
+      return publicUrl;
     } catch (error) {
       console.error('Error uploading file:', error);
       toast.error('Failed to upload file');
@@ -119,6 +150,7 @@ export const useWebsiteSettings = () => {
     settings,
     loading,
     updateSetting,
+    updateNestedSetting,
     uploadFile,
     refetch: fetchSettings
   };

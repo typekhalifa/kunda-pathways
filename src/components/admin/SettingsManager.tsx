@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 const SettingsManager = () => {
   const { profile, updatePassword } = useAuth();
-  const { settings, loading: settingsLoading, updateSetting, uploadFile } = useWebsiteSettings();
+  const { settings, loading: settingsLoading, updateSetting, updateNestedSetting, uploadFile } = useWebsiteSettings();
   const [passwordData, setPasswordData] = useState({
     newPassword: '',
     confirmPassword: ''
@@ -294,13 +294,24 @@ const SettingsManager = () => {
         }
       }));
       
+      // Save the setting immediately
+      await updateSetting('branding', {
+        ...formData.branding,
+        [`${type}_url`]: url
+      });
+      
       if (type === 'favicon') {
         // Update the favicon in the HTML head
-        const link = document.querySelector("link[rel*='icon']") as HTMLLinkElement || document.createElement('link');
-        link.type = 'image/x-icon';
-        link.rel = 'shortcut icon';
-        link.href = url;
-        document.getElementsByTagName('head')[0].appendChild(link);
+        const link = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+        if (link) {
+          link.href = url;
+        } else {
+          const newLink = document.createElement('link');
+          newLink.type = 'image/png';
+          newLink.rel = 'icon';
+          newLink.href = url;
+          document.getElementsByTagName('head')[0].appendChild(newLink);
+        }
       }
     }
   };
