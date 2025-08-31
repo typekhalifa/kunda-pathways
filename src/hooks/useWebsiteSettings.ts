@@ -47,6 +47,8 @@ export const useWebsiteSettings = () => {
   const [settings, setSettings] = useState<WebsiteSettings | null>(null);
   const [loading, setLoading] = useState(true);
 
+  console.log('useWebsiteSettings hook initialized');
+
   const fetchSettings = async () => {
     try {
       console.log('Fetching website settings...');
