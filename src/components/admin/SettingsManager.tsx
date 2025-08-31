@@ -823,6 +823,19 @@ const SettingsManager = () => {
               </div>
             </CardContent>
           </Card>
+          
+          {/* Save Button for Website Settings */}
+          <div className="flex justify-end">
+            <Button 
+              onClick={handleSaveSettings} 
+              disabled={saveLoading || settingsLoading}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              {saveLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Save className="mr-2 h-4 w-4" />
+              Save Website Settings
+            </Button>
+          </div>
         </TabsContent>
 
         {/* Content Management */}
