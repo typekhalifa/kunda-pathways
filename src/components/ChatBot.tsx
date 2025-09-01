@@ -27,7 +27,7 @@ const ChatBot = () => {
                 .trim();
   }, []);
 
-  // Enhanced AI knowledge base with comprehensive Korea & Asia study expertise
+  // Enhanced AI knowledge base with comprehensive Korea & Asia study expertise + F&B consulting
   const getResponse = useCallback((userMessage: string) => {
     const message = userMessage.toLowerCase().trim();
     
@@ -36,7 +36,30 @@ const ChatBot = () => {
       keywords.some(keyword => message.includes(keyword.toLowerCase()));
     
     const hasAllKeywords = (keywords: string[]) => 
-      keywords.every(keyword => message.includes(keyword.toLowerCase()));
+      keywords.every(keyword => keywords.includes(keyword.toLowerCase()));
+
+    // Greeting responses
+    if (hasKeywords(['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening']) || message === '') {
+      return "Hello! 👋 Welcome to Kunda Pathways! I'm Aria, your dedicated assistant for study abroad and F&B consulting services.\n\n★ I can help you with:\n• Korea & Asia study abroad opportunities\n• KGSP scholarship applications (85% success rate!)\n• F&B market entry consulting\n• Visa applications & documentation\n• University admissions guidance\n\n✨ What would you like to explore today?";
+    }
+
+    // F&B Consulting Services - Enhanced section
+    if (hasKeywords(['f&b', 'food', 'beverage', 'restaurant', 'catering', 'hospitality', 'culinary', 'kitchen', 'menu', 'franchise'])) {
+      
+      if (hasKeywords(['market', 'entry', 'expansion', 'business plan', 'strategy'])) {
+        return "★ F&B Market Entry & Expansion Services:\n\n🎯 Complete Market Analysis:\n• Competitor landscape mapping\n• Consumer behavior studies\n• Pricing strategy optimization\n• Location feasibility analysis\n• ROI projections & break-even analysis\n\n📋 Business Planning:\n• Comprehensive business plan development\n• Financial modeling & projections\n• Operational workflow design\n• Staff planning & hiring strategies\n• Compliance & regulatory guidance\n\n🌍 Korean Market Expertise:\n• Cultural adaptation strategies\n• Local partnership facilitation\n• Supply chain optimization\n• Marketing & branding for Korean consumers\n\n💰 Investment: $12,000 (25% discount - limited time!)\n\nReady to enter the Korean F&B market? Let's schedule your consultation!";
+      }
+      
+      if (hasKeywords(['franchise', 'licensing', 'brand', 'concept'])) {
+        return "★ Franchise & Brand Development Services:\n\n🏢 Franchise Development:\n• Franchise model structuring\n• Operations manual creation\n• Training program development\n• Quality control systems\n• Territory mapping & expansion plans\n\n🎨 Brand Development:\n• Brand identity & positioning\n• Logo & visual identity design\n• Marketing materials creation\n• Digital presence setup\n• Brand protection strategies\n\n📊 Licensing Support:\n• Licensing agreement templates\n• Intellectual property protection\n• Revenue sharing models\n• Performance monitoring systems\n\n🎯 Success Rate: 90%+ of our franchise clients achieve profitability within 18 months\n\nInterested in franchising your concept? Let's discuss your expansion goals!";
+      }
+      
+      if (hasKeywords(['menu', 'recipe', 'food development', 'culinary', 'chef'])) {
+        return "★ Menu Development & Culinary Services:\n\n👨‍🍳 Menu Engineering:\n• Cost-effective recipe development\n• Nutritional analysis & optimization\n• Seasonal menu planning\n• Dietary restriction accommodations\n• Portion control & waste reduction\n\n🧪 Food Innovation:\n• New product development\n• Fusion cuisine concepts\n• Korean-inspired adaptations\n• Healthy alternative options\n• Instagram-worthy presentation\n\n📋 Operational Excellence:\n• Kitchen workflow optimization\n• Equipment recommendations\n• Inventory management systems\n• Food safety & HACCP compliance\n• Staff training protocols\n\n🏆 Our chefs have experience with:\n• Michelin-starred restaurants\n• International hotel chains\n• Korean traditional & modern cuisine\n\nNeed menu innovation? Our culinary experts are ready to help!";
+      }
+      
+      return "★ Complete F&B Consulting Services:\n\n🍽️ Our Expertise:\n✓ Market entry & expansion strategies\n✓ Restaurant & cafe concept development\n✓ Franchise & licensing opportunities\n✓ Menu engineering & recipe development\n✓ Korean market penetration\n✓ Operational efficiency optimization\n✓ Digital transformation & delivery systems\n\n💼 Package Options:\n• Complete F&B Package: $12,000 (25% OFF - limited time!)\n• Individual consultations: From $150/hour\n• Menu development: From $2,500\n• Market research: From $1,500\n\n🎯 Success Stories:\n• 15+ successful restaurant launches\n• 90%+ client profitability within 18 months\n• Korean market expertise since 2019\n\nWhich F&B service interests you most?";
+    }
     
     // 1. How to book consultation - Enhanced matching
     if (hasKeywords(['book', 'schedule', 'appointment']) || 
