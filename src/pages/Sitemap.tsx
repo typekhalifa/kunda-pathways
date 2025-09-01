@@ -128,7 +128,7 @@ const Sitemap = () => {
 
           <div className="mt-12 text-center">
             <p className="text-slate-600 dark:text-slate-400">
-              {translations.lastUpdatedMarch2024 || "Last updated: March 2024"} | {translations.allPagesMobileResponsive || "All pages are mobile-responsive and accessibility-friendly"}
+              {translations.lastUpdatedMarch2025 || "Last updated: March 2025"} | {translations.allPagesMobileResponsive || "All pages are mobile-responsive and accessibility-friendly"}
             </p>
           </div>
         </div>

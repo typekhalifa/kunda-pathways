@@ -152,9 +152,8 @@ const Services = () => {
             {studyServices.map((service, index) => (
               <Card key={index} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-card dark:bg-card hover:scale-105">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center mb-3">
                     {getServiceIcon(service.title)}
-                    <span className="text-lg font-bold text-primary">${service.price}</span>
                   </div>
                   <h4 className="text-lg font-semibold mb-3 text-foreground">{service.title}</h4>
                   <p className="text-muted-foreground mb-4 text-sm">{service.description}</p>
@@ -194,9 +193,8 @@ const Services = () => {
             {fbServices.map((service, index) => (
               <Card key={index} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-card dark:bg-card hover:scale-105">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center mb-3">
                     <TrendingUp className="w-6 h-6 text-green-600" />
-                    <span className="text-lg font-bold text-primary">${service.price}</span>
                   </div>
                   <h4 className="text-lg font-semibold mb-3 text-foreground">{service.title}</h4>
                   <p className="text-muted-foreground mb-4 text-sm">{service.description}</p>
