@@ -14,10 +14,13 @@ import Newsletter from "@/components/Newsletter";
 import Partners from "@/components/Partners";
 import ChatBot from "@/components/ChatBot";
 import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
+import { useWebsiteSettings } from "@/hooks/useWebsiteSettings";
+import { updateMetaTags } from "@/utils/updateMetaTags";
 
 
 const Index = () => {
   const navigate = useNavigate();
+  const { settings } = useWebsiteSettings();
 
   useEffect(() => {
     // Check if this is a password reset callback
@@ -28,6 +31,13 @@ const Index = () => {
       navigate(targetPath, { replace: true });
     }
   }, [navigate]);
+
+  // Update meta tags when settings change
+  useEffect(() => {
+    if (settings) {
+      updateMetaTags(settings);
+    }
+  }, [settings]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
