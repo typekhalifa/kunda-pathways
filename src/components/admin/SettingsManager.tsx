@@ -45,17 +45,6 @@ const SettingsManager = () => {
       favicon_url: '',
       primary_color: '#3b82f6'
     },
-    seo: {
-      meta_title: '',
-      meta_description: '',
-      meta_keywords: '',
-      og_title: '',
-      og_description: '',
-      og_image: '',
-      twitter_title: '',
-      twitter_description: '',
-      twitter_image: ''
-    },
     analytics: {
       google_analytics_id: '',
       google_tag_manager_id: '',
@@ -328,7 +317,6 @@ const SettingsManager = () => {
       await Promise.all([
         updateSetting('site_info', formData.site_info),
         updateSetting('branding', formData.branding),
-        updateSetting('seo', formData.seo),
         updateSetting('analytics', formData.analytics),
         updateSetting('contact', formData.contact),
         updateSetting('social', formData.social)
@@ -725,139 +713,6 @@ const SettingsManager = () => {
                   </div>
                 </div>
               </div>
-
-              <hr className="border-slate-200" />
-
-              <div className="space-y-4">
-                <h4 className="font-semibold text-slate-800">SEO Settings</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="meta-title">Meta Title</Label>
-                    <Input
-                      id="meta-title"
-                      placeholder="SEO optimized title"
-                      value={formData.seo.meta_title}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        seo: { ...prev.seo, meta_title: e.target.value }
-                      }))}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="meta-keywords">Meta Keywords</Label>
-                    <Input
-                      id="meta-keywords"
-                      placeholder="keyword1, keyword2, keyword3"
-                      value={formData.seo.meta_keywords}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        seo: { ...prev.seo, meta_keywords: e.target.value }
-                      }))}
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="meta-description">Meta Description</Label>
-                  <Textarea
-                    id="meta-description"
-                    placeholder="SEO meta description (150-160 characters)"
-                    value={formData.seo.meta_description}
-                    onChange={(e) => setFormData(prev => ({
-                      ...prev,
-                      seo: { ...prev.seo, meta_description: e.target.value }
-                    }))}
-                    rows={3}
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <h5 className="font-medium text-slate-700">Open Graph / Facebook</h5>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="og-title">OG Title</Label>
-                      <Input
-                        id="og-title"
-                        placeholder="Facebook/social media title"
-                        value={formData.seo.og_title}
-                        onChange={(e) => setFormData(prev => ({
-                          ...prev,
-                          seo: { ...prev.seo, og_title: e.target.value }
-                        }))}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="og-image">OG Image URL</Label>
-                      <Input
-                        id="og-image"
-                        placeholder="https://yoursite.com/image.jpg"
-                        value={formData.seo.og_image}
-                        onChange={(e) => setFormData(prev => ({
-                          ...prev,
-                          seo: { ...prev.seo, og_image: e.target.value }
-                        }))}
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="og-description">OG Description</Label>
-                    <Textarea
-                      id="og-description"
-                      placeholder="Facebook/social media description"
-                      value={formData.seo.og_description}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        seo: { ...prev.seo, og_description: e.target.value }
-                      }))}
-                      rows={2}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h5 className="font-medium text-slate-700">Twitter Cards</h5>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="twitter-title">Twitter Title</Label>
-                      <Input
-                        id="twitter-title"
-                        placeholder="Twitter card title"
-                        value={formData.seo.twitter_title}
-                        onChange={(e) => setFormData(prev => ({
-                          ...prev,
-                          seo: { ...prev.seo, twitter_title: e.target.value }
-                        }))}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="twitter-image">Twitter Image URL</Label>
-                      <Input
-                        id="twitter-image"
-                        placeholder="https://yoursite.com/twitter-image.jpg"
-                        value={formData.seo.twitter_image}
-                        onChange={(e) => setFormData(prev => ({
-                          ...prev,
-                          seo: { ...prev.seo, twitter_image: e.target.value }
-                        }))}
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="twitter-description">Twitter Description</Label>
-                    <Textarea
-                      id="twitter-description"
-                      placeholder="Twitter card description"
-                      value={formData.seo.twitter_description}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        seo: { ...prev.seo, twitter_description: e.target.value }
-                      }))}
-                      rows={2}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <hr className="border-slate-200" />
 
               <div className="space-y-4">
                 <h4 className="font-semibold text-slate-800">Technical Settings</h4>
