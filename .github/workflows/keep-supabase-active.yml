@@ -1,0 +1,21 @@
+name: Keep Supabase Active
+
+on:
+  schedule:
+    # Run every 3 days at 12:00 UTC
+    - cron: '0 12 */3 * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Database
+        run: |
+          curl -X POST \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1Z3pjbXF0bGN0cmNjaXhxcHZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTkzODQsImV4cCI6MjA2NjA3NTM4NH0.vl8EZvd66U1tGHdt1R_brxPYQY0gJ6N0-WUal51A_bY" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1Z3pjbXF0bGN0cmNjaXhxcHZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0OTkzODQsImV4cCI6MjA2NjA3NTM4NH0.vl8EZvd66U1tGHdt1R_brxPYQY0gJ6N0-WUal51A_bY" \
+            -H "Content-Type: application/json" \
+            "https://wugzcmqtlctrccixqpvf.supabase.co/rest/v1/profiles?select=id&limit=1"
+          
+          echo "Supabase ping completed at $(date)"
