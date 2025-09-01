@@ -12,10 +12,10 @@ const TermsOfService = () => {
 
   useEffect(() => {
     updateMetaTags(
-      "Terms of Service - Khalil Consultings",
-      "Read our terms of service to understand the conditions for using Khalil Consultings services.",
-      "https://khalilconsultings.com/consulting-meta-image.jpg",
-      "https://khalilconsultings.com/terms-of-service"
+      "Terms of Service - Kunda Pathways",
+      "Read our terms of service to understand the conditions for using Kunda Pathways services.",
+      "https://kundapathways.com/consulting-meta-image.jpg",
+      "https://kundapathways.com/terms-of-service"
     );
   }, []);
 

@@ -12,10 +12,10 @@ const PrivacyPolicy = () => {
 
   useEffect(() => {
     updateMetaTags(
-      "Privacy Policy - Khalil Consultings",
-      "Read our privacy policy to understand how Khalil Consultings protects your personal information and data.",
-      "https://khalilconsultings.com/consulting-meta-image.jpg",
-      "https://khalilconsultings.com/privacy-policy"
+      "Privacy Policy - Kunda Pathways",
+      "Read our privacy policy to understand how Kunda Pathways protects your personal information and data.",
+      "https://kundapathways.com/consulting-meta-image.jpg",
+      "https://kundapathways.com/privacy-policy"
     );
   }, []);
 

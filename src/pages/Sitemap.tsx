@@ -13,10 +13,10 @@ const Sitemap = () => {
 
   useEffect(() => {
     updateMetaTags(
-      "Sitemap - Khalil Consultings",
-      "Navigate through all pages and services offered by Khalil Consultings for Korean study abroad and F&B business consulting.",
-      "https://khalilconsultings.com/consulting-meta-image.jpg",
-      "https://khalilconsultings.com/sitemap"
+      "Sitemap - Kunda Pathways",
+      "Navigate through all pages and services offered by Kunda Pathways for Korean study abroad and F&B business consulting.",
+      "https://kundapathways.com/consulting-meta-image.jpg",
+      "https://kundapathways.com/sitemap"
     );
   }, []);
 

@@ -64,35 +64,30 @@ const StudyPrograms = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data, error } = await supabase
+        // Fetch ALL study-related services (both study-programs and study-abroad)
+        const { data: studyData, error: studyError } = await supabase
           .from('services')
           .select('*')
-          .eq('category', 'study-programs')
+          .in('category', ['study-programs', 'study-abroad'])
           .eq('is_active', true);
 
-        if (error) throw error;
-        setServices(data || []);
+        if (studyError) throw studyError;
+
+        // Separate study-abroad services for package calculation
+        const studyAbroadData = studyData?.filter(service => service.category === 'study-abroad') || [];
+        
+        setServices(studyData || []);
+        setStudyAbroadServices(studyAbroadData);
       } catch (error) {
         console.error('Error fetching services:', error);
+        setServices([]);
+        setStudyAbroadServices([]);
       } finally {
         setLoading(false);
       }
     };
 
-    const fetchStudyAbroadServices = async () => {
-      const { data } = await supabase
-        .from("services")
-        .select("*")
-        .eq("category", "study-abroad")
-        .eq("is_active", true);
-      
-      if (data) {
-        setStudyAbroadServices(data);
-      }
-    };
-
     fetchServices();
-    fetchStudyAbroadServices();
   }, []);
 
   // Calculate total price dynamically from all Study Abroad services with 29% discount
