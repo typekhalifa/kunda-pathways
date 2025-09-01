@@ -128,7 +128,6 @@ export const koTranslations: Translations = {
   latest: "최신",
   resourcesDescription: "가이드, 팁, 인사이트 컬렉션을 탐색하세요",
   viewAllResources: "모든 리소스 보기",
-  footerDescription: "한국 교육 및 F&B 비즈니스 성공을 위한 신뢰할 수 있는 파트너.",
   quickLinks: "빠른 링크",
   aboutUs: "회사 소개",
   legal: "법적 정보",
@@ -316,19 +315,12 @@ export const koTranslations: Translations = {
   
   // Footer
   footerDescription: "한국 교육 및 비즈니스 기회를 위한 전문 컨설팅 서비스.",
-  quickLinks: "빠른 링크",
-  about: "소개",
-  contact: "연락처",
-  resources: "리소스",
-  privacyPolicy: "개인정보처리방침",
-  termsOfService: "이용약관",
   copyright: "© 2025 Khalil Consultings. 모든 권리 보유.",
 
   // 404 page translations
   pageNotFound: "페이지를 찾을 수 없음",
   pageNotFoundDesc: "찾고 계신 페이지가 존재하지 않거나 이동되었습니다.",
   returnHome: "홈으로 돌아가기",
-};
 
   // Contact form translations
   readyToTakeNextStep: "여정의 다음 단계를 시작할 준비가 되셨나요? 모든 단계에서 도움을 드리겠습니다.",
@@ -380,9 +372,4 @@ export const koTranslations: Translations = {
   foodSafetyExcerpt: "아시아로 확장하는 F&B 기업을 위한 준수 요건 이해...",
   culturalAdaptationGuide: "국제 학생을 위한 문화 적응 가이드",
   culturalAdaptationExcerpt: "한국 문화와 학업 환경에 적응하기 위한 필수 팁...",
-  
-  // 404 page translations
-  pageNotFound: "페이지를 찾을 수 없습니다",
-  pageNotFoundDesc: "찾고 계신 페이지가 존재하지 않거나 이동되었습니다.",
-  returnHome: "홈으로 돌아가기",
 };
