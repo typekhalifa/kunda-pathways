@@ -175,7 +175,7 @@ const BookConsultation = () => {
                 {/* Phone and Company */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                    <label className="block text-sm font-medium mb-2 text-muted-foreground">
                       Phone Number
                     </label>
                     <Input 
@@ -183,34 +183,30 @@ const BookConsultation = () => {
                       placeholder="+250 7xx xxx xxx"
                       value={formData.phone}
                       onChange={(e) => handleInputChange("phone", e.target.value)}
-                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 
-                                text-slate-800 dark:text-white placeholder:text-slate-500 
-                                dark:placeholder:text-slate-400 rounded-xl"
+                      className="rounded-xl"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-                      Company Name <span className="text-xs text-slate-400">(Optional)</span>
+                    <label className="block text-sm font-medium mb-2 text-muted-foreground">
+                      Company Name <span className="text-xs text-muted-foreground/70">(Optional)</span>
                     </label>
                     <Input 
                       placeholder="e.g. ABC Global Ltd."
                       value={(formData as any).company || ""}
                       onChange={(e) => handleInputChange("company", e.target.value)}
-                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 
-                                text-slate-800 dark:text-white placeholder:text-slate-500 
-                                dark:placeholder:text-slate-400 rounded-xl"
+                      className="rounded-xl"
                     />
                   </div>
                 </div>
 
                 {/* Service Selection */}
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                  <label className="block text-sm font-medium mb-2 text-muted-foreground">
                     Select Services (Choose multiple)
                   </label>
                   <div className="grid gap-3">
                     {loading ? (
-                      <div className="text-center py-4">Loading services...</div>
+                      <div className="text-center py-4 text-muted-foreground">Loading services...</div>
                     ) : (
                       services.map((service) => (
                       <div
@@ -218,13 +214,13 @@ const BookConsultation = () => {
                         onClick={() => handleServiceToggle(service.id)}
                         className={`p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${
                           formData.selectedServices.includes(service.id)
-                            ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
-                            : "border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:border-blue-300"
+                            ? "border-primary bg-primary/10"
+                            : "border-border bg-card hover:border-primary/50"
                         }`}
                       >
                         <div className="flex justify-between items-center">
-                          <span className="text-slate-800 dark:text-white">{service.name}</span>
-                          <span className="text-blue-600 font-bold">
+                          <span className="text-foreground">{service.name}</span>
+                          <span className="text-primary font-bold">
                             {service.currency === 'USD' ? '$' : service.currency === 'EUR' ? '€' : ''}
                             {service.price.toLocaleString()} {service.currency}
                           </span>
@@ -238,34 +234,32 @@ const BookConsultation = () => {
                 {/* Preferred Date & Time */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                    <label className="block text-sm font-medium mb-2 text-muted-foreground">
                       Preferred Date
                     </label>
                     <Input 
                       type="date"
                       value={formData.preferredDate}
                       onChange={(e) => handleInputChange("preferredDate", e.target.value)}
-                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 
-                                text-slate-800 dark:text-white rounded-xl"
+                      className="rounded-xl"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                    <label className="block text-sm font-medium mb-2 text-muted-foreground">
                       Preferred Time
                     </label>
                     <Input 
                       type="time"
                       value={formData.preferredTime}
                       onChange={(e) => handleInputChange("preferredTime", e.target.value)}
-                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 
-                                text-slate-800 dark:text-white rounded-xl"
+                      className="rounded-xl"
                     />
                   </div>
                 </div>
 
                 {/* Message */}
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                  <label className="block text-sm font-medium mb-2 text-muted-foreground">
                     Message
                   </label>
                   <Textarea 
@@ -273,23 +267,21 @@ const BookConsultation = () => {
                     rows={5}
                     value={formData.message}
                     onChange={(e) => handleInputChange("message", e.target.value)}
-                    className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 
-                              text-slate-800 dark:text-white placeholder:text-slate-500 
-                              dark:placeholder:text-slate-400 rounded-xl"
+                    className="rounded-xl"
                   />
                 </div>
 
                 {/* Total Price and Submit */}
                 {formData.selectedServices.length > 0 && (
-                  <div className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-xl font-bold text-slate-800 dark:text-white">
-                    Total: <span className="text-blue-600">${getTotalPrice().toLocaleString()}</span>
+                  <div className="p-4 bg-primary/10 rounded-xl font-bold text-foreground">
+                    Total: <span className="text-primary">${getTotalPrice().toLocaleString()}</span>
                   </div>
                 )}
 
                 <Button 
                   type="submit"
                   disabled={formData.selectedServices.length === 0}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 rounded-xl"
                 >
                   Review Consultation Request
                 </Button>
@@ -299,17 +291,17 @@ const BookConsultation = () => {
           ) : (
             <div className="space-y-6">
               {/* Booking Details Card */}
-              <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border-0">
+              <Card className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg">
                 <CardHeader>
-                  <CardTitle className="text-2xl text-slate-800 dark:text-white">📋 Booking Details</CardTitle>
+                  <CardTitle className="text-2xl text-foreground">📋 Booking Details</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                      <label className="text-sm font-medium text-muted-foreground">
                         Full Name
                       </label>
-                      <p className="text-slate-800 dark:text-white">{formData.fullName}</p>
+                      <p className="text-foreground">{formData.fullName}</p>
                     </div>
                     <div>
                       <label className="text-sm font-medium text-slate-600 dark:text-slate-400">

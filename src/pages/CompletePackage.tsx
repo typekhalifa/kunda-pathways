@@ -99,60 +99,59 @@ const CompletePackage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/10">
       <Header />
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-2xl mx-auto space-y-8">
           <Link to="/">
-            <Button variant="outline" className="rounded-xl border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700">
+            <Button variant="outline" className="rounded-xl">
               <ArrowLeft size={16} className="mr-2" />
               Back to Home
             </Button>
           </Link>
 
           {currentStep === 1 ? (
-            <Card className="p-6 rounded-xl shadow-lg bg-white dark:bg-slate-800 border-0 space-y-6">
+            <Card className="p-6 rounded-xl shadow-lg bg-card space-y-6">
               <CardHeader>
-                <CardTitle className="text-3xl text-center text-blue-700 dark:text-white flex items-center justify-center">
-                  <GraduationCap className="mr-3 text-blue-600" size={32} />
+                <CardTitle className="text-3xl text-center text-primary flex items-center justify-center">
+                  <GraduationCap className="mr-3 text-primary" size={32} />
                   {serviceName} – ${totalPrice}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-slate-600 dark:text-slate-300 text-center">
+                <p className="text-muted-foreground text-center">
                   Fill in your details to start the full package process.
                 </p>
 
                 <Input
                   placeholder="Full Name"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white px-4 py-2"
+                  className="w-full rounded-xl"
                   value={formData.fullName}
                   onChange={(e) => handleInputChange("fullName", e.target.value)}
                 />
                 <Input
                   placeholder="Email"
                   type="email"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white px-4 py-2"
+                  className="w-full rounded-xl"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                 />
                 <Input
                   placeholder="Phone Number"
                   type="tel"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white px-4 py-2"
+                  className="w-full rounded-xl"
                   value={formData.phone}
                   onChange={(e) => handleInputChange("phone", e.target.value)}
                 />
                 <Textarea
                   placeholder="Your message (optional)"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white"
+                  className="w-full rounded-xl"
                   value={formData.message}
                   onChange={(e) => handleInputChange("message", e.target.value)}
                 />
 
-
                 <Button
-                  className="w-full bg-green-600 hover:bg-green-700 text-white"
+                  className="w-full"
                   onClick={handleSubmit}
                   disabled={loading}
                 >

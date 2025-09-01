@@ -129,7 +129,7 @@ const BookFBConsultation = () => {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      <div className="min-h-screen bg-gradient-to-br from-background to-secondary/10">
         <Header />
         <div className="flex items-center justify-center py-20">
           <div className="text-center">

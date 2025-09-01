@@ -101,7 +101,7 @@ const FBCompletePackage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/10">
       <Header />
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-2xl mx-auto space-y-8">
