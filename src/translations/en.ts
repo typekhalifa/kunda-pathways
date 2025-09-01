@@ -155,12 +155,12 @@ export const enTranslations: Translations = {
   tenMinRead: "10 min read",
   fifteenMinRead: "15 min read",
   sevenMinRead: "7 min read",
-  march152024: "March 15, 2024",
-  march102024: "March 10, 2024",
-  march52024: "March 5, 2024",
-  february282024: "February 28, 2024",
-  february202024: "February 20, 2024",
-  february152024: "February 15, 2024",
+  march152025: "March 15, 2025",
+  march102025: "March 10, 2025",
+  march52025: "March 5, 2025",
+  february282025: "February 28, 2025",
+  february202025: "February 20, 2025",
+  february152025: "February 15, 2025",
   johnDoe: "John Doe",
   readMore: "Read More",
   newsletterTitle: "Stay Updated with Global Opportunities",
@@ -179,6 +179,13 @@ export const enTranslations: Translations = {
   legal: "Legal",
   contactInfo: "Contact Info",
   allRightsReserved: "All rights reserved.",
+  
+  // Privacy and legal translations
+  optOutMarketing: "Opt-out of marketing communications",
+  dataPortability: "Data portability and transfer",
+  lastUpdatedMarch2025: "Last updated: March 2025",
+  questionsContact: "Questions? Contact us at privacy@kundapathways.com",
+  questionsContactLegal: "Questions? Contact us at legal@kundapathways.com",
   
   // 404 page translations
   pageNotFound: "Page Not Found",

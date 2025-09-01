@@ -131,22 +131,22 @@ const BookConsultation = () => {
   const total = getTotalPrice();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/10">
       <Header />
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-2xl mx-auto">
           {currentStep === 1 ? (
             <>
-              <h1 className="text-4xl font-bold text-center mb-8 text-slate-800 dark:text-white">
+              <h1 className="text-4xl font-bold text-center mb-8 text-foreground">
                 Book Consultation
               </h1>
 
-              <form onSubmit={handleSubmit} className="space-y-6 bg-white/80 dark:bg-slate-800/80 p-8 rounded-2xl shadow-lg border-0">
+              <form onSubmit={handleSubmit} className="space-y-6 bg-card/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-border">
 
                 {/* Full Name, Email */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                    <label className="block text-sm font-medium mb-2 text-muted-foreground">
                       Full Name
                     </label>
                     <Input 
@@ -154,13 +154,11 @@ const BookConsultation = () => {
                       value={formData.fullName}
                       onChange={(e) => handleInputChange("fullName", e.target.value)}
                       required
-                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 
-                                text-slate-800 dark:text-white placeholder:text-slate-500 
-                                dark:placeholder:text-slate-400 rounded-xl"
+                      className="rounded-xl"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
+                    <label className="block text-sm font-medium mb-2 text-muted-foreground">
                       Email
                     </label>
                     <Input 
@@ -169,9 +167,7 @@ const BookConsultation = () => {
                       value={formData.email}
                       onChange={(e) => handleInputChange("email", e.target.value)}
                       required
-                      className="bg-white dark:bg-slate-700 border-slate-300 dark:border-slate-600 
-                                text-slate-800 dark:text-white placeholder:text-slate-500 
-                                dark:placeholder:text-slate-400 rounded-xl"
+                      className="rounded-xl"
                     />
                   </div>
                 </div>
