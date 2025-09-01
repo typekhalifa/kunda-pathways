@@ -64,20 +64,17 @@ const StudyPrograms = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        // Fetch ALL study-related services (both study-programs and study-abroad)
+        // Fetch only study-abroad services to match all-services page
         const { data: studyData, error: studyError } = await supabase
           .from('services')
           .select('*')
-          .in('category', ['study-programs', 'study-abroad'])
+          .eq('category', 'study-abroad')
           .eq('is_active', true);
 
         if (studyError) throw studyError;
 
-        // Separate study-abroad services for package calculation
-        const studyAbroadData = studyData?.filter(service => service.category === 'study-abroad') || [];
-        
         setServices(studyData || []);
-        setStudyAbroadServices(studyAbroadData);
+        setStudyAbroadServices(studyData || []);
       } catch (error) {
         console.error('Error fetching services:', error);
         setServices([]);
