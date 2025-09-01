@@ -5,109 +5,95 @@ import { GraduationCap, TrendingUp, Users, Globe, ArrowRight, CheckCircle, Star,
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 const Services = () => {
   const { translations } = useLanguage();
+  const [studyServices, setStudyServices] = useState([]);
+  const [fbServices, setFbServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Hardcoded services data
-  const studyServices = [
-    {
-      title: "Scholarship Guidance",
-      description: "Expert guidance for finding and applying to scholarships in Korea",
-      features: [
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        // Fetch study programs services
+        const { data: studyData, error: studyError } = await supabase
+          .from('services')
+          .select('*')
+          .eq('category', 'study-programs')
+          .eq('is_active', true)
+          .limit(4);
+
+        if (studyError) throw studyError;
+
+        // Fetch F&B services
+        const { data: fbData, error: fbError } = await supabase
+          .from('services')
+          .select('*')
+          .eq('category', 'fb-consulting')
+          .eq('is_active', true)
+          .limit(4);
+
+        if (fbError) throw fbError;
+
+        setStudyServices(studyData || []);
+        setFbServices(fbData || []);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
+  const getServiceIcon = (name) => {
+    const serviceName = name.toLowerCase();
+    if (serviceName.includes('scholarship')) {
+      return <Award className="w-6 h-6 text-blue-600" />;
+    } else if (serviceName.includes('university') || serviceName.includes('admission')) {
+      return <GraduationCap className="w-6 h-6 text-green-600" />;
+    } else if (serviceName.includes('visa')) {
+      return <Globe className="w-6 h-6 text-purple-600" />;
+    } else if (serviceName.includes('language') || serviceName.includes('korean')) {
+      return <Users className="w-6 h-6 text-orange-600" />;
+    } else if (serviceName.includes('market') || serviceName.includes('strategy')) {
+      return <TrendingUp className="w-6 h-6 text-green-600" />;
+    } else {
+      return <GraduationCap className="w-6 h-6 text-blue-600" />;
+    }
+  };
+
+  const getServiceFeatures = (name) => {
+    const serviceName = name.toLowerCase();
+    if (serviceName.includes('scholarship')) {
+      return [
         translations.scholarshipSearch || "Scholarship search",
         translations.applicationAssistance || "Application assistance", 
         translations.documentPreparation || "Document preparation"
-      ],
-      price: "100"
-    },
-    {
-      title: "University Admissions", 
-      description: "Complete support for Korean university admission process",
-      features: [
+      ];
+    } else if (serviceName.includes('university') || serviceName.includes('admission')) {
+      return [
         translations.universitySelection || "University selection",
         translations.applicationReview || "Application review",
         translations.interviewPreparation || "Interview preparation"
-      ],
-      price: "70"
-    },
-    {
-      title: "Visa Application Assistance",
-      description: "Professional help with Korean student visa applications", 
-      features: [
+      ];
+    } else if (serviceName.includes('visa')) {
+      return [
         translations.documentPreparation || "Document preparation",
         translations.applicationFiling || "Application filing",
         translations.interviewCoaching || "Interview coaching"
-      ],
-      price: "100"
-    },
-    {
-      title: "Korean Language Preparation",
-      description: "Comprehensive Korean language preparation program",
-      features: [
+      ];
+    } else if (serviceName.includes('language') || serviceName.includes('korean')) {
+      return [
         translations.topikPreparation || "TOPIK preparation",
         translations.conversationPractice || "Conversation practice", 
         translations.culturalOrientation || "Cultural orientation"
-      ],
-      price: "80"
-    }
-  ];
-
-  const fbServices = [
-    {
-      title: "Market Entry Strategy",
-      description: "Strategic market analysis and entry planning for Korean F&B market",
-      features: [
-        translations.marketResearch || "Market research",
-        translations.businessPlanning || "Business planning",
-        translations.strategyDevelopment || "Strategy development"
-      ],
-      price: "200"
-    },
-    {
-      title: "Regulatory Compliance",
-      description: "Food safety and regulatory compliance guidance",
-      features: [
-        translations.safetyStandards || "Safety standards", 
-        translations.certificationSupport || "Certification support",
-        translations.complianceAudits || "Compliance audits"
-      ],
-      price: "150"
-    },
-    {
-      title: "Food Product Development", 
-      description: "Product development and innovation support",
-      features: [
-        translations.recipeDevelopment || "Recipe development",
-        translations.productTesting || "Product testing",
-        translations.regulatoryCompliance || "Regulatory compliance"
-      ],
-      price: "250"
-    },
-    {
-      title: "Supply Chain Optimization",
-      description: "Optimize your supply chain for the Korean market",
-      features: [
-        "Supplier identification",
-        "Cost optimization",
-        "Quality assurance"
-      ],
-      price: "180"
-    }
-  ];
-
-  const getServiceIcon = (title) => {
-    switch (title.toLowerCase()) {
-      case 'scholarship guidance':
-        return <Award className="w-6 h-6 text-blue-600" />;
-      case 'university admissions':
-        return <GraduationCap className="w-6 h-6 text-green-600" />;
-      case 'visa application assistance':
-        return <Globe className="w-6 h-6 text-purple-600" />;
-      case 'korean language preparation':
-        return <Users className="w-6 h-6 text-orange-600" />;
-      default:
-        return <GraduationCap className="w-6 h-6 text-blue-600" />;
+      ];
+    } else {
+      return ["Professional guidance", "Expert support", "Personalized assistance"];
     }
   };
 
@@ -149,25 +135,31 @@ const Services = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {studyServices.map((service, index) => (
-              <Card key={index} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-card dark:bg-card hover:scale-105">
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-3">
-                    {getServiceIcon(service.title)}
-                  </div>
-                  <h4 className="text-lg font-semibold mb-3 text-foreground">{service.title}</h4>
-                  <p className="text-muted-foreground mb-4 text-sm">{service.description}</p>
-                  <ul className="space-y-2">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-muted-foreground">
-                        <CheckCircle size={14} className="text-blue-600 mr-2" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
+            {loading ? (
+              <div className="col-span-full text-center py-8">
+                <div className="text-muted-foreground">Loading services...</div>
+              </div>
+            ) : (
+              studyServices.map((service) => (
+                <Card key={service.id} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-card dark:bg-card hover:scale-105">
+                  <CardContent className="p-6">
+                    <div className="flex items-center mb-3">
+                      {getServiceIcon(service.name)}
+                    </div>
+                    <h4 className="text-lg font-semibold mb-3 text-foreground">{service.name}</h4>
+                    <p className="text-muted-foreground mb-4 text-sm">{service.description}</p>
+                    <ul className="space-y-2">
+                      {getServiceFeatures(service.name).map((feature, idx) => (
+                        <li key={idx} className="flex items-center text-sm text-muted-foreground">
+                          <CheckCircle size={14} className="text-blue-600 mr-2" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))
+            )}
           </div>
           
           <div className="text-center">
@@ -190,25 +182,31 @@ const Services = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {fbServices.map((service, index) => (
-              <Card key={index} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-card dark:bg-card hover:scale-105">
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-3">
-                    <TrendingUp className="w-6 h-6 text-green-600" />
-                  </div>
-                  <h4 className="text-lg font-semibold mb-3 text-foreground">{service.title}</h4>
-                  <p className="text-muted-foreground mb-4 text-sm">{service.description}</p>
-                  <ul className="space-y-2">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-muted-foreground">
-                        <CheckCircle size={14} className="text-green-600 mr-2" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
+            {loading ? (
+              <div className="col-span-full text-center py-8">
+                <div className="text-muted-foreground">Loading services...</div>
+              </div>
+            ) : (
+              fbServices.map((service) => (
+                <Card key={service.id} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-card dark:bg-card hover:scale-105">
+                  <CardContent className="p-6">
+                    <div className="flex items-center mb-3">
+                      {getServiceIcon(service.name)}
+                    </div>
+                    <h4 className="text-lg font-semibold mb-3 text-foreground">{service.name}</h4>
+                    <p className="text-muted-foreground mb-4 text-sm">{service.description}</p>
+                    <ul className="space-y-2">
+                      {getServiceFeatures(service.name).map((feature, idx) => (
+                        <li key={idx} className="flex items-center text-sm text-muted-foreground">
+                          <CheckCircle size={14} className="text-green-600 mr-2" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))
+            )}
           </div>
           
           <div className="text-center">
