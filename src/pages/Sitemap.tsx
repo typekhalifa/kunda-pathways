@@ -1,13 +1,24 @@
 
+import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Map, Home, Briefcase, User, Mail, FileText, Shield, Scale } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { updateMetaTags } from "@/utils/updateMetaTags";
 
 const Sitemap = () => {
   const { translations } = useLanguage();
+
+  useEffect(() => {
+    updateMetaTags(
+      "Sitemap - Khalil Consultings",
+      "Navigate through all pages and services offered by Khalil Consultings for Korean study abroad and F&B business consulting.",
+      "https://khalilconsultings.com/consulting-meta-image.jpg",
+      "https://khalilconsultings.com/sitemap"
+    );
+  }, []);
 
   const siteLinks = [
     {

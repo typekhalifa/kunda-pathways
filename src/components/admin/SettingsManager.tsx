@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Loader2, KeyRound, User, Shield, Save, Upload, Edit, UserPlus, Users, Globe, Mail, Phone, MessageCircle, MapPin } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { updateMetaTags } from '@/utils/updateMetaTags';
 
 const SettingsManager = () => {
   const { profile, updatePassword } = useAuth();
@@ -321,6 +322,16 @@ const SettingsManager = () => {
         updateSetting('contact', formData.contact),
         updateSetting('social', formData.social)
       ]);
+
+      // Update meta tags immediately
+      if (formData.site_info.title && formData.site_info.description) {
+        updateMetaTags(
+          formData.site_info.title,
+          formData.site_info.description,
+          "https://khalilconsultings.com/consulting-meta-image.jpg",
+          "https://khalilconsultings.com/"
+        );
+      }
     } catch (error) {
       console.error('Error saving settings:', error);
     } finally {

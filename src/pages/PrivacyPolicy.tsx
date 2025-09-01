@@ -1,12 +1,23 @@
 
+import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Shield, Eye, Lock, Database, Users, FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { updateMetaTags } from "@/utils/updateMetaTags";
 
 const PrivacyPolicy = () => {
   const { translations } = useLanguage();
+
+  useEffect(() => {
+    updateMetaTags(
+      "Privacy Policy - Khalil Consultings",
+      "Read our privacy policy to understand how Khalil Consultings protects your personal information and data.",
+      "https://khalilconsultings.com/consulting-meta-image.jpg",
+      "https://khalilconsultings.com/privacy-policy"
+    );
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">

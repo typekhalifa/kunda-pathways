@@ -314,22 +314,21 @@ export const koTranslations: Translations = {
   closed: "휴무",
   learnMore: "더 알아보기",
   
-  // Quality control and research related
-  qualityControlConsultation: "식품 품질 관리",
-  qualityControlDescription: "식품 안전 및 품질 보증에 대한 전문가 지침",
-  researchGuidance: "연구 주제 지침",
-  researchDescription: "학술 연구 주제 선택에 대한 전문적 지원",
-  thesisEditing: "논문 편집 및 검토",
-  thesisDescription: "학술 논문을 위한 종합적인 편집 서비스",
-  journalPublication: "학술지 논문 게재",
-  journalDescription: "학술 출판을 위한 완전한 지원",
-  labConsulting: "실험실 설치",
-  labDescription: "식품과학 실험실 설치를 위한 기술 지침",
-  nutritionAnalysis: "영양 분석",
-  nutritionDescription: "전문적인 영양 분석 및 라벨링 지원",
-  
-  supplyChainOptimization: "공급망 최적화",
-  advisorDescription: "국제 교육 컨설팅 분야에서 8년 이상의 경험과 식품과학 석사 학위를 바탕으로, 500명 이상의 학생들이 학업 목표를 달성하도록 도왔으며 전략적 F&B 컨설팅을 통해 수많은 기업의 글로벌 확장을 지원했습니다.",
+  // Footer
+  footerDescription: "한국 교육 및 비즈니스 기회를 위한 전문 컨설팅 서비스.",
+  quickLinks: "빠른 링크",
+  about: "소개",
+  contact: "연락처",
+  resources: "리소스",
+  privacyPolicy: "개인정보처리방침",
+  termsOfService: "이용약관",
+  copyright: "© 2025 Khalil Consultings. 모든 권리 보유.",
+
+  // 404 page translations
+  pageNotFound: "페이지를 찾을 수 없음",
+  pageNotFoundDesc: "찾고 계신 페이지가 존재하지 않거나 이동되었습니다.",
+  returnHome: "홈으로 돌아가기",
+};
 
   // Contact form translations
   readyToTakeNextStep: "여정의 다음 단계를 시작할 준비가 되셨나요? 모든 단계에서 도움을 드리겠습니다.",

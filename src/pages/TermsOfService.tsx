@@ -1,12 +1,23 @@
 
+import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Scale, FileCheck, AlertTriangle, Users, Globe, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { updateMetaTags } from "@/utils/updateMetaTags";
 
 const TermsOfService = () => {
   const { translations } = useLanguage();
+
+  useEffect(() => {
+    updateMetaTags(
+      "Terms of Service - Khalil Consultings",
+      "Read our terms of service to understand the conditions for using Khalil Consultings services.",
+      "https://khalilconsultings.com/consulting-meta-image.jpg",
+      "https://khalilconsultings.com/terms-of-service"
+    );
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
