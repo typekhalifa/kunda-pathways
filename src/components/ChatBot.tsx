@@ -36,11 +36,23 @@ const ChatBot = () => {
       keywords.some(keyword => message.includes(keyword.toLowerCase()));
     
     const hasAllKeywords = (keywords: string[]) => 
-      keywords.every(keyword => keywords.includes(keyword.toLowerCase()));
+      keywords.every(keyword => message.includes(keyword.toLowerCase()));
 
-    // Greeting responses
-    if (hasKeywords(['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening']) || message === '') {
-      return "Hello! 👋 Welcome to Kunda Pathways! I'm Aria, your dedicated assistant for study abroad and F&B consulting services.\n\n★ I can help you with:\n• Korea & Asia study abroad opportunities\n• KGSP scholarship applications (85% success rate!)\n• F&B market entry consulting\n• Visa applications & documentation\n• University admissions guidance\n\n✨ What would you like to explore today?";
+    // More specific keyword matching to avoid overlaps
+    const isSpecificQuery = (primary: string[], secondary: string[] = []) => {
+      const hasPrimary = hasKeywords(primary);
+      const hasSecondary = secondary.length === 0 || hasKeywords(secondary);
+      return hasPrimary && hasSecondary;
+    };
+
+    // Greeting responses (consolidated and improved)
+    if (hasKeywords(['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening']) || message === '' || message === 'start') {
+      const greetings = [
+        "Hello! 👋 Welcome to Kunda Pathways! I'm Aria, your dedicated assistant for study abroad and F&B consulting services.\n\n★ I can help you with:\n• Korea & Asia study abroad opportunities\n• KGSP scholarship applications (85% success rate!)\n• F&B market entry consulting\n• Visa applications & documentation\n• University admissions guidance\n\n✨ What would you like to explore today?",
+        "Hi there! 🌟 I'm Aria from Kunda Pathways! I specialize in helping with:\n\n📚 Study Abroad Services:\n• Korean university admissions\n• KGSP scholarships (85% success rate!)\n• Asian education opportunities\n\n🍽️ F&B Consulting:\n• Market entry strategies\n• Business development\n• Korean market expertise\n\nWhat brings you here today?",
+        "Welcome to Kunda Pathways! 🎯 I'm Aria, your personal consultant for:\n\n🌏 Global Education:\n• Korea, Japan, Singapore, China\n• Scholarship guidance & applications\n• Complete admission support\n\n💼 F&B Business:\n• Market analysis & strategy\n• Restaurant/cafe development\n• Complete business packages\n\nHow can I help you today?"
+      ];
+      return greetings[Math.floor(Math.random() * greetings.length)];
     }
 
     // F&B Consulting Services - Enhanced section
@@ -166,50 +178,89 @@ const ChatBot = () => {
       return "★ Connect with Our Human Experts!\n\n★ Direct Contact:\n- Phone/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n★ Business Hours:\n- Monday-Friday: 8 AM - 6 PM (EAT)\n- Saturday: 9 AM - 2 PM (EAT)\n- Emergency support available\n\n★ Or book a consultation: Our expert advisors are ready to discuss your goals in detail!\n\nWould you like me to help you schedule a call with our team right now?";
     }
     
-    // Enhanced Study in Korea related queries
-    if (message.includes('study') || message.includes('education') || message.includes('scholarship')) {
-      if (message.includes('scholarship')) {
+    // Enhanced Study in Korea related queries (more specific matching)
+    if (isSpecificQuery(['study', 'education']) && !hasKeywords(['f&b', 'food', 'restaurant', 'business consulting'])) {
+      if (hasKeywords(['scholarship', 'funding', 'financial aid'])) {
         return "★ Comprehensive Scholarship Guide for Korea & Asia:\n\n★ Korean Scholarships:\n• KGSP: Full coverage + living allowance\n• University scholarships: 25-100% tuition\n• Provincial government scholarships\n• Private foundation scholarships\n\n★ Other Asian Scholarships:\n• Japan: MEXT scholarships\n• Singapore: Government scholarships\n• China: Chinese Government Scholarships\n• Hong Kong: HKPFS for research\n\n★ Our Success Statistics:\n• KGSP: 85%+ acceptance rate\n• University scholarships: 90%+ rate\n• Complete application support\n• Interview preparation included\n\nReady to apply? Let's discuss your scholarship strategy!";
       }
       return "★ Comprehensive Study Abroad Services for Asia:\n\n★ Our Specialties:\n• Korea: Complete university & scholarship support\n• Japan: University admissions & MEXT scholarships\n• Singapore: NUS, NTU applications\n• China: Top university placements\n• Hong Kong: Research & business programs\n\n★ Complete Support Package:\n• University selection & applications\n• Scholarship applications & strategies\n• Visa processing & documentation\n• Language preparation (Korean/Japanese/Chinese)\n• Pre-departure orientation\n• Post-arrival support\n\n★ Investment: Starting from $200\n★ Success Rate: 95%+ admissions\n\nReady to start your Asian education journey?";
     }
     
-    // F&B Consulting related queries
-    if (message.includes('food') || message.includes('beverage') || message.includes('restaurant') || message.includes('business') || message.includes('consulting')) {
-      return "★ F&B Market Entry Support: Business planning, market analysis, menu development, regulatory compliance, and operational setup. Our complete package is $12,000 (25% discount available!). We have MSc Food Science expertise and Korean market specialization. Ready to expand your F&B business?";
+    // F&B Consulting related queries (more specific)
+    if (isSpecificQuery(['f&b', 'food', 'beverage', 'restaurant']) || 
+        (hasKeywords(['business']) && hasKeywords(['consulting', 'development', 'planning']))) {
+      const responses = [
+        "★ F&B Market Entry Support: Complete business planning, market analysis, menu development, regulatory compliance, and operational setup. Our package is $12,000 (25% discount available!). We have MSc Food Science expertise and Korean market specialization. Ready to expand your F&B business?",
+        "★ Professional F&B Consulting: We specialize in restaurant & cafe development, market entry strategies, and business growth. Our comprehensive package includes market research, menu engineering, and operational setup. Current offer: $12,000 (save 25%!). Shall we discuss your F&B goals?",
+        "★ F&B Business Development: From concept to launch, we provide complete consulting services. Market analysis, business planning, menu development, and Korean market expertise. Investment: $12,000 with current 25% discount. Ready to transform your F&B vision into reality?"
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];
     }
     
-    // Contact information queries
-    if (message.includes('contact') || message.includes('phone') || message.includes('reach')) {
+    // Contact information queries (more specific)
+    if (isSpecificQuery(['contact', 'phone', 'reach', 'call', 'email']) && !hasKeywords(['book', 'schedule'])) {
       return "📞 Contact Us: Phone/WhatsApp: +250 788 123 456 | 📧 Email: info@kundapathways.com | ⏰ Hours: Mon-Fri 8AM-6PM, Sat 9AM-2PM (EAT). Would you prefer a scheduled consultation or immediate contact?";
     }
     
-    // Greetings
-    if (message.includes('hello') || message.includes('hi') || message.includes('hey') || message.includes('good')) {
-      return "Hello! 👋 Welcome to Kunda Pathways! I'm Aria, your personal assistant. I can help you with Study Abroad opportunities in Korea or F&B business consulting. What brings you here today? Are you interested in education or business consulting?";
+    // Thanks (varied responses)
+    if (hasKeywords(['thank', 'appreciate', 'grateful'])) {
+      const thanks = [
+        "You're absolutely welcome! 😊 I'm here to help you achieve your goals. Remember, we offer FREE 15-minute consultations with our expert advisors. Feel free to ask me anything else!",
+        "My pleasure! 🌟 I'm glad I could help. Don't forget about our complimentary 15-minute consultation with our specialists. What else can I assist you with?",
+        "Happy to help! ✨ Remember, our expert advisors are available for FREE 15-minute consultations. Is there anything else you'd like to know about our services?"
+      ];
+      return thanks[Math.floor(Math.random() * thanks.length)];
     }
     
-    // Thanks
-    if (message.includes('thank') || message.includes('appreciate')) {
-      return "You're absolutely welcome! 😊 I'm here to help you achieve your goals. Remember, we offer FREE 15-minute consultations with our expert advisors. Feel free to ask me anything else about our services!";
+    // Goodbye (varied responses)
+    if (hasKeywords(['bye', 'goodbye', 'see you', 'talk later'])) {
+      const goodbyes = [
+        "Thank you for chatting with me! 👋 Before you go, remember our FREE 15-minute consultation offer. Whether it's studying in Korea or F&B consulting, we're here to support your dreams. Have a wonderful day!",
+        "It was great talking with you! 🌟 Don't forget our complimentary consultation - it's a great way to get personalized advice for your goals. Take care and feel free to return anytime!",
+        "Goodbye for now! 🎯 Remember, we're just a message away when you're ready to take the next step. Our FREE consultation is always available. Wishing you success in your journey!"
+      ];
+      return goodbyes[Math.floor(Math.random() * goodbyes.length)];
     }
     
-    // Goodbye
-    if (message.includes('bye') || message.includes('goodbye')) {
-      return "Thank you for chatting with me! 👋 Before you go, remember our FREE 15-minute consultation offer. Whether it's studying in Korea or F&B consulting, we're here to support your dreams. Have a wonderful day!";
-    }
-    
-    // Default response with smart suggestions
-    const commonQuestions = [
-      "📋 How to book a consultation",
-      "💵 Service pricing information", 
-      "💳 Payment methods accepted",
-      "📍 Our location & contact info",
-      "🎓 Korean university applications",
-      "🍽 F&B business consulting"
+    // Default response with smart suggestions (varied responses)
+    const defaultResponses = [
+      {
+        intro: "I'd be happy to help! 🤖 Here are some topics I can assist with:",
+        questions: [
+          "📋 How to book a consultation",
+          "💵 Service pricing information", 
+          "💳 Payment methods accepted",
+          "📍 Our location & contact info",
+          "🎓 Korean university applications",
+          "🍽 F&B business consulting"
+        ]
+      },
+      {
+        intro: "Let me help you find what you're looking for! 🌟 I specialize in:",
+        questions: [
+          "🌏 Study abroad opportunities in Korea & Asia",
+          "💰 Scholarship applications & guidance",
+          "🍴 F&B market entry consulting",
+          "📞 Booking consultations with our experts",
+          "💳 Payment options & pricing",
+          "📍 Contact information & office hours"
+        ]
+      },
+      {
+        intro: "I'm here to guide you! ✨ Popular topics include:",
+        questions: [
+          "🎯 KGSP scholarship applications (85% success rate)",
+          "🏫 Korean university admissions",
+          "🍽️ Restaurant & F&B business development",
+          "💼 Market entry strategies",
+          "📅 Scheduling expert consultations",
+          "💬 Direct contact with our team"
+        ]
+      }
     ];
     
-    return `I'd be happy to help! 🤖 Here are some topics I can assist with:\n\n${commonQuestions.join('\n')}\n\n💬 Just ask me about any of these, or feel free to ask anything else!\n\n🆓 Remember: We offer FREE 15-minute consultations with our expert advisors. Would you like me to help you schedule one?`;
+    const randomResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+    return `${randomResponse.intro}\n\n${randomResponse.questions.join('\n')}\n\n💬 Just ask me about any of these, or feel free to ask anything else!\n\n🆓 Remember: We offer FREE 15-minute consultations with our expert advisors. Would you like me to help you schedule one?`;
   }, []);
 
   const handleSendMessage = useCallback(() => {
