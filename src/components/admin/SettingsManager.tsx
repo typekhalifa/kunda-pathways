@@ -10,6 +10,7 @@ import { useWebsiteSettings } from '@/hooks/useWebsiteSettings';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Loader2, KeyRound, User, Shield, Save, Upload, Edit, UserPlus, Users, Globe, Mail, Phone, MessageCircle, MapPin } from 'lucide-react';
+import HeroStatsManager from './HeroStatsManager';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { updateMetaTags } from '@/utils/updateMetaTags';
 
@@ -799,6 +800,22 @@ const SettingsManager = () => {
         {/* Content Management */}
         <TabsContent value="content">
           <div className="space-y-6">
+            {/* Hero Statistics Management */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Globe className="w-5 h-5 mr-2" />
+                  Hero Section Statistics
+                </CardTitle>
+                <CardDescription>
+                  Manage the statistics displayed on your homepage hero section
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <HeroStatsManager />
+              </CardContent>
+            </Card>
+
             {/* Contact Information */}
             <Card>
               <CardHeader>
