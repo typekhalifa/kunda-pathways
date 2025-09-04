@@ -39,8 +39,8 @@ const Hero = () => {
           title: content.title || translations.heroTitle || "Your Gateway to Global Education and Business Success",
           subtitle: content.subtitle || translations.heroSubtitle || "Expert guidance for Korean university admissions, scholarships, and F&B business consulting",
           backgroundImage: content.backgroundImage || "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-          studentsCount: content.studentsCount || 53,
-          countriesCount: content.countriesCount || 13
+          studentsCount: parseInt(content.studentsCount) || 53,
+          countriesCount: parseInt(content.countriesCount) || 13
         });
       } else {
         setHeroContent({
