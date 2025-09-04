@@ -79,6 +79,7 @@ const Services = () => {
 
   const getServiceFeatures = (name) => {
     const serviceName = name.toLowerCase();
+    // Study abroad services
     if (serviceName.includes('scholarship')) {
       return [
         translations.scholarshipSearch || "Scholarship search",
@@ -103,7 +104,35 @@ const Services = () => {
         translations.conversationPractice || "Conversation practice", 
         translations.culturalOrientation || "Cultural orientation"
       ];
-    } else {
+    }
+    // F&B consulting services
+    else if (serviceName.includes('market') || serviceName.includes('strategy') || serviceName.includes('entry')) {
+      return [
+        "Comprehensive market analysis and entry strategy",
+        "Professional guidance",
+        "Expert support"
+      ];
+    } else if (serviceName.includes('regulatory') || serviceName.includes('compliance') || serviceName.includes('safety')) {
+      return [
+        "Navigate food safety regulations",
+        "Professional guidance", 
+        "Expert support"
+      ];
+    } else if (serviceName.includes('product') || serviceName.includes('development')) {
+      return [
+        "Develop products for Asian markets",
+        "Professional guidance",
+        "Expert support"
+      ];
+    } else if (serviceName.includes('supply') || serviceName.includes('chain') || serviceName.includes('optimization')) {
+      return [
+        "Optimize supply chain efficiency",
+        "Professional guidance",
+        "Expert support"
+      ];
+    }
+    // Default fallback
+    else {
       return ["Professional guidance", "Expert support", "Personalized assistance"];
     }
   };
