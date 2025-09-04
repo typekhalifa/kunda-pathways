@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Mail, Sparkles, Gift, CheckCircle } from 'lucide-react';
+import { Mail, Sparkles, Gift, CheckCircle, Shield, Clock } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -190,9 +190,20 @@ const Newsletter = () => {
                   )}
                 </Button>
                 
-                <p className="text-xs text-center text-slate-500 dark:text-slate-400">
-                  📧 Weekly updates • 🚫 No spam • ✨ Unsubscribe anytime
-                </p>
+                <div className="flex items-center justify-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>Weekly updates</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Shield className="w-3 h-3" />
+                    <span>No spam</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Unsubscribe anytime</span>
+                  </div>
+                </div>
               </form>
             </CardContent>
           </Card>

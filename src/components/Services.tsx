@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, TrendingUp, Users, Globe, ArrowRight, CheckCircle, Star, Sparkles, Award } from "lucide-react";
+import { GraduationCap, TrendingUp, Users, Globe, ArrowRight, CheckCircle, Star, Sparkles, Award, ShieldCheck, Package, Truck, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
@@ -51,6 +51,7 @@ const Services = () => {
 
   const getServiceIcon = (name) => {
     const serviceName = name.toLowerCase();
+    // Study abroad services
     if (serviceName.includes('scholarship')) {
       return <Award className="w-6 h-6 text-blue-600" />;
     } else if (serviceName.includes('university') || serviceName.includes('admission')) {
@@ -59,10 +60,20 @@ const Services = () => {
       return <Globe className="w-6 h-6 text-purple-600" />;
     } else if (serviceName.includes('language') || serviceName.includes('korean')) {
       return <Users className="w-6 h-6 text-orange-600" />;
-    } else if (serviceName.includes('market') || serviceName.includes('strategy')) {
-      return <TrendingUp className="w-6 h-6 text-green-600" />;
-    } else {
-      return <GraduationCap className="w-6 h-6 text-blue-600" />;
+    }
+    // F&B consulting services
+    else if (serviceName.includes('market') || serviceName.includes('strategy') || serviceName.includes('entry')) {
+      return <Target className="w-6 h-6 text-green-600" />;
+    } else if (serviceName.includes('regulatory') || serviceName.includes('compliance') || serviceName.includes('safety')) {
+      return <ShieldCheck className="w-6 h-6 text-blue-600" />;
+    } else if (serviceName.includes('product') || serviceName.includes('development')) {
+      return <Package className="w-6 h-6 text-purple-600" />;
+    } else if (serviceName.includes('supply') || serviceName.includes('chain') || serviceName.includes('optimization')) {
+      return <Truck className="w-6 h-6 text-orange-600" />;
+    }
+    // Default fallback
+    else {
+      return <TrendingUp className="w-6 h-6 text-blue-600" />;
     }
   };
 
