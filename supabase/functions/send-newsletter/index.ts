@@ -181,10 +181,14 @@ const handler = async (req: Request): Promise<Response> => {
     for (const [batchIndex, batch] of batches.entries()) {
       console.log(`Processing batch ${batchIndex + 1}/${batches.length} with ${batch.length} emails`);
       
-      const emailPromises = batch.map(async (subscriber) => {
+      const emailPromises = batch.map(async (subscriber, index) => {
         try {
-          console.log(`Attempting to send email to: ${subscriber.email}`);
+          // Add delay between emails to respect rate limits (2 requests per second)
+          if (index > 0) {
+            await new Promise(resolve => setTimeout(resolve, 600)); // 600ms delay
+          }
           
+          console.log(`Attempting to send email to: ${subscriber.email}`);
           console.log(`Sending email to: ${subscriber.email} with subject: ${subject}`);
           
           const emailResult = await resend.emails.send({

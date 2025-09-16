@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; text-align: center;">
             <p style="margin: 0; color: #64748b; font-size: 14px;">
               Best regards,<br>
-              <strong>Africa Korea Connect Team</strong><br>
+              <strong>Kunda Pathways Team</strong><br>
               Your Gateway to Global Education and Business Success
             </p>
           </div>
