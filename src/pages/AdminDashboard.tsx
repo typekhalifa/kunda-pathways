@@ -24,7 +24,8 @@ import {
   Plus,
   BarChart3,
   Mail,
-  DollarSign
+  DollarSign,
+  GraduationCap
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -249,6 +250,13 @@ const AdminDashboard = () => {
       icon: Mail,
       href: '/admin/newsletter',
       color: 'text-cyan-600'
+    },
+    {
+      title: 'Scholarships',
+      description: 'Manage scholarship opportunities',
+      icon: GraduationCap,
+      href: '/admin/scholarships',
+      color: 'text-yellow-600'
     }
   ];
 

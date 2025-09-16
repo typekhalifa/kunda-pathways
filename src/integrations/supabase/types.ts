@@ -568,6 +568,75 @@ export type Database = {
         }
         Relationships: []
       }
+      scholarships: {
+        Row: {
+          amount: string
+          application_process: string | null
+          country: string | null
+          created_at: string
+          currency: string
+          deadline: string
+          description: string
+          display_order: number | null
+          education_level: string
+          eligibility_criteria: string
+          external_link: string | null
+          field_of_study: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          is_featured: boolean
+          provider: string
+          requirements: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          amount: string
+          application_process?: string | null
+          country?: string | null
+          created_at?: string
+          currency?: string
+          deadline: string
+          description: string
+          display_order?: number | null
+          education_level?: string
+          eligibility_criteria: string
+          external_link?: string | null
+          field_of_study?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_featured?: boolean
+          provider: string
+          requirements: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: string
+          application_process?: string | null
+          country?: string | null
+          created_at?: string
+          currency?: string
+          deadline?: string
+          description?: string
+          display_order?: number | null
+          education_level?: string
+          eligibility_criteria?: string
+          external_link?: string | null
+          field_of_study?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_featured?: boolean
+          provider?: string
+          requirements?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       security_audit_log: {
         Row: {
           action: string

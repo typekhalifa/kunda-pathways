@@ -11,6 +11,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
+import Scholarships from "./pages/Scholarships";
 import BookConsultation from "./pages/BookConsultation";
 import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
@@ -35,6 +36,7 @@ import AdminConsultations from "./pages/AdminConsultations";
 import ContentManager from '@/components/admin/ContentManager';
 import MessagesManager from '@/components/admin/MessagesManager';
 import ConsultationsManager from '@/components/admin/ConsultationsManager';
+import ScholarshipsManager from '@/components/admin/ScholarshipsManager';
 import ServicesManager from '@/components/admin/ServicesManager';
 import PackagesManager from '@/components/admin/PackagesManager';
 import BookStudyAbroadConsultation from '@/pages/BookStudyAbroadConsultation';
@@ -49,22 +51,20 @@ const AdminContent = () => (
     <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link to="/admin/dashboard">
-              <Button variant="outline" size="sm">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Dashboard
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-                Content Management
-              </h1>
-              <p className="text-slate-600 dark:text-slate-400">
-                Manage your website content and settings
-              </p>
-            </div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+              Content Management
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400">
+              Manage website content and sections
+            </p>
           </div>
+          <Link to="/admin/dashboard">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
@@ -79,22 +79,20 @@ const AdminMessages = () => (
     <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link to="/admin/dashboard">
-              <Button variant="outline" size="sm">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Dashboard
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-                Contact Messages
-              </h1>
-              <p className="text-slate-600 dark:text-slate-400">
-                View and manage all contact form submissions
-              </p>
-            </div>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+              Contact Messages
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400">
+              View and respond to customer inquiries
+            </p>
           </div>
+          <Link to="/admin/dashboard">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
@@ -104,7 +102,6 @@ const AdminMessages = () => (
   </div>
 );
 
-
 const AdminServices = () => {
   const [activeTab, setActiveTab] = React.useState("services");
 
@@ -113,27 +110,25 @@ const AdminServices = () => {
       <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link to="/admin/dashboard">
-                <Button variant="outline" size="sm">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-              <div>
-                <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-                  Services & Packages Management
-                </h1>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Manage all your website services, pricing and package deals
-                </p>
-              </div>
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+                Services Management
+              </h1>
+              <p className="text-slate-600 dark:text-slate-400">
+                Manage consultation services, packages, and pricing
+              </p>
             </div>
+            <Link to="/admin/dashboard">
+              <Button variant="outline">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Dashboard
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
       <div className="container mx-auto px-4 py-8">
-        <div className="flex space-x-1 mb-6 p-1 bg-slate-100 dark:bg-slate-800 rounded-lg">
+        <div className="bg-slate-100 dark:bg-slate-800 p-1 rounded-lg mb-6 flex space-x-1">
           <button
             onClick={() => setActiveTab("services")}
             className={`px-4 py-2 rounded-md font-medium transition-colors ${
@@ -172,6 +167,35 @@ const AdminServices = () => {
   );
 };
 
+// Admin Scholarships page wrapper
+const AdminScholarships = () => (
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+              Scholarships Management
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400">
+              Manage scholarship opportunities and applications
+            </p>
+          </div>
+          <Link to="/admin/dashboard">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+    <div className="container mx-auto px-4 py-8">
+      <ScholarshipsManager />
+    </div>
+  </div>
+);
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -185,6 +209,7 @@ const App = () => (
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/scholarships" element={<Scholarships />} />
               <Route path="/admin" element={<AdminLogin />} />
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/reset-password" element={<ResetPassword />} />
@@ -276,8 +301,16 @@ const App = () => (
                     <AdminNewsletter />
                   </ProtectedRoute>
                 } 
-              />
-              <Route path="/blog/:slug" element={<BlogPost />} />
+               />
+               <Route 
+                path="/admin/scholarships" 
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AdminScholarships />
+                  </ProtectedRoute>
+                } 
+               />
+               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
