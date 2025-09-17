@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, MapPin, GraduationCap, DollarSign, MessageCircle, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, GraduationCap, MessageCircle, ExternalLink, BookOpen, Sparkles, Eye, X, Clock, DollarSign, FileText, CheckCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
@@ -23,10 +23,14 @@ interface Scholarship {
   provider: string;
   country?: string;
   field_of_study?: string;
-  education_level: string;
-  is_featured: boolean;
+  education_levels: string[];
   image_url?: string;
   external_link?: string;
+  is_featured: boolean;
+  is_active: boolean;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
 }
 
 const Scholarships = () => {
@@ -34,7 +38,8 @@ const Scholarships = () => {
   const { toast } = useToast();
   const [scholarships, setScholarships] = useState<Scholarship[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<string>('all');
+  const [filter, setFilter] = useState('all');
+  const [selectedScholarship, setSelectedScholarship] = useState<Scholarship | null>(null);
 
   useEffect(() => {
     fetchScholarships();
@@ -64,21 +69,25 @@ const Scholarships = () => {
   };
 
   const handleWhatsAppClick = (scholarship: Scholarship) => {
-    const phoneNumber = "+821012345678";
+    const phoneNumber = "+821026077012"; // Updated with correct WhatsApp number
     const message = encodeURIComponent(
-      `Hello! I would like to know more about and apply to the "${scholarship.title}" scholarship. Could you please provide more information about the application process?`
+      `Hello! I would like to know more about and apply for the "${scholarship.title}" scholarship. Could you please provide more information about the application process?`
     );
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
 
+  // Get unique education levels for filter buttons
+  const uniqueEducationLevels = Array.from(
+    new Set(scholarships.flatMap(s => s.education_levels || []))
+  ).filter(Boolean);
+
+  // Filter scholarships based on current filter
   const filteredScholarships = scholarships.filter(scholarship => {
     if (filter === 'all') return true;
     if (filter === 'featured') return scholarship.is_featured;
-    return scholarship.education_level === filter;
+    return scholarship.education_levels?.includes(filter);
   });
-
-  const uniqueEducationLevels = [...new Set(scholarships.map(s => s.education_level))];
 
   if (loading) {
     return (
@@ -102,6 +111,10 @@ const Scholarships = () => {
       <main className="container mx-auto px-4 pt-24 pb-12">
         {/* Hero Section */}
         <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <BookOpen className="h-10 w-10 text-primary" />
+            <Sparkles className="h-8 w-8 text-yellow-500" />
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent mb-6">
             Available Scholarships
           </h1>
@@ -124,6 +137,7 @@ const Scholarships = () => {
             onClick={() => setFilter('featured')}
             className="mb-2"
           >
+            <Sparkles className="mr-2 h-4 w-4" />
             Featured
           </Button>
           {uniqueEducationLevels.map(level => (
@@ -151,6 +165,7 @@ const Scholarships = () => {
               <Card key={scholarship.id} className="h-full flex flex-col relative group hover:shadow-lg transition-shadow duration-300">
                 {scholarship.is_featured && (
                   <Badge className="absolute top-4 right-4 z-10 bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
+                    <Sparkles className="mr-1 h-3 w-3" />
                     Featured
                   </Badge>
                 )}
@@ -171,29 +186,36 @@ const Scholarships = () => {
                 </CardHeader>
                 
                 <CardContent className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm">
-                    <DollarSign className="h-4 w-4 text-green-600" />
-                    <span className="font-medium">{scholarship.amount} {scholarship.currency}</span>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-green-600">
+                    <DollarSign className="h-4 w-4" />
+                    <span>{scholarship.amount} {scholarship.currency}</span>
                   </div>
                   
-                  <div className="flex items-center gap-2 text-sm">
-                    <CalendarDays className="h-4 w-4 text-blue-600" />
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                    <Calendar className="h-4 w-4" />
                     <span>Deadline: {format(new Date(scholarship.deadline), 'MMM dd, yyyy')}</span>
                   </div>
                   
                   {scholarship.country && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <MapPin className="h-4 w-4 text-red-600" />
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                      <MapPin className="h-4 w-4" />
                       <span>{scholarship.country}</span>
                     </div>
                   )}
                   
-                  <div className="flex items-center gap-2 text-sm">
-                    <GraduationCap className="h-4 w-4 text-purple-600" />
-                    <span className="capitalize">{scholarship.education_level}</span>
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                    <GraduationCap className="h-4 w-4" />
+                    <div className="flex flex-wrap gap-1">
+                      {scholarship.education_levels?.map((level, index) => (
+                        <span key={level}>
+                          {level.charAt(0).toUpperCase() + level.slice(1)}
+                          {index < scholarship.education_levels.length - 1 && ', '}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                   
-                  <div className="text-sm">
+                  <div className="text-sm text-gray-600 dark:text-gray-300">
                     <span className="font-medium">Provider:</span> {scholarship.provider}
                   </div>
                   
@@ -204,28 +226,177 @@ const Scholarships = () => {
                   )}
                 </CardContent>
                 
-                <CardFooter className="gap-2 flex-col">
-                  <Button
-                    onClick={() => handleWhatsAppClick(scholarship)}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white"
-                  >
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    I Want This Scholarship
-                  </Button>
-                  
-                  {scholarship.external_link && (
+                <CardFooter className="pt-4">
+                  <div className="flex gap-2">
                     <Button
-                      variant="outline"
-                      onClick={() => window.open(scholarship.external_link, '_blank')}
-                      className="w-full"
+                      onClick={() => handleWhatsAppClick(scholarship)}
+                      className="flex-1 bg-green-600 hover:bg-green-700 text-white"
                     >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Learn More
+                      <MessageCircle className="mr-2 h-4 w-4" />
+                      WhatsApp
                     </Button>
-                  )}
+                    <Button
+                      onClick={() => setSelectedScholarship(scholarship)}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      <Eye className="mr-2 h-4 w-4" />
+                      View Details
+                    </Button>
+                    {scholarship.external_link && (
+                      <Button
+                        onClick={() => window.open(scholarship.external_link, '_blank')}
+                        variant="outline"
+                        size="sm"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                 </CardFooter>
               </Card>
             ))}
+          </div>
+        )}
+
+        {/* Scholarship Detail Modal */}
+        {selectedScholarship && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-white dark:bg-gray-800 border-b p-6 flex justify-between items-start">
+                <div className="flex-1">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    {selectedScholarship.title}
+                  </h2>
+                  <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
+                    <div className="flex items-center gap-1">
+                      <DollarSign className="h-4 w-4" />
+                      <span className="font-semibold">{selectedScholarship.amount} {selectedScholarship.currency}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-4 w-4" />
+                      <span>Deadline: {new Date(selectedScholarship.deadline).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => setSelectedScholarship(null)}
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
+              <div className="p-6 space-y-6">
+                {selectedScholarship.image_url && (
+                  <div className="w-full h-48 rounded-lg overflow-hidden">
+                    <img
+                      src={selectedScholarship.image_url}
+                      alt={selectedScholarship.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <FileText className="h-5 w-5" />
+                        Description
+                      </h3>
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {selectedScholarship.description}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5" />
+                        Eligibility Criteria
+                      </h3>
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {selectedScholarship.eligibility_criteria}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Provider</h3>
+                      <p className="text-gray-700 dark:text-gray-300">{selectedScholarship.provider}</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Requirements</h3>
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {selectedScholarship.requirements}
+                      </p>
+                    </div>
+
+                    {selectedScholarship.application_process && (
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Application Process</h3>
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                          {selectedScholarship.application_process}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-2 gap-4">
+                      {selectedScholarship.country && (
+                        <div>
+                          <h4 className="font-medium text-gray-900 dark:text-white">Location</h4>
+                          <p className="text-gray-600 dark:text-gray-300">{selectedScholarship.country}</p>
+                        </div>
+                      )}
+                      {selectedScholarship.field_of_study && (
+                        <div>
+                          <h4 className="font-medium text-gray-900 dark:text-white">Field of Study</h4>
+                          <p className="text-gray-600 dark:text-gray-300">{selectedScholarship.field_of_study}</p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <h4 className="font-medium text-gray-900 dark:text-white">Education Levels</h4>
+                      <div className="flex flex-wrap gap-2 mt-1">
+                        {selectedScholarship.education_levels?.map((level) => (
+                          <span
+                            key={level}
+                            className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm"
+                          >
+                            {level.charAt(0).toUpperCase() + level.slice(1)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 pt-4 border-t">
+                  <Button
+                    onClick={() => handleWhatsAppClick(selectedScholarship)}
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Contact via WhatsApp
+                  </Button>
+                  {selectedScholarship.external_link && (
+                    <Button
+                      onClick={() => window.open(selectedScholarship.external_link, '_blank')}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      Official Link
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </main>

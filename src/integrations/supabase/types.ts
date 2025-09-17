@@ -578,7 +578,7 @@ export type Database = {
           deadline: string
           description: string
           display_order: number | null
-          education_level: string
+          education_levels: string[]
           eligibility_criteria: string
           external_link: string | null
           field_of_study: string | null
@@ -600,7 +600,7 @@ export type Database = {
           deadline: string
           description: string
           display_order?: number | null
-          education_level?: string
+          education_levels?: string[]
           eligibility_criteria: string
           external_link?: string | null
           field_of_study?: string | null
@@ -622,7 +622,7 @@ export type Database = {
           deadline?: string
           description?: string
           display_order?: number | null
-          education_level?: string
+          education_levels?: string[]
           eligibility_criteria?: string
           external_link?: string | null
           field_of_study?: string | null
