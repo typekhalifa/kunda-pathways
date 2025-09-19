@@ -317,9 +317,25 @@ const Scholarships = () => {
                         <CheckCircle className="h-5 w-5" />
                         Eligibility Criteria
                       </h3>
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        {selectedScholarship.eligibility_criteria}
-                      </p>
+                      <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {selectedScholarship.eligibility_criteria.split('\n').filter(item => item.trim()).map((criteria, index) => {
+                          const trimmed = criteria.trim();
+                          if (trimmed.startsWith('-') || trimmed.startsWith('•')) {
+                            return (
+                              <div key={index} className="flex items-start gap-2 mb-2">
+                                <span className="text-blue-600 dark:text-blue-400 font-bold mt-1">-</span>
+                                <span>{trimmed.replace(/^[\-•]\s*/, '')}</span>
+                              </div>
+                            );
+                          }
+                          return trimmed ? (
+                            <div key={index} className="flex items-start gap-2 mb-2">
+                              <span className="text-blue-600 dark:text-blue-400 font-bold mt-1">-</span>
+                              <span>{trimmed}</span>
+                            </div>
+                          ) : null;
+                        })}
+                      </div>
                     </div>
 
                     <div>
@@ -331,17 +347,49 @@ const Scholarships = () => {
                   <div className="space-y-4">
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Requirements</h3>
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        {selectedScholarship.requirements}
-                      </p>
+                      <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {selectedScholarship.requirements.split('\n').filter(item => item.trim()).map((requirement, index) => {
+                          const trimmed = requirement.trim();
+                          if (trimmed.startsWith('-') || trimmed.startsWith('•')) {
+                            return (
+                              <div key={index} className="flex items-start gap-2 mb-2">
+                                <span className="text-blue-600 dark:text-blue-400 font-bold mt-1">-</span>
+                                <span>{trimmed.replace(/^[\-•]\s*/, '')}</span>
+                              </div>
+                            );
+                          }
+                          return trimmed ? (
+                            <div key={index} className="flex items-start gap-2 mb-2">
+                              <span className="text-blue-600 dark:text-blue-400 font-bold mt-1">-</span>
+                              <span>{trimmed}</span>
+                            </div>
+                          ) : null;
+                        })}
+                      </div>
                     </div>
 
                     {selectedScholarship.application_process && (
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Application Process</h3>
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                          {selectedScholarship.application_process}
-                        </p>
+                        <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                          {selectedScholarship.application_process.split('\n').filter(item => item.trim()).map((step, index) => {
+                            const trimmed = step.trim();
+                            if (trimmed.startsWith('→') || trimmed.startsWith('-') || trimmed.startsWith('•')) {
+                              return (
+                                <div key={index} className="flex items-start gap-2 mb-2">
+                                  <span className="text-blue-600 dark:text-blue-400 font-bold mt-1">→</span>
+                                  <span>{trimmed.replace(/^[→\-•]\s*/, '')}</span>
+                                </div>
+                              );
+                            }
+                            return trimmed ? (
+                              <div key={index} className="flex items-start gap-2 mb-2">
+                                <span className="text-blue-600 dark:text-blue-400 font-bold mt-1">→</span>
+                                <span>{trimmed}</span>
+                              </div>
+                            ) : null;
+                          })}
+                        </div>
                       </div>
                     )}
 

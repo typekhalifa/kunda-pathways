@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Edit2, Trash2, Eye, EyeOff, Star, ExternalLink, Upload } from "lucide-react";
 import { format } from "date-fns";
+import FileUpload from "./FileUpload";
 
 interface Scholarship {
   id: string;
@@ -425,15 +426,13 @@ const ScholarshipsManager = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="image_url">Image URL</Label>
-                <Input
-                  id="image_url"
-                  type="url"
-                  value={formData.image_url}
-                  onChange={(e) => handleInputChange('image_url', e.target.value)}
-                />
-              </div>
+              <FileUpload
+                label="Scholarship Image"
+                currentUrl={formData.image_url}
+                onUpload={(url) => handleInputChange('image_url', url)}
+                accept="image/*"
+                folder="scholarships"
+              />
 
               <div className="flex items-center space-x-2">
                 <Checkbox
