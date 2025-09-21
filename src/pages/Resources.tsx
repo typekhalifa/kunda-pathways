@@ -116,17 +116,15 @@ const Resources = () => {
               {articles.map((article) => (
                 <Card key={article.id} className="group bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
                   <Link to={`/blog/${article.slug}`} className="block h-full">
-                    <div className="aspect-video overflow-hidden rounded-t-lg">
-                      {article.featured_image_url ? (
+                    {article.featured_image_url && (
+                      <div className="aspect-video overflow-hidden rounded-t-lg">
                         <img 
                           src={article.featured_image_url} 
                           alt={article.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900 dark:to-green-900"></div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                     <CardHeader>
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center space-x-2">

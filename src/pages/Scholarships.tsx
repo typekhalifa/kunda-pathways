@@ -188,7 +188,13 @@ const Scholarships = () => {
                 <CardContent className="space-y-3">
                   <div className="flex items-center gap-2 text-sm font-semibold text-green-600">
                     <DollarSign className="h-4 w-4" />
-                    <span>{scholarship.amount} {scholarship.currency}</span>
+                    <span>
+                      {/* Check if amount is numeric for proper formatting */}
+                      {/^\d+(\.\d+)?$/.test(scholarship.amount.trim()) 
+                        ? `${scholarship.amount} ${scholarship.currency}`
+                        : scholarship.amount
+                      }
+                    </span>
                   </div>
                   
                   <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">

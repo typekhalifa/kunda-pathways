@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAutoLogout } from '@/hooks/useAutoLogout';
 import { 
   LogOut, 
   ArrowLeft, 
@@ -28,6 +29,7 @@ import { toast } from 'sonner';
 
 const AdminNewsletter = () => {
   const { profile, signOut } = useAuth();
+  useAutoLogout(5); // Auto logout after 5 minutes of inactivity
   const [subscribers, setSubscribers] = useState<any[]>([]);
   const [campaigns, setCampaigns] = useState<any[]>([]);
   const [filteredSubscribers, setFilteredSubscribers] = useState<any[]>([]);

@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAutoLogout } from '@/hooks/useAutoLogout';
 import { 
   FileText, 
   MessageSquare, 
@@ -31,6 +32,7 @@ import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const { profile, signOut } = useAuth();
+  useAutoLogout(5); // Auto logout after 5 minutes of inactivity
   const [consultationCount, setConsultationCount] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
   const [newsletterCount, setNewsletterCount] = useState(0);

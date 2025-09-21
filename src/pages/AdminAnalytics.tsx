@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAutoLogout } from '@/hooks/useAutoLogout';
 import { 
   LogOut, 
   ArrowLeft, 
@@ -19,6 +20,7 @@ import { LineChart, Line, AreaChart, Area, PieChart as RechartsPieChart, Pie, Ce
 
 const AdminAnalytics = () => {
   const { profile, signOut } = useAuth();
+  useAutoLogout(5); // Auto logout after 5 minutes of inactivity
   const [analytics, setAnalytics] = useState({
     totalBookings: 0,
     totalRevenue: 0,

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAutoLogout } from '@/hooks/useAutoLogout';
 import { LogOut, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ConsultationsManager from '@/components/admin/ConsultationsManager';
 
 const AdminConsultations = () => {
   const { profile, signOut } = useAuth();
+  useAutoLogout(5); // Auto logout after 5 minutes of inactivity
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
