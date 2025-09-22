@@ -20,7 +20,7 @@ import { LineChart, Line, AreaChart, Area, PieChart as RechartsPieChart, Pie, Ce
 
 const AdminAnalytics = () => {
   const { profile, signOut } = useAuth();
-  useAutoLogout(5); // Auto logout after 5 minutes of inactivity
+  useAutoLogout(10); // Auto logout after 10 minutes of inactivity
   const [analytics, setAnalytics] = useState({
     totalBookings: 0,
     totalRevenue: 0,

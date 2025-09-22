@@ -32,7 +32,7 @@ import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const { profile, signOut } = useAuth();
-  useAutoLogout(5); // Auto logout after 5 minutes of inactivity
+  useAutoLogout(10); // Auto logout after 10 minutes of inactivity
   const [consultationCount, setConsultationCount] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
   const [newsletterCount, setNewsletterCount] = useState(0);

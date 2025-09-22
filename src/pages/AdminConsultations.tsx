@@ -8,7 +8,7 @@ import ConsultationsManager from '@/components/admin/ConsultationsManager';
 
 const AdminConsultations = () => {
   const { profile, signOut } = useAuth();
-  useAutoLogout(5); // Auto logout after 5 minutes of inactivity
+  useAutoLogout(10); // Auto logout after 10 minutes of inactivity
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
