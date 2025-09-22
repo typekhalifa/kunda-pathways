@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
-export const useAutoLogout = (timeoutMinutes: number = 5) => {
+export const useAutoLogout = (timeoutMinutes: number = 10) => {
   const { signOut, user } = useAuth();
   const { toast } = useToast();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);

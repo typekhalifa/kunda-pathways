@@ -33,16 +33,6 @@ export const NewsletterEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Section style={header}>
-          <img 
-            src="https://kunda-pathways.vercel.app/kunda-pathways-logo.png" 
-            alt="Kunda Pathways Logo" 
-            style={{
-              width: '200px',
-              height: 'auto',
-              margin: '0 auto 16px',
-              display: 'block'
-            }}
-          />
           <Heading style={h1}>Kunda Pathways</Heading>
           <Text style={tagline}>Your Gateway to Global Education and Business Success</Text>
         </Section>
