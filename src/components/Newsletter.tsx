@@ -55,10 +55,23 @@ const Newsletter = () => {
 
       if (error) {
         console.error('📧 Subscription error:', error);
+        console.error('📧 Error details:', {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint
+        });
+        
         if (error.code === '23505') { // Unique constraint violation
           toast.error('This email is already subscribed to our newsletter!');
+        } else if (error.code === '42501') { // RLS policy violation
+          console.error('📧 RLS Policy violation - checking auth state:', { 
+            uid: 'N/A (anonymous)', 
+            authenticated: false 
+          });
+          toast.error('Unable to subscribe. Please try again or contact support.');
         } else {
-          throw error;
+          toast.error(`Subscription failed: ${error.message}`);
         }
         return;
       }
