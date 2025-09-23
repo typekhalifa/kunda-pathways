@@ -18,31 +18,36 @@ const Newsletter = () => {
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('📧 Newsletter subscription attempt started');
-    console.log('📧 Form data before processing:', { email, name, emailLength: email.length, nameLength: name.length });
     
-    if (!email) {
+    const trimmedEmail = email.toLowerCase().trim();
+    const trimmedName = name.trim();
+    
+    console.log('📧 Form data:', { 
+      email: trimmedEmail, 
+      name: trimmedName, 
+      emailValid: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)
+    });
+    
+    if (!trimmedEmail) {
       toast.error('Please enter your email address');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      toast.error('Please enter a valid email address');
       return;
     }
 
     setLoading(true);
     try {
-      const trimmedEmail = email.toLowerCase().trim();
-      const trimmedName = name.trim() || null;
-      
-      console.log('📧 Attempting to subscribe:', { 
-        email: trimmedEmail, 
-        name: trimmedName,
-        originalEmail: email,
-        originalName: name 
-      });
+      console.log('📧 Making Supabase request...');
       
       const { data, error } = await supabase
         .from('newsletter_subscribers')
         .insert([
           {
             email: trimmedEmail,
-            name: trimmedName,
+            name: trimmedName || null,
             preferences: {
               frequency: 'weekly',
               topics: ['study-abroad', 'fb-consulting', 'general-updates']
@@ -51,39 +56,40 @@ const Newsletter = () => {
         ])
         .select();
 
-      console.log('📧 Supabase response:', { data, error });
+      console.log('📧 Supabase response received:', { data, error });
 
       if (error) {
         console.error('📧 Subscription error:', error);
-        console.error('📧 Error details:', {
-          code: error.code,
-          message: error.message,
-          details: error.details,
-          hint: error.hint
-        });
         
         if (error.code === '23505') { // Unique constraint violation
-          toast.error('This email is already subscribed to our newsletter!');
-        } else if (error.code === '42501') { // RLS policy violation
-          console.error('📧 RLS Policy violation - checking auth state:', { 
-            uid: 'N/A (anonymous)', 
-            authenticated: false 
-          });
-          toast.error('Unable to subscribe. Please try again or contact support.');
-        } else {
-          toast.error(`Subscription failed: ${error.message}`);
-        }
+          toast.error('This email is already subscribed!');
+          return;
+        } 
+        
+        // Log any other error and show generic message
+        console.error('📧 Unexpected error:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        });
+        toast.error('Subscription failed. Please try again.');
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        console.error('📧 No data returned');
+        toast.error('Subscription may have failed. Please try again.');
         return;
       }
 
       console.log('📧 Subscription successful!', data);
       setSubscribed(true);
-      toast.success('🎉 Successfully subscribed to our newsletter!');
+      toast.success('🎉 Successfully subscribed!');
       setEmail('');
       setName('');
-    } catch (error) {
-      console.error('📧 Newsletter subscription error:', error);
-      toast.error('Failed to subscribe. Please try again.');
+    } catch (error: any) {
+      console.error('📧 Catch block error:', error);
+      toast.error('An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
