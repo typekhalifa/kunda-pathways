@@ -17,95 +17,80 @@ const Newsletter = () => {
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    console.log('🎯 Newsletter subscription started');
+    console.log('📧 Newsletter subscription attempt started');
     
     const trimmedEmail = email.toLowerCase().trim();
     const trimmedName = name.trim();
     
-    console.log('🎯 Processing subscription:', { 
+    console.log('📧 Form data:', { 
       email: trimmedEmail, 
-      name: trimmedName,
-      emailLength: trimmedEmail.length,
-      isValidEmail: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)
+      name: trimmedName, 
+      emailValid: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)
     });
     
     if (!trimmedEmail) {
-      console.log('🎯 No email provided');
       toast.error('Please enter your email address');
       return;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      console.log('🎯 Invalid email format');
       toast.error('Please enter a valid email address');
       return;
     }
 
     setLoading(true);
-    console.log('🎯 Starting database operation...');
-    
     try {
-      const insertData = {
-        email: trimmedEmail,
-        name: trimmedName || null,
-        preferences: {
-          frequency: 'weekly',
-          topics: ['study-abroad', 'fb-consulting', 'general-updates']
-        }
-      };
-      
-      console.log('🎯 Insert data prepared:', insertData);
+      console.log('📧 Making Supabase request...');
       
       const { data, error } = await supabase
         .from('newsletter_subscribers')
-        .insert([insertData])
+        .insert([
+          {
+            email: trimmedEmail,
+            name: trimmedName || null,
+            preferences: {
+              frequency: 'weekly',
+              topics: ['study-abroad', 'fb-consulting', 'general-updates']
+            }
+          }
+        ])
         .select();
 
-      console.log('🎯 Database response:', { 
-        data, 
-        error,
-        hasData: !!data,
-        hasError: !!error
-      });
+      console.log('📧 Supabase response received:', { data, error });
 
       if (error) {
-        console.error('🎯 Database error occurred:', {
+        console.error('📧 Subscription error:', error);
+        
+        if (error.code === '23505') { // Unique constraint violation
+          toast.error('This email is already subscribed!');
+          return;
+        } 
+        
+        // Log any other error and show generic message
+        console.error('📧 Unexpected error:', {
           code: error.code,
           message: error.message,
-          details: error.details,
-          hint: error.hint
+          details: error.details
         });
-        
-        if (error.code === '23505') {
-          toast.error('This email is already subscribed!');
-        } else {
-          toast.error(`Database error: ${error.message}`);
-        }
+        toast.error('Subscription failed. Please try again.');
         return;
       }
 
       if (!data || data.length === 0) {
-        console.error('🎯 No data returned from database');
-        toast.error('No data returned. Please try again.');
+        console.error('📧 No data returned');
+        toast.error('Subscription may have failed. Please try again.');
         return;
       }
 
-      console.log('🎯 SUCCESS! Subscription completed:', data[0]);
+      console.log('📧 Subscription successful!', data);
       setSubscribed(true);
-      toast.success('🎉 Successfully subscribed to our newsletter!');
+      toast.success('🎉 Successfully subscribed!');
       setEmail('');
       setName('');
-      
     } catch (error: any) {
-      console.error('🎯 Unexpected error in try-catch:', {
-        error,
-        message: error?.message,
-        name: error?.name
-      });
-      toast.error(`Unexpected error: ${error?.message || 'Unknown error'}`);
+      console.error('📧 Catch block error:', error);
+      toast.error('An error occurred. Please try again.');
     } finally {
-      console.log('🎯 Subscription attempt completed, setting loading to false');
       setLoading(false);
     }
   };
@@ -139,78 +124,109 @@ const Newsletter = () => {
   }
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20">
+    <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-900 dark:to-blue-900/30">
       <div className="container mx-auto">
-        <Card className="max-w-2xl mx-auto bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20 border-violet-200 dark:border-violet-800">
-          <CardHeader className="text-center pb-6">
-            <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-violet-100 dark:bg-violet-900/30 rounded-full flex items-center justify-center">
-              <Mail className="w-8 h-8 text-violet-600 dark:text-violet-400" />
-            </div>
-            </div>
-            <CardTitle className="text-2xl font-bold text-violet-800 dark:text-violet-200 mb-2">
-              Subscribe to Our Newsletter
-            </CardTitle>
-            <CardDescription className="text-violet-700 dark:text-violet-300 text-base">
-              Get the latest insights on education opportunities, scholarships, and F&B industry trends delivered straight to your inbox.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <form onSubmit={handleSubscribe} className="space-y-4">
-              <div>
-                <Input
-                  type="text"
-                  placeholder="Your name (optional)"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="bg-white/70 border-violet-200 focus:border-violet-400 dark:bg-gray-800/70 dark:border-violet-700"
-                />
-              </div>
-              <div>
-                <Input
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-white/70 border-violet-200 focus:border-violet-400 dark:bg-gray-800/70 dark:border-violet-700"
-                />
-              </div>
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                {loading ? (
-                  <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Subscribing...
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    Subscribe Now
-                  </div>
-                )}
-              </Button>
-            </form>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+              Join Our Newsletter
+            </h2>
+            <p className="text-xl text-muted-foreground dark:text-slate-300">
+              Get exclusive insights, study abroad tips, and business consulting updates delivered to your inbox
+            </p>
+          </div>
 
-            <div className="flex flex-wrap justify-center gap-3 pt-4 border-t border-violet-200 dark:border-violet-700">
-              <Badge variant="secondary" className="bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300">
-                <Gift className="w-3 h-3 mr-1" />
-                Weekly updates
-              </Badge>
-              <Badge variant="secondary" className="bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300">
-                <Shield className="w-3 h-3 mr-1" />
-                No spam
-              </Badge>
-              <Badge variant="secondary" className="bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300">
-                <Clock className="w-3 h-3 mr-1" />
-                Unsubscribe anytime
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
+          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-white/80 to-blue-50/80 dark:from-slate-800/80 dark:to-blue-900/40 border-blue-200 dark:border-blue-700/50 shadow-lg hover:shadow-xl dark:shadow-blue-500/10 transition-all duration-300 rounded-3xl backdrop-blur-sm">
+            <CardHeader className="text-center pb-4">
+              <div className="flex justify-center mb-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                  <Mail className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Stay Connected With Us
+              </CardTitle>
+              <CardDescription className="text-base text-slate-600 dark:text-slate-300">
+                Be the first to know about new opportunities, expert insights, and exclusive content
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubscribe} className="space-y-4">
+                <div className="space-y-3">
+                  <Input
+                    type="text"
+                    placeholder="Your name (optional)"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="border-blue-200 focus:border-blue-400 focus:ring-blue-400 rounded-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400"
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="border-blue-200 focus:border-blue-400 focus:ring-blue-400 rounded-2xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400"
+                  />
+                </div>
+                
+                <div className="grid grid-cols-3 gap-2 py-3">
+                  <div className="flex items-center justify-center p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <div className="text-center">
+                      <Sparkles className="w-5 h-5 text-blue-600 mx-auto mb-1" />
+                      <span className="text-xs text-blue-700 dark:text-blue-300 font-medium">Expert Tips</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-center p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                    <div className="text-center">
+                      <Gift className="w-5 h-5 text-purple-600 mx-auto mb-1" />
+                      <span className="text-xs text-purple-700 dark:text-purple-300 font-medium">Exclusive Content</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-center p-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                    <div className="text-center">
+                      <CheckCircle className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
+                      <span className="text-xs text-emerald-700 dark:text-emerald-300 font-medium">Success Stories</span>
+                    </div>
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                >
+                  {loading ? (
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                      Subscribing...
+                    </div>
+                  ) : (
+                    <div className="flex items-center">
+                      <Mail className="w-4 h-4 mr-2" />
+                      Subscribe Now
+                    </div>
+                  )}
+                </Button>
+                
+                <div className="flex items-center justify-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>Weekly updates</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Shield className="w-3 h-3" />
+                    <span>No spam</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    <span>Unsubscribe anytime</span>
+                  </div>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </section>
   );
