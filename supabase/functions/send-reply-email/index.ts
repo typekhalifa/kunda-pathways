@@ -34,13 +34,6 @@ const handler = async (req: Request): Promise<Response> => {
       subject: subject,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="text-align: center; margin-bottom: 30px;">
-            <img 
-              src="https://kunda-pathways.vercel.app/kunda-pathways-logo.png" 
-              alt="Kunda Pathways Logo" 
-              style="width: 200px; height: auto; margin-bottom: 16px;"
-            />
-          </div>
           <h2 style="color: #2563eb; margin-bottom: 20px;">Re: Your Inquiry</h2>
           
           <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
