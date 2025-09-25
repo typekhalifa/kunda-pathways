@@ -115,10 +115,13 @@ const HeroStatsManager = () => {
 
       toast.success('Hero content updated successfully!');
       
-      // Force a page refresh to update the hero section
+      // Dispatch custom event to update hero section without full page reload
+      window.dispatchEvent(new CustomEvent('hero-content-updated'));
+      
+      // Still refresh after a short delay as fallback
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 2000);
       
     } catch (error: any) {
       console.error('Error saving hero content:', error);

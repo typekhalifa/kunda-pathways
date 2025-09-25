@@ -23,17 +23,26 @@ const Hero = () => {
 
   useEffect(() => {
     const fetchHeroContent = async () => {
-      const { data } = await supabase
+      console.log('Fetching hero content from database...');
+      const { data, error } = await supabase
         .from('website_content')
         .select('*')
         .eq('section', 'hero')
         .eq('language_code', 'EN');
+      
+      console.log('Hero content fetch result:', { data, error });
+      
+      if (error) {
+        console.error('Error fetching hero content:', error);
+      }
       
       if (data && data.length > 0) {
         const content = data.reduce((acc: any, item) => {
           acc[item.content_key] = item.content_value;
           return acc;
         }, {} as any);
+        
+        console.log('Processed hero content:', content);
         
         setHeroContent({
           title: content.title || translations.heroTitle || "Your Gateway to Global Education and Business Success",
@@ -43,6 +52,7 @@ const Hero = () => {
           countriesCount: parseInt(content.countriesCount) || 13
         });
       } else {
+        console.log('No hero content found in database, using defaults');
         setHeroContent({
           title: translations.heroTitle || "Your Gateway to Global Education and Business Success",
           subtitle: translations.heroSubtitle || "Expert guidance for Korean university admissions, scholarships, and F&B business consulting",
@@ -54,6 +64,15 @@ const Hero = () => {
     };
 
     fetchHeroContent();
+    
+    // Listen for storage events or custom events to refetch content when updated
+    const handleStorageChange = () => {
+      console.log('Storage change detected, refetching hero content');
+      fetchHeroContent();
+    };
+    
+    window.addEventListener('hero-content-updated', handleStorageChange);
+    return () => window.removeEventListener('hero-content-updated', handleStorageChange);
   }, [translations]);
 
   // Safe handling of heroTitle to prevent undefined error
