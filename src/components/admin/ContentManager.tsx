@@ -16,13 +16,11 @@ const ContentManager = () => {
   const [activeTab, setActiveTab] = useState('hero');
 
   const [content, setContent] = useState({
-    hero: {
-      title: 'Your Gateway to Global Education and Business Success',
-      subtitle: 'Expert guidance for Korean university admissions, scholarships, and F&B business consulting',
-      backgroundImage: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      studentsCount: 53,
-      countriesCount: 13
-    },
+  hero: {
+    title: 'Your Gateway to Global Education and Business Success',
+    subtitle: 'Expert guidance for Korean university admissions, scholarships, and F&B business consulting',
+    backgroundImage: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+  },
     about: {
       title: 'About Our Services',
       description: 'We provide comprehensive educational consulting services...'
@@ -120,34 +118,6 @@ const ContentManager = () => {
                 accept="image/*"
                 folder="hero"
               />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="hero-students">Students Count</Label>
-                <Input
-                  id="hero-students"
-                  type="number"
-                  value={content.hero.studentsCount}
-                  onChange={(e) => setContent({
-                    ...content,
-                    hero: { ...content.hero, studentsCount: parseInt(e.target.value) || 0 }
-                  })}
-                  placeholder="Students assisted"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="hero-countries">Countries Count</Label>
-                <Input
-                  id="hero-countries"
-                  type="number"
-                  value={content.hero.countriesCount}
-                  onChange={(e) => setContent({
-                    ...content,
-                    hero: { ...content.hero, countriesCount: parseInt(e.target.value) || 0 }
-                  })}
-                  placeholder="Countries reached"
-                />
-              </div>
             </div>
             <Button 
               onClick={() => handleSave('Hero')} 
