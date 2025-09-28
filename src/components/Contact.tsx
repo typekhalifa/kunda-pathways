@@ -232,9 +232,7 @@ const Contact = () => {
                   <p className="mb-4 opacity-90">
                     {translations.scheduleFreeConsultation || "Schedule a free 15-minute consultation to discuss your goals."}
                   </p>
-                  <div className="text-center">
-                    <WhatsAppConsultationButton className="w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4" />
-                  </div>
+                  
                 </CardContent>
               </Card>
 
