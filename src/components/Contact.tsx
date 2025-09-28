@@ -10,6 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useWebsiteSettings } from "@/hooks/useWebsiteSettings";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import WhatsAppConsultationButton from "@/components/WhatsAppConsultationButton";
 
 const Contact = () => {
   const { translations } = useLanguage();
@@ -229,10 +230,13 @@ const Contact = () => {
               <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-lg">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-2xl font-bold mb-2">{translations.bookAConsultation || "Book a Consultation"}</h3>
-                  <p className="mb-4 opacity-90">
+                  <p className="mb-6 opacity-90">
                     {translations.scheduleFreeConsultation || "Schedule a free 15-minute consultation to discuss your goals."}
                   </p>
                   
+                  <div className="flex justify-center">
+                    <WhatsAppConsultationButton className="px-6 py-3" />
+                  </div>
                 </CardContent>
               </Card>
 
