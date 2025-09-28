@@ -232,11 +232,9 @@ const Contact = () => {
                   <p className="mb-4 opacity-90">
                     {translations.scheduleFreeConsultation || "Schedule a free 15-minute consultation to discuss your goals."}
                   </p>
-                  <Link to="src/components/WhatsAppConsultationButton.tsx">
-                    <Button className="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-xl font-semibold shadow-lg">
-                      {translations.scheduleConsultation || "Schedule Consultation"}
-                    </Button>
-                  </Link>
+                  <div className="text-center">
+                    <WhatsAppConsultationButton className="w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4" />
+                  </div>
                 </CardContent>
               </Card>
 
