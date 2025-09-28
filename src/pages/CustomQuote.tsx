@@ -38,7 +38,7 @@ const CustomQuote = () => {
       `📝 Message:\n${message}`
     );
 
-    window.open(`https://wa.me/250788214751?text=${encoded}`, "_blank");
+    window.open(`https://wa.me/821026077012?text=${encoded}`, "_blank");
   };
 
   return (
