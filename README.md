@@ -96,7 +96,7 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 ---
 
-## 📩 Contact
+##  Contact
 
 * 🌐 Website: [kundapathways.com](https://www.kundapathways.com)
 * 📧 Email: [diradukunda40@gmail.com](mailto:diradukunda40@gmail.com)
