@@ -11,7 +11,7 @@ const WhatsAppConsultationButton = ({ className = "" }: WhatsAppConsultationButt
   const { translations } = useLanguage();
   
   const handleWhatsAppClick = () => {
-    const phoneNumber = "+821012345678";
+    const phoneNumber = "+821026077012";
     const message = encodeURIComponent(`Hello! I would like to schedule a free 15-minute consultation about your services.`);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
