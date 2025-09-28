@@ -1,73 +1,102 @@
-# Welcome to your Lovable project
+#  Kunda Pathways
 
-## Project info
+**URL:** [www.kundapathways.com](https://www.kundapathways.com)
 
-**URL**: https://lovable.dev/projects/39073bb4-07de-4f04-93ec-fd6665df7230
+Kunda Pathways is a modern platform designed to help students and professionals connect with opportunities abroad. From **scholarships and consultation bookings** to **career support and newsletters**, it provides a seamless way for users to explore, apply, and stay updated.
 
-## How can I edit this code?
+Built with **React + TypeScript + Tailwind + Supabase**, deployed on **Vercel**, and powered by **Resend** for email communication.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/39073bb4-07de-4f04-93ec-fd6665df7230) and start prompting.
+*  **Scholarship Listings** – View scholarships with requirements, deadlines, and direct WhatsApp connect.
+*  **Consultation Bookings** – Securely book services and get professional guidance.
+*  **Newsletter Campaigns** – Stay updated with the latest opportunities.
+*  **Messaging System** – Contact and reply via admin dashboard.
+*  **Admin Dashboard** – Manage services, messages, and campaigns with authentication.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+##  Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+* **Frontend:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui
+* **Backend & Database:** Supabase (Postgres, Auth, RLS, Edge Functions)
+* **Deployment:** Vercel
+* **Email Integration:** Resend API
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+##  Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 1. Clone Repository
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+git clone https://github.com/typekhalifa/kunda-pathways.git
+cd kunda-pathways
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 2. Install Dependencies
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
+```
+
+### 3. Environment Variables
+
+Create a `.env.local` file in the root with:
+
+```env
+VITE_SUPABASE_URL=*********************
+VITE_SUPABASE_ANON_KEY=*********************
+RESEND_API_KEY=**************************
+
+```
+
+### 4. Run Development Server
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### 5. Deploy to Vercel
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Push your changes to GitHub → Import repo in [Vercel](https://vercel.com/) → Deploy.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Screenshots
 
-## What technologies are used for this project?
+### Homepage
 
-This project is built with:
+![Homepage Preview](./screenshots/homepage.png)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Scholarships
 
-## How can I deploy this project?
+![Scholarship Page Preview](./screenshots/scholarships.png)
 
-Simply open [Lovable](https://lovable.dev/projects/39073bb4-07de-4f04-93ec-fd6665df7230) and click on Share -> Publish.
+### Admin Dashboard
 
-## Can I connect a custom domain to my Lovable project?
+![Dashboard Preview](./screenshots/dashboard.png)
 
-Yes, you can!
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+##  Documentation
+
+* [Supabase Docs](https://supabase.com/docs)
+* [Resend Docs](https://resend.com/docs)
+* [Vercel Docs](https://vercel.com/docs)
+
+---
+
+##  Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to update.
+
+---
+
+## 📩 Contact
+
+* 🌐 Website: [kundapathways.com](https://www.kundapathways.com)
+* 📧 Email: [diradukunda40@gmail.com](mailto:diradukunda40@gmail.com)
