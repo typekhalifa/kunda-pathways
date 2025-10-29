@@ -14,7 +14,7 @@ const AriaAvatar = ({ size = "default", className = "" }: { size?: "sm" | "defau
         src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=100&h=100&fit=crop&crop=face" 
         alt="Aria Assistant"
       />
-      <AvatarFallback className="bg-gradient-to-br from-purple-500 to-pink-500 text-white font-semibold">
+      <AvatarFallback className="bg-blue-400 text-white font-semibold">
         AI
       </AvatarFallback>
     </Avatar>
