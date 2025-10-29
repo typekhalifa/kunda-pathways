@@ -294,7 +294,7 @@ const ChatBot = () => {
       {/* Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-24 right-6 z-50 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+        className="fixed bottom-24 right-6 z-50 bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
         aria-label="Open chat assistant"
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
@@ -304,7 +304,7 @@ const ChatBot = () => {
       {isOpen && (
         <div className="fixed bottom-40 right-6 z-50 w-80 sm:w-80 h-96 sm:h-96 max-h-[calc(100vh-200px)] bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden md:w-96 md:h-[500px]">
           {/* Header */}
-          <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 rounded-t-2xl">
+          <div className="bg-blue-500 text-white p-4 rounded-t-2xl">
             <div className="flex items-center">
               <Avatar className="w-8 h-8 mr-3">
                 <AvatarImage src="https://images.unsplash.com/photo-1494790108755-2616b612b547?w=100&h=100&fit=crop&crop=face" alt="Aria Assistant" />
@@ -364,7 +364,7 @@ const ChatBot = () => {
                 onClick={handleSendMessage}
                 size="sm"
                 disabled={isTyping || !inputMessage.trim()}
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-xl px-4 shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-blue-500 hover:bg-blue-600 rounded-xl px-4 shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isTyping ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
               </Button>
