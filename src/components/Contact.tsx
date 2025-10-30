@@ -227,7 +227,7 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-lg">
+              <Card className="bg-blue-600 text-white border-0 shadow-lg">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-2xl font-bold mb-2">{translations.bookAConsultation || "Book a Consultation"}</h3>
                   <p className="mb-6 opacity-90">
