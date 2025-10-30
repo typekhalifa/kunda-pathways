@@ -7,8 +7,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { text: "Hello! I'm Aria, your Kunda Pathways Assistant. I'm here to help you with study abroad opportunities in Korea and F&B consulting services. How can I assist you today?", isBot: true }
+  const [messages, setMessages] = useState<Array<{ text: string; isBot: boolean }>>([
+    { text: "Hello! I'm Aria, your AI-powered Kunda Pathways Assistant. I'm here to help you with study abroad opportunities in Korea and F&B consulting services. How can I assist you today?", isBot: true }
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -27,260 +27,107 @@ const ChatBot = () => {
                 .trim();
   }, []);
 
-  // Enhanced AI knowledge base with comprehensive Korea & Asia study expertise + F&B consulting
-  const getResponse = useCallback((userMessage: string) => {
-    const message = userMessage.toLowerCase().trim();
+  // Stream AI response from edge function
+  const streamAIResponse = useCallback(async (userMessage: string) => {
+    const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/aria-chat`;
     
-    // Multi-keyword matching for better intent detection
-    const hasKeywords = (keywords: string[]) => 
-      keywords.some(keyword => message.includes(keyword.toLowerCase()));
-    
-    const hasAllKeywords = (keywords: string[]) => 
-      keywords.every(keyword => message.includes(keyword.toLowerCase()));
+    // Build conversation history for context
+    const conversationHistory = messages.map(msg => ({
+      role: msg.isBot ? "assistant" : "user",
+      content: msg.text
+    }));
 
-    // More specific keyword matching to avoid overlaps
-    const isSpecificQuery = (primary: string[], secondary: string[] = []) => {
-      const hasPrimary = hasKeywords(primary);
-      const hasSecondary = secondary.length === 0 || hasKeywords(secondary);
-      return hasPrimary && hasSecondary;
-    };
+    // Add current user message
+    conversationHistory.push({
+      role: "user",
+      content: userMessage
+    });
 
-    // Greeting responses (consolidated and improved)
-    if (hasKeywords(['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening']) || message === '' || message === 'start') {
-      const greetings = [
-        "Hello! 👋 Welcome to Kunda Pathways! I'm Aria, your dedicated assistant for study abroad and F&B consulting services.\n\n★ I can help you with:\n• Korea & Asia study abroad opportunities\n• KGSP scholarship applications (85% success rate!)\n• F&B market entry consulting\n• Visa applications & documentation\n• University admissions guidance\n\n✨ What would you like to explore today?",
-        "Hi there! 🌟 I'm Aria from Kunda Pathways! I specialize in helping with:\n\n📚 Study Abroad Services:\n• Korean university admissions\n• KGSP scholarships (85% success rate!)\n• Asian education opportunities\n\n🍽️ F&B Consulting:\n• Market entry strategies\n• Business development\n• Korean market expertise\n\nWhat brings you here today?",
-        "Welcome to Kunda Pathways! 🎯 I'm Aria, your personal consultant for:\n\n🌏 Global Education:\n• Korea, Japan, Singapore, China\n• Scholarship guidance & applications\n• Complete admission support\n\n💼 F&B Business:\n• Market analysis & strategy\n• Restaurant/cafe development\n• Complete business packages\n\nHow can I help you today?"
-      ];
-      return greetings[Math.floor(Math.random() * greetings.length)];
-    }
+    try {
+      const response = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ messages: conversationHistory }),
+      });
 
-    // F&B Consulting Services - Enhanced section
-    if (hasKeywords(['f&b', 'food', 'beverage', 'restaurant', 'catering', 'hospitality', 'culinary', 'kitchen', 'menu', 'franchise'])) {
-      
-      if (hasKeywords(['market', 'entry', 'expansion', 'business plan', 'strategy'])) {
-        return "★ F&B Market Entry & Expansion Services:\n\n🎯 Complete Market Analysis:\n• Competitor landscape mapping\n• Consumer behavior studies\n• Pricing strategy optimization\n• Location feasibility analysis\n• ROI projections & break-even analysis\n\n📋 Business Planning:\n• Comprehensive business plan development\n• Financial modeling & projections\n• Operational workflow design\n• Staff planning & hiring strategies\n• Compliance & regulatory guidance\n\n🌍 Korean Market Expertise:\n• Cultural adaptation strategies\n• Local partnership facilitation\n• Supply chain optimization\n• Marketing & branding for Korean consumers\n\n💰 Investment: $12,000 (25% discount - limited time!)\n\nReady to enter the Korean F&B market? Let's schedule your consultation!";
+      if (!response.ok || !response.body) {
+        throw new Error("Failed to start AI stream");
       }
-      
-      if (hasKeywords(['franchise', 'licensing', 'brand', 'concept'])) {
-        return "★ Franchise & Brand Development Services:\n\n🏢 Franchise Development:\n• Franchise model structuring\n• Operations manual creation\n• Training program development\n• Quality control systems\n• Territory mapping & expansion plans\n\n🎨 Brand Development:\n• Brand identity & positioning\n• Logo & visual identity design\n• Marketing materials creation\n• Digital presence setup\n• Brand protection strategies\n\n📊 Licensing Support:\n• Licensing agreement templates\n• Intellectual property protection\n• Revenue sharing models\n• Performance monitoring systems\n\n🎯 Success Rate: 90%+ of our franchise clients achieve profitability within 18 months\n\nInterested in franchising your concept? Let's discuss your expansion goals!";
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = "";
+      let streamDone = false;
+      let assistantText = "";
+
+      // Add initial empty assistant message
+      setMessages(prev => [...prev, { text: "", isBot: true }]);
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") {
+            streamDone = true;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantText += content;
+              // Update the last message with accumulated text
+              setMessages(prev => {
+                const newMessages = [...prev];
+                newMessages[newMessages.length - 1] = { text: assistantText, isBot: true };
+                return newMessages;
+              });
+            }
+          } catch {
+            textBuffer = line + "\n" + textBuffer;
+            break;
+          }
+        }
       }
-      
-      if (hasKeywords(['menu', 'recipe', 'food development', 'culinary', 'chef'])) {
-        return "★ Menu Development & Culinary Services:\n\n👨‍🍳 Menu Engineering:\n• Cost-effective recipe development\n• Nutritional analysis & optimization\n• Seasonal menu planning\n• Dietary restriction accommodations\n• Portion control & waste reduction\n\n🧪 Food Innovation:\n• New product development\n• Fusion cuisine concepts\n• Korean-inspired adaptations\n• Healthy alternative options\n• Instagram-worthy presentation\n\n📋 Operational Excellence:\n• Kitchen workflow optimization\n• Equipment recommendations\n• Inventory management systems\n• Food safety & HACCP compliance\n• Staff training protocols\n\n🏆 Our chefs have experience with:\n• Michelin-starred restaurants\n• International hotel chains\n• Korean traditional & modern cuisine\n\nNeed menu innovation? Our culinary experts are ready to help!";
-      }
-      
-      return "★ Complete F&B Consulting Services:\n\n🍽️ Our Expertise:\n✓ Market entry & expansion strategies\n✓ Restaurant & cafe concept development\n✓ Franchise & licensing opportunities\n✓ Menu engineering & recipe development\n✓ Korean market penetration\n✓ Operational efficiency optimization\n✓ Digital transformation & delivery systems\n\n💼 Package Options:\n• Complete F&B Package: $12,000 (25% OFF - limited time!)\n• Individual consultations: From $150/hour\n• Menu development: From $2,500\n• Market research: From $1,500\n\n🎯 Success Stories:\n• 15+ successful restaurant launches\n• 90%+ client profitability within 18 months\n• Korean market expertise since 2019\n\nWhich F&B service interests you most?";
+
+      setIsTyping(false);
+    } catch (error) {
+      console.error("Error streaming AI response:", error);
+      setMessages(prev => [...prev, { 
+        text: "I apologize, but I'm having trouble connecting right now. Please try again or contact us directly at +250 788 123 456.", 
+        isBot: true 
+      }]);
+      setIsTyping(false);
     }
-    
-    // 1. How to book consultation - Enhanced matching
-    if (hasKeywords(['book', 'schedule', 'appointment']) || 
-        hasAllKeywords(['how', 'book']) || 
-        hasKeywords(['consultation', 'meeting']) && hasKeywords(['book', 'schedule'])) {
-      return "How to Book Your Consultation:\n\n✓ Quick Steps:\n• Click the 'Book Now' button on our website\n• Select your preferred service (Study Abroad or F&B Consulting)\n• Choose your preferred date and time\n• Fill in your contact details\n• Confirm your booking\n\n✓ You'll receive instant confirmation via email!\n\n⚡ Need faster booking? Call/WhatsApp: +250 788 123 456\n\nReady to get started? What service interests you most?";
-    }
-    
-    // 2. Services offered - Better intent detection
-    if (hasKeywords(['what', 'services']) || 
-        hasKeywords(['list', 'services']) || 
-        hasKeywords(['offer', 'provide']) || 
-        hasKeywords(['help', 'with']) ||
-        message.includes('what can you do') ||
-        message.includes('what do you do')) {
-      return "★ Our Complete Service Portfolio:\n\nStudy Abroad Consulting:\n• University admissions & application support\n• KGSP & scholarship guidance (85%+ success rate)\n• Visa applications & document preparation\n• Korean language training & TOPIK prep\n• Post-arrival support in Korea\n\nF&B Market Entry Support:\n• Complete business planning & strategy\n• Market research & competitive analysis\n• Menu development & food regulations\n• Operational setup & compliance\n• Korean market entry expertise\n\n★ Additional Services:\n• Document translation & apostille\n• Cultural orientation programs\n• Emergency visa support\n• Academic transcript evaluation\n\nWhich area interests you most? I can provide detailed information!";
-    }
-    
-    // 3. Pricing questions
-    if (message.includes('price') || message.includes('cost') || message.includes('how much') || message.includes('complete') || message.includes('package') || message.includes('full')) {
-      return "Here's our pricing structure:\n\n• **Study Abroad Services:** Starting from $200\n• **F&B Complete Package:** $12,000 (currently 25% discount available!)\n• **Individual Consultations:** Starting from $50\n• **Extra Services:** Varies by service\n\nWe offer FREE 15-minute initial consultations to discuss your needs and provide accurate quotes. The F&B package includes comprehensive market entry support. Would you like to book a consultation to get a customized quote?";
-    }
-    
-    // 4. Payment methods
-    if (message.includes('pay') || message.includes('payment') || message.includes('mobile money') || message.includes('bank')) {
-      return "We accept multiple payment methods for your convenience:\n\n**Mobile Money:**\n- MTN Mobile Money\n- Airtel Money\n\n**Bank Transfer:**\n- Bank of Kigali (BK)\n- Equity Bank\n- Other local banks\n\n**Cards:**\n- Debit/Credit Cards\n- International payments accepted\n\nWe'll provide payment details after your consultation booking. Which payment method would be most convenient for you?";
-    }
-    
-    // 5. Discounts and promotions
-    if (message.includes('discount') || message.includes('promo') || message.includes('offer') || message.includes('sale')) {
-      return "✓ Yes, we have active promotions!\n\n★ Current Offer: 25% OFF on our F&B Complete Package (normally $16,000, now $12,000)\n★ Study Abroad: Early bird discounts available for next semester applications\n★ First-time clients: FREE initial consultation (15 minutes)\n\nThese promotions are limited time offers. Would you like to book a consultation to learn more about how these discounts apply to your specific needs?";
-    }
-    
-    // 6. Location
-    if (message.includes('where') || message.includes('location') || message.includes('office') || message.includes('address')) {
-      return "★ Our Location:\n\nWe operate primarily online to serve clients globally, but our head office is located in Kigali, Rwanda.\n\n★ Virtual Services: Most consultations are conducted online via Zoom/Google Meet for convenience\n★ In-person meetings: Available in Kigali by appointment\n★ Contact: +250 788 123 456\n★ Email: info@kundapathways.com\n\nWould you prefer an online or in-person consultation?";
-    }
-    
-    // 7. Reschedule consultation
-    if (message.includes('reschedule') || message.includes('change') || message.includes('move')) {
-      return "★ Rescheduling Your Consultation:\n\nYes, you can reschedule! Here's how:\n\n★ Notice Required: Please contact us at least 24 hours before your scheduled appointment\n★ Contact Methods:\n- Call/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n✓ We'll help you find a new time slot that works for both parties\n\nDo you need to reschedule an existing appointment?";
-    }
-    
-    // 8. Email/booking issues
-    if (message.includes('email') || message.includes('confirmation') || message.includes('booking') || message.includes('didn') || message.includes('through')) {
-      return "★ Booking & Email Issues - Let's fix this!\n\n★ Troubleshooting steps:\n1. Check your spam/junk folder\n2. Verify the email address you provided\n3. Wait up to 10 minutes for delivery\n\n★ Immediate Support:\n- Call/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n✓ We'll verify your booking and resend confirmation immediately\n\nWhat email address did you use for booking? I can help you resolve this right away!";
-    }
-    
-    // 9. Korea & Asia Study Abroad (Comprehensive Knowledge)
-    if (hasKeywords(['korea', 'korean', 'seoul', 'busan', 'kaist', 'postech', 'snu', 'yonsei']) ||
-        hasKeywords(['asian', 'asia', 'japan', 'china', 'singapore', 'hong kong', 'malaysia']) ||
-        hasKeywords(['topik', 'kgsp', 'korean government scholarship', 'k-pop', 'korean culture'])) {
-      
-      if (hasKeywords(['university', 'universities', 'college', 'admission'])) {
-        return "★ Top Korean Universities & Admissions:\n\n★ SKY Universities (Top 3):\n• Seoul National University (SNU) - #1 in Korea\n• Korea University - Strong liberal arts & business\n• Yonsei University - International programs\n\n★ STEM Excellence:\n• KAIST - Engineering & Technology\n• POSTECH - Science & Engineering\n• UNIST - Science & Technology\n\n★ Other Top Choices:\n• Hanyang University - Engineering focus\n• Ewha Womans University - Women's education leader\n• Sungkyunkwan University - Business & medicine\n• HUFS - Foreign languages & international studies\n\n★ Application Seasons:\n• Spring: Sept-Nov (starts March)\n• Fall: Feb-May (starts September)\n\nWhich field interests you most? I can provide specific admission requirements!";
-      }
-      
-      if (hasKeywords(['scholarship', 'kgsp', 'funding', 'financial aid'])) {
-        return "★ Korean Scholarship Opportunities:\n\n★ KGSP (Korean Government Scholarship):\n• Full tuition coverage + living allowance\n• Monthly stipend: 900,000-1,000,000 KRW\n• Korean language training included\n• Flight tickets covered\n• 85%+ success rate with our guidance\n\n★ University Scholarships:\n• Merit-based: 25-100% tuition coverage\n• Need-based: Financial assistance\n• Exchange programs: Semester/year abroad\n\n★ Application Requirements:\n• Bachelor's degree (for Master's)\n• GPA: 2.64+ (KGSP requirement)\n• English proficiency: TOEFL/IELTS\n• Health certificate & clean criminal record\n\n★ Deadlines:\n• KGSP: February-May annually\n• University scholarships: Vary by institution\n\nReady to apply? Our success rate is 85%+ for KGSP applications!";
-      }
-      
-      if (hasKeywords(['topik', 'korean language', 'language requirement'])) {
-        return "★ Korean Language & TOPIK Guide:\n\n★ TOPIK Levels:\n• TOPIK I (Levels 1-2): Basic communication\n• TOPIK II (Levels 3-6): Academic & professional\n\n★ University Requirements:\n• Undergraduate: TOPIK 3+ (Korean programs)\n• Graduate: TOPIK 4+ recommended\n• English programs: No TOPIK required\n\n★ Test Schedule:\n• 6 times per year globally\n• Registration: 2 months before test\n• Results: 1 month after test\n\n★ Preparation Timeline:\n• Level 1-2: 3-6 months\n• Level 3-4: 6-12 months\n• Level 5-6: 12-18 months\n\n★ Language Schools in Korea:\n• University language centers\n• Private institutes (hagwons)\n• Online programs available\n\nNeed TOPIK preparation guidance? We provide comprehensive training!";
-      }
-      
-      return "★ Korea Study Abroad - Complete Guide!\n\nOur expertise covers:\n✓ University admissions (SKY, KAIST, POSTECH)\n✓ KGSP scholarship applications (85% success)\n✓ Visa applications & documentation\n✓ TOPIK preparation & language training\n✓ Cultural orientation & arrival support\n\n★ We also assist with other Asian destinations:\n• Japan: University of Tokyo, Kyoto University\n• Singapore: NUS, NTU\n• Hong Kong: HKU, HKUST\n• China: Tsinghua, Peking University\n\nWhich country/program interests you most?";
-    }
-    
-    // 10. Detailed Program Information
-    if (hasKeywords(['program', 'major', 'course', 'field of study', 'engineering', 'business', 'medicine', 'arts'])) {
-      if (hasKeywords(['engineering', 'computer science', 'tech', 'it'])) {
-        return "★ Engineering & Technology Programs in Korea:\n\n★ Top Engineering Universities:\n• KAIST - #1 for engineering globally\n• POSTECH - Research-focused excellence\n• SNU Engineering - Comprehensive programs\n• Hanyang University - Industry connections\n\n★ Popular Programs:\n• Computer Science & AI\n• Electrical & Electronic Engineering\n• Mechanical Engineering\n• Chemical Engineering\n• Biomedical Engineering\n\n★ Career Prospects:\n• Samsung, LG Electronics\n• Hyundai Motors, SK Group\n• Naver, Kakao (tech companies)\n• Global tech opportunities\n\n★ Program Duration:\n• Bachelor's: 4 years\n• Master's: 2 years\n• PhD: 3-4 years\n\nInterested in a specific engineering field?";
-      }
-      
-      if (hasKeywords(['business', 'mba', 'management', 'economics'])) {
-        return "★ Business & Management Programs in Korea:\n\n★ Top Business Schools:\n• Seoul National University Business School\n• Korea University Business School\n• Yonsei School of Business\n• KAIST Graduate School of Management\n\n★ Popular Programs:\n• International Business\n• Finance & Banking\n• Marketing & Brand Management\n• Technology Management\n• Entrepreneurship\n\n★ Global Opportunities:\n• Chaebols (Samsung, LG, Hyundai)\n• Korean wave (K-pop, entertainment)\n• Fintech & e-commerce\n• International trade\n\n★ ROI:\n• Average starting salary: 35-50M KRW/year\n• Rapid career advancement\n• Global networking opportunities\n\nWhich business specialization interests you?";
-      }
-      
-      return "★ Academic Programs in Korea:\n\n★ Popular Fields:\n• Engineering & Technology (KAIST, POSTECH)\n• Business & Economics (SNU, Korea Univ)\n• Medicine & Healthcare (various universities)\n• Arts & Design (Hongik, Ewha)\n• International Studies (HUFS, Yonsei)\n• Korean Studies & Culture\n\n★ Unique Advantages:\n• Cutting-edge research facilities\n• Industry-academia partnerships\n• Cultural immersion opportunities\n• Gateway to Asian markets\n• High-quality education at affordable costs\n\nWhich field would you like to explore in detail?";
-    }
-    
-    // 11. Visa & Immigration Information
-    if (hasKeywords(['visa', 'immigration', 'documents', 'd-2', 'd-4', 'student visa'])) {
-      return "★ Korean Student Visa Guide:\n\n★ Visa Types:\n• D-2: Degree-seeking students (Bachelor's/Master's/PhD)\n• D-4: Language training students\n• D-4-1: General Korean language programs\n• D-4-6: University language programs\n\n★ Required Documents:\n• Passport (6+ months validity)\n• Certificate of Admission\n• Financial proof (bank statements)\n• Health certificate & background check\n• Academic transcripts (apostilled)\n• Visa application form\n\n★ Financial Requirements:\n• Undergraduate: $18,000+ USD\n• Graduate: $20,000+ USD\n• Language students: $9,000+ USD\n\n★ Processing Time:\n• 5-10 business days (standard)\n• Express service available\n\n★ Extensions & Changes:\n• Extend before expiration\n• Change status possible\n\nNeed help with visa documentation? We provide complete support!";
-    }
-    
-    // 12. Living in Korea Information
-    if (hasKeywords(['living', 'cost', 'accommodation', 'dorm', 'housing', 'life in korea'])) {
-      return "★ Living in Korea - Complete Guide:\n\n★ Monthly Living Costs:\n• Seoul: $800-1,200 USD\n• Other cities: $600-900 USD\n• Dormitory: $200-400 USD/month\n• Off-campus housing: $300-800 USD/month\n\n★ Food & Dining:\n• Campus meals: $3-5 USD\n• Local restaurants: $5-10 USD\n• Groceries: $200-300 USD/month\n• Convenience stores: 24/7 availability\n\n★ Transportation:\n• Subway/bus pass: $45-55 USD/month\n• Student discounts available\n• Excellent public transport system\n\n★ Mobile & Internet:\n• Mobile plan: $30-50 USD/month\n• High-speed internet included in dorms\n• Free WiFi widely available\n\n★ Healthcare:\n• National Health Insurance mandatory\n• Student rate: ~$20 USD/month\n• Quality healthcare system\n\nWant specific information about any aspect of Korean life?";
-    }
-    
-    // 13. Korean Culture & Language
-    if (hasKeywords(['culture', 'korean culture', 'k-pop', 'k-drama', 'tradition', 'customs'])) {
-      return "★ Korean Culture & Student Life:\n\n★ Cultural Highlights:\n• K-pop phenomenon (BTS, Blackpink, etc.)\n• K-dramas & Korean cinema\n• Traditional festivals (Chuseok, Lunar New Year)\n• Taekwondo & traditional martial arts\n• Buddhist temples & Confucian heritage\n\n★ Campus Culture:\n• Strong senior-junior relationships (sunbae-hoobae)\n• Active club activities (동아리)\n• Festival seasons (spring/fall)\n• Study groups & academic cooperation\n\n★ Food Culture:\n• Korean BBQ & hot pot\n• Street food culture\n• Cafe culture for studying\n• Seasonal specialties\n\n★ Modern vs Traditional:\n• High-tech smart cities\n• Traditional palaces & hanok villages\n• Work-life balance awareness\n• Innovation & tradition blend\n\n★ Social Etiquette:\n• Respect for elders\n• Group harmony importance\n• Gift-giving customs\n• Bowing & formal greetings\n\nCurious about any specific cultural aspect?";
-    }
-    
-    // 14. Other Asian Countries
-    if (hasKeywords(['japan', 'china', 'singapore', 'hong kong', 'malaysia', 'asian countries'])) {
-      return "★ Study in Other Asian Destinations:\n\n★ Japan:\n• University of Tokyo, Kyoto University\n• MEXT scholarships available\n• Strong in robotics, engineering\n• Cultural immersion opportunities\n\n★ Singapore:\n• National University of Singapore (NUS)\n• Nanyang Technological University (NTU)\n• English-taught programs\n• Gateway to Southeast Asia\n\n★ Hong Kong:\n• University of Hong Kong (HKU)\n• Hong Kong University of Science & Technology\n• International business hub\n• East-meets-West culture\n\n★ China:\n• Tsinghua University, Peking University\n• Chinese Government Scholarships\n• Largest education system globally\n• Rapidly growing economy\n\n★ Malaysia:\n• University of Malaya\n• Affordable education costs\n• Multicultural environment\n• Growing tech sector\n\nWhich Asian destination interests you most?";
-    }
-    
-    // 15. Talk to human/live agent
-    if (message.includes('human') || message.includes('agent') || message.includes('person') || message.includes('talk') || message.includes('speak')) {
-      return "★ Connect with Our Human Experts!\n\n★ Direct Contact:\n- Phone/WhatsApp: +250 788 123 456\n- Email: info@kundapathways.com\n\n★ Business Hours:\n- Monday-Friday: 8 AM - 6 PM (EAT)\n- Saturday: 9 AM - 2 PM (EAT)\n- Emergency support available\n\n★ Or book a consultation: Our expert advisors are ready to discuss your goals in detail!\n\nWould you like me to help you schedule a call with our team right now?";
-    }
-    
-    // Enhanced Study in Korea related queries (more specific matching)
-    if (isSpecificQuery(['study', 'education']) && !hasKeywords(['f&b', 'food', 'restaurant', 'business consulting'])) {
-      if (hasKeywords(['scholarship', 'funding', 'financial aid'])) {
-        return "★ Comprehensive Scholarship Guide for Korea & Asia:\n\n★ Korean Scholarships:\n• KGSP: Full coverage + living allowance\n• University scholarships: 25-100% tuition\n• Provincial government scholarships\n• Private foundation scholarships\n\n★ Other Asian Scholarships:\n• Japan: MEXT scholarships\n• Singapore: Government scholarships\n• China: Chinese Government Scholarships\n• Hong Kong: HKPFS for research\n\n★ Our Success Statistics:\n• KGSP: 85%+ acceptance rate\n• University scholarships: 90%+ rate\n• Complete application support\n• Interview preparation included\n\nReady to apply? Let's discuss your scholarship strategy!";
-      }
-      return "★ Comprehensive Study Abroad Services for Asia:\n\n★ Our Specialties:\n• Korea: Complete university & scholarship support\n• Japan: University admissions & MEXT scholarships\n• Singapore: NUS, NTU applications\n• China: Top university placements\n• Hong Kong: Research & business programs\n\n★ Complete Support Package:\n• University selection & applications\n• Scholarship applications & strategies\n• Visa processing & documentation\n• Language preparation (Korean/Japanese/Chinese)\n• Pre-departure orientation\n• Post-arrival support\n\n★ Investment: Starting from $200\n★ Success Rate: 95%+ admissions\n\nReady to start your Asian education journey?";
-    }
-    
-    // F&B Consulting related queries (more specific)
-    if (isSpecificQuery(['f&b', 'food', 'beverage', 'restaurant']) || 
-        (hasKeywords(['business']) && hasKeywords(['consulting', 'development', 'planning']))) {
-      const responses = [
-        "★ F&B Market Entry Support: Complete business planning, market analysis, menu development, regulatory compliance, and operational setup. Our package is $12,000 (25% discount available!). We have MSc Food Science expertise and Korean market specialization. Ready to expand your F&B business?",
-        "★ Professional F&B Consulting: We specialize in restaurant & cafe development, market entry strategies, and business growth. Our comprehensive package includes market research, menu engineering, and operational setup. Current offer: $12,000 (save 25%!). Shall we discuss your F&B goals?",
-        "★ F&B Business Development: From concept to launch, we provide complete consulting services. Market analysis, business planning, menu development, and Korean market expertise. Investment: $12,000 with current 25% discount. Ready to transform your F&B vision into reality?"
-      ];
-      return responses[Math.floor(Math.random() * responses.length)];
-    }
-    
-    // Contact information queries (more specific)
-    if (isSpecificQuery(['contact', 'phone', 'reach', 'call', 'email']) && !hasKeywords(['book', 'schedule'])) {
-      return "📞 Contact Us: Phone/WhatsApp: +250 788 123 456 | 📧 Email: info@kundapathways.com | ⏰ Hours: Mon-Fri 8AM-6PM, Sat 9AM-2PM (EAT). Would you prefer a scheduled consultation or immediate contact?";
-    }
-    
-    // Thanks (varied responses)
-    if (hasKeywords(['thank', 'appreciate', 'grateful'])) {
-      const thanks = [
-        "You're absolutely welcome! 😊 I'm here to help you achieve your goals. Remember, we offer FREE 15-minute consultations with our expert advisors. Feel free to ask me anything else!",
-        "My pleasure! 🌟 I'm glad I could help. Don't forget about our complimentary 15-minute consultation with our specialists. What else can I assist you with?",
-        "Happy to help! ✨ Remember, our expert advisors are available for FREE 15-minute consultations. Is there anything else you'd like to know about our services?"
-      ];
-      return thanks[Math.floor(Math.random() * thanks.length)];
-    }
-    
-    // Goodbye (varied responses)
-    if (hasKeywords(['bye', 'goodbye', 'see you', 'talk later'])) {
-      const goodbyes = [
-        "Thank you for chatting with me! 👋 Before you go, remember our FREE 15-minute consultation offer. Whether it's studying in Korea or F&B consulting, we're here to support your dreams. Have a wonderful day!",
-        "It was great talking with you! 🌟 Don't forget our complimentary consultation - it's a great way to get personalized advice for your goals. Take care and feel free to return anytime!",
-        "Goodbye for now! 🎯 Remember, we're just a message away when you're ready to take the next step. Our FREE consultation is always available. Wishing you success in your journey!"
-      ];
-      return goodbyes[Math.floor(Math.random() * goodbyes.length)];
-    }
-    
-    // Default response with smart suggestions (varied responses)
-    const defaultResponses = [
-      {
-        intro: "I'd be happy to help! 🤖 Here are some topics I can assist with:",
-        questions: [
-          "📋 How to book a consultation",
-          "💵 Service pricing information", 
-          "💳 Payment methods accepted",
-          "📍 Our location & contact info",
-          "🎓 Korean university applications",
-          "🍽 F&B business consulting"
-        ]
-      },
-      {
-        intro: "Let me help you find what you're looking for! 🌟 I specialize in:",
-        questions: [
-          "🌏 Study abroad opportunities in Korea & Asia",
-          "💰 Scholarship applications & guidance",
-          "🍴 F&B market entry consulting",
-          "📞 Booking consultations with our experts",
-          "💳 Payment options & pricing",
-          "📍 Contact information & office hours"
-        ]
-      },
-      {
-        intro: "I'm here to guide you! ✨ Popular topics include:",
-        questions: [
-          "🎯 KGSP scholarship applications (85% success rate)",
-          "🏫 Korean university admissions",
-          "🍽️ Restaurant & F&B business development",
-          "💼 Market entry strategies",
-          "📅 Scheduling expert consultations",
-          "💬 Direct contact with our team"
-        ]
-      }
-    ];
-    
-    const randomResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-    return `${randomResponse.intro}\n\n${randomResponse.questions.join('\n')}\n\n💬 Just ask me about any of these, or feel free to ask anything else!\n\n🆓 Remember: We offer FREE 15-minute consultations with our expert advisors. Would you like me to help you schedule one?`;
-  }, []);
+  }, [messages]);
 
   const handleSendMessage = useCallback(() => {
-    const sanitizedInput = sanitizeInput(inputMessage);
-    if (!sanitizedInput.trim()) return;
+    const sanitized = sanitizeInput(inputMessage);
+    if (!sanitized || isTyping) return;
 
-    // Add user message immediately
-    setMessages(prev => [...prev, { text: sanitizedInput, isBot: false }]);
+    // Add user message
+    setMessages(prev => [...prev, { text: sanitized, isBot: false }]);
     setInputMessage("");
     setIsTyping(true);
-    
-    // Simulate more natural response timing (300-800ms)
-    const responseTime = Math.random() * 500 + 300;
-    
-    setTimeout(() => {
-      const response = getResponse(sanitizedInput);
-      setMessages(prev => [...prev, { text: response, isBot: true }]);
-      setIsTyping(false);
-    }, responseTime);
-  }, [inputMessage, sanitizeInput, getResponse]);
+
+    // Stream AI response
+    streamAIResponse(sanitized);
+  }, [inputMessage, isTyping, sanitizeInput, streamAIResponse]);
 
   const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {

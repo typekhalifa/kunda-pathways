@@ -61,6 +61,9 @@ enabled = true
 port = 54328
 inspector_port = 8083
 
+[functions.aria-chat]
+verify_jwt = false
+
 [functions.send-reply-email]
 verify_jwt = false
 
