@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import ReactMarkdown from "react-markdown";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -176,13 +177,17 @@ const ChatBot = () => {
                 className={`flex ${message.isBot ? 'justify-start' : 'justify-end'} animate-in slide-in-from-bottom-2 duration-300`}
               >
                 <div
-                  className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-line ${
+                  className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${
                     message.isBot
-                      ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 shadow-sm border border-slate-200 dark:border-slate-600'
+                      ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 shadow-sm border border-slate-200 dark:border-slate-600 prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0'
                       : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md'
                   }`}
                 >
-                  {message.text}
+                  {message.isBot ? (
+                    <ReactMarkdown>{message.text}</ReactMarkdown>
+                  ) : (
+                    <span className="whitespace-pre-line">{message.text}</span>
+                  )}
                 </div>
               </div>
             ))}
