@@ -12,6 +12,7 @@ const ChatBot = () => {
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new messages arrive
@@ -50,7 +51,10 @@ const ChatBot = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-        body: JSON.stringify({ messages: conversationHistory }),
+        body: JSON.stringify({ 
+          messages: conversationHistory,
+          sessionId 
+        }),
       });
 
       if (!response.ok || !response.body) {
@@ -154,8 +158,8 @@ const ChatBot = () => {
           <div className="bg-blue-500 text-white p-4 rounded-t-2xl">
             <div className="flex items-center">
               <Avatar className="w-8 h-8 mr-3">
-                <AvatarImage src="https://images.unsplash.com/photo-1494790108755-2616b612b547?w=100&h=100&fit=crop&crop=face" alt="Aria Assistant" />
-                <AvatarFallback className="bg-white/20 text-white text-xs">AI</AvatarFallback>
+                <AvatarImage src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=face" alt="Aria Assistant" />
+                <AvatarFallback className="bg-white/20 text-white text-xs">AR</AvatarFallback>
               </Avatar>
               <div>
                 <h3 className="font-semibold text-sm">Aria - Kunda Pathways Assistant</h3>

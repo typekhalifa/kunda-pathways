@@ -11,11 +11,11 @@ const AriaAvatar = ({ size = "default", className = "" }: { size?: "sm" | "defau
   return (
     <Avatar className={`${sizeClasses[size]} ${className}`}>
       <AvatarImage 
-        src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=100&h=100&fit=crop&crop=face" 
+        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=face" 
         alt="Aria Assistant"
       />
       <AvatarFallback className="bg-blue-400 text-white font-semibold">
-        AI
+        AR
       </AvatarFallback>
     </Avatar>
   );

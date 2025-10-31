@@ -23,27 +23,57 @@ export const useConsultationActions = () => {
       }
 
       let error = null;
+      let bookingData: any = null;
 
       switch (bookingType) {
         case 'Study Abroad':
+          // Fetch booking details first
+          const { data: studyData } = await supabase
+            .from('study_abroad_bookings')
+            .select('*')
+            .eq('id', bookingId)
+            .single();
+          bookingData = studyData;
+          
           ({ error } = await supabase
             .from('study_abroad_bookings')
             .update(updateData)
             .eq('id', bookingId));
           break;
         case 'F&B Consulting':
+          const { data: fbData } = await supabase
+            .from('fb_consultation_bookings')
+            .select('*')
+            .eq('id', bookingId)
+            .single();
+          bookingData = fbData;
+          
           ({ error } = await supabase
             .from('fb_consultation_bookings')
             .update(updateData)
             .eq('id', bookingId));
           break;
         case 'Extra Services':
+          const { data: extraData } = await supabase
+            .from('extra_service_bookings')
+            .select('*')
+            .eq('id', parseInt(bookingId))
+            .single();
+          bookingData = extraData;
+          
           ({ error } = await supabase
             .from('extra_service_bookings')
             .update(updateData)
             .eq('id', parseInt(bookingId)));
           break;
         default:
+          const { data: consultData } = await supabase
+            .from('consultation_bookings')
+            .select('*')
+            .eq('id', bookingId)
+            .single();
+          bookingData = consultData;
+          
           ({ error } = await supabase
             .from('consultation_bookings')
             .update(updateData)
@@ -52,8 +82,44 @@ export const useConsultationActions = () => {
 
       if (error) throw error;
 
+      // Send approval email when booking is confirmed
+      if (status === 'confirmed' && bookingData && bookingData.email) {
+        try {
+          let services: string[] = [];
+          
+          // Parse services based on booking type
+          if (typeof bookingData.services === 'string') {
+            try {
+              services = JSON.parse(bookingData.services);
+            } catch {
+              services = [bookingData.services];
+            }
+          } else if (Array.isArray(bookingData.services)) {
+            services = bookingData.services;
+          } else if (bookingData.service) {
+            services = [bookingData.service.name || 'Service'];
+          }
+
+          await supabase.functions.invoke('send-booking-approval', {
+            body: {
+              bookingId: bookingId,
+              bookingType: bookingType,
+              name: bookingData.full_name,
+              email: bookingData.email,
+              services: services,
+              totalPrice: bookingData.total_price || 0,
+              preferredDate: bookingData.preferred_date,
+              preferredTime: bookingData.preferred_time
+            }
+          });
+        } catch (emailError) {
+          console.error('Error sending approval email:', emailError);
+          // Don't fail the whole operation if email fails
+        }
+      }
+
       const statusMessage = status === 'confirmed' 
-        ? 'Booking confirmed and marked as paid' 
+        ? 'Booking confirmed and marked as paid. Approval email sent!' 
         : `Booking ${status} successfully`;
         
       toast.success(statusMessage);

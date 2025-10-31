@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.0';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -9,10 +10,26 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { messages } = await req.json();
+    const { messages, sessionId } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
+    // Initialize Supabase client
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? ''
+    );
+
+    // Fetch real website settings
+    const { data: settings } = await supabase
+      .from('website_settings')
+      .select('*')
+      .limit(10);
+
+    // Extract contact info from settings
+    const contactInfo = settings?.find(s => s.setting_key === 'contact')?.setting_value || {};
+    const siteInfo = settings?.find(s => s.setting_key === 'site_info')?.setting_value || {};
+    
     const systemPrompt = `You are Aria, the friendly AI assistant for Kunda Pathways. You help users with:
 
 **Study Abroad Services:**
@@ -32,10 +49,12 @@ serve(async (req) => {
 - Operational efficiency optimization
 - Complete F&B Package: $12,000 (25% OFF - limited time!)
 
-**Key Facts:**
-- Location: Kigali, Rwanda (online consultations available globally)
-- Contact: +250 788 123 456
-- Email: info@kundapathways.com
+**Key Facts (USE THESE REAL CONTACT DETAILS):**
+- Location: ${contactInfo.location || 'Kigali, Rwanda'} (online consultations available globally)
+- Contact: ${contactInfo.phone || '+250 788 214 751'}
+- WhatsApp: ${contactInfo.whatsapp || '+821026077012'}
+- Email: ${contactInfo.email || 'info@kundapathways.com'}
+- Website: ${siteInfo.site_url || 'https://kundapathways.com'}
 - FREE 15-minute initial consultations
 - Payment methods: Mobile Money (MTN, Airtel), Bank Transfer, Cards
 
@@ -83,6 +102,18 @@ Keep responses concise but informative. Always be helpful and guide users toward
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
+    }
+
+    // Store user message in database for learning
+    if (sessionId && messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage.role === 'user') {
+        await supabase.from('aria_conversations').insert({
+          session_id: sessionId,
+          message: lastMessage.content,
+          is_bot: false
+        });
+      }
     }
 
     return new Response(response.body, {

@@ -77,6 +77,33 @@ export type Database = {
         }
         Relationships: []
       }
+      aria_conversations: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_bot: boolean
+          message: string
+          session_id: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_bot?: boolean
+          message: string
+          session_id: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_bot?: boolean
+          message?: string
+          session_id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author_id: string | null
@@ -643,7 +670,7 @@ export type Database = {
           created_at: string | null
           details: Json | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           resource: string | null
           success: boolean
           user_agent: string | null
@@ -654,7 +681,7 @@ export type Database = {
           created_at?: string | null
           details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           resource?: string | null
           success?: boolean
           user_agent?: string | null
@@ -665,7 +692,7 @@ export type Database = {
           created_at?: string | null
           details?: Json | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           resource?: string | null
           success?: boolean
           user_agent?: string | null
@@ -876,25 +903,22 @@ export type Database = {
         }
         Returns: boolean
       }
-      get_current_user_role: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      is_admin: {
-        Args: { user_id?: string }
-        Returns: boolean
-      }
-      log_security_event: {
-        Args:
-          | { event_details?: Json; event_type: string }
-          | {
+      get_current_user_role: { Args: never; Returns: string }
+      is_admin: { Args: { user_id?: string }; Returns: boolean }
+      log_security_event:
+        | {
+            Args: {
               p_action: string
               p_details?: Json
               p_resource?: string
               p_success?: boolean
             }
-        Returns: undefined
-      }
+            Returns: undefined
+          }
+        | {
+            Args: { event_details?: Json; event_type: string }
+            Returns: undefined
+          }
       validate_input: {
         Args: { p_input: string; p_type?: string }
         Returns: boolean
