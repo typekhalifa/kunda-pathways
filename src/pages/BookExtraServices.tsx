@@ -118,25 +118,33 @@ const BookExtraServices = () => {
     if (error) {
       console.error("Supabase error:", error.message);
       alert("There was an error submitting your request.");
-    } else {
-      // Send confirmation email
-      const serviceNames = getSelectedServiceDetails().map(s => s.name);
-      await supabase.functions.invoke('send-booking-confirmation', {
-        body: {
-          bookingId: Date.now().toString(),
-          bookingType: 'extra_service',
-          name: formData.fullName,
-          email: formData.email,
-          services: serviceNames,
-          totalPrice: getTotalPrice(),
-          preferredDate: formData.preferredDate,
-          preferredTime: formData.preferredTime
-        }
-      });
-      
-      alert("✅Booking submitted successfully! Check your email for confirmation.");
-      setCurrentStep(2);
+      return;
     }
+    
+    // Send confirmation email
+    const serviceNames = getSelectedServiceDetails().map(s => s.name);
+    const { data: emailData, error: emailError } = await supabase.functions.invoke('send-booking-confirmation', {
+      body: {
+        bookingId: Date.now().toString(),
+        bookingType: 'extra_service',
+        name: formData.fullName,
+        email: formData.email,
+        services: serviceNames,
+        totalPrice: getTotalPrice(),
+        preferredDate: formData.preferredDate,
+        preferredTime: formData.preferredTime
+      }
+    });
+    
+    if (emailError) {
+      console.error("❌ Email sending error:", emailError);
+      alert("✅ Booking submitted! However, there was an issue sending the confirmation email. Please check your spam folder or contact us.");
+    } else {
+      console.log("✅ Email sent successfully:", emailData);
+      alert("✅Booking submitted successfully! Check your email for confirmation.");
+    }
+    
+    setCurrentStep(2);
   } catch (err) {
     console.error("Unexpected error:", err);
     alert("An unexpected error occurred.");
