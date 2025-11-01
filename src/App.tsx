@@ -197,9 +197,9 @@ const AdminScholarships = () => (
   </div>
 );
 
-const queryClient = new QueryClient();
-
 function App() {
+  const [queryClient] = React.useState(() => new QueryClient());
+  
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
