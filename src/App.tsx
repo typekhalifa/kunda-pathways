@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SecurityProvider } from "@/components/SecurityProvider";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
@@ -201,11 +202,12 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <LanguageProvider>
-        <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
+      <SecurityProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
@@ -312,10 +314,11 @@ const App = () => (
                />
                <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
-      </LanguageProvider>
+              </Routes>
+            </BrowserRouter>
+          </AuthProvider>
+        </LanguageProvider>
+      </SecurityProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
