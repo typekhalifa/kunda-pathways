@@ -199,128 +199,130 @@ const AdminScholarships = () => (
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <SecurityProvider>
-        <LanguageProvider>
-          <AuthProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/scholarships" element={<Scholarships />} />
-              <Route path="/admin" element={<AdminLogin />} />
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/admin/reset-password" element={<AdminResetPassword />} />
-              <Route 
-                path="/admin/consultations" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminConsultations />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/book-consultation" element={<BookConsultation />} />
-              <Route path="/book-fb-consultation" element={<BookFBConsultation />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/study-programs" element={<StudyPrograms />} />
-              <Route path="/fb-consulting" element={<FBConsulting />} />
-              <Route path="/all-services" element={<AllServices />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
-              <Route path="/sitemap" element={<Sitemap />} />
-              <Route path="/about-advisor" element={<AboutAdvisor />} />
-              <Route path="/book-study-abroad-consultation" element={<BookStudyAbroadConsultation />} />
-              <Route path="/book/study-abroad" element={<BookStudyAbroadConsultation />} />
-              <Route path="/complete-package" element={<CompletePackage />} />
-              <Route path="/fb-complete-package" element={<FBCompletePackage />} />
-              <Route path="/book/extra-services" element={<BookExtraServices />} />
-              <Route path="/custom-quote" element={<CustomQuote />} />
-              <Route 
-                path="/admin/dashboard" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/blog" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminBlog />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/settings" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminSettings />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/content" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminContent />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/messages" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminMessages />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/services" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminServices />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/analytics" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminAnalytics />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/newsletter" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminNewsletter />
-                  </ProtectedRoute>
-                } 
-               />
-               <Route 
-                path="/admin/scholarships" 
-                element={
-                  <ProtectedRoute adminOnly>
-                    <AdminScholarships />
-                  </ProtectedRoute>
-                } 
-               />
-               <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </AuthProvider>
-        </LanguageProvider>
-      </SecurityProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <SecurityProvider>
+          <LanguageProvider>
+            <AuthProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+              <ScrollToTop />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/scholarships" element={<Scholarships />} />
+                <Route path="/admin" element={<AdminLogin />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/admin/reset-password" element={<AdminResetPassword />} />
+                <Route 
+                  path="/admin/consultations" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminConsultations />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="/book-consultation" element={<BookConsultation />} />
+                <Route path="/book-fb-consultation" element={<BookFBConsultation />} />
+                <Route path="/resources" element={<Resources />} />
+                <Route path="/study-programs" element={<StudyPrograms />} />
+                <Route path="/fb-consulting" element={<FBConsulting />} />
+                <Route path="/all-services" element={<AllServices />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="/sitemap" element={<Sitemap />} />
+                <Route path="/about-advisor" element={<AboutAdvisor />} />
+                <Route path="/book-study-abroad-consultation" element={<BookStudyAbroadConsultation />} />
+                <Route path="/book/study-abroad" element={<BookStudyAbroadConsultation />} />
+                <Route path="/complete-package" element={<CompletePackage />} />
+                <Route path="/fb-complete-package" element={<FBCompletePackage />} />
+                <Route path="/book/extra-services" element={<BookExtraServices />} />
+                <Route path="/custom-quote" element={<CustomQuote />} />
+                <Route 
+                  path="/admin/dashboard" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/blog" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminBlog />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/settings" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminSettings />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/content" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminContent />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/messages" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminMessages />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/services" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminServices />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/analytics" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminAnalytics />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/newsletter" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminNewsletter />
+                    </ProtectedRoute>
+                  } 
+                />
+                 <Route 
+                  path="/admin/scholarships" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminScholarships />
+                    </ProtectedRoute>
+                  } 
+                 />
+                 <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </AuthProvider>
+          </LanguageProvider>
+        </SecurityProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;
