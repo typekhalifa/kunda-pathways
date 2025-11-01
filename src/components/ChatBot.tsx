@@ -5,6 +5,7 @@ import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import ReactMarkdown from "react-markdown";
+import type { Components } from "react-markdown";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,39 @@ const ChatBot = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Convert phone numbers and emails to clickable links
+  const processMessageText = useCallback((text: string) => {
+    // Replace phone numbers with WhatsApp links
+    let processed = text.replace(/(\+?\d{1,4}[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3,4})/g, (match) => {
+      const cleanNumber = match.replace(/[\s-]/g, '');
+      const message = encodeURIComponent("Hi, I would like to request a free 15 mins consultation so that we can talk.");
+      return `[${match}](https://wa.me/${cleanNumber}?text=${message})`;
+    });
+
+    // Replace email addresses with mailto links
+    processed = processed.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/g, (match) => {
+      const subject = encodeURIComponent("Requesting free 15 mins consultation");
+      return `[${match}](mailto:${match}?subject=${subject})`;
+    });
+
+    return processed;
+  }, []);
+
+  // Custom markdown components for styling links
+  const markdownComponents: Components = {
+    a: ({ node, children, href, ...props }) => (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+        {...props}
+      >
+        {children}
+      </a>
+    ),
+  };
 
   // Sanitize input to prevent XSS
   const sanitizeInput = useCallback((input: string) => {
@@ -184,7 +218,9 @@ const ChatBot = () => {
                   }`}
                 >
                   {message.isBot ? (
-                    <ReactMarkdown>{message.text}</ReactMarkdown>
+                    <ReactMarkdown components={markdownComponents}>
+                      {processMessageText(message.text)}
+                    </ReactMarkdown>
                   ) : (
                     <span className="whitespace-pre-line">{message.text}</span>
                   )}
