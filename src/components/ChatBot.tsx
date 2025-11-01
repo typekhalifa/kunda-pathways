@@ -22,10 +22,17 @@ const ChatBot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Convert phone numbers and emails to clickable links
+  // Convert phone numbers, emails, and URLs to clickable links
   const processMessageText = useCallback((text: string) => {
-    // Replace phone numbers with WhatsApp links
-    let processed = text.replace(/(\+?\d{1,4}[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3,4})/g, (match) => {
+    let processed = text;
+
+    // Replace website URLs with clickable links (must be before phone number regex)
+    processed = processed.replace(/(https?:\/\/[^\s<]+[^\s<.,;!?)])/g, (match) => {
+      return `[${match}](${match})`;
+    });
+
+    // Replace phone numbers with WhatsApp links (including formats like +82-10 2607-7012)
+    processed = processed.replace(/(\+?\d{1,4}[-\s]?\d{1,4}[-\s]?\d{3,4}[-\s]?\d{3,4})/g, (match) => {
       const cleanNumber = match.replace(/[\s-]/g, '');
       const message = encodeURIComponent("Hi, I would like to request a free 15 mins consultation so that we can talk.");
       return `[${match}](https://wa.me/${cleanNumber}?text=${message})`;
