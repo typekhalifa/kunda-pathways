@@ -119,7 +119,22 @@ const BookExtraServices = () => {
       console.error("Supabase error:", error.message);
       alert("There was an error submitting your request.");
     } else {
-      alert("✅Booking submitted successfully!");
+      // Send confirmation email
+      const serviceNames = getSelectedServiceDetails().map(s => s.name);
+      await supabase.functions.invoke('send-booking-confirmation', {
+        body: {
+          bookingId: Date.now().toString(),
+          bookingType: 'extra_service',
+          name: formData.fullName,
+          email: formData.email,
+          services: serviceNames,
+          totalPrice: getTotalPrice(),
+          preferredDate: formData.preferredDate,
+          preferredTime: formData.preferredTime
+        }
+      });
+      
+      alert("✅Booking submitted successfully! Check your email for confirmation.");
       setCurrentStep(2);
     }
   } catch (err) {

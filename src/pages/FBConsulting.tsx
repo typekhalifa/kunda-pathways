@@ -123,7 +123,7 @@ const FBConsulting = () => {
   const packagePricing = calculatePackagePrice();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-background">
       <Header />
       
       <div className="container mx-auto px-4 py-20">
@@ -196,7 +196,7 @@ const FBConsulting = () => {
           </div>
 
           {/* Package Deal */}
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl p-8 text-white text-center mb-16">
+          <div className="bg-primary rounded-2xl p-8 text-primary-foreground text-center mb-16 shadow-xl">
             <h2 className="text-3xl font-bold mb-4">Complete Market Entry Package</h2>
             <p className="text-xl mb-6 opacity-90">
               Get all services at a 25% discount - Perfect for comprehensive market entry

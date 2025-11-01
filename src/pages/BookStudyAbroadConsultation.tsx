@@ -111,7 +111,22 @@ const BookConsultation = () => {
         console.error("❌ Supabase insertion error:", error.message);
         alert("There was an error submitting your request.");
       } else {
-        alert("✅ Booking submitted successfully!");
+        // Send confirmation email
+        const selectedService = services.find((s) => s.id === formData.service);
+        await supabase.functions.invoke('send-booking-confirmation', {
+          body: {
+            bookingId: Date.now().toString(),
+            bookingType: 'study_abroad',
+            name: formData.fullName,
+            email: formData.email,
+            services: [selectedService?.name || ''],
+            totalPrice: selectedService?.price || 0,
+            preferredDate: formData.preferredDate,
+            preferredTime: formData.preferredTime
+          }
+        });
+        
+        alert("✅ Booking submitted successfully! Check your email for confirmation.");
         setCurrentStep(2); // Go to confirmation page
       }
     } catch (err) {

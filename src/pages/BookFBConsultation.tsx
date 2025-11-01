@@ -110,7 +110,22 @@ const BookFBConsultation = () => {
         console.error("❌ Supabase insert error:", error);
         alert(`❌ Error: ${error.message}`);
       } else {
-        alert("✅ Your request was submitted successfully!");
+        // Send confirmation email
+        const serviceNames = getSelectedServicesDetails().map(s => s.name);
+        await supabase.functions.invoke('send-booking-confirmation', {
+          body: {
+            bookingId: Date.now().toString(),
+            bookingType: 'fb_consultation',
+            name: formData.fullName,
+            email: formData.email,
+            services: serviceNames,
+            totalPrice: getTotalPrice(),
+            preferredDate: formData.preferredDate,
+            preferredTime: formData.preferredTime
+          }
+        });
+        
+        alert("✅ Your request was submitted successfully! Check your email for confirmation.");
         setCurrentStep(2);
       }
     } catch (err: any) {
