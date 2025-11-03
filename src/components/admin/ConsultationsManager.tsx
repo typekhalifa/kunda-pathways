@@ -79,13 +79,20 @@ const ConsultationsManager = () => {
         }));
         console.log('📚 Processed Study Bookings:', studyBookings);
 
+        // Fetch services map first for F&B bookings
+        const { data: servicesData } = await supabase.from('services').select('id, name');
+        const servicesMap = (servicesData || []).reduce((acc: any, service) => {
+          acc[service.id] = service.name;
+          return acc;
+        }, {});
+
         const fbBookings = (fbRes.data || []).map((b) => ({
           ...b,
           service_type: (() => {
             if (Array.isArray(b.services) && b.services.length > 0) {
-              const serviceNames = b.services.map(serviceId => {
-                // Since we don't have fbServices here, we'll use a generic name
-                return 'F&B Consulting Service';
+              const serviceNames = b.services.map((serviceId: any) => {
+                const id = String(serviceId);
+                return servicesMap[id] || 'F&B Consulting Service';
               }).filter(Boolean);
               return serviceNames.length > 0 ? serviceNames.join(', ') : 'F&B Consulting Service';
             }
@@ -116,12 +123,7 @@ const ConsultationsManager = () => {
         }));
         console.log('🔧 Processed Extra Bookings:', extraBookings);
 
-        // Fetch services to display names instead of IDs
-        const { data: servicesData } = await supabase.from('services').select('id, name');
-        const servicesMap = (servicesData || []).reduce((acc: any, service) => {
-          acc[service.id] = service.name;
-          return acc;
-        }, {});
+        // servicesMap already fetched above for all booking types
 
         const consultationBookings = (consultationRes.data || []).map((b) => ({
           ...b,
