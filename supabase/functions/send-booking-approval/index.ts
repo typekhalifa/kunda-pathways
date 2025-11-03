@@ -28,7 +28,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { bookingId, bookingType, name, email, services, totalPrice, preferredDate, preferredTime }: BookingApprovalRequest = await req.json();
 
     const emailResponse = await resend.emails.send({
-      from: "Kunda Pathways <onboarding@resend.dev>",
+      from: "Kunda Pathways <noreply@kundapathways.com>",
       to: [email],
       subject: "🎉 Your Booking is Approved - Kunda Pathways",
       html: `
