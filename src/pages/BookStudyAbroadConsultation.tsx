@@ -105,12 +105,17 @@ const BookConsultation = () => {
           payment_status: "unpaid",
           total_price: services.find((s) => s.id === formData.service)?.price || 0,
         },
-      ]);
+      ]).select();
 
       if (error) {
         console.error("❌ Supabase insertion error:", error.message);
         alert("There was an error submitting your request.");
         return;
+      }
+
+      // Save the booking ID
+      if (data && data[0]) {
+        setBookingId(data[0].id);
       }
       
       // Send confirmation email

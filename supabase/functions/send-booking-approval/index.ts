@@ -103,7 +103,7 @@ const handler = async (req: Request): Promise<Response> => {
                 Questions? Contact us:
               </p>
               <p style="color: #1f2937; font-size: 14px; margin: 0;">
-                📧 <a href="mailto:info@kundapathways.com" style="color: #3b82f6;">info@kundapathways.com</a><br>
+                📧 <a href="mailto:diradukunda40@gmail.com" style="color: #3b82f6;">diradukunda40@gmail.com</a><br>
                 📱 <a href="https://wa.me/821026077012" style="color: #3b82f6;">+82 10-2607-7012</a>
               </p>
               <p style="color: #6b7280; font-size: 14px; margin: 20px 0 0 0;">

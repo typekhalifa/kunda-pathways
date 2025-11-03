@@ -89,7 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
 
             <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0; color: #92400e; font-size: 14px;">
-                💡 <strong>Tip:</strong> Keep this email for your records. You can contact us at <a href="mailto:info@kundapathways.com" style="color: #b45309;">info@kundapathways.com</a> or <a href="https://wa.me/821026077012" style="color: #b45309;">WhatsApp: +82 10-2607-7012</a>
+                💡 <strong>Tip:</strong> Keep this email for your records. You can contact us at <a href="mailto:diradukunda40@gmail.com" style="color: #b45309;">diradukunda40@gmail.com</a> or <a href="https://wa.me/821026077012" style="color: #b45309;">WhatsApp: +82 10-2607-7012</a>
               </p>
             </div>
 
