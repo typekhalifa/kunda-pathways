@@ -73,28 +73,55 @@ const CompletePackage = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const { error } = await supabase.from("study_abroad_bookings").insert({
-      full_name: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      service: [serviceName],
-      message: formData.message || null,
-      preferred_date: null,
-      preferred_time: null,
-      total_price: totalPrice,
-      status: "pending",
-      payment_status: "unpaid",
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    });
+    
+    try {
+      const { data, error } = await supabase.from("study_abroad_bookings").insert({
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        service: [serviceName],
+        message: formData.message || null,
+        preferred_date: null,
+        preferred_time: null,
+        total_price: totalPrice,
+        status: "pending",
+        payment_status: "unpaid",
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }).select();
 
-    setLoading(false);
+      if (error) {
+        console.error("❌ Error saving booking:", error.message);
+        alert("There was an error submitting your request.");
+        setLoading(false);
+        return;
+      }
 
-    if (error) {
-      console.error("❌ Error saving booking:", error.message);
-      alert("There was an error submitting your request.");
-    } else {
+      // Send confirmation email
+      try {
+        await supabase.functions.invoke('send-booking-confirmation', {
+          body: {
+            bookingId: data[0]?.id || Date.now().toString(),
+            bookingType: 'study_abroad_package',
+            name: formData.fullName,
+            email: formData.email,
+            services: [serviceName],
+            totalPrice: totalPrice,
+            preferredDate: null,
+            preferredTime: null
+          }
+        });
+        console.log("✅ Confirmation email sent successfully");
+      } catch (emailError) {
+        console.error("❌ Email sending error:", emailError);
+      }
+
       setCurrentStep(2);
+    } catch (err) {
+      console.error("❌ Unexpected error:", err);
+      alert("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 

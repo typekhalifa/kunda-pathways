@@ -271,7 +271,7 @@ const BookExtraServices = () => {
     </Button>
 
     <a
-      href={`https://wa.me/250788214751?text=${encodeURIComponent(
+      href={`https://wa.me/821026077012?text=${encodeURIComponent(
         `Hello! I’ve just paid for extra services: ${selected
           .map((s) => s?.name)
           .join(", ")}. My name is ${formData.fullName}.`

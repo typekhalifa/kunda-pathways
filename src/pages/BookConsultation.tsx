@@ -407,7 +407,7 @@ const BookConsultation = () => {
                   </p>
 
                   <a
-                    href={`https://wa.me/250788214751?text=Hello! I've paid for the consultation services. My name is ${encodeURIComponent(formData.fullName)}.`}
+                    href={`https://wa.me/821026077012?text=Hello! I've paid for the consultation services. My name is ${encodeURIComponent(formData.fullName)}.`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

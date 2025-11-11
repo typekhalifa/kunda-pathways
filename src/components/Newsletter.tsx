@@ -42,63 +42,84 @@ const Newsletter = () => {
     try {
       console.log('📧 Making Supabase request...');
       
-      const { data, error } = await supabase
+      // First check if email exists
+      const { data: existingSubscriber } = await supabase
         .from('newsletter_subscribers')
-        .insert([
-          {
-            email: trimmedEmail,
-            name: trimmedName || null,
-            preferences: {
-              frequency: 'weekly',
-              topics: ['study-abroad', 'fb-consulting', 'general-updates']
-            }
+        .select('id, is_active')
+        .eq('email', trimmedEmail)
+        .single();
+
+      let subscriberId: string;
+      
+      if (existingSubscriber) {
+        // If exists and inactive, reactivate
+        if (!existingSubscriber.is_active) {
+          const { error: updateError } = await supabase
+            .from('newsletter_subscribers')
+            .update({ 
+              is_active: true,
+              name: trimmedName || null,
+              subscribed_at: new Date().toISOString()
+            })
+            .eq('id', existingSubscriber.id);
+
+          if (updateError) {
+            console.error('📧 Reactivation error:', updateError);
+            toast.error('Subscription failed. Please try again.');
+            return;
           }
-        ])
-        .select();
-
-      console.log('📧 Supabase response received:', { data, error });
-
-      if (error) {
-        console.error('📧 Subscription error:', error);
-        
-        if (error.code === '23505') { // Unique constraint violation
+          subscriberId = existingSubscriber.id;
+          console.log('📧 Reactivated existing subscriber:', subscriberId);
+        } else {
+          // Already active
           toast.error('This email is already subscribed!');
           return;
-        } 
-        
-        // Log any other error and show generic message
-        console.error('📧 Unexpected error:', {
-          code: error.code,
-          message: error.message,
-          details: error.details
-        });
-        toast.error('Subscription failed. Please try again.');
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        console.error('📧 No data returned');
-        toast.error('Subscription may have failed. Please try again.');
-        return;
-      }
-
-      console.log('📧 Subscription successful!', data);
-
-      // Send welcome email
-      if (data[0]?.id) {
-        try {
-          await supabase.functions.invoke('send-welcome-email', {
-            body: {
+        }
+      } else {
+        // New subscriber - insert
+        const { data, error } = await supabase
+          .from('newsletter_subscribers')
+          .insert([
+            {
               email: trimmedEmail,
               name: trimmedName || null,
-              subscriberId: data[0].id
+              preferences: {
+                frequency: 'weekly',
+                topics: ['study-abroad', 'fb-consulting', 'general-updates']
+              }
             }
-          });
-          console.log("Welcome email sent successfully");
-        } catch (emailError) {
-          console.error("Failed to send welcome email:", emailError);
-          // Don't show error to user, subscription was successful
+          ])
+          .select();
+
+        if (error) {
+          console.error('📧 Subscription error:', error);
+          toast.error('Subscription failed. Please try again.');
+          return;
         }
+
+        if (!data || data.length === 0) {
+          console.error('📧 No data returned');
+          toast.error('Subscription may have failed. Please try again.');
+          return;
+        }
+
+        subscriberId = data[0].id;
+        console.log('📧 New subscription successful!', data);
+      }
+
+      // Send welcome email
+      try {
+        await supabase.functions.invoke('send-welcome-email', {
+          body: {
+            email: trimmedEmail,
+            name: trimmedName || null,
+            subscriberId
+          }
+        });
+        console.log("Welcome email sent successfully");
+      } catch (emailError) {
+        console.error("Failed to send welcome email:", emailError);
+        // Don't show error to user, subscription was successful
       }
 
       setSubscribed(true);

@@ -76,25 +76,13 @@ const handler = async (req: Request): Promise<Response> => {
               </table>
             </div>
 
-            <div style="background: #dbeafe; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
-              <h3 style="color: #1e40af; margin-top: 0; font-size: 16px;">💳 Payment Instructions</h3>
+            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981;">
+              <h3 style="color: #065f46; margin-top: 0; font-size: 16px;">✅ Next Steps</h3>
               <p style="color: #1f2937; line-height: 1.6; margin: 10px 0;">
-                To secure your booking, please complete the payment:
+                Your booking is confirmed! We're excited to work with you. If you have any questions or need to make changes, please feel free to contact us.
               </p>
-              <ul style="color: #1f2937; line-height: 1.8; margin: 10px 0; padding-left: 20px;">
-                <li><strong>Mobile Money (MTN):</strong> 0788 214 751</li>
-                <li><strong>Bank of Kigali:</strong> 00005677XXXXXXX</li>
-                <li><strong>Equity Bank:</strong> 4065373xxxxxxxxxxxxx</li>
-                <li><strong>Amount:</strong> $${totalPrice.toLocaleString()} (approx. ${(totalPrice * 1437.5).toLocaleString()} RWF)</li>
-              </ul>
-              <p style="color: #1f2937; line-height: 1.6; margin: 10px 0; font-size: 14px;">
-                💡 <strong>Quick Dial Code:</strong> <code style="background: white; padding: 4px 8px; border-radius: 4px;">*182*1*1*0788214751*${totalPrice * 1437.5}#</code>
-              </p>
-            </div>
-
-            <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
-              <p style="margin: 0; color: #92400e; font-size: 14px;">
-                📱 After payment, please send confirmation via WhatsApp: <a href="https://wa.me/821026077012" style="color: #b45309; font-weight: bold;">+82 10-2607-7012</a>
+              <p style="margin: 10px 0; color: #065f46; font-size: 14px;">
+                📱 Contact us via WhatsApp: <a href="https://wa.me/821026077012" style="color: #059669; font-weight: bold;">+82 10-2607-7012</a>
               </p>
             </div>
 
