@@ -92,7 +92,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Fetch active subscribers
     const { data: subscribers, error: subscribersError } = await supabase
       .from("newsletter_subscribers")
-      .select("email, name")
+      .select("id, email, name")
       .eq("is_active", true);
 
     if (subscribersError) {
@@ -118,46 +118,8 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Create the email HTML using React Email
-    let emailHtml: string;
-    try {
-      emailHtml = await renderAsync(
-        React.createElement(NewsletterEmail, {
-          subject: subject,
-          content: content,
-          unsubscribeUrl: `${supabaseUrl}/unsubscribe`,
-          advisorName: advisorData?.advisor_name || "Kunda John Kim",
-          advisorTitle: advisorData?.advisor_title || "Global Education & F&B Consultant"
-        })
-      );
-      console.log("Email HTML generated successfully with React Email");
-    } catch (emailError) {
-      console.error("Failed to generate React Email, falling back to basic HTML:", emailError);
-      // Fallback to basic HTML if React Email fails
-      emailHtml = `
-        <html>
-          <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #2563eb; padding-bottom: 20px;">
-              <h1 style="color: #2563eb; margin-bottom: 10px; font-size: 32px;">Kunda Pathways</h1>
-              <p style="color: #666; margin: 0; font-style: italic;">Your Gateway to Global Education and Business Success</p>
-            </div>
-            
-            <div style="background-color: #f8fafc; padding: 30px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #2563eb;">
-              <div style="white-space: pre-wrap; font-size: 16px; line-height: 1.6;">${content}</div>
-            </div>
-            
-            <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
-              <p style="margin: 0; color: #64748b; font-size: 14px;">
-                Best regards,<br>
-                <strong>${advisorData?.advisor_name || "Kunda John Kim"}</strong><br>
-                ${advisorData?.advisor_title || "Global Education & F&B Consultant"}<br>
-                Kunda Pathways
-              </p>
-            </div>
-          </body>
-        </html>
-      `;
-    }
+    // Get the website URL (frontend URL)
+    const websiteUrl = Deno.env.get("WEBSITE_URL") || "https://kundapathways.com";
 
     // Split subscribers into batches of 10 to avoid rate limiting
     const batchSize = 10;
@@ -191,11 +153,57 @@ const handler = async (req: Request): Promise<Response> => {
           console.log(`Attempting to send email to: ${subscriber.email}`);
           console.log(`Sending email to: ${subscriber.email} with subject: ${subject}`);
           
+          // Generate unique unsubscribe URL for this subscriber
+          const unsubscribeUrl = `${websiteUrl}/unsubscribe?id=${subscriber.id}`;
+          
+          // Create personalized email HTML for this subscriber
+          let personalizedEmailHtml: string;
+          try {
+            personalizedEmailHtml = await renderAsync(
+              React.createElement(NewsletterEmail, {
+                subject: subject,
+                content: content,
+                unsubscribeUrl: unsubscribeUrl,
+                advisorName: advisorData?.advisor_name || "Kunda John Kim",
+                advisorTitle: advisorData?.advisor_title || "Global Education & F&B Consultant"
+              })
+            );
+          } catch (emailError) {
+            console.error("Failed to generate React Email for subscriber, using fallback:", emailError);
+            personalizedEmailHtml = `
+              <html>
+                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+                  <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #2563eb; padding-bottom: 20px;">
+                    <h1 style="color: #2563eb; margin-bottom: 10px; font-size: 32px;">Kunda Pathways</h1>
+                    <p style="color: #666; margin: 0; font-style: italic;">Your Gateway to Global Education and Business Success</p>
+                  </div>
+                  
+                  <div style="background-color: #f8fafc; padding: 30px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #2563eb;">
+                    <div style="white-space: pre-wrap; font-size: 16px; line-height: 1.6;">${content}</div>
+                  </div>
+                  
+                  <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; text-align: center;">
+                    <p style="margin: 0; color: #64748b; font-size: 14px;">
+                      Best regards,<br>
+                      <strong>${advisorData?.advisor_name || "Kunda John Kim"}</strong><br>
+                      ${advisorData?.advisor_title || "Global Education & F&B Consultant"}<br>
+                      Kunda Pathways
+                    </p>
+                    <p style="margin-top: 20px; color: #94a3b8; font-size: 12px;">
+                      You received this email because you subscribed to our newsletter.
+                      <a href="${unsubscribeUrl}" style="color: #2563eb; text-decoration: underline;">Unsubscribe here</a>
+                    </p>
+                  </div>
+                </body>
+              </html>
+            `;
+          }
+          
           const emailResult = await resend.emails.send({
             from: "Kunda Pathways <noreply@kundapathways.com>", // Using verified domain
             to: subscriber.email, // Send to actual subscriber
             subject: subject,
-            html: emailHtml,
+            html: personalizedEmailHtml,
           });
           
           console.log(`Resend API response:`, JSON.stringify(emailResult, null, 2));

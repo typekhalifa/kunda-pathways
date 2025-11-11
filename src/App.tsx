@@ -45,6 +45,7 @@ import CompletePackage from '@/pages/CompletePackage';
 import FBCompletePackage from '@/pages/FBCompletePackage';
 import BookExtraServices from "./pages/BookExtraServices";
 import CustomQuote from "@/pages/CustomQuote";
+import Unsubscribe from "@/pages/Unsubscribe";
 
 // Admin page wrappers
 const AdminContent = () => (
@@ -241,8 +242,9 @@ function App() {
                 <Route path="/fb-complete-package" element={<FBCompletePackage />} />
                 <Route path="/book/extra-services" element={<BookExtraServices />} />
                 <Route path="/custom-quote" element={<CustomQuote />} />
+                <Route path="/unsubscribe" element={<Unsubscribe />} />
                 <Route 
-                  path="/admin/dashboard" 
+                  path="/admin/dashboard"
                   element={
                     <ProtectedRoute adminOnly>
                       <AdminDashboard />
