@@ -83,8 +83,26 @@ const Newsletter = () => {
       }
 
       console.log('📧 Subscription successful!', data);
+
+      // Send welcome email
+      if (data[0]?.id) {
+        try {
+          await supabase.functions.invoke('send-welcome-email', {
+            body: {
+              email: trimmedEmail,
+              name: trimmedName || null,
+              subscriberId: data[0].id
+            }
+          });
+          console.log("Welcome email sent successfully");
+        } catch (emailError) {
+          console.error("Failed to send welcome email:", emailError);
+          // Don't show error to user, subscription was successful
+        }
+      }
+
       setSubscribed(true);
-      toast.success('🎉 Successfully subscribed!');
+      toast.success('🎉 Successfully subscribed! Check your email for a welcome message.');
       setEmail('');
       setName('');
     } catch (error: any) {
