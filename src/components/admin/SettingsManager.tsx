@@ -9,7 +9,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useWebsiteSettings } from '@/hooks/useWebsiteSettings';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Loader2, KeyRound, User, Shield, Save, Upload, Edit, UserPlus, Users, Globe, Mail, Phone, MessageCircle, MapPin } from 'lucide-react';
+import { Loader2, KeyRound, User, Shield, Save, Upload, Edit, UserPlus, Users, Globe, Mail, Phone, MessageCircle, MapPin, Construction } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 import HeroStatsManager from './HeroStatsManager';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { updateMetaTags } from '@/utils/updateMetaTags';
@@ -35,6 +36,10 @@ const SettingsManager = () => {
     password: '',
     fullName: '',
     role: 'user' as 'admin' | 'user'
+  });
+  const [maintenanceMode, setMaintenanceMode] = useState({
+    enabled: false,
+    message: 'We are currently performing maintenance. Please check back soon!'
   });
   const [formData, setFormData] = useState({
     site_info: {
@@ -71,6 +76,28 @@ const SettingsManager = () => {
       instagram: '#'
     }
   });
+
+  React.useEffect(() => {
+    const fetchMaintenanceMode = async () => {
+      const { data } = await supabase
+        .from('website_settings')
+        .select('setting_value')
+        .eq('setting_key', 'maintenance_mode')
+        .single();
+
+      if (data?.setting_value && typeof data.setting_value === 'object' && data.setting_value !== null) {
+        const value = data.setting_value as Record<string, any>;
+        if ('enabled' in value && 'message' in value) {
+          setMaintenanceMode({
+            enabled: value.enabled as boolean,
+            message: value.message as string
+          });
+        }
+      }
+    };
+
+    fetchMaintenanceMode();
+  }, []);
 
   React.useEffect(() => {
     if (settings) {
@@ -313,6 +340,41 @@ const SettingsManager = () => {
     }
   };
 
+  const handleMaintenanceModeToggle = async (enabled: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('website_settings')
+        .update({ 
+          setting_value: { ...maintenanceMode, enabled } 
+        })
+        .eq('setting_key', 'maintenance_mode');
+
+      if (error) throw error;
+      
+      setMaintenanceMode({ ...maintenanceMode, enabled });
+      toast.success(`Maintenance mode ${enabled ? 'enabled' : 'disabled'}`);
+    } catch (error: any) {
+      toast.error('Failed to update maintenance mode');
+    }
+  };
+
+  const handleMaintenanceMessageUpdate = async () => {
+    try {
+      const { error } = await supabase
+        .from('website_settings')
+        .update({ 
+          setting_value: maintenanceMode 
+        })
+        .eq('setting_key', 'maintenance_mode');
+
+      if (error) throw error;
+      
+      toast.success('Maintenance message updated');
+    } catch (error: any) {
+      toast.error('Failed to update maintenance message');
+    }
+  };
+
   const handleSaveSettings = async () => {
     setSaveLoading(true);
     try {
@@ -343,11 +405,12 @@ const SettingsManager = () => {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="profile" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="website">Website</TabsTrigger>
+          <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
           <TabsTrigger value="content">Content</TabsTrigger>
         </TabsList>
 
@@ -795,6 +858,68 @@ const SettingsManager = () => {
               Save Website Settings
             </Button>
           </div>
+        </TabsContent>
+
+        {/* Maintenance Mode */}
+        <TabsContent value="maintenance">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Construction className="w-5 h-5 mr-2" />
+                Maintenance Mode
+              </CardTitle>
+              <CardDescription>
+                Control site accessibility during updates and maintenance
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="space-y-1">
+                  <h4 className="font-semibold text-slate-800 dark:text-slate-100">
+                    Enable Maintenance Mode
+                  </h4>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    When enabled, visitors will see a maintenance page. Admins can still access the site.
+                  </p>
+                </div>
+                <Switch
+                  checked={maintenanceMode.enabled}
+                  onCheckedChange={handleMaintenanceModeToggle}
+                />
+              </div>
+
+              <div className="space-y-4">
+                <Label htmlFor="maintenance-message">Maintenance Message</Label>
+                <Textarea
+                  id="maintenance-message"
+                  placeholder="Enter the message to display during maintenance"
+                  value={maintenanceMode.message}
+                  onChange={(e) => setMaintenanceMode({ ...maintenanceMode, message: e.target.value })}
+                  rows={4}
+                  className="resize-none"
+                />
+                <Button 
+                  onClick={handleMaintenanceMessageUpdate}
+                  size="sm"
+                  variant="outline"
+                >
+                  <Save className="mr-2 h-4 w-4" />
+                  Save Message
+                </Button>
+              </div>
+
+              <div className="rounded-lg bg-yellow-50 dark:bg-yellow-900/20 p-4 border border-yellow-200 dark:border-yellow-800">
+                <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">
+                  Important Notes:
+                </h4>
+                <ul className="text-sm text-yellow-700 dark:text-yellow-300 space-y-1 list-disc list-inside">
+                  <li>Admin users will always have access to the site</li>
+                  <li>Changes take effect immediately for all visitors</li>
+                  <li>Make sure to disable maintenance mode after updates</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Content Management */}

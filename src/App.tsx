@@ -7,10 +7,11 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { SecurityProvider } from "@/components/SecurityProvider";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ScrollToTop from "@/components/ScrollToTop";
+import { useMaintenanceMode } from "@/hooks/useMaintenanceMode";
 import Index from "./pages/Index";
 import Scholarships from "./pages/Scholarships";
 import BookConsultation from "./pages/BookConsultation";
@@ -46,6 +47,7 @@ import FBCompletePackage from '@/pages/FBCompletePackage';
 import BookExtraServices from "./pages/BookExtraServices";
 import CustomQuote from "@/pages/CustomQuote";
 import Unsubscribe from "@/pages/Unsubscribe";
+import Maintenance from "@/pages/Maintenance";
 
 // Admin page wrappers
 const AdminContent = () => (
@@ -198,6 +200,23 @@ const AdminScholarships = () => (
   </div>
 );
 
+// Wrapper component to check maintenance mode
+const MaintenanceChecker = ({ children }: { children: React.ReactNode }) => {
+  const { maintenanceMode, loading } = useMaintenanceMode();
+  const { isAdmin } = useAuth();
+
+  if (loading) {
+    return null;
+  }
+
+  // If maintenance mode is enabled and user is not an admin, show maintenance page
+  if (maintenanceMode.enabled && !isAdmin) {
+    return <Maintenance />;
+  }
+
+  return <>{children}</>;
+};
+
 function App() {
   const queryClient = React.useMemo(() => new QueryClient(), []);
   
@@ -211,7 +230,8 @@ function App() {
               <Sonner />
               <BrowserRouter>
               <ScrollToTop />
-              <Routes>
+              <MaintenanceChecker>
+                <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/scholarships" element={<Scholarships />} />
                 <Route path="/admin" element={<AdminLogin />} />
@@ -316,8 +336,9 @@ function App() {
                   } 
                  />
                  <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="*" element={<NotFound />} />
+                 <Route path="*" element={<NotFound />} />
                 </Routes>
+                </MaintenanceChecker>
               </BrowserRouter>
             </AuthProvider>
           </LanguageProvider>
