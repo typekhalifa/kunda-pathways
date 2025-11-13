@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
+import { usePaymentDetails } from "@/hooks/usePaymentDetails";
 
 const CompletePackage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -20,6 +21,7 @@ const CompletePackage = () => {
   const [packageData, setPackageData] = useState<any>(null);
   const [studyAbroadServices, setStudyAbroadServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const { paymentDetails } = usePaymentDetails();
 
   useEffect(() => {
     fetchPackageData();
@@ -67,7 +69,7 @@ const CompletePackage = () => {
   const totalPrice = calculateTotalPrice();
   const serviceName = packageData?.name || "Complete Korean Study Package";
   
-  const rwfRate = 1437.50;
+  const rwfRate = parseFloat(paymentDetails.rwf_exchange_rate);
   const rwfAmount = totalPrice * rwfRate;
 
 
@@ -202,15 +204,15 @@ const CompletePackage = () => {
                   Total to pay: <span className="text-green-600 font-bold">${totalPrice}</span>
                 </p>
                 <p className="text-slate-600 dark:text-slate-300 text-sm">
-                  Please pay <strong>${totalPrice}</strong> which is approximately <strong>{rwfAmount.toLocaleString()} RWF</strong> to <strong>0788214751</strong>.
+                  Please pay <strong>${totalPrice}</strong> which is approximately <strong>{rwfAmount.toLocaleString()} RWF</strong> to <strong>{paymentDetails.mobile_money.replace(/\s/g, '').replace('+', '')}</strong>.
                   <br />
-                  Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*0788214751*{rwfAmount}#</code>
+                  Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*{paymentDetails.mobile_money.replace(/\s/g, '').replace('+', '')}*{Math.round(rwfAmount)}#</code>
                 </p>
                 <ul className="space-y-2 text-sm text-slate-800 dark:text-white pl-4 list-none">
                   For further modes
-                  <li className="flex items-center"><Smartphone className="mr-2 w-4 h-4" /> <strong>Mobile Money:</strong> +250 788 214 751</li>
-                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Bank of Kigali:</strong> 00005677XXXXXXX</li>
-                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Equity Bank:</strong> 4065373xxxxxxxxxxxxx</li>
+                  <li className="flex items-center"><Smartphone className="mr-2 w-4 h-4" /> <strong>Mobile Money:</strong> {paymentDetails.mobile_money}</li>
+                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Bank of Kigali:</strong> {paymentDetails.bank_of_kigali}</li>
+                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Equity Bank:</strong> {paymentDetails.equity_bank}</li>
                 </ul>
 
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-4">
