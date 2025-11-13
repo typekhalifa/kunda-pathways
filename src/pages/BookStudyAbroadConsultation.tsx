@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { usePaymentDetails } from "@/hooks/usePaymentDetails";
 
 const BookConsultation = () => {
   const { translations } = useLanguage();
@@ -17,6 +18,7 @@ const BookConsultation = () => {
   const [bookingId, setBookingId] = useState<string | null>(null);
   const [services, setServices] = useState<Array<{id: string, name: string, price: number}>>([]);
   const [loading, setLoading] = useState(true);
+  const { paymentDetails } = usePaymentDetails();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -220,15 +222,15 @@ const BookConsultation = () => {
                   Total to pay: <span className="text-blue-600 font-bold">${total}</span>
                 </p>
                 <p className="text-slate-600 dark:text-slate-300 text-sm">
-                  Please pay <strong>${total}</strong> which is approximately <strong>{(total * 1437.5).toLocaleString()} RWF</strong> to <strong>0788214751</strong>.
+                  Please pay <strong>${total}</strong> which is approximately <strong>{(total * parseFloat(paymentDetails.rwf_exchange_rate)).toLocaleString()} RWF</strong> to <strong>{paymentDetails.mobile_money.replace(/\s/g, '').replace('+', '')}</strong>.
                   <br />
-                  Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*0788214751*{total * 1437.5}#</code>
+                  Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*{paymentDetails.mobile_money.replace(/\s/g, '').replace('+', '')}*{Math.round(total * parseFloat(paymentDetails.rwf_exchange_rate))}#</code>
                 </p>
                 <ul className="space-y-2 text-sm text-slate-800 dark:text-white pl-4 list-disc">
                   For further modes
-                  <li>📱 <strong>Mobile Money:</strong> +250 788 214 751</li>
-                  <li>🏦 <strong>Bank of Kigali:</strong> 00005677XXXXXXX</li>
-                  <li>🏦 <strong>Equity Bank:</strong> 4065373xxxxxxxxxxxxx</li>
+                  <li>📱 <strong>Mobile Money:</strong> {paymentDetails.mobile_money}</li>
+                  <li>🏦 <strong>Bank of Kigali:</strong> {paymentDetails.bank_of_kigali}</li>
+                  <li>🏦 <strong>Equity Bank:</strong> {paymentDetails.equity_bank}</li>
                 </ul>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-4">
                   Need a quick reach out? We're one message away.

@@ -9,7 +9,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useWebsiteSettings } from '@/hooks/useWebsiteSettings';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Loader2, KeyRound, User, Shield, Save, Upload, Edit, UserPlus, Users, Globe, Mail, Phone, MessageCircle, MapPin, Construction } from 'lucide-react';
+import { Loader2, KeyRound, User, Shield, Save, Upload, Edit, UserPlus, Users, Globe, Mail, Phone, MessageCircle, MapPin, Construction, CreditCard } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import HeroStatsManager from './HeroStatsManager';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -74,6 +74,12 @@ const SettingsManager = () => {
       twitter: '#',
       linkedin: '#',
       instagram: '#'
+    },
+    payment_details: {
+      mobile_money: '+250 788 214 751',
+      bank_of_kigali: '00005677XXXXXXX',
+      equity_bank: '4065373xxxxxxxxxxxxx',
+      rwf_exchange_rate: '1437.50'
     }
   });
 
@@ -111,6 +117,10 @@ const SettingsManager = () => {
         social: {
           ...formData.social,
           ...settings.social
+        },
+        payment_details: {
+          ...formData.payment_details,
+          ...settings.payment_details
         }
       });
     }
@@ -383,7 +393,8 @@ const SettingsManager = () => {
         updateSetting('branding', formData.branding),
         updateSetting('analytics', formData.analytics),
         updateSetting('contact', formData.contact),
-        updateSetting('social', formData.social)
+        updateSetting('social', formData.social),
+        updateSetting('payment_details', formData.payment_details)
       ]);
 
       // Update meta tags immediately
@@ -405,11 +416,12 @@ const SettingsManager = () => {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="profile" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="website">Website</TabsTrigger>
+          <TabsTrigger value="payment">Payment</TabsTrigger>
           <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
           <TabsTrigger value="content">Content</TabsTrigger>
         </TabsList>
@@ -858,6 +870,84 @@ const SettingsManager = () => {
               Save Website Settings
             </Button>
           </div>
+        </TabsContent>
+
+        {/* Payment Details */}
+        <TabsContent value="payment">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <CreditCard className="w-5 h-5 mr-2" />
+                Payment Details
+              </CardTitle>
+              <CardDescription>
+                Configure payment information displayed on booking pages
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="mobile-money">Mobile Money Number</Label>
+                  <Input
+                    id="mobile-money"
+                    placeholder="+250 788 214 751"
+                    value={formData.payment_details.mobile_money}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      payment_details: { ...prev.payment_details, mobile_money: e.target.value }
+                    }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="bank-kigali">Bank of Kigali Account</Label>
+                  <Input
+                    id="bank-kigali"
+                    placeholder="00005677XXXXXXX"
+                    value={formData.payment_details.bank_of_kigali}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      payment_details: { ...prev.payment_details, bank_of_kigali: e.target.value }
+                    }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="equity-bank">Equity Bank Account</Label>
+                  <Input
+                    id="equity-bank"
+                    placeholder="4065373xxxxxxxxxxxxx"
+                    value={formData.payment_details.equity_bank}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      payment_details: { ...prev.payment_details, equity_bank: e.target.value }
+                    }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="rwf-rate">USD to RWF Exchange Rate</Label>
+                  <Input
+                    id="rwf-rate"
+                    type="number"
+                    step="0.01"
+                    placeholder="1437.50"
+                    value={formData.payment_details.rwf_exchange_rate}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      payment_details: { ...prev.payment_details, rwf_exchange_rate: e.target.value }
+                    }))}
+                  />
+                </div>
+              </div>
+              <Button 
+                onClick={handleSaveSettings} 
+                disabled={saveLoading || settingsLoading}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                {saveLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                <Save className="mr-2 h-4 w-4" />
+                Save Payment Details
+              </Button>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Maintenance Mode */}

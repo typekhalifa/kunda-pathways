@@ -8,12 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
+import { usePaymentDetails } from "@/hooks/usePaymentDetails";
 
 const FBCompletePackage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [packageData, setPackageData] = useState<any>(null);
   const [fbServices, setFbServices] = useState<any[]>([]);
+  const { paymentDetails } = usePaymentDetails();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -67,7 +69,7 @@ const FBCompletePackage = () => {
   };
 
   const totalPrice = calculateTotalPrice();
-  const rwfRate = 1437.5;
+  const rwfRate = parseFloat(paymentDetails.rwf_exchange_rate);
   const rwfAmount = totalPrice * rwfRate;
   const serviceName = packageData?.name || "F&B Market Entry Complete Package";
 
@@ -209,15 +211,15 @@ const FBCompletePackage = () => {
                   Total to pay: <span className="text-green-600 font-bold">${totalPrice}</span>
                 </p>
                 <p className="text-slate-600 dark:text-slate-300 text-sm">
-                  Please pay <strong>${totalPrice}</strong> (~<strong>{rwfAmount.toLocaleString()} RWF</strong>) to <strong>0788214751</strong><br />
-                  Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*0788214751*{rwfAmount}#</code>
+                  Please pay <strong>${totalPrice}</strong> (~<strong>{rwfAmount.toLocaleString()} RWF</strong>) to <strong>{paymentDetails.mobile_money.replace(/\s/g, '').replace('+', '')}</strong><br />
+                  Dial: <code className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-sm">*182*1*1*{paymentDetails.mobile_money.replace(/\s/g, '').replace('+', '')}*{Math.round(rwfAmount)}#</code>
                 </p>
 
                 <ul className="text-sm text-slate-800 dark:text-white pl-4 list-none space-y-1">
                   For other payment details
-                  <li className="flex items-center"><Smartphone className="mr-2 w-4 h-4" /> <strong>Mobile Money:</strong> +250 788 214 751</li>
-                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Bank of Kigali:</strong> 00005677XXXXXXX</li>
-                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Equity Bank:</strong> 4065373xxxxxxxxxxxxx</li>
+                  <li className="flex items-center"><Smartphone className="mr-2 w-4 h-4" /> <strong>Mobile Money:</strong> {paymentDetails.mobile_money}</li>
+                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Bank of Kigali:</strong> {paymentDetails.bank_of_kigali}</li>
+                  <li className="flex items-center"><Building className="mr-2 w-4 h-4" /> <strong>Equity Bank:</strong> {paymentDetails.equity_bank}</li>
                 </ul>
 
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-4">

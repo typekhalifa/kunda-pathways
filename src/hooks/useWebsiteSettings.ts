@@ -37,6 +37,12 @@ export interface WebsiteSettings {
     linkedin: string;
     instagram: string;
   };
+  payment_details?: {
+    mobile_money: string;
+    bank_of_kigali: string;
+    equity_bank: string;
+    rwf_exchange_rate: string;
+  };
 }
 
 export const useWebsiteSettings = () => {
