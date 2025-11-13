@@ -416,15 +416,17 @@ const SettingsManager = () => {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="profile" className="w-full">
-        <TabsList className="grid w-full grid-cols-7">
-          <TabsTrigger value="profile">Profile</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
-          <TabsTrigger value="users">Users</TabsTrigger>
-          <TabsTrigger value="website">Website</TabsTrigger>
-          <TabsTrigger value="payment">Payment</TabsTrigger>
-          <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
-          <TabsTrigger value="content">Content</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full sm:grid-cols-7 mb-2">
+            <TabsTrigger value="profile" className="whitespace-nowrap">Profile</TabsTrigger>
+            <TabsTrigger value="password" className="whitespace-nowrap">Password</TabsTrigger>
+            <TabsTrigger value="users" className="whitespace-nowrap">Users</TabsTrigger>
+            <TabsTrigger value="website" className="whitespace-nowrap">Website</TabsTrigger>
+            <TabsTrigger value="payment" className="whitespace-nowrap">Payment</TabsTrigger>
+            <TabsTrigger value="maintenance" className="whitespace-nowrap">Maintenance</TabsTrigger>
+            <TabsTrigger value="content" className="whitespace-nowrap">Content</TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Profile Information */}
         <TabsContent value="profile">
