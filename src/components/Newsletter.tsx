@@ -47,7 +47,7 @@ const Newsletter = () => {
         .from('newsletter_subscribers')
         .select('id, is_active')
         .eq('email', trimmedEmail)
-        .single();
+        .maybeSingle();
 
       let subscriberId: string;
       
